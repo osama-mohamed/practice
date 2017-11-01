@@ -60,5 +60,5 @@ def result():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    app.secret_key = 'osama_blog'
+    app.secret_key = 'shorten_url'
     app.run(debug=True)
