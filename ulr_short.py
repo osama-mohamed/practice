@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, url_for, redirect, send_from_
 from flask_mysqldb import MySQL
 import MySQLdb
 import os
+import random
+import string
 import uuid
 
 database = MySQLdb.connect("localhost", "OSAMA", "OSAMA")
@@ -37,6 +39,8 @@ def index():
 def result():
     cur = mysql.connection.cursor()
     r = request.form['url']
+    if r == None or r == "" or r == " " :
+        return redirect(url_for('index'))
     cur.execute("SELECT original_link FROM short_link WHERE original_link=%s", [r])
     sl = cur.fetchone()
     if r in str(sl):
@@ -44,8 +48,10 @@ def result():
         sl2 = cur.fetchone()
         return render_template('already_exists.html', sl2=sl2)
     else :
-        def random_string(string_length=5):
-            return str(uuid.uuid4())[0:string_length]
+        # def random_string(string_length=5):
+        #     return str(uuid.uuid4())[0:string_length]
+        def random_string():
+            return ("".join([random.choice(string.ascii_letters + string.digits) for i in range(6)]))
         cur.execute("INSERT INTO short_link(original_link, short_link)\
                              VALUES(%s, %s)", ([r], ["https://go.gl/" + random_string()]))
         mysql.connection.commit()
