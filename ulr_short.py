@@ -4,6 +4,7 @@ import MySQLdb
 import os
 import random
 import string
+import requests
 import uuid
 
 database = MySQLdb.connect("localhost", "OSAMA", "OSAMA")
@@ -53,7 +54,7 @@ def result():
         def random_string():
             return ("".join([random.choice(string.ascii_letters + string.digits) for i in range(6)]))
         cur.execute("INSERT INTO short_link(original_link, short_link)\
-                             VALUES(%s, %s)", ([r], ["https://go.gl/" + random_string()]))
+                             VALUES(%s, %s)", ([r], [random_string()]))
         mysql.connection.commit()
         res = cur.execute("SELECT * FROM short_link WHERE original_link=%s", [r])
         short_link = cur.fetchone()
@@ -64,6 +65,24 @@ def result():
             return render_template('fail.html', msg=msg, short_link=short_link)
     cur.close()
     return redirect(url_for('index'))
+
+# @app.route('/link/<url_name>', methods=['GET', 'post'])
+@app.route('/<url_name>')
+def href(url_name):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT short_link FROM short_link WHERE short_link=%s", [url_name])
+    ff = cur.fetchone()
+    if url_name in str(ff):
+        cur.execute("SELECT original_link FROM short_link WHERE short_link=%s", [url_name])
+        f = cur.fetchone()
+        for i in f:
+            return redirect(f[i])
+    else:
+        return render_template('url.html')
+    # return redirect(url_for(f.original_link))
+    msg = 'No Urls Found!'
+    return render_template('url.html', msg=msg)
+
 
 if __name__ == '__main__':
     app.secret_key = 'shorten_url'
