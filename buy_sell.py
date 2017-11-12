@@ -42,6 +42,7 @@ cursor.execute("CREATE TABLE IF NOT EXISTS products(\
                 files TEXT NOT NULL,\
                 create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);")
 
+cursor.execute("CREATE TABLE IF NOT EXISTS categories (category VARCHAR(255) PRIMARY KEY);")
 
 database.close()
 
@@ -96,8 +97,11 @@ def admin_dashboard():
     cur.execute("SELECT COUNT(id) FROM users")
     users = cur.fetchone()
     count_users = users['COUNT(id)']
+    cur.execute("SELECT COUNT(category) FROM categories")
+    categories = cur.fetchone()
+    count_categories = categories['COUNT(category)']
     cur.close()
-    return render_template('index.html', count_products=count_products, count_users=count_users)
+    return render_template('index.html', count_products=count_products, count_users=count_users, count_categories=count_categories)
 
 
 @app.route('/admin/login')
@@ -298,6 +302,21 @@ def delete_user(id):
     return redirect(url_for('admin_dashboard'))
 
 
+@app.route('/admin/add_category', methods=['post', 'get'])
+def add_category():
+    if request.method == 'POST' and request.form['add_category'] != '' and not request.form['add_category'] == ' ':
+        category = request.form['add_category']
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO categories (category) VALUES(%s);", ([category]))
+        mysql.connection.commit()
+        cur.close()
+        flash('You Have Added New Category successfully!', 'success')
+        return redirect(url_for('admin_dashboard'))
+    elif request.method == 'POST':
+        flash('You Should Type A Word!', 'warning')
+        return redirect(url_for('add_category'))
+    return render_template('admin_add_category.html')
+
 @app.route('/admin/products_table')
 def products_table():
     cur = mysql.connection.cursor()
@@ -306,7 +325,7 @@ def products_table():
     cur.execute("SELECT * FROM users")
     users = cur.fetchall()
     cur.close()
-    return render_template('tables.html', products=products, users=users)
+    return render_template('products_table.html', products=products, users=users)
 
 
 @app.route('/admin/users_table')

@@ -119,6 +119,7 @@
           <ul class="list-unstyled">
             <li class="active"> <a href="/admin/"><i class="icon-home"></i>Home</a></li>
             <li> <a href="/admin/add_product"><i class="fa fa-plus"></i>Add New Product</a></li>
+            <li> <a href="/admin/add_category"><i class="fa fa-star-o"></i>Add New Category</a></li>
             <li><a href="/admin/add_user"><i class="fa fa-user-plus"></i>Create User Account</a></li>
             <li> <a href="/admin/edit_product/1"><i class="fa fa-pencil-square-o"></i>Edit Product</a></li>
             <li><a href="#dashvariants" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Dropdown </a>
@@ -163,12 +164,13 @@
                 <!-- Item -->
                   <div class="col-xl-3 col-sm-6">
                   <div class="item d-flex align-items-center">
-                    <a href="/admin/edit_product/1"><div class="icon bg-orange"><i class="fa fa-pencil-square-o"></i></div>
-                    <div class="title"><span>Edit<br>Product</span></a>
+                    <a href="/admin/add_category"><div class="icon bg-orange"><i class="fa fa-star-o"></i></div>
+                    <div class="title"><span>Add<br>Category</span></a>
                       <div class="progress">
 {#                        <div role="progressbar" style="width: 50%; height: 4px;" aria-valuenow="{#val.value}" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-orange"></div>#}
                       </div>
                     </div>
+                      <div class="number"><strong>{{ count_categories | safe }}</strong></div>
                   </div>
                 </div>
                   <!-- Item -->
