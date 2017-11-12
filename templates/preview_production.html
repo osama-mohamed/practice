@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link href="../../static/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+    <div class="container">
+        {% block body %}
+            <h1>Product : &emsp; {{product.product_name}}</h1>
+            <h2>Price : &emsp; {{product.price}} &emsp; <small>From Category : {{product.category}}</small></h2>
+            <h3>Price After discount : {{ product.price - product.discount }}</h3>
+            <img src="../../static\uploads\products\{{ product.product_name }}\{{ product.files }}" style="max-width: 60%; max-height: 60%;">
+            <br>
+            <br>
+            <p class="lead">
+                Description : &emsp; {{product.description | safe}}
+            </p>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <script src="../../static/js/jquery.min.js"></script>
+            <script src="../../static/js/bootstrap.min.js"></script>
+        {% endblock %}
+    </div>
+    </body>
+</html>

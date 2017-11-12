@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link href="../../static/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+    <div class="container">
+        {% block body %}
+        {% from "includes/_formhelpers.html" import render_field %}
+        <h2>Edit Product</h2>
+        <br>
+        <form method="post" action="" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Select Category</label>
+                <select name="categories" class="btn btn-outline-secondary dropdown-toggle">
+                    {% include 'includes/select.html' %}
+                </select>
+            </div>
+            <div class="form-group">
+                {{ render_field(form.product_name, class="form-control", style="max-width: 75%;", autocomplete="off") }}
+            </div>
+            <div class="form-group">
+                {{ render_field(form.description, class="form-control", style="max-width: 75%;", autocomplete="off") }}
+            </div>
+            <div class="form-group">
+                {{ render_field(form.price, class="form-control", style="max-width: 20%;", autocomplete="off") }}
+            </div>
+            <div class="form-group">
+                {{ render_field(form.discount, class="form-control", style="max-width: 20%;", autocomplete="off") }}
+            </div>
+            <div class="form-group">
+                <label>Add picture to Your Product</label>
+                <input type="file" name="file" class="form-control" style="max-width: 21%;">
+            </div>
+                <input type="submit" class="btn btn-primary" value="Edit Product">
+        </form>
+        </div>
+        <script src="../../static/js/jquery.min.js"></script>
+        <script src="../../static/js/bootstrap.min.js"></script>
+    {% endblock %}
+    </body>
+</html>
