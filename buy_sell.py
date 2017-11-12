@@ -130,6 +130,11 @@ class AddProductForm(Form):
 @app.route('/admin/add_product', methods=['post', 'get'])
 def add_product():
     form = AddProductForm(request.form)
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT category FROM categories")
+    categories = cur.fetchall()
+    cur.close()
+    
     if request.method == 'POST' and form.validate():
         product_name = form.product_name.data
 
@@ -165,11 +170,16 @@ def add_product():
                 cur.close()
                 flash('Your Product is published successfully!', 'success')
                 return redirect(url_for('admin_dashboard'))
-    return render_template('admin_add_production.html', form=form)
+    return render_template('admin_add_production.html', form=form, categories=categories)
 
 
 @app.route('/admin/edit_product/<id>', methods=['post', 'get'])
 def edit_product(id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT category FROM categories")
+    categories = cur.fetchall()
+    cur.close()
+    
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM products WHERE id={}".format(id))
     product = cur.fetchone()
@@ -216,7 +226,7 @@ def edit_product(id):
             cur.close()
             flash('Your Product Has been Edited successfully!', 'success')
             return redirect(url_for('admin_dashboard'))
-    return render_template('admin_edit_production.html', form=form)
+    return render_template('admin_edit_production.html', form=form, categories=categories)
 
 
 @app.route('/admin/delete_product/<id>', methods=['post', 'get'])
@@ -338,6 +348,8 @@ def edit_category(current_category):
                 return redirect(url_for('add_category'))
             cur = mysql.connection.cursor()
             cur.execute("UPDATE categories SET category=%s WHERE category=%s;", ([category], [current_category]))
+            cur.execute("UPDATE products SET category=%s WHERE category=%s", \
+                        ([category], [current_category]))
             mysql.connection.commit()
             cur.close()
             flash('You Have Edited Category successfully!', 'success')
@@ -348,10 +360,18 @@ def edit_category(current_category):
 @app.route('/admin/delete_category/<category>', methods=['post', 'get'])
 def delete_category(category):
         cur = mysql.connection.cursor()
+        prod = cur.execute("SELECT product_name FROM products WHERE category=%s", [category])
+        if prod > 0:
+            flash('You Have products in This category', 'success')
+            # pass
+        products = cur.fetchall()
+        for product in products:
+                rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product['product_name']))
+        cur.execute("DELETE FROM products WHERE category=%s", [category])
         cur.execute("DELETE FROM categories Where category=%s;", [category])
         mysql.connection.commit()
-        cur.close()
-        flash('You Have Deleted Category successfully!', 'success')
+        cur.close()        
+        flash("You Have Deleted Category With it's products successfully!", 'success')
         return redirect(url_for('admin_dashboard'))
 
 
