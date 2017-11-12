@@ -136,8 +136,9 @@
                 <li><a href="#">Page</a></li>
               </ul>
             </li>
-            <li><a href="/admin/products_table"> <i class="icon-grid"></i>Products Tables </a></li>
-            <li><a href="/admin/users_table"> <i class="icon-user"></i>users Tables </a></li>
+            <li><a href="/admin/products_table"> <i class="icon-grid"></i>Products Table</a></li>
+            <li><a href="/admin/categories_table"> <i class="fa fa-bars"></i>Categories Table</a></li>
+            <li><a href="/admin/users_table"> <i class="icon-user"></i>users Table</a></li>
             <li> <a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
             <li> <a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
             <li> <a href="/admin/login"> <i class="icon-interface-windows"></i>Login Page</a></li>
@@ -167,8 +168,7 @@
                 {% from "includes/_formhelpers.html" import render_field %}
                 <form method="post" action="" style="color: #FFF;">
                     <div class="form-group">
-                        <label>ADD Category</label> &emsp;
-                        <input type="text" name="add_category" class="form-control" style="max-width: 20%;">
+                        {{ render_field(form.category, class="form-control", style="max-width: 20%;", autocomplete="off") }}
                     </div>
                     <input type="submit" class="btn btn-primary" value="Add Category">
                 </form>

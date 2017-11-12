@@ -302,30 +302,75 @@ def delete_user(id):
     return redirect(url_for('admin_dashboard'))
 
 
+class CategoryForm(Form):
+    category = StringField('Category', [validators.InputRequired(), validators.length(min=1, max=100)])
+    
+    
 @app.route('/admin/add_category', methods=['post', 'get'])
 def add_category():
-    if request.method == 'POST' and request.form['add_category'] != '' and not request.form['add_category'] == ' ':
-        category = request.form['add_category']
+    form = CategoryForm(request.form)
+    if request.method == 'POST' and form.validate():
+        category = form.category.data.lower()
+        if category == ' ':
+            flash('You Should Type A Word!', 'warning')
+            return redirect(url_for('add_category'))
         cur = mysql.connection.cursor()
         cur.execute("INSERT INTO categories (category) VALUES(%s);", ([category]))
         mysql.connection.commit()
         cur.close()
         flash('You Have Added New Category successfully!', 'success')
         return redirect(url_for('admin_dashboard'))
-    elif request.method == 'POST':
-        flash('You Should Type A Word!', 'warning')
-        return redirect(url_for('add_category'))
-    return render_template('admin_add_category.html')
+    return render_template('admin_add_category.html', form=form)
+
+
+@app.route('/admin/edit_category/<current_category>', methods=['post', 'get'])
+def edit_category(current_category):
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT category FROM categories Where category=%s;", [current_category])
+        cat = cur.fetchone()
+        cur.close()
+        form = CategoryForm(request.form)
+        form.category.data = cat['category']
+        if request.method == 'POST' and form.validate():
+            category = request.form['category'].lower()
+            if category == ' ':
+                flash('You Should Type A Word!', 'warning')
+                return redirect(url_for('add_category'))
+            cur = mysql.connection.cursor()
+            cur.execute("UPDATE categories SET category=%s WHERE category=%s;", ([category], [current_category]))
+            mysql.connection.commit()
+            cur.close()
+            flash('You Have Edited Category successfully!', 'success')
+            return redirect(url_for('admin_dashboard'))
+        return render_template('admin_edit_category.html', form=form)
+
+
+@app.route('/admin/delete_category/<category>', methods=['post', 'get'])
+def delete_category(category):
+        cur = mysql.connection.cursor()
+        cur.execute("DELETE FROM categories Where category=%s;", [category])
+        mysql.connection.commit()
+        cur.close()
+        flash('You Have Deleted Category successfully!', 'success')
+        return redirect(url_for('admin_dashboard'))
+
 
 @app.route('/admin/products_table')
 def products_table():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM products")
     products = cur.fetchall()
-    cur.execute("SELECT * FROM users")
-    users = cur.fetchall()
     cur.close()
-    return render_template('products_table.html', products=products, users=users)
+    return render_template('products_table.html', products=products)
+
+
+@app.route('/admin/categories_table')
+def categories_table():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT category FROM categories")
+    categories = cur.fetchall()
+    cur.close()
+    return render_template('categories_table.html', categories=categories)
 
 
 @app.route('/admin/users_table')
