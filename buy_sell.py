@@ -1,6 +1,7 @@
 from flask import Flask, render_template, flash, redirect, url_for, session, request, send_from_directory
 from flask_mysqldb import MySQL
-from wtforms import Form, StringField, TextAreaField, validators, FileField, IntegerField
+from wtforms import Form, StringField, TextAreaField, validators, FileField, IntegerField, PasswordField
+from passlib.hash import sha256_crypt
 from werkzeug.utils import secure_filename
 from shutil import rmtree
 import MySQLdb
@@ -88,7 +89,15 @@ def admin_register():
 
 @app.route('/admin/')
 def admin_dashboard():
-    return render_template('index.html')
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT COUNT(id) FROM products")
+    products = cur.fetchone()
+    count_products = products['COUNT(id)']
+    cur.execute("SELECT COUNT(id) FROM users")
+    users = cur.fetchone()
+    count_users = users['COUNT(id)']
+    cur.close()
+    return render_template('index.html', count_products=count_products, count_users=count_users)
 
 
 @app.route('/admin/login')
@@ -220,6 +229,75 @@ def delete_product(id):
     return redirect(url_for('admin_dashboard'))
 
 
+class AdduserForm(Form):
+    first_name = StringField('First Name', [validators.InputRequired()])
+    last_name = StringField('Last Name', [validators.InputRequired()])
+    username = StringField('User Name', [validators.InputRequired()])
+    password = PasswordField('Password',
+                             [validators.DataRequired(), validators.Length(min=6, max=100),
+                              validators.EqualTo('confirm', message='Passwords Do Not Match')])
+    confirm = PasswordField('Confirm Password', [validators.DataRequired()])
+
+
+@app.route('/admin/add_user', methods=['post', 'get'])
+def add_user():
+    form = AdduserForm(request.form)
+    if request.method == 'POST' and form.validate():
+        username = form.username.data
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT username FROM users WHERE username = BINARY %s", [username])
+        res = cur.fetchone()
+        if username in str(res):
+            msg = "User Name Already Exists"
+            return render_template('admin_add_user.html', form=form, msg=msg)
+        else:
+            permission = request.form['permissions']
+            first_name = form.first_name.data.lower()
+            last_name = form.last_name.data.lower()
+            email = request.form['email'].lower()
+            gender = request.form['gender']
+            country = request.form['country']
+            username = form.username.data
+            password = sha256_crypt.encrypt(str(form.password.data))
+            file = request.files['file']
+            if file.filename == '':
+                flash('You Have to Select a File!', 'warning')
+            try:
+                rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(username))
+                os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(username))
+            except:
+                os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(username))
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                dir = r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(username)
+                file.save(os.path.join(dir, filename))
+                cur = mysql.connection.cursor()
+                cur.execute("INSERT INTO users(permission, first_name, last_name,\
+                             email, sex, country, username, password, files)\
+                             VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", \
+                            (permission, first_name, last_name, email, gender,\
+                             country, username, password, filename))
+                mysql.connection.commit()
+                cur.close()
+                flash('You Have Created a User Account successfully!', 'success')
+                return redirect(url_for('admin_dashboard'))
+    return render_template('admin_add_user.html', form=form)
+
+
+@app.route('/admin/delete_user/<id>', methods=['post', 'get'])
+def delete_user(id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT username FROM users WHERE id = %s", [id])
+    name = cur.fetchone()
+    n = name['username']
+    rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(n))
+    cur.execute("DELETE FROM users WHERE id = %s", [id])
+    mysql.connection.commit()
+    cur.close()
+    flash('You Have Deleted User Account successfully!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
 @app.route('/admin/products_table')
 def products_table():
     cur = mysql.connection.cursor()
@@ -229,7 +307,6 @@ def products_table():
     users = cur.fetchall()
     cur.close()
     return render_template('tables.html', products=products, users=users)
-
 
 
 @app.route('/admin/users_table')

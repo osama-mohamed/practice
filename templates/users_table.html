@@ -118,6 +118,7 @@
           <ul class="list-unstyled">
             <li> <a href="/admin/"><i class="icon-home"></i>Home</a></li>
             <li> <a href="/admin/add_product"><i class="fa fa-plus"></i>Add New Product</a></li>
+            <li><a href="/admin/add_user"><i class="fa fa-user-plus"></i>Create User Account</a></li>
             <li> <a href="/admin/edit_product/1"><i class="fa fa-pencil-square-o"></i>Edit Product</a></li>
             <li><a href="#dashvariants" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Dropdown </a>
               <ul id="dashvariants" class="collapse list-unstyled">
@@ -168,14 +169,13 @@
                       <table class="table table-striped">
                         <thead>
                           <tr>
-                            <th>id</th>
+                            <th>ID</th>
                             <th>permission</th>
-                            <th>first Name</th>
+                            <th>First Name</th>
                             <th>Last Name</th>
-                            <th>email</th>
-                            <th>sex</th>
-                            <th>username</th>
-                            <th>Edit</th>
+                            <th>E-mail</th>
+                            <th>Gender</th>
+                            <th>Username</th>
                             <th>Delete</th>
                           </tr>
                         </thead>
@@ -189,8 +189,7 @@
                             <td>{{ user.email }}</td>
                             <td>{{ user.sex }}</td>
                             <td>{{ user.username }}</td>
-                            <td><a href="" class="btn btn-sm btn-outline-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&emsp; Edit</a></td>
-                            <td><a href="" class="btn btn-sm btn-outline-danger"><i class="fa fa-times" aria-hidden="true"></i>&emsp; Delete</a></td>
+                            <td><a href="/admin/delete_user/{{ user.id }}" class="btn btn-sm btn-outline-danger"><i class="fa fa-times" aria-hidden="true"></i>&emsp; Delete</a></td>
                           </tr>
                         {% endfor %}
                         </tbody>
