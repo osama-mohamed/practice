@@ -5,6 +5,7 @@ from wtforms import Form, StringField, TextAreaField, validators, FileField, Int
 from passlib.hash import sha256_crypt
 from werkzeug.utils import secure_filename
 from shutil import rmtree
+from functools import wraps
 import MySQLdb
 import os
 
@@ -84,6 +85,17 @@ def home():
     return render_template('home.html')
 
 
+# preview product page
+
+@app.route('/preview_production/<id>/')
+def preview_production(id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM products WHERE id={}".format(id))
+    product = cur.fetchone()
+    cur.close()
+    return render_template('preview_production.html', product=product)
+
+
 # admin registration page
 
 @app.route('/admin/register')
@@ -91,9 +103,59 @@ def admin_register():
     return render_template('register.html')
 
 
+# admin login page
+
+@app.route('/admin/login', methods=['GET', 'POST'])
+def admin_login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password_candidate = request.form['password']
+        cur = mysql.connection.cursor()
+        result = cur.execute("SELECT * FROM users WHERE username = BINARY %s AND permission='admin'", [username])
+        if result > 0:
+            data = cur.fetchone()
+            password = data['password']
+            if sha256_crypt.verify(password_candidate, password):
+                session['admin_logged_in'] = True
+                cur.close()
+                flash('Now You Are Logged In ', 'success')
+                return redirect(url_for('admin_dashboard'))
+            else:
+                error = 'Wrong Password!'
+                return render_template('admin_login.html', error=error)
+        else:
+            error = 'Username Can Not Be Found!'
+            return render_template('admin_login.html', error=error)
+    return render_template('admin_login.html')
+
+
+# check if admin is still logged in 
+
+def is_admin_logged_in(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'admin_logged_in' in session :
+            return f(*args, **kwargs)
+        else:
+            flash('Unauthorized, Please Login', 'danger')
+            return redirect(url_for('admin_login'))
+    return wrap
+
+
+# admin log out
+
+@app.route('/admin/logout')
+@is_admin_logged_in
+def admin_logout():
+    session.clear()
+    flash('You Are Now Logged Out', 'success')
+    return redirect(url_for('admin_login'))
+
+
 # admin dashboard page
 
-@app.route('/admin/')
+@app.route('/admin/', methods=['post', 'get'])
+@is_admin_logged_in
 def admin_dashboard():
     cur = mysql.connection.cursor()
     cur.execute("SELECT COUNT(id) FROM products")
@@ -109,24 +171,6 @@ def admin_dashboard():
     return render_template('index.html', count_products=count_products, count_users=count_users, count_categories=count_categories)
 
 
-# admin login page
-
-@app.route('/admin/login')
-def admin_login():
-    return render_template('login.html')
-
-
-# preview product page
-
-@app.route('/preview_production/<id>/')
-def preview_production(id):
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM products WHERE id={}".format(id))
-    product = cur.fetchone()
-    cur.close()
-    return render_template('preview_production.html', product=product)
-
-
 # product validators form
 
 class AddProductForm(Form):
@@ -140,6 +184,7 @@ class AddProductForm(Form):
 # admin add new product page
 
 @app.route('/admin/add_product', methods=['post', 'get'])
+@is_admin_logged_in
 def add_product():
     form = AddProductForm(request.form)
     cur = mysql.connection.cursor()
@@ -212,6 +257,7 @@ def add_product():
 # admin edit product page
 
 @app.route('/admin/edit_product/<id>', methods=['post', 'get'])
+@is_admin_logged_in
 def edit_product(id):
     cur = mysql.connection.cursor()
     cur.execute("SELECT category FROM categories")
@@ -282,6 +328,7 @@ def edit_product(id):
 # admin delete product
 
 @app.route('/admin/delete_product/<id>', methods=['post', 'get'])
+@is_admin_logged_in
 def delete_product(id):
     cur = mysql.connection.cursor()
     cur.execute("SELECT product_name FROM products WHERE id = %s", [id])
@@ -310,6 +357,7 @@ class AdduserForm(Form):
 # admin create user account page
 
 @app.route('/admin/add_user', methods=['post', 'get'])
+@is_admin_logged_in
 def add_user():
     form = AdduserForm(request.form)
     if request.method == 'POST' and form.validate():
@@ -357,6 +405,7 @@ def add_user():
 # admin delete user 
 
 @app.route('/admin/delete_user/<id>', methods=['post', 'get'])
+@is_admin_logged_in
 def delete_user(id):
     cur = mysql.connection.cursor()
     cur.execute("SELECT username FROM users WHERE id = %s", [id])
@@ -379,6 +428,7 @@ class CategoryForm(Form):
 # admin add new category page
 
 @app.route('/admin/add_category', methods=['post', 'get'])
+@is_admin_logged_in
 def add_category():
     form = CategoryForm(request.form)
     if request.method == 'POST' and form.validate():
@@ -398,6 +448,7 @@ def add_category():
 # admin edit category page
 
 @app.route('/admin/edit_category/<current_category>', methods=['post', 'get'])
+@is_admin_logged_in
 def edit_category(current_category):
         cur = mysql.connection.cursor()
         cur.execute("SELECT category FROM categories Where category=%s;", [current_category])
@@ -424,6 +475,7 @@ def edit_category(current_category):
 # admin delete category 
 
 @app.route('/admin/delete_category/<category>', methods=['post', 'get'])
+@is_admin_logged_in
 def delete_category(category):
         cur = mysql.connection.cursor()
         prod = cur.execute("SELECT product_name FROM products WHERE category=%s", [category])
@@ -444,6 +496,7 @@ def delete_category(category):
 # admin preview all products table page
 
 @app.route('/admin/products_table')
+@is_admin_logged_in
 def products_table():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM products")
@@ -455,6 +508,7 @@ def products_table():
 # admin preview all categories table page
 
 @app.route('/admin/categories_table')
+@is_admin_logged_in
 def categories_table():
     cur = mysql.connection.cursor()
     cur.execute("SELECT category FROM categories")
@@ -466,6 +520,7 @@ def categories_table():
 # admin preview all users table page
 
 @app.route('/admin/users_table')
+@is_admin_logged_in
 def users_table():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM users")
@@ -476,6 +531,6 @@ def users_table():
 
 # run whole application function
 
-if __name__ == '__main__' :
+if __name__ == '__main__':
     app.secret_key = 'osama_blog'
     app.run(debug=True)
