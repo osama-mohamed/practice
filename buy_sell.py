@@ -1,3 +1,4 @@
+# some imports
 from flask import Flask, render_template, flash, redirect, url_for, session, request, send_from_directory
 from flask_mysqldb import MySQL
 from wtforms import Form, StringField, TextAreaField, validators, FileField, IntegerField, PasswordField
@@ -76,17 +77,21 @@ def favicon():
                                'favicon.png', mimetype='image/vnd.microsoft.icon')
 
 
+# home page
+
 @app.route('/')
 def home():
     return render_template('home.html')
 
+
+# admin registration page
 
 @app.route('/admin/register')
 def admin_register():
     return render_template('register.html')
 
 
-# home page
+# admin dashboard page
 
 @app.route('/admin/')
 def admin_dashboard():
@@ -104,10 +109,14 @@ def admin_dashboard():
     return render_template('index.html', count_products=count_products, count_users=count_users, count_categories=count_categories)
 
 
+# admin login page
+
 @app.route('/admin/login')
 def admin_login():
     return render_template('login.html')
 
+
+# preview product page
 
 @app.route('/preview_production/<id>/')
 def preview_production(id):
@@ -118,6 +127,7 @@ def preview_production(id):
     return render_template('preview_production.html', product=product)
 
 
+# product validators form
 
 class AddProductForm(Form):
     product_name = StringField('Name Of Product', [validators.InputRequired(), validators.length(min=1, max=180)])
@@ -126,6 +136,8 @@ class AddProductForm(Form):
     discount = StringField('Discount Percentage %')
     # files = FileField('Add picture to Your Product', [validators.InputRequired()])
 
+
+# admin add new product page
 
 @app.route('/admin/add_product', methods=['post', 'get'])
 def add_product():
@@ -197,6 +209,8 @@ def add_product():
     # return render_template('admin_add_production.html', form=form, categories=categories)
 
 
+# admin edit product page
+
 @app.route('/admin/edit_product/<id>', methods=['post', 'get'])
 def edit_product(id):
     cur = mysql.connection.cursor()
@@ -265,6 +279,8 @@ def edit_product(id):
     return render_template('admin_edit_production.html', form=form, categories=categories)
 
 
+# admin delete product
+
 @app.route('/admin/delete_product/<id>', methods=['post', 'get'])
 def delete_product(id):
     cur = mysql.connection.cursor()
@@ -279,6 +295,8 @@ def delete_product(id):
     return redirect(url_for('admin_dashboard'))
 
 
+# admin create user account validator form
+
 class AdduserForm(Form):
     first_name = StringField('First Name', [validators.InputRequired()])
     last_name = StringField('Last Name', [validators.InputRequired()])
@@ -288,6 +306,8 @@ class AdduserForm(Form):
                               validators.EqualTo('confirm', message='Passwords Do Not Match')])
     confirm = PasswordField('Confirm Password', [validators.DataRequired()])
 
+
+# admin create user account page
 
 @app.route('/admin/add_user', methods=['post', 'get'])
 def add_user():
@@ -334,6 +354,8 @@ def add_user():
     return render_template('admin_add_user.html', form=form)
 
 
+# admin delete user 
+
 @app.route('/admin/delete_user/<id>', methods=['post', 'get'])
 def delete_user(id):
     cur = mysql.connection.cursor()
@@ -348,10 +370,14 @@ def delete_user(id):
     return redirect(url_for('admin_dashboard'))
 
 
+# admin add new category validator form
+
 class CategoryForm(Form):
     category = StringField('Category', [validators.InputRequired(), validators.length(min=1, max=100)])
     
-    
+
+# admin add new category page
+
 @app.route('/admin/add_category', methods=['post', 'get'])
 def add_category():
     form = CategoryForm(request.form)
@@ -368,6 +394,8 @@ def add_category():
         return redirect(url_for('admin_dashboard'))
     return render_template('admin_add_category.html', form=form)
 
+
+# admin edit category page
 
 @app.route('/admin/edit_category/<current_category>', methods=['post', 'get'])
 def edit_category(current_category):
@@ -393,6 +421,8 @@ def edit_category(current_category):
         return render_template('admin_edit_category.html', form=form)
 
 
+# admin delete category 
+
 @app.route('/admin/delete_category/<category>', methods=['post', 'get'])
 def delete_category(category):
         cur = mysql.connection.cursor()
@@ -411,6 +441,8 @@ def delete_category(category):
         return redirect(url_for('admin_dashboard'))
 
 
+# admin preview all products table page
+
 @app.route('/admin/products_table')
 def products_table():
     cur = mysql.connection.cursor()
@@ -420,6 +452,8 @@ def products_table():
     return render_template('products_table.html', products=products)
 
 
+# admin preview all categories table page
+
 @app.route('/admin/categories_table')
 def categories_table():
     cur = mysql.connection.cursor()
@@ -428,6 +462,8 @@ def categories_table():
     cur.close()
     return render_template('categories_table.html', categories=categories)
 
+
+# admin preview all users table page
 
 @app.route('/admin/users_table')
 def users_table():
