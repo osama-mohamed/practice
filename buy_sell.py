@@ -92,15 +92,31 @@ def preview_production(id):
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM products WHERE id={}".format(id))
     product = cur.fetchone()
+    cur.execute("SELECT * FROM products")
+    products = cur.fetchall()
+    cur.execute("SELECT * FROM categories")
+    categories = cur.fetchall()
     cur.close()
-    return render_template('preview_production.html', product=product)
+    return render_template('preview_production.html', product=product, products=products, categories=categories)
 
 
-# admin registration page
 
-@app.route('/admin/register')
-def admin_register():
-    return render_template('register.html')
+@app.route('/categories/<category>', methods=['post', 'get'])
+def categories(category):
+    cur = mysql.connection.cursor()
+    result = cur.execute("SELECT * FROM products WHERE category=%s", [category])
+    categories = cur.fetchall()
+    cur.close()
+    if result > 0:
+        return render_template('categories.html', categories=categories)
+    else:
+        msg = 'No Productions Found!'
+        return render_template('categories.html', msg=msg)
+
+
+
+
+
 
 
 # admin login page

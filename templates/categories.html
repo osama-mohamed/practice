@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link href="../../static/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+    <div class="container">
+        {% block body %}
+            <br>
+            <h1 class="text-center">Result : &emsp; {{ categories | length }} &emsp; Product(s)</h1>
+            {% include 'includes/_messages.html' %}
+            {% for category in categories %}
+            <h2>Product : &emsp; {{category.product_name}}</h2>
+            <h3>Price : &emsp; {{category.price}} &emsp; <small>From Category : {{category.category}}</small></h3>
+            <h4>Price After discount : {{ category.price - category.discount }}</h4>
+            <br>
+            <img class="img-thumbnail" src="../../static\uploads\products\{{ category.product_name }}\{{ category.files }}" style="max-width: 60%; max-height: 60%; display: block; margin: 10px auto;">
+            <br>
+            <br>
+            <p class="lead">
+                Description : &emsp; {{category.description | safe}}
+            </p>
+            <hr>
+            <hr>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            {% endfor %}
+            <script src="../../static/js/jquery.min.js"></script>
+            <script src="../../static/js/bootstrap.min.js"></script>
+        {% endblock %}
+    </div>
+    </body>
+</html>
