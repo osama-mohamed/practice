@@ -25,7 +25,7 @@ cursor.execute("CREATE TABLE IF NOT EXISTS users(\
                 first_name VARCHAR(100) NOT NULL,\
                 last_name VARCHAR(100) NOT NULL,\
                 email VARCHAR(100) NOT NULL,\
-                sex VARCHAR(10) NOT NULL,\
+                gender VARCHAR(10) NOT NULL,\
                 country VARCHAR(50) NOT NULL,\
                 username VARCHAR(100) NOT NULL,\
                 password VARCHAR(100) NOT NULL,\
@@ -287,7 +287,7 @@ def add_user():
                 file.save(os.path.join(dir, filename))
                 cur = mysql.connection.cursor()
                 cur.execute("INSERT INTO users(permission, first_name, last_name,\
-                             email, sex, country, username, password, files)\
+                             email, gender, country, username, password, files)\
                              VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", \
                             (permission, first_name, last_name, email, gender,\
                              country, username, password, filename))
@@ -403,14 +403,7 @@ def users_table():
 
 
 
-
-#cur = mysql.connection.cursor()
-#cur.execute("UPDATE users SET files='' WHERE username=%s", [session['username']])
-#mysql.connection.commit()
-#cur.close()
-
 # run whole application function
-
 
 if __name__ == '__main__' :
     app.secret_key = 'osama_blog'
