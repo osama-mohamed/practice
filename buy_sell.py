@@ -120,13 +120,13 @@ def preview_production(id):
 
 
 class AddProductForm(Form):
-    product_name = StringField('Name Of Product', [validators.InputRequired()])
+    product_name = StringField('Name Of Product', [validators.InputRequired(), validators.length(min=1, max=180)])
     description = TextAreaField('Description', [validators.InputRequired()])
     price = IntegerField('Price', [validators.InputRequired()])
-    discount = StringField('Discount')
+    discount = StringField('Discount Percentage %')
     # files = FileField('Add picture to Your Product', [validators.InputRequired()])
-    
-    
+
+
 @app.route('/admin/add_product', methods=['post', 'get'])
 def add_product():
     form = AddProductForm(request.form)
@@ -134,7 +134,7 @@ def add_product():
     cur.execute("SELECT category FROM categories")
     categories = cur.fetchall()
     cur.close()
-    
+
     if request.method == 'POST' and form.validate():
         product_name = form.product_name.data
 
@@ -145,32 +145,56 @@ def add_product():
             msg = "Product Name Already Exists"
             return render_template('admin_add_production.html', form=form, msg=msg)
         else:
-            
+
             file = request.files['file']
             if file.filename == '':
                 flash('You Have to Select a File!', 'warning')
-            try:
-                rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name))
-                os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name))
-            except:
-                os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name))
             if file and allowed_file(file.filename):
+                try:
+                    rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name))
+                    os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name))
+                except:
+                    os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name))
                 filename = secure_filename(file.filename)
                 dir = r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name)
                 file.save(os.path.join(dir, filename))
                 category = request.form['categories']
-                description = form.description.data
+                description = form.description.data.lower()
                 price = form.price.data
                 discount = form.discount.data
-                cur = mysql.connection.cursor()
-                cur.execute("INSERT INTO products(category, product_name, description, price, discount, files)\
-                             VALUES(%s, %s, %s, %s, %s, %s)", \
-                             (category, product_name, description, price, discount, filename))
-                mysql.connection.commit()
-                cur.close()
-                flash('Your Product is published successfully!', 'success')
-                return redirect(url_for('admin_dashboard'))
+                
+                if discount != '' and discount != ' ':
+                    p = (int(price) * int(discount)) / 100
+                    cur = mysql.connection.cursor()
+                    cur.execute("INSERT INTO products(category, product_name, description, price, discount, files)\
+                                                 VALUES(%s, %s, %s, %s, %s, %s)", \
+                                (category, product_name, description, price, p, filename))
+                    mysql.connection.commit()
+                    cur.close()
+                    flash('Your Product is published successfully!', 'success')
+                    return redirect(url_for('admin_dashboard'))
+
+                if discount == "" or discount == " ":
+                    p = 0
+                    cur = mysql.connection.cursor()
+                    cur.execute("INSERT INTO products(category, product_name, description, price, discount, files)\
+                                                 VALUES(%s, %s, %s, %s, %s, %s)", \
+                                (category, product_name, description, price, p, filename))
+                    mysql.connection.commit()
+                    cur.close()
+                    flash('Your Product is published successfully!', 'success')
+                    return redirect(url_for('admin_dashboard'))
     return render_template('admin_add_production.html', form=form, categories=categories)
+                                
+                # cur = mysql.connection.cursor()
+                # cur.execute("INSERT INTO products(category, product_name, description, price, discount, files)\
+                #              VALUES(%s, %s, %s, %s, %s, %s)", \
+                #             (category, product_name, description, price, p, filename))
+                # mysql.connection.commit()
+                # cur.close()
+                # flash('Your Product is published successfully!', 'success')
+                # return redirect(url_for('admin_dashboard'))
+    # return render_template('admin_add_production.html', form=form, categories=categories)
 
 
 @app.route('/admin/edit_product/<id>', methods=['post', 'get'])
@@ -188,7 +212,13 @@ def edit_product(id):
     form.product_name.data = product['product_name']
     form.description.data = product['description']
     form.price.data = product['price']
-    form.discount.data = product['discount']
+    # form.discount.data = product['discount']
+    
+    
+    d = (int(product['discount']) * 100)/int(form.price.data)
+    form.discount.data = int(d)
+    
+    
     if request.method == 'POST' and form.validate():
         product_name = request.form['product_name']
         file = request.files['file']
@@ -203,10 +233,13 @@ def edit_product(id):
             description = request.form['description']
             price = request.form['price']
             discount = request.form['discount']
+
+            p = (int(price) * int(discount)) / 100
+            
             cur = mysql.connection.cursor()
             cur.execute("UPDATE products SET category=%s, product_name=%s, description=%s, price=%s,\
                          discount=%s, files=%s WHERE id=%s", \
-                        (category, product_name, description, price, discount, filename, id))
+                        (category, product_name, description, price, p, filename, id))
             mysql.connection.commit()
             cur.close()
             flash('Your Product Has been Edited successfully!', 'success')
@@ -218,10 +251,13 @@ def edit_product(id):
             description = request.form['description']
             price = request.form['price']
             discount = request.form['discount']
+
+            p = (int(price) * int(discount)) / 100
+            
             cur = mysql.connection.cursor()
             cur.execute("UPDATE products SET category=%s, product_name=%s, description=%s, price=%s,\
                                      discount=%s WHERE id=%s", \
-                        (category, product_name, description, price, discount, id))
+                        (category, product_name, description, price, p, id))
             mysql.connection.commit()
             cur.close()
             flash('Your Product Has been Edited successfully!', 'success')
@@ -400,7 +436,6 @@ def users_table():
     users = cur.fetchall()
     cur.close()
     return render_template('users_table.html', users=users)
-
 
 
 # run whole application function
