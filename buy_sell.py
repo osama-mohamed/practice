@@ -296,7 +296,7 @@ def admin_dashboard():
     categories = cur.fetchone()
     count_categories = categories['COUNT(category)']
     cur.close()
-    return render_template('index.html', count_products=count_products, count_users=count_users, count_categories=count_categories)
+    return render_template('admin_dashboard.html', count_products=count_products, count_users=count_users, count_categories=count_categories)
 
 
 # product validators form
@@ -630,7 +630,7 @@ def products_table():
     cur.execute("SELECT * FROM products")
     products = cur.fetchall()
     cur.close()
-    return render_template('products_table.html', products=products)
+    return render_template('admin_products_table.html', products=products)
 
 
 # admin preview all categories table page
@@ -642,7 +642,7 @@ def categories_table():
     cur.execute("SELECT category FROM categories")
     categories = cur.fetchall()
     cur.close()
-    return render_template('categories_table.html', categories=categories)
+    return render_template('admin_categories_table.html', categories=categories)
 
 
 # admin preview all users table page
@@ -654,7 +654,7 @@ def users_table():
     cur.execute("SELECT * FROM users")
     users = cur.fetchall()
     cur.close()
-    return render_template('users_table.html', users=users)
+    return render_template('admin_users_table.html', users=users)
 
 
 # run whole application function
