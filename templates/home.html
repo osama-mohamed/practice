@@ -146,42 +146,53 @@
 						</ol>
 
 						<div class="carousel-inner">
+
 							<div class="item active">
+                                {% for slider in slider_products_first %}
 								<div class="col-sm-6">
-									<h1><span>E</span>-SHOPPER</h1>
-									<h2>Free E-Commerce Template</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+									<h1><span>{{ slider.product_name }}</span></h1>
+									<h2>&#36; {{ slider.price }}</h2>
+                                    <h3 style="color: red;">{{ ((100 * slider.discount) / slider.price) | int}} &#37; OFF</h3>
+									<p>{{ slider.description | truncate(30) }}</p>
 									<button type="button" class="btn btn-default get">Get it now</button>
 								</div>
 								<div class="col-sm-6">
-									<img src="../static/user/images/home/girl1.jpg" class="girl img-responsive" alt="" />
-									<img src="../static/user/images/home/pricing.png"  class="pricing" alt="" />
+									<img src="../static/uploads/slider_products/{{ slider.product_name }}/{{ slider.files }}" class="girl img-responsive" style="max-width: 520px; height: 354px;" />
+{#									<img src="../static/user/images/home/pricing.png"  class="pricing" alt="" />#}
 								</div>
-							</div>
-							<div class="item">
-								<div class="col-sm-6">
-									<h1><span>E</span>-SHOPPER</h1>
-									<h2>100% Responsive Design</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
-								</div>
-								<div class="col-sm-6">
-									<img src="../static/user/images/home/girl2.jpg" class="girl img-responsive" alt="" />
-									<img src="../static/user/images/home/pricing.png"  class="pricing" alt="" />
-								</div>
+                                {% endfor %}
 							</div>
 
-							<div class="item">
+                            <div class="item">
+                                {% for slider in slider_products_second %}
 								<div class="col-sm-6">
-									<h1><span>E</span>-SHOPPER</h1>
-									<h2>Free Ecommerce Template</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+									<h1><span>{{ slider.product_name }}</span></h1>
+									<h2>&#36; {{ slider.price }}</h2>
+                                    <h3 style="color: red;">{{ ((100 * slider.discount) / slider.price) | int}} &#37; OFF</h3>
+									<p>{{ slider.description | truncate(30) }}</p>
 									<button type="button" class="btn btn-default get">Get it now</button>
 								</div>
 								<div class="col-sm-6">
-									<img src="../static/user/images/home/girl3.jpg" class="girl img-responsive" alt="" />
-									<img src="../static/user/images/home/pricing.png" class="pricing" alt="" />
+									<img src="../static/uploads/slider_products/{{ slider.product_name }}/{{ slider.files }}" class="girl img-responsive" style="max-width: 520px; height: 354px;" />
+{#									<img src="../static/user/images/home/pricing.png"  class="pricing" alt="" />#}
 								</div>
+                                {% endfor %}
+							</div>
+
+                            <div class="item">
+                                {% for slider in slider_products_third %}
+								<div class="col-sm-6">
+									<h1><span>{{ slider.product_name }}</span></h1>
+									<h2>&#36; {{ slider.price }}</h2>
+                                    <h3 style="color: red;">{{ ((100 * slider.discount) / slider.price) | int}} &#37; OFF</h3>
+									<p>{{ slider.description | truncate(30) }}</p>
+									<button type="button" class="btn btn-default get">Get it now</button>
+								</div>
+								<div class="col-sm-6">
+									<img src="../static/uploads/slider_products/{{ slider.product_name }}/{{ slider.files }}" class="girl img-responsive" style="max-width: 520px; height: 354px;" />
+{#									<img src="../static/user/images/home/pricing.png"  class="pricing" alt="" />#}
+								</div>
+                                {% endfor %}
 							</div>
 
 						</div>
@@ -241,20 +252,20 @@
 							<div class="product-image-wrapper">
 								<div class="single-products">
 									<div class="productinfo text-center">
-                                        <a href="/preview_production/{{ product.id }}"><img src="../../static\uploads\products\{{ product.product_name }}\{{ product.files }}" /></a>
+                                        <a href="/preview_production/{{ product.id }}"><img src="../../static\uploads\products\{{ product.product_name }}\{{ product.files }}" style="height: 232px;"/></a>
 										<h2>&#36;{{ product.price }}</h2>
                                         <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | int}} &#37; OFF</h3>
 										<p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>
 										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 									</div>
-									<div class="product-overlay">
-										<div class="overlay-content">
-											<h2>&#36;{{ product.price }}</h2>
-                                            <h3 style="color: #fff;">{{ ((100 * product.discount) / product.price) | int}} &#37; OFF</h3>
-											<p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-										</div>
-									</div>
+{#									<div class="product-overlay">#}
+{#										<div class="overlay-content">#}
+{#											<h2>&#36;{{ product.price }}</h2>#}
+{#                                            <h3 style="color: #fff;">{{ ((100 * product.discount) / product.price) | int}} &#37; OFF</h3>#}
+{#											<p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>#}
+{#											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>#}
+{#										</div>#}
+{#									</div>#}
                                     <img src="../static/user/images/home/new.png" class="new" alt="" />
 {#									<img src="../static/user/images/home/sale.png" class="new" alt="" />#}
 								</div>

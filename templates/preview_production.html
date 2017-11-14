@@ -168,12 +168,13 @@
 				
 				<div class="col-sm-9 padding-right">
 					<div class="product-details"><!--product-details-->
-						<div class="col-sm-12">
+						<div class="col-sm-12" style="margin-bottom: 50px;">
 							<div class="view-product">
 								<img src="../../static\uploads\products\{{ product.product_name }}\{{ product.files }}" />
 								<h3>ZOOM</h3>
 							</div>
 						</div>
+
 						<div class="col-sm-12">
 							<div class="product-information"><!--/product-information-->
 								<img src="../../static/user/images/product-details/new.jpg" class="newarrival" alt="" />
@@ -252,7 +253,7 @@
 										<div class="product-image-wrapper">
 											<div class="single-products">
 												<div class="productinfo text-center">
-													<a href="/preview_production/{{ product.id }}"><img src="../../static\uploads\products\{{ product.product_name }}\{{ product.files }}" /></a>
+													<a href="/preview_production/{{ product.id }}"><img src="../../static\uploads\products\{{ product.product_name }}\{{ product.files }}" style="height: 232px;"/></a>
 													<h2>&#36;{{ product.price }}</h2>
                                                     <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | int}} &#37; OFF</h3>
 													<p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>
