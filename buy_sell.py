@@ -46,6 +46,21 @@ cursor.execute("CREATE TABLE IF NOT EXISTS products(\
 
 cursor.execute("CREATE TABLE IF NOT EXISTS categories (category VARCHAR(255) PRIMARY KEY);")
 
+
+# create default admin account if not exists
+
+result = cursor.execute('SELECT username FROM users WHERE username=%s', ['admin'])
+if result > 0:
+    pass
+else:
+    admin_password = sha256_crypt.encrypt(str('admin')) 
+    cursor.execute("INSERT INTO users(permission, first_name, last_name,\
+             email, gender, country, username, password, files)\
+             VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", \
+            ('admin', 'admin', 'admin', 'admin', 'admin', \
+             'admin', 'admin', admin_password, 'admin'))
+    database.commit()
+
 database.close()
 
 
@@ -80,9 +95,17 @@ def favicon():
 
 # home page
 
-@app.route('/')
+@app.route('/', methods=['post', 'get'])
 def home():
-    return render_template('home.html')
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM products ORDER BY id DESC LIMIT 6;")
+    latest_products = cur.fetchall()
+    cur.execute("SELECT * FROM categories")
+    categories = cur.fetchall()
+    # cur.execute("SELECT * FROM products WHERE category = %s ORDER BY id DESC  LIMIT 8;", ['hosting'])
+    # latest_productss = cur.fetchall()
+    cur.close()
+    return render_template('home.html', latest_products=latest_products, categories=categories)
 
 
 # user part ***********************************************************************************************
@@ -212,6 +235,7 @@ def preview_production(id):
     return render_template('preview_production.html', product=product, products=products, categories=categories)
 
 
+# show all products in specific category 
 
 @app.route('/categories/<category>', methods=['post', 'get'])
 def categories(category):
@@ -224,9 +248,6 @@ def categories(category):
     else:
         msg = 'No Productions Found!'
         return render_template('categories.html', msg=msg)
-
-
-
 
 
 # admin part ***********************************************************************************************
@@ -245,6 +266,7 @@ def admin_login():
             password = data['password']
             if sha256_crypt.verify(password_candidate, password):
                 session['admin_logged_in'] = True
+                session['admin_username'] = username
                 cur.close()
                 flash('Now You Are Logged In ', 'success')
                 return redirect(url_for('admin_dashboard'))
@@ -296,7 +318,7 @@ def admin_dashboard():
     categories = cur.fetchone()
     count_categories = categories['COUNT(category)']
     cur.close()
-    return render_template('admin_dashboard.html', count_products=count_products, count_users=count_users, count_categories=count_categories)
+    return render_template('admin_dashboard.html', count_products=count_products, count_users=count_users, count_categories=count_categories, admin_name=session['admin_username'])
 
 
 # product validators form
@@ -470,6 +492,24 @@ def delete_product(id):
     return redirect(url_for('admin_dashboard'))
 
 
+# admin delete all products
+
+@app.route('/admin/delete_all_products', methods=['post', 'get'])
+@is_admin_logged_in
+def delete_all_products():
+    cur = mysql.connection.cursor()
+    cur.execute("TRUNCATE products")
+    mysql.connection.commit()
+    cur.close()
+    try:
+        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products")
+        flash('You Has been Deleted All Products successfully!', 'success')
+    except:
+        flash('You Has been Already Deleted All Products successfully!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
+
 # admin create user account validator form
 
 class AdduserForm(Form):
@@ -617,8 +657,21 @@ def delete_category(category):
         cur.execute("DELETE FROM categories Where category=%s;", [category])
         mysql.connection.commit()
         cur.close()        
-        flash("You Have Deleted Category With it's products successfully!", 'success')
+        flash("You Have Deleted Category With it's products Successfully!", 'success')
         return redirect(url_for('admin_dashboard'))
+
+
+# admin delete all categories
+
+@app.route('/admin/delete_all_categories', methods=['post', 'get'])
+@is_admin_logged_in
+def delete_all_categories():
+    cur = mysql.connection.cursor()
+    cur.execute("TRUNCATE categories")
+    mysql.connection.commit()
+    cur.close()
+    flash('You Has been Deleted All Categories Successfully!', 'success')
+    return redirect(url_for('admin_dashboard'))
 
 
 # admin preview all products table page

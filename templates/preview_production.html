@@ -252,9 +252,10 @@
 										<div class="product-image-wrapper">
 											<div class="single-products">
 												<div class="productinfo text-center">
-													<img src="../../static\uploads\products\{{ product.product_name }}\{{ product.files }}" />
+													<a href="/preview_production/{{ product.id }}"><img src="../../static\uploads\products\{{ product.product_name }}\{{ product.files }}" /></a>
 													<h2>&#36;{{ product.price }}</h2>
-													<p style="max-width: 252px; overflow: hidden;">{{ product.product_name }}</p>
+                                                    <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | int}} &#37; OFF</h3>
+													<p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>
 													<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
 												</div>
 											</div>
