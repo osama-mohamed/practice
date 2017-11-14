@@ -152,7 +152,7 @@
 								<div class="col-sm-6">
 									<h1><span>{{ slider.product_name }}</span></h1>
 									<h2>&#36; {{ slider.price }}</h2>
-                                    <h3 style="color: red;">{{ ((100 * slider.discount) / slider.price) | int}} &#37; OFF</h3>
+                                    <h3 style="color: red;">{{ ((100 * slider.discount) / slider.price) | round(2, 'common')}} &#37; OFF</h3>
 									<p>{{ slider.description | truncate(30) }}</p>
 									<button type="button" class="btn btn-default get">Get it now</button>
 								</div>
@@ -168,7 +168,7 @@
 								<div class="col-sm-6">
 									<h1><span>{{ slider.product_name }}</span></h1>
 									<h2>&#36; {{ slider.price }}</h2>
-                                    <h3 style="color: red;">{{ ((100 * slider.discount) / slider.price) | int}} &#37; OFF</h3>
+                                    <h3 style="color: red;">{{ ((100 * slider.discount) / slider.price) | round(2, 'common')}} &#37; OFF</h3>
 									<p>{{ slider.description | truncate(30) }}</p>
 									<button type="button" class="btn btn-default get">Get it now</button>
 								</div>
@@ -184,7 +184,7 @@
 								<div class="col-sm-6">
 									<h1><span>{{ slider.product_name }}</span></h1>
 									<h2>&#36; {{ slider.price }}</h2>
-                                    <h3 style="color: red;">{{ ((100 * slider.discount) / slider.price) | int}} &#37; OFF</h3>
+                                    <h3 style="color: red;">{{ ((100 * slider.discount) / slider.price) | round(2, 'common')}} &#37; OFF</h3>
 									<p>{{ slider.description | truncate(30) }}</p>
 									<button type="button" class="btn btn-default get">Get it now</button>
 								</div>
@@ -254,7 +254,7 @@
 									<div class="productinfo text-center">
                                         <a href="/preview_production/{{ product.id }}"><img src="../../static\uploads\products\{{ product.product_name }}\{{ product.files }}" style="height: 232px;"/></a>
 										<h2>&#36;{{ product.price }}</h2>
-                                        <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | int}} &#37; OFF</h3>
+                                        <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | round(2, 'common')}} &#37; OFF</h3>
 										<p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>
 										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 									</div>

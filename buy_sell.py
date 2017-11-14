@@ -40,7 +40,7 @@ cursor.execute("CREATE TABLE IF NOT EXISTS products(\
                 product_name VARCHAR(255) NOT NULL,\
                 description TEXT NOT NULL,\
                 price INT(10) NOT NULL,\
-                discount INT(10) NOT NULL,\
+                discount FLOAT NOT NULL,\
                 files TEXT NOT NULL,\
                 create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);")
 
@@ -50,7 +50,7 @@ cursor.execute("CREATE TABLE IF NOT EXISTS slider_products(\
                 product_name VARCHAR(255) NOT NULL,\
                 description TEXT NOT NULL,\
                 price INT(10) NOT NULL,\
-                discount INT(10) NOT NULL,\
+                discount FLOAT NOT NULL,\
                 files TEXT NOT NULL,\
                 create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);")
 
@@ -387,7 +387,7 @@ def add_product():
                 discount = form.discount.data
                 
                 if discount != '' and discount != ' ':
-                    p = (int(price) * int(discount)) / 100
+                    p = round((float(price) * float(discount)) / 100, 2)
                     cur = mysql.connection.cursor()
                     cur.execute("INSERT INTO products(category, product_name, description, price, discount, files)\
                                                  VALUES(%s, %s, %s, %s, %s, %s)", \
@@ -441,8 +441,8 @@ def edit_product(id):
     # form.discount.data = product['discount']
     
     
-    d = (int(product['discount']) * 100)/int(form.price.data)
-    form.discount.data = int(d)
+    d = round((float(product['discount']) * float(100))/float(form.price.data), 2)
+    form.discount.data = d
     
     
     if request.method == 'POST' and form.validate():
@@ -460,7 +460,18 @@ def edit_product(id):
             price = request.form['price']
             discount = request.form['discount']
 
-            p = (int(price) * int(discount)) / 100
+            if discount == "" or discount == " ":
+                p = 0
+                cur = mysql.connection.cursor()
+                cur.execute("UPDATE products SET category=%s, product_name=%s, description=%s, price=%s,\
+                                         discount=%s, files=%s WHERE id=%s", \
+                            (category, product_name, description, price, p, filename, id))
+                mysql.connection.commit()
+                cur.close()
+                flash('Your Product Has been Edited successfully!', 'success')
+                return redirect(url_for('admin_dashboard'))
+            
+            p = round((float(price) * float(discount)) / 100, 2)
             
             cur = mysql.connection.cursor()
             cur.execute("UPDATE products SET category=%s, product_name=%s, description=%s, price=%s,\
@@ -478,7 +489,18 @@ def edit_product(id):
             price = request.form['price']
             discount = request.form['discount']
 
-            p = (int(price) * int(discount)) / 100
+            if discount == "" or discount == " ":
+                p = 0
+                cur = mysql.connection.cursor()
+                cur.execute("UPDATE products SET category=%s, product_name=%s, description=%s, price=%s,\
+                                                     discount=%s WHERE id=%s", \
+                            (category, product_name, description, price, p, id))
+                mysql.connection.commit()
+                cur.close()
+                flash('Your Product Has been Edited successfully!', 'success')
+                return redirect(url_for('admin_dashboard'))
+            
+            p = round((float(price) * float(discount)) / 100, 2)
             
             cur = mysql.connection.cursor()
             cur.execute("UPDATE products SET category=%s, product_name=%s, description=%s, price=%s,\
@@ -576,7 +598,7 @@ def add_product_slider():
                 discount = form.discount.data
 
                 if discount != '' and discount != ' ':
-                    p = (int(price) * int(discount)) / 100
+                    p = round((float(price) * float(discount)) / 100, 2)
                     cur = mysql.connection.cursor()
                     cur.execute("INSERT INTO slider_products(category, product_name, description, price, discount, files)\
                                                  VALUES(%s, %s, %s, %s, %s, %s)", \
@@ -622,9 +644,8 @@ def edit_product_slider(id):
     form.price.data = product['price']
     # form.discount.data = product['discount']
 
-
-    d = (int(product['discount']) * 100) / int(form.price.data)
-    form.discount.data = int(d)
+    d = round((float(product['discount']) * float(100)) / float(form.price.data), 2)
+    form.discount.data = d
 
     if request.method == 'POST' and form.validate():
         product_name = request.form['product_name']
@@ -641,7 +662,18 @@ def edit_product_slider(id):
             price = request.form['price']
             discount = request.form['discount']
 
-            p = (int(price) * int(discount)) / 100
+            if discount == "" or discount == " ":
+                p = 0
+                cur = mysql.connection.cursor()
+                cur.execute("UPDATE slider_products SET category=%s, product_name=%s, description=%s, price=%s,\
+                                         discount=%s, files=%s WHERE id=%s", \
+                            (category, product_name, description, price, p, filename, id))
+                mysql.connection.commit()
+                cur.close()
+                flash('Your slider Product Has been Edited successfully!', 'success')
+                return redirect(url_for('admin_dashboard'))
+            
+            p = round((float(price) * float(discount)) / 100, 2)
 
             cur = mysql.connection.cursor()
             cur.execute("UPDATE slider_products SET category=%s, product_name=%s, description=%s, price=%s,\
@@ -659,8 +691,20 @@ def edit_product_slider(id):
             price = request.form['price']
             discount = request.form['discount']
 
-            p = (int(price) * int(discount)) / 100
-
+            if discount == "" or discount == " ":
+                p = 0
+                cur = mysql.connection.cursor()
+                cur.execute("UPDATE slider_products SET category=%s, product_name=%s, description=%s, price=%s,\
+                                                     discount=%s WHERE id=%s", \
+                            (category, product_name, description, price, p, id))
+                mysql.connection.commit()
+                cur.close()
+                flash('Your slider Product Has been Edited successfully!', 'success')
+                return redirect(url_for('admin_dashboard'))
+            
+            p = round((float(price) * float(discount)) / 100, 2)
+            
+            
             cur = mysql.connection.cursor()
             cur.execute("UPDATE slider_products SET category=%s, product_name=%s, description=%s, price=%s,\
                                      discount=%s WHERE id=%s", \
