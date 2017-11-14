@@ -44,6 +44,16 @@ cursor.execute("CREATE TABLE IF NOT EXISTS products(\
                 files TEXT NOT NULL,\
                 create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);")
 
+cursor.execute("CREATE TABLE IF NOT EXISTS slider_products(\
+                id INT(11) AUTO_INCREMENT PRIMARY KEY,\
+                category VARCHAR(100) NOT NULL,\
+                product_name VARCHAR(255) NOT NULL,\
+                description TEXT NOT NULL,\
+                price INT(10) NOT NULL,\
+                discount INT(10) NOT NULL,\
+                files TEXT NOT NULL,\
+                create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);")
+
 cursor.execute("CREATE TABLE IF NOT EXISTS categories (category VARCHAR(255) PRIMARY KEY);")
 
 
@@ -509,6 +519,186 @@ def delete_all_products():
     return redirect(url_for('admin_dashboard'))
 
 
+# slider product validators form
+
+class AddProductsliderForm(Form):
+    product_name = StringField('Name Of Product', [validators.InputRequired(), validators.length(min=1, max=180)])
+    description = TextAreaField('Description', [validators.InputRequired()])
+    price = IntegerField('Price', [validators.InputRequired()])
+    discount = StringField('Discount Percentage %')
+    # files = FileField('Add picture to Your Product', [validators.InputRequired()])
+
+
+# admin add new slider product page
+
+@app.route('/admin/add_product_slider', methods=['post', 'get'])
+@is_admin_logged_in
+def add_product_slider():
+    form = AddProductsliderForm(request.form)
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT category FROM categories")
+    categories = cur.fetchall()
+    cur.close()
+
+    if request.method == 'POST' and form.validate():
+        product_name = form.product_name.data
+
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT product_name FROM slider_products WHERE product_name = BINARY %s", [product_name])
+        res = cur.fetchone()
+        if product_name in str(res):
+            msg = "Product Name Already Exists"
+            return render_template('admin_add_production_slider.html', form=form, msg=msg)
+        slider_result = cur.execute("SELECT * FROM slider_products")
+        if slider_result < 3:
+            
+            file = request.files['file']
+            if file.filename == '':
+                flash('You Have to Select a File!', 'warning')
+            if file and allowed_file(file.filename):
+                try:
+                    rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name))
+                    os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name))
+                except:
+                    os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name))
+                filename = secure_filename(file.filename)
+                dir = r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name)
+                file.save(os.path.join(dir, filename))
+                category = request.form['categories']
+                description = form.description.data.lower()
+                price = form.price.data
+                discount = form.discount.data
+
+                if discount != '' and discount != ' ':
+                    p = (int(price) * int(discount)) / 100
+                    cur = mysql.connection.cursor()
+                    cur.execute("INSERT INTO slider_products(category, product_name, description, price, discount, files)\
+                                                 VALUES(%s, %s, %s, %s, %s, %s)", \
+                                (category, product_name, description, price, p, filename))
+                    mysql.connection.commit()
+                    cur.close()
+                    flash('Your Product is published to the slider uccessfully!', 'success')
+                    return redirect(url_for('admin_dashboard'))
+
+                if discount == "" or discount == " ":
+                    p = 0
+                    cur = mysql.connection.cursor()
+                    cur.execute("INSERT INTO slider_products(category, product_name, description, price, discount, files)\
+                                                 VALUES(%s, %s, %s, %s, %s, %s)", \
+                                (category, product_name, description, price, p, filename))
+                    mysql.connection.commit()
+                    cur.close()
+                    flash('Your Product is published to the slider successfully!', 'success')
+                    return redirect(url_for('admin_dashboard'))
+        else:
+            flash('You can not add more 3 products in the slider!', 'warning')
+            return redirect(url_for('admin_dashboard'))
+    return render_template('admin_add_production_slider.html', form=form, categories=categories)
+
+
+# admin edit slider product page
+
+@app.route('/admin/edit_product_slider/<id>', methods=['post', 'get'])
+@is_admin_logged_in
+def edit_product_slider(id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT category FROM categories")
+    categories = cur.fetchall()
+    cur.close()
+
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM slider_products WHERE id={}".format(id))
+    product = cur.fetchone()
+    cur.close()
+    form = AddProductForm(request.form)
+    form.product_name.data = product['product_name']
+    form.description.data = product['description']
+    form.price.data = product['price']
+    # form.discount.data = product['discount']
+
+
+    d = (int(product['discount']) * 100) / int(form.price.data)
+    form.discount.data = int(d)
+
+    if request.method == 'POST' and form.validate():
+        product_name = request.form['product_name']
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product['product_name']))
+            os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name))
+            filename = secure_filename(file.filename)
+            dir = r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name)
+            file.save(os.path.join(dir, filename))
+
+            category = request.form['categories']
+            description = request.form['description']
+            price = request.form['price']
+            discount = request.form['discount']
+
+            p = (int(price) * int(discount)) / 100
+
+            cur = mysql.connection.cursor()
+            cur.execute("UPDATE slider_products SET category=%s, product_name=%s, description=%s, price=%s,\
+                         discount=%s, files=%s WHERE id=%s", \
+                        (category, product_name, description, price, p, filename, id))
+            mysql.connection.commit()
+            cur.close()
+            flash('Your slider Product Has been Edited successfully!', 'success')
+            return redirect(url_for('admin_dashboard'))
+        elif file.filename == '' or 'file' not in request.files:
+            os.rename(os.path.join(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product['product_name'])),
+                      os.path.join(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name)))
+            category = request.form['categories']
+            description = request.form['description']
+            price = request.form['price']
+            discount = request.form['discount']
+
+            p = (int(price) * int(discount)) / 100
+
+            cur = mysql.connection.cursor()
+            cur.execute("UPDATE slider_products SET category=%s, product_name=%s, description=%s, price=%s,\
+                                     discount=%s WHERE id=%s", \
+                        (category, product_name, description, price, p, id))
+            mysql.connection.commit()
+            cur.close()
+            flash('Your slider Product Has been Edited successfully!', 'success')
+            return redirect(url_for('admin_dashboard'))
+    return render_template('admin_edit_production_slider.html', form=form, categories=categories)
+
+
+# admin delete slider product
+
+@app.route('/admin/delete_product_slider/<id>', methods=['post', 'get'])
+@is_admin_logged_in
+def delete_product_slider(id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT product_name FROM slider_products WHERE id = %s", [id])
+    name = cur.fetchone()
+    n = name['product_name']
+    rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(n))
+    cur.execute("DELETE FROM slider_products WHERE id = %s", [id])
+    mysql.connection.commit()
+    cur.close()
+    flash('Your slider Product Has been Deleted successfully!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
+# admin delete all slider products
+
+@app.route('/admin/delete_all_slider_products', methods=['post', 'get'])
+@is_admin_logged_in
+def delete_all_slider_products():
+    cur = mysql.connection.cursor()
+    cur.execute("TRUNCATE slider_products")
+    mysql.connection.commit()
+    cur.close()
+    try:
+        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products")
+        flash('You Has been Deleted All slider Products successfully!', 'success')
+    except:
+        flash('You Has been Already Deleted All slider Products successfully!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
 
 # admin create user account validator form
 
@@ -672,6 +862,18 @@ def delete_all_categories():
     cur.close()
     flash('You Has been Deleted All Categories Successfully!', 'success')
     return redirect(url_for('admin_dashboard'))
+
+
+# admin preview all slider products table page
+
+@app.route('/admin/slider_products_table')
+@is_admin_logged_in
+def slider_products_table():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM slider_products")
+    slider_products = cur.fetchall()
+    cur.close()
+    return render_template('admin_slider_products_table .html', slider_products=slider_products)
 
 
 # admin preview all products table page
