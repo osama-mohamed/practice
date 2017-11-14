@@ -85,6 +85,118 @@ def home():
     return render_template('home.html')
 
 
+# user part ***********************************************************************************************
+
+# user registration validators form
+
+class RegisterForm(Form):
+    first_name = StringField('First Name', [validators.InputRequired()])
+    last_name = StringField('Last Name', [validators.InputRequired()])
+    username = StringField('User Name', [validators.InputRequired()])
+    password = PasswordField('Password',
+                             [validators.DataRequired(), validators.Length(min=6, max=100),
+                              validators.EqualTo('confirm', message='Passwords Do Not Match')])
+    confirm = PasswordField('Confirm Password', [validators.DataRequired()])
+
+
+# user register page
+
+@app.route('/user_register', methods=['post', 'get'])
+def user_register():
+    form = RegisterForm(request.form)
+    if request.method == 'POST' and form.validate():
+        username = form.username.data
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT username FROM users WHERE username = BINARY %s", [username])
+        res = cur.fetchone()
+        if username in str(res):
+            msg = "User Name Already Exists"
+            return render_template('user_register.html', form=form, msg=msg)
+        else:
+            first_name = form.first_name.data.lower()
+            last_name = form.last_name.data.lower()
+            email = request.form['email'].lower()
+            gender = request.form['gender']
+            country = request.form['country']
+            username = form.username.data
+            password = sha256_crypt.encrypt(str(form.password.data))
+            file = request.files['file']
+            if file.filename == '':
+                flash('You Have to Select a File!', 'warning')
+            if file and allowed_file(file.filename):
+                try:
+                    rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(username))
+                    os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(username))
+                except:
+                    os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(username))
+                filename = secure_filename(file.filename)
+                dir = r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(username)
+                file.save(os.path.join(dir, filename))
+                cur = mysql.connection.cursor()
+                cur.execute("INSERT INTO users(permission, first_name, last_name,\
+                             email, gender, country, username, password, files)\
+                             VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", \
+                            ("user", first_name, last_name, email, gender,\
+                             country, username, password, filename))
+                mysql.connection.commit()
+                cur.close()
+                flash('You Have Created Account successfully!', 'success')
+                return redirect(url_for('user_login'))
+    return render_template('user_register.html', form=form)
+
+
+# user login page
+
+@app.route('/user_login', methods=['GET', 'POST'])
+def user_login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password_candidate = request.form['password']
+        cur = mysql.connection.cursor()
+        result = cur.execute("SELECT * FROM users WHERE username = BINARY %s AND permission='user'", [username])
+        if result > 0:
+            data = cur.fetchone()
+            password = data['password']
+            if sha256_crypt.verify(password_candidate, password):
+                session['user_logged_in'] = True
+                cur.close()
+                flash('Now You Are Logged In ', 'success')
+                return redirect(url_for('home'))
+            else:
+                error = 'Wrong Password!'
+                return render_template('user_login.html', error=error)
+        else:
+            error = 'Username Can Not Be Found!'
+            return render_template('user_login.html', error=error)
+    return render_template('user_login.html')
+
+
+# check if user is still logged in 
+
+def is_user_logged_in(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'user_logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash('Unauthorized, Please Login', 'danger')
+            return redirect(url_for('user_login'))
+    return wrap
+
+
+# user log out
+
+@app.route('/logout')
+@is_user_logged_in
+def user_logout():
+    session.clear()
+    flash('You Are Now Logged Out', 'success')
+    return redirect(url_for('user_login'))
+
+
+# A common part between the admin and the user ********************************************************
+
+
 # preview product page
 
 @app.route('/preview_production/<id>/')
@@ -117,7 +229,7 @@ def categories(category):
 
 
 
-
+# admin part ***********************************************************************************************
 
 # admin login page
 
