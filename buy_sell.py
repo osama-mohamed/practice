@@ -256,14 +256,16 @@ def preview_production(id):
 @app.route('/categories/<category>', methods=['post', 'get'])
 def categories(category):
     cur = mysql.connection.cursor()
+    cur.execute("SELECT category FROM categories")
+    all_categories = cur.fetchall()
     result = cur.execute("SELECT * FROM products WHERE category=%s", [category])
     categories = cur.fetchall()
     cur.close()
     if result > 0:
-        return render_template('categories.html', categories=categories)
+        return render_template('catigories.html', categories=categories, all_categories=all_categories)
     else:
-        msg = 'No Productions Found!'
-        return render_template('categories.html', msg=msg)
+        msg = 'No Products Found!'
+        return render_template('catigories.html', msg=msg, all_categories=all_categories)
 
 
 # admin part ***********************************************************************************************

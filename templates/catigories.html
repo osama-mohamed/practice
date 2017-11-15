@@ -10,6 +10,7 @@
     <link href="../static/user/css/animate.css" rel="stylesheet">
 	<link href="../static/user/css/main.css" rel="stylesheet">
 	<link href="../static/user/css/responsive.css" rel="stylesheet">
+
 </head><!--/head-->
 
 <body>
@@ -17,7 +18,7 @@
 		<div class="header_top"><!--header_top-->
 			<div class="container">
 				<div class="row">
-					<div class="col-sm-6">
+					<div class="col-sm-6 ">
 						<div class="contactinfo">
 							<ul class="nav nav-pills">
 								<li><a href=""><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
@@ -39,7 +40,7 @@
 				</div>
 			</div>
 		</div><!--/header_top-->
-
+		
 		<div class="header-middle"><!--header-middle-->
 			<div class="container">
 				<div class="row">
@@ -55,15 +56,14 @@
 								<li><a href=""><i class="fa fa-user"></i> Account</a></li>
 								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
 								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-								<li><a href="login.html"><i class="fa fa-lock"></i>Register</a></li>
-                                <li><a href="login.html" class="active"><i class="fa fa-lock"></i>Login</a></li>
+								<li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
 							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div><!--/header-middle-->
-
+	
 		<div class="header-bottom"><!--header-bottom-->
 			<div class="container">
 				<div class="row">
@@ -79,52 +79,84 @@
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
 								<li><a href="index.html">Home</a></li>
-								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
+								<li class="dropdown"><a href="#" class="active">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="shop.html">Products</a></li>
-										<li><a href="product-details.html">Product Details</a></li>
-										<li><a href="checkout.html">Checkout</a></li>
-										<li><a href="cart.html">Cart</a></li>
-										<li><a href="login.html">Register</a></li>
-                                        <li><a href="login.html" class="active">Login</a></li>
+                                        <li><a href="shop.html" class="active">Products</a></li>
+										<li><a href="product-details.html">Product Details</a></li> 
+										<li><a href="checkout.html">Checkout</a></li> 
+										<li><a href="cart.html">Cart</a></li> 
+										<li><a href="login.html">Login</a></li> 
                                     </ul>
-                                </li>
+                                </li> 
+
 							</ul>
 						</div>
 					</div>
 
 				</div>
+				</div>
 			</div>
-		</div><!--/header-bottom-->
-	</header><!--/header-->
+	</header>
 
-	<section><!--form-->
+	
+	<section>
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-4">
-					<div class="signup-form"><!--sign up form-->
-						<h2>Login!</h2>
-						{% include 'includes/_messages.html' %}
-                        {% from "includes/_formhelpers.html" import render_field %}
-                        <form method="post" action="{{ url_for('user_login') }}" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <label>Username</label>
-                                <input type="text" name="username" class="form-control" value="{{request.form.username}}" autocomplete="off">
-                            </div>
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" name="password" class="form-control" value="{{request.form.password}}">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Login</button>
-                            <a href="/user_login" class="btn btn-danger" style="margin-top: 10px; border-radius: 0; margin-bottom: 200px;">Reset</a>
-                        </form>
-					</div><!--/sign up form-->
+				<div class="col-sm-3">
+					<div class="left-sidebar">
+						<h2>Category</h2>
+						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+
+                            {% for category in all_categories %}
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="/categories/{{ category.category }}">{{ category.category }}</a></h4>
+								</div>
+							</div>
+                            {% endfor %}
+
+						</div><!--/category-productsr-->
+
+
+						
+					</div>
+				</div>
+				
+				<div class="col-sm-9 padding-right">
+					<div class="features_items"><!--features_items-->
+						<h2 class="title text-center">Category Items</h2>
+                        {% include 'includes/_messages.html' %}
+
+                        {% for product in categories %}
+						<div class="col-sm-4">
+							<div class="product-image-wrapper">
+								<div class="single-products">
+									<div class="productinfo text-center">
+                                        <a href="/preview_production/{{ product.id }}"><img src="../../static\uploads\products\{{ product.product_name }}\{{ product.files }}" style="height: 232px;"/></a>
+										<h2>&#36;{{ product.price }}</h2>
+                                        <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | round(2, 'common')}} &#37; OFF</h3>
+										<p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>
+										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+									</div>
+                                    <img src="../static/user/images/home/new.png" class="new" alt="" />
+{#									<img src="../static/user/images/home/sale.png" class="new" alt="" />#}
+								</div>
+								<div class="choose">
+									<ul class="nav nav-pills nav-justified">
+										<li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+                        {% endfor %}
+
+
+					</div><!--features_items-->
 				</div>
 			</div>
 		</div>
-	</section><!--/form-->
-
-
+	</section>
+	
 	<footer id="footer"><!--Footer-->
 		<div class="footer-top">
 			<div class="container">
@@ -147,20 +179,23 @@
 				</div>
 			</div>
 		</div>
-
+        <br>
+        <br>
+        <br>
+		
 		<div class="footer-bottom">
 			<div class="container">
 				<div class="row">
-					<p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
+					<p class="pull-left">Copyright © 2013 E-Shopper. All rights reserved.</p>
 					<p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
 				</div>
 			</div>
 		</div>
-
+		
 	</footer><!--/Footer-->
+	
 
-
-
+  
     <script src="../static/user/js/jquery.js"></script>
 	<script src="../static/user/js/price-range.js"></script>
     <script src="../static/user/js/jquery.scrollUp.min.js"></script>
