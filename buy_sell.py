@@ -19,6 +19,7 @@ cursor.execute("CREATE DATABASE IF NOT EXISTS buy_sell DEFAULT CHARSET UTF8")
 database.select_db('buy_sell')
 # cursor.execute("DROP TABLE IF EXISTS users;")
 # cursor.execute("DROP TABLE IF EXISTS products;")
+# cursor.execute("DROP TABLE IF EXISTS slider_products;")
 
 
 cursor.execute("CREATE TABLE IF NOT EXISTS users(\
@@ -37,6 +38,8 @@ cursor.execute("CREATE TABLE IF NOT EXISTS users(\
 cursor.execute("CREATE TABLE IF NOT EXISTS products(\
                 id INT(11) AUTO_INCREMENT PRIMARY KEY,\
                 category VARCHAR(100) NOT NULL,\
+                number_of_sales INT(11) NOT NULL,\
+                number_of_views INT(11) NOT NULL,\
                 product_name VARCHAR(255) NOT NULL,\
                 description TEXT NOT NULL,\
                 price INT(10) NOT NULL,\

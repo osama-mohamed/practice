@@ -166,7 +166,13 @@
                         <div aria-labelledby="closeCard2" class="dropdown-menu dropdown-menu-right has-shadow">
                             <a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a>
                             <a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a>
-                            <a href="{{ url_for('delete_all_slider_products') }}" class="dropdown-item edit"> <i class="fa fa-times"></i>Delete All Slider Products</a>
+{#                            <a href="{{ url_for('delete_all_slider_products') }}" class="dropdown-item edit"> <i class="fa fa-times"></i>Delete All Slider Products</a>#}
+
+                            <!-- Button trigger modal -->
+                            <a class="dropdown-item edit" href="" data-toggle="modal" data-target="#delete_all_slider_products">
+                              <i class="fa fa-times"></i>Delete All Slider Products
+                            </a>
+
                         </div>
                       </div>
                     </div>
@@ -199,7 +205,38 @@
                             <td></td>
                             <td></td>
                             <td><a href="/admin/edit_product_slider/{{ product.id }}" class="btn btn-sm btn-outline-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&emsp; Edit</a></td>
-                            <td><a href="/admin/delete_product_slider/{{ product.id }}" class="btn btn-sm btn-outline-danger"><i class="fa fa-times" aria-hidden="true"></i>&emsp; Delete</a></td>
+{#                            <td><a href="/admin/delete_product_slider/{{ product.id }}" class="btn btn-sm btn-outline-danger"><i class="fa fa-times" aria-hidden="true"></i>&emsp; Delete</a></td>#}
+                            <td>
+
+                                <!-- Button trigger modal -->
+                                <button class="btn btn-sm btn-outline-danger" href="" data-toggle="modal" data-target="#delete_product_slider">
+                                  <i class="fa fa-times"></i> &emsp; Delete
+                                </button>
+
+                                <!-- delete_slider_product modal -->
+                                <!-- Modal -->
+                                <div class="modal fade" id="delete_product_slider" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Delete slider Product</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        Are you sure you want to delete this slider product from the website and its file ?
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <a href="/admin/delete_product_slider/{{ product.id }}"><button class="btn btn-danger">Confirm Delete</button></a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+
+                            </td>
                           </tr>
                         {% endfor %}
                         </tbody>
@@ -228,6 +265,36 @@
         </div>
       </div>
     </div>
+
+
+
+    <!-- delete_all_products modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="delete_all_slider_products" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete All slider Products</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete all slider products from the website and their files ?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <a href="{{ url_for('delete_all_slider_products') }}"><button class="btn btn-danger">Confirm Delete</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
     <!-- Javascript files-->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="../static/vendor/popper.js/umd/popper.min.js"> </script>
