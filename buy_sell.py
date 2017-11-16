@@ -843,6 +843,12 @@ def add_category():
     form = CategoryForm(request.form)
     if request.method == 'POST' and form.validate():
         category = form.category.data.lower()
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM categories WHERE category = BINARY %s", [category])
+        res = cur.fetchone()
+        if category in str(res):
+            flash('This Category Already Exists', 'warning')
+            return redirect(url_for('admin_dashboard'))
         if category == ' ':
             flash('You Should Type A Word!', 'warning')
             return redirect(url_for('add_category'))
