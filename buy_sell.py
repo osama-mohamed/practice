@@ -385,7 +385,7 @@ def add_product():
         product_name = form.product_name.data
 
         cur = mysql.connection.cursor()
-        cur.execute("SELECT product_name FROM products WHERE product_name = BINARY %s", [product_name])
+        cur.execute("SELECT product_name FROM products WHERE product_name = %s", [product_name])
         res = cur.fetchone()
         if product_name in str(res):
             msg = "Product Name Already Exists"
@@ -545,7 +545,10 @@ def delete_product(id):
     cur.execute("SELECT product_name FROM products WHERE id = %s", [id])
     name = cur.fetchone()
     n = name['product_name']
-    rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(n))
+    try:
+        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(n))
+    except:
+        pass
     cur.execute("DELETE FROM products WHERE id = %s", [id])
     mysql.connection.commit()
     cur.close()
@@ -748,7 +751,10 @@ def delete_product_slider(id):
     cur.execute("SELECT product_name FROM slider_products WHERE id = %s", [id])
     name = cur.fetchone()
     n = name['product_name']
-    rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(n))
+    try:
+        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(n))
+    except:
+        pass
     cur.execute("DELETE FROM slider_products WHERE id = %s", [id])
     mysql.connection.commit()
     cur.close()
@@ -842,7 +848,10 @@ def delete_user(id):
     cur.execute("SELECT username FROM users WHERE id = %s", [id])
     name = cur.fetchone()
     n = name['username']
-    rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(n))
+    try:
+        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(n))
+    except:
+        pass
     cur.execute("DELETE FROM users WHERE id = %s", [id])
     mysql.connection.commit()
     cur.close()
@@ -937,9 +946,14 @@ def delete_category(category):
 def delete_all_categories():
     cur = mysql.connection.cursor()
     cur.execute("TRUNCATE categories")
+    cur.execute("TRUNCATE products")
     mysql.connection.commit()
     cur.close()
-    flash('You Has been Deleted All Categories Successfully!', 'success')
+    try:
+        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products")
+        flash('You Has been Deleted All Categories and Products Successfully!', 'success')
+    except:
+        flash('You Has been Deleted All Categories and Products Successfully!', 'success')
     return redirect(url_for('admin_dashboard'))
 
 
@@ -951,8 +965,11 @@ def slider_products_table():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM slider_products")
     slider_products = cur.fetchall()
+    cur.execute("SELECT COUNT(id) FROM slider_products")
+    sliders = cur.fetchone()
+    count_sliders = sliders['COUNT(id)']
     cur.close()
-    return render_template('admin_slider_products_table .html', slider_products=slider_products, admin_name=session['admin_username'], admin_image=session['admin_image'])
+    return render_template('admin_slider_products_table .html', slider_products=slider_products, count_sliders=count_sliders, admin_name=session['admin_username'], admin_image=session['admin_image'])
 
 
 # admin preview all products table page
@@ -975,8 +992,26 @@ def categories_table():
     cur = mysql.connection.cursor()
     cur.execute("SELECT category FROM categories")
     categories = cur.fetchall()
+    for category in categories:
+        cc = category['category']
+
+
+        cur.execute("SELECT COUNT(product_name) FROM products WHERE category=%s", [cc])
+        count_products_by_category = cur.fetchall()
+        for products_by_category in count_products_by_category:
+            print(products_by_category['COUNT(product_name)'])
+            session['cat'] = products_by_category['COUNT(product_name)']
+            print(session['cat'])
+
+
+    cur.execute("SELECT COUNT(category) FROM categories")
+    category = cur.fetchone()
+    count_categories = category['COUNT(category)']
+    cur.execute("SELECT COUNT(id) FROM products")
+    products = cur.fetchone()
+    count_products = products['COUNT(id)']
     cur.close()
-    return render_template('admin_categories_table.html', categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'])
+    return render_template('admin_categories_table.html', categories=categories, count_products=count_products, count_categories=count_categories, products_by_category=session['cat'], admin_name=session['admin_username'], admin_image=session['admin_image'])
 
 
 # admin preview all users table page

@@ -186,7 +186,7 @@
                             <th>Category</th>
                             <th></th>
                             <th></th>
-                            <th></th>
+                            <th>Products</th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -200,7 +200,7 @@
                             <td><a href="/categories/{{ category.category }}" >{{ category.category }}</a></td>
                             <td></td>
                             <td></td>
-                            <td></td>
+                            <td>{{ products_by_category }}</td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -250,6 +250,19 @@
                   <!-- end my products table -->
               </div>
             </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
           </section>
           <!-- Page Footer-->
           <footer class="main-footer">
@@ -286,6 +299,10 @@
           </div>
           <div class="modal-body">
             Are you sure you want to delete all Categories from the website and its products and their files?
+            <br>
+            <br>
+{#            You have : &emsp; {{ count_products }} &emsp; product in &emsp; {{ count_categories }} &emsp; category#}
+            You have : &emsp; {{ count_products }} &emsp; {% if count_products == 1 or count_products == 0 %} product {% else %} products {% endif %} in &emsp; {{ count_categories }} &emsp; {% if count_categories == 1 or count_categories == 0 %} category {% else %} categories {% endif %}
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

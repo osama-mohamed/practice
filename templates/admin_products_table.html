@@ -248,6 +248,19 @@
 
               </div>
             </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
           </section>
           <!-- Page Footer-->
           <footer class="main-footer">
@@ -270,8 +283,6 @@
 
 
 
-
-
     <!-- delete_all_products modal -->
     <!-- Modal -->
     <div class="modal fade" id="delete_all_products" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -285,6 +296,9 @@
           </div>
           <div class="modal-body">
             Are you sure you want to delete all products from the website and their files ?
+            <br>
+            <br>
+            You have : &emsp; {{ products | length }} &emsp; {% if products|length == 1 or products|length == 0 %} product {% else %} products {% endif %}
           </div>
           <div class="modal-footer">
 {#              <form method="post" action="{{ url_for('delete_all_products') }}">#}
@@ -295,8 +309,6 @@
         </div>
       </div>
     </div>
-
-
 
 
 
