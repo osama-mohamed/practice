@@ -112,7 +112,7 @@
             <div class="avatar"><img src="../static/uploads/users/{{ admin_name }}/{{ admin_image }}" class="img-fluid rounded-circle" style="width: 46px; height: 46px;"></div>
             <div class="title">
               <h1 class="h4">{{ admin_name }}</h1>
-              <p>Website Administrator</p>
+              <p style="min-width: 164px; max-width: 195px;">Website Administrator</p>
             </div>
           </div>
           <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
@@ -150,59 +150,69 @@
           </header>
             <!-- start my dashboard -->
             <section class="dashboard-counts no-padding-bottom">
-            <div class="container-fluid">
-                {% include 'includes/_messages.html' %}
-              <div class="row bg-white has-shadow">
-                <!-- Item -->
-                  <div class="col-xl-3 col-sm-6">
-                  <div class="item d-flex align-items-center">
-                      <a href="/admin/add_product"><div class="icon bg-green"><i class="fa fa-plus"></i></div>
-                    <div class="title"><span>New<br>Product</span></a>
-                      <div class="progress">
-{#                        <div role="progressbar" style="width: 40%; height: 4px;" aria-valuenow="{#val.value}" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-green"></div>#}
+                <div class="container-fluid">
+                    {% include 'includes/_messages.html' %}
+                  <div class="row bg-white has-shadow">
+
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <a href="/admin/add_product_slider" style="color: #17a2b8;"><div class="icon bg-info"><i class="fa fa-plus-circle" style="color: #fff; margin-top: 12px;"></i></div>
+                        <div class="title"><span>New<br>Slider</span></a>
+                          <div class="progress">
+{#                            <div role="progressbar" style="width: 70%; height: 4px;" aria-valuenow="" aria-valuemin="0" aria-valuemax="10" class="progress-bar bg-info"></div>#}
+                          </div>
+                        </div>
+                        <div class="number" style="color: #17a2b8;"><strong>{{ count_sliders | safe }}</strong></div>
                       </div>
                     </div>
-                    <div class="number"><strong>{{ count_products | safe }}</strong></div>
-                  </div>
-                  </div>
-                <!-- Item -->
-                  <div class="col-xl-3 col-sm-6">
-                  <div class="item d-flex align-items-center">
-                    <a href="/admin/add_category"><div class="icon bg-orange"><i class="fa fa-star-o"></i></div>
-                    <div class="title"><span>Add<br>Category</span></a>
-                      <div class="progress">
-{#                        <div role="progressbar" style="width: 50%; height: 4px;" aria-valuenow="{#val.value}" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-orange"></div>#}
+
+
+                    <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                          <a href="/admin/add_product" style="color: #54e69d;"><div class="icon bg-green"><i class="fa fa-plus" style="margin-top: 12px;"></i></div>
+                        <div class="title"><span>New<br>Product</span></a>
+                          <div class="progress">
+    {#                        <div role="progressbar" style="width: 40%; height: 4px;" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-green"></div>#}
+                          </div>
+                        </div>
+                        <div class="number" style="color: #54e69d;"><strong>{{ count_products | safe }}</strong></div>
+                      </div>
+                      </div>
+
+
+                    <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <a href="/admin/add_category" style="color: #ffc36d;"><div class="icon bg-orange"><i class="fa fa-star-o" style="margin-top: 12px; margin-left: 1px;"></i></div>
+                        <div class="title"><span>Add<br>Category</span></a>
+                          <div class="progress">
+    {#                        <div role="progressbar" style="width: 50%; height: 4px;" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-orange"></div>#}
+                          </div>
+                        </div>
+                          <div class="number" style="color: #ffc36d;"><strong>{{ count_categories | safe }}</strong></div>
                       </div>
                     </div>
-                      <div class="number"><strong>{{ count_categories | safe }}</strong></div>
+
+
+                    <!-- Item -->
+                    <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <a href="/admin/add_user" style="color: #796AEE;"><div class="icon bg-violet"><i class="fa fa-user-plus" style="margin-left: 5px; margin-top: 11px;"></i></div>
+                        <div class="title"><span>Create<br>Account</span></a>
+                          <div class="progress">
+    {#                        <div role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-violet"></div>#}
+                          </div>
+                        </div>
+                        <div class="number" style="color: #796AEE;"><strong>{{ count_users | safe }}</strong></div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
-                  <!-- Item -->
-                  <div class="col-xl-3 col-sm-6">
-                  <div class="item d-flex align-items-center">
-                    <div class="icon bg-red"><i class="fa fa-times"></i></div>
-                    <div class="title"><span>Delete<br>Product</span>
-                      <div class="progress">
-{#                        <div role="progressbar" style="width: 70%; height: 4px;" aria-valuenow="{#val.value}" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>#}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- Item -->
-                <div class="col-xl-3 col-sm-6">
-                  <div class="item d-flex align-items-center">
-                    <a href="/admin/add_user"><div class="icon bg-violet"><i class="fa fa-user-plus"></i></div>
-                    <div class="title"><span>Create<br>Account</span></a>
-                      <div class="progress">
-{#                        <div role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="{#val.value}" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-violet"></div>#}
-                      </div>
-                    </div>
-                    <div class="number"><strong>{{ count_users | safe }}</strong></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
+            </section>
             <!-- end my dashboard -->
 
           <br>

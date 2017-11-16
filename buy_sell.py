@@ -121,7 +121,8 @@ def home():
     slider_products_first = cur.fetchall()
     cur.execute("SELECT * FROM slider_products LIMIT 1 OFFSET 1")
     slider_products_second = cur.fetchall()
-    cur.execute("SELECT * FROM slider_products ORDER BY id DESC LIMIT 1")
+    # cur.execute("SELECT * FROM slider_products ORDER BY id DESC LIMIT 1")
+    cur.execute("SELECT * FROM slider_products LIMIT 1 OFFSET 2")
     slider_products_third = cur.fetchall()
     cur.execute("SELECT * FROM products ORDER BY id DESC LIMIT 6;")
     latest_products = cur.fetchall()
@@ -340,6 +341,9 @@ def admin_logout():
 @is_admin_logged_in
 def admin_dashboard():
     cur = mysql.connection.cursor()
+    cur.execute("SELECT COUNT(id) FROM slider_products")
+    sliders = cur.fetchone()
+    count_sliders = sliders['COUNT(id)']
     cur.execute("SELECT COUNT(id) FROM products")
     products = cur.fetchone()
     count_products = products['COUNT(id)']
@@ -350,7 +354,7 @@ def admin_dashboard():
     categories = cur.fetchone()
     count_categories = categories['COUNT(category)']
     cur.close()
-    return render_template('admin_dashboard.html', count_products=count_products, count_users=count_users, count_categories=count_categories, admin_name=session['admin_username'], admin_image=session['admin_image'])
+    return render_template('admin_dashboard.html', count_sliders=count_sliders, count_products=count_products, count_users=count_users, count_categories=count_categories, admin_name=session['admin_username'], admin_image=session['admin_image'])
 
 
 # product validators form
