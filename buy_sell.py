@@ -4,7 +4,7 @@ from flask_mysqldb import MySQL
 from wtforms import Form, StringField, TextAreaField, validators, FileField, IntegerField, PasswordField
 from passlib.hash import sha256_crypt
 from werkzeug.utils import secure_filename
-from shutil import rmtree
+from shutil import rmtree, copyfile, copy2, copy, copyfileobj
 from functools import wraps
 import MySQLdb
 import os
@@ -59,6 +59,13 @@ cursor.execute("CREATE TABLE IF NOT EXISTS categories (category VARCHAR(255) PRI
 
 # create default admin account if not exists
 
+# try:
+#     rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\admin")
+#     os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\admin")
+#     copyfileobj(r'C:\Users\OSAMA\Desktop\buy_sell\static\admin.png', r'C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\admin\admin.png')
+# except:
+#     pass
+
 result = cursor.execute('SELECT username FROM users WHERE username=%s', ['admin'])
 if result > 0:
     pass
@@ -68,8 +75,10 @@ else:
              email, gender, country, username, password, files)\
              VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", \
             ('admin', 'admin', 'admin', 'admin', 'admin', \
-             'admin', 'admin', admin_password, 'admin'))
+             'admin', 'admin', admin_password, 'admin.png'))
     database.commit()
+    os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\admin")
+    copy(r'C:\Users\OSAMA\Desktop\buy_sell\static\admin.png', r'C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\admin\admin.png')
 
 database.close()
 
