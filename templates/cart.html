@@ -53,11 +53,9 @@
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
                                 {% if session.user_logged_in %}
-								<li><a href="#"><i class="fa fa-user"></i> Account</a></li>
-								<li><a href="/add_to_cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                                {% else %}
-                                <li><a href="/user_register" class="active"><i class="fa fa-edit"></i>Register</a></li>
-								<li><a href="/user_login"><i class="fa fa-lock"></i>Login</a></li>
+								<li><a href=""><i class="fa fa-user"></i> Account</a></li>
+								<li><a href="" class="active"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+								<li><a href="/user_logout"><i class="fa fa-lock"></i> Logout</a></li>
                                 {% endif %}
 							</ul>
 						</div>
@@ -85,77 +83,124 @@
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="/">Products</a></li>
                                         {% if session.user_logged_in %}
-										<li><a href="/add_to_cart">Cart</a></li>
-                                        {% else %}
-										<li><a href="/user_register" class="active">Register</a></li>
-                                        <li><a href="/user_login">Login</a></li>
+										<li><a href="/add_to_cart" class="active">Cart</a></li>
                                         {% endif %}
                                     </ul>
                                 </li>
 							</ul>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div><!--/header-bottom-->
 	</header><!--/header-->
-	
-	<section><!--form-->
+
+	<section id="cart_items">
 		<div class="container">
+			<div class="breadcrumbs">
+				<ol class="breadcrumb">
+				  <li><a href="/">Home</a></li>
+				  <li class="active">Shopping Cart</li>
+				</ol>
+			</div>
+			<div class="table-responsive cart_info">
+				<table class="table table-condensed">
+					<thead>
+						<tr class="cart_menu">
+							<td class="image">Product</td>
+							<td class="description"></td>
+							<td class="price">Price</td>
+							<td class="quantity">Quantity</td>
+							<td class="total">Total</td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+
+
+
+						<tr>
+
+						</tr>
+
+
+
+                        <tr>
+							<td colspan="4">&nbsp;</td>
+							<td colspan="2">
+								<table class="table table-condensed total-result">
+									<tr>
+										<td>Cart Sub Total</td>
+										<td>$59</td>
+									</tr>
+									<tr>
+										<td>Exo Tax</td>
+										<td>$2</td>
+									</tr>
+									<tr class="shipping-cost">
+										<td>Shipping Cost</td>
+										<td>Free</td>
+									</tr>
+									<tr>
+										<td>Total</td>
+										<td><span>$61</span></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section> <!--/#cart_items-->
+
+	<section id="do_action">
+		<div class="container">
+			<div class="heading">
+				<h3>What would you like to do next?</h3>
+				<p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
+			</div>
 			<div class="row">
-				<div class="col-sm-4">
-					<div class="signup-form"><!--sign up form-->
-						<h2>New User Signup!</h2>
-						{% include 'includes/_messages.html' %}
-                        {% from "includes/_formhelpers.html" import render_field %}
-                        <form method="post" action="{{ url_for('user_register') }}" enctype="multipart/form-data">
-                            <div class="form-group">
-                                {{ render_field(form.first_name, class="form-control", autocomplete="off") }}
-                            </div>
-                            <div class="form-group">
-                                {{ render_field(form.last_name, class="form-control", autocomplete="off") }}
-                            </div>
-                            <div class="form-group">
-                                <label>E-Mail</label>
-                                <input type="email" name="email" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Select Gender</label> &emsp;
-                                <select name="gender" class="btn btn-outline-primary btn-sm dropdown-toggle">
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Select Country</label> &emsp;
-                                <select name="country" class="btn btn-outline-primary btn-sm dropdown-toggle">
+				<div class="col-sm-6">
+					<div class="chose_area">
+
+						<ul class="user_info">
+							<li class="single_field">
+								<label>Country:</label>
+								<select>
                                     {% include 'includes/select_country.html' %}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                {{ render_field(form.username, class="form-control", autocomplete="off") }}
-                            </div>
-                            <div class="form-group">
-                                {{ render_field(form.password, class="form-control", autocomplete="off") }}
-                            </div>
-                            <div class="form-group">
-                                {{render_field(form.confirm, class="form-control")}}
-                            </div>
-                            <div class="form-group">
-                                <label>Add picture to Your Account</label>
-                                <input type="file" name="file" class="form-control">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Register</button>
-                            <a href="/user_register" class="btn btn-danger" style="margin-top: 10px; border-radius: 0; margin-bottom: 200px;">Reset</a>
-                        </form>
-					</div><!--/sign up form-->
+								</select>
+								
+							</li>
+							<li class="single_field">
+								<label>Region / State:</label>
+								<select>
+                                    {% include 'includes/select_country.html' %}
+								</select>
+							
+							</li>
+
+						</ul>
+						<a class="btn btn-default update" href="">Get Quotes</a>
+						<a class="btn btn-default check_out" href="">Continue</a>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="total_area">
+						<ul>
+							<li>Cart Sub Total <span>$59</span></li>
+							<li>Eco Tax <span>$2</span></li>
+							<li>Shipping Cost <span>Free</span></li>
+							<li>Total <span>$61</span></li>
+						</ul>
+							<a class="btn btn-default update" href="">Update</a>
+							<a class="btn btn-default check_out" href="">Check Out</a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</section><!--/form-->
-	
-	
+	</section><!--/#do_action-->
+
 	<footer id="footer"><!--Footer-->
 		<div class="footer-top">
 			<div class="container">
@@ -172,12 +217,13 @@
 					<div class="col-sm-3">
 						<div class="address">
 							<img src="../static/user/images/home/map.png" alt="" />
-							<p>505 S Atlantic Ave Virginia Beach, VA(Virginia)</p>
+							<p>Virginia Beach, VA(Virginia)</p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
 		
 		<div class="footer-bottom">
 			<div class="container">
@@ -191,11 +237,10 @@
 	</footer><!--/Footer-->
 	
 
-  
+
     <script src="../static/user/js/jquery.js"></script>
-	<script src="../static/user/js/price-range.js"></script>
-    <script src="../static/user/js/jquery.scrollUp.min.js"></script>
 	<script src="../static/user/js/bootstrap.min.js"></script>
+	<script src="../static/user/js/jquery.scrollUp.min.js"></script>
     <script src="../static/user/js/jquery.prettyPhoto.js"></script>
     <script src="../static/user/js/main.js"></script>
 </body>

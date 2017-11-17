@@ -54,8 +54,7 @@
 							<ul class="nav navbar-nav">
                                 {% if session.user_logged_in %}
                                 <li><a href="/"><i class="fa fa-user"></i> Account</a></li>
-                                <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+								<li><a href="/add_to_cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 <li><a href="/user_logout"><i class="fa fa-lock"></i>Logout</a></li>
                                 {% else %}
                                 <li><a href="/user_register"><i class="fa fa-edit"></i>Register</a></li>
@@ -87,8 +86,7 @@
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="/">Products</a></li>
                                         {% if session.user_logged_in %}
-                                        <li><a href="checkout.html">Checkout</a></li>
-										<li><a href="cart.html">Cart</a></li>
+										<li><a href="/add_to_cart">Cart</a></li>
                                         {% else %}
 										<li><a href="/user_register">Register</a></li>
                                         <li><a href="/user_login">Login</a></li>
@@ -110,6 +108,7 @@
 
 	<section id="slider"><!--slider-->
 		<div class="container">
+        {% include 'includes/_messages.html' %}
 			<div class="row">
 				<div class="col-sm-12">
 					<div id="slider-carousel" class="carousel slide" data-ride="carousel">
@@ -230,7 +229,7 @@
 										<h2>&#36;{{ product.price }}</h2>
                                         <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | round(2, 'common')}} &#37; OFF</h3>
 										<p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>
-										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										<a href="/add_product_to_cart/{{ product.id }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 									</div>
 {#									<div class="product-overlay">#}
 {#										<div class="overlay-content">#}

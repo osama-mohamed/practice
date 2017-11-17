@@ -20,6 +20,7 @@ database.select_db('buy_sell')
 # cursor.execute("DROP TABLE IF EXISTS users;")
 # cursor.execute("DROP TABLE IF EXISTS products;")
 # cursor.execute("DROP TABLE IF EXISTS slider_products;")
+# cursor.execute("DROP TABLE IF EXISTS orders;")
 
 
 cursor.execute("CREATE TABLE IF NOT EXISTS users(\
@@ -60,6 +61,18 @@ cursor.execute("CREATE TABLE IF NOT EXISTS slider_products(\
                 create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);")
 
 cursor.execute("CREATE TABLE IF NOT EXISTS categories (category VARCHAR(255) PRIMARY KEY);")
+
+cursor.execute("CREATE TABLE IF NOT EXISTS orders(\
+                id INT(11) AUTO_INCREMENT PRIMARY KEY,\
+                user_id INT(11) NOT NULL,\
+                user_name VARCHAR(255) NOT NULL,\
+                product_id INT(11) NOT NULL,\
+                quantity INT(11) NOT NULL,\
+                product_name VARCHAR(255) NOT NULL,\
+                price INT(10) NOT NULL,\
+                discount FLOAT NOT NULL,\
+                files TEXT NOT NULL,\
+                order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);")
 
 
 # create default admin account if not exists
@@ -133,6 +146,7 @@ def home():
 
 
 # user part ***********************************************************************************************
+
 
 # user registration validators form
 
@@ -212,6 +226,7 @@ def user_login():
             password = data['password']
             if sha256_crypt.verify(password_candidate, password):
                 session['user_logged_in'] = True
+                session['user_username'] = username
                 cur.close()
                 flash('Now You Are Logged In ', 'success')
                 return redirect(url_for('home'))
@@ -245,6 +260,43 @@ def user_logout():
     session.clear()
     flash('You Are Now Logged Out', 'success')
     return redirect(url_for('user_login'))
+
+
+# add product to the cart
+
+@app.route('/add_product_to_cart/<id>', methods=['post', 'get'])
+@is_user_logged_in
+def add_product_to_cart(id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM products WHERE id = %s", [id])
+    product = cur.fetchone()
+    product_id = product['id']
+    product_name = product['product_name']
+    product_price = product['price']
+    product_discount = product['discount']
+    product_files = product['files']
+    user_name = session['user_username']
+    cur.execute("SELECT id FROM users WHERE username = %s", [session['user_username']])
+    res = cur.fetchone()
+    user_id = res['id']
+    print(user_id)
+    cur.execute("INSERT INTO orders(user_id, user_name, product_id, quantity,\
+                                 product_name, price, discount, files)\
+                                 VALUES(%s, %s, %s, %s, %s, %s, %s, %s)", \
+                (user_id, user_name, product_id, 1, product_name, \
+                 product_price, product_discount, product_files))
+    mysql.connection.commit()
+    cur.close()
+    flash('Added successfully to your cart', 'success')
+    return redirect(url_for('home'))
+
+
+# add to cart page
+
+@app.route('/add_to_cart', methods=['post', 'get'])
+@is_user_logged_in
+def add_to_cart():
+    return render_template('cart.html')
 
 
 # A common part between the admin and the user ********************************************************

@@ -54,8 +54,7 @@
 							<ul class="nav navbar-nav">
                                 {% if session.user_logged_in %}
 								<li><a href=""><i class="fa fa-user"></i> Account</a></li>
-								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+								<li><a href="/add_to_cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 {% else %}
 								<li><a href="/user_register"><i class="fa fa-edit"></i>Register</a></li>
                                 <li><a href="/user_login" class="active"><i class="fa fa-lock"></i>Login</a></li>
@@ -86,8 +85,7 @@
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="/">Products</a></li>
                                         {% if session.user_logged_in %}
-										<li><a href="checkout.html">Checkout</a></li>
-										<li><a href="cart.html">Cart</a></li>
+										<li><a href="/add_to_cart">Cart</a></li>
                                         {% else %}
 										<li><a href="/user_register">Register</a></li>
                                         <li><a href="/user_login" class="active">Login</a></li>
