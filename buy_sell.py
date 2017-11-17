@@ -50,6 +50,8 @@ cursor.execute("CREATE TABLE IF NOT EXISTS products(\
 cursor.execute("CREATE TABLE IF NOT EXISTS slider_products(\
                 id INT(11) AUTO_INCREMENT PRIMARY KEY,\
                 category VARCHAR(100) NOT NULL,\
+                number_of_sales INT(11) NOT NULL,\
+                number_of_views INT(11) NOT NULL,\
                 product_name VARCHAR(255) NOT NULL,\
                 description TEXT NOT NULL,\
                 price INT(10) NOT NULL,\
@@ -61,13 +63,6 @@ cursor.execute("CREATE TABLE IF NOT EXISTS categories (category VARCHAR(255) PRI
 
 
 # create default admin account if not exists
-
-# try:
-#     rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\admin")
-#     os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\admin")
-#     copyfileobj(r'C:\Users\OSAMA\Desktop\buy_sell\static\admin.png', r'C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\admin\admin.png')
-# except:
-#     pass
 
 result = cursor.execute('SELECT username FROM users WHERE username=%s', ['admin'])
 if result > 0:
@@ -163,7 +158,6 @@ def user_register():
         if folder == True:
             flash('Folder Name Already Exists', 'warning')
             return redirect(url_for('user_register'))
-
 
         cur = mysql.connection.cursor()
         cur.execute("SELECT username FROM users WHERE username = %s", [username])
