@@ -270,8 +270,11 @@ def add_to_cart():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM orders WHERE user_name = %s", [session['user_username']])
     orders = cur.fetchall()
+    cur.execute("SELECT SUM((price * quantity) - (quantity * discount)) FROM orders WHERE user_name = %s", [session['user_username']])
+    # cur.execute("SELECT SUM((price * quantity) - (quantity * discount)) AS total FROM orders WHERE user_name = %s", [session['user_username']])
+    order_price = cur.fetchone()
     cur.close()
-    return render_template('cart.html', orders=orders)
+    return render_template('cart.html', orders=orders, price=order_price['SUM((price * quantity) - (quantity * discount))'])
 
 
 # add product to the cart
@@ -280,25 +283,32 @@ def add_to_cart():
 @is_user_logged_in
 def add_product_to_cart(id):
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM products WHERE id = %s", [id])
-    product = cur.fetchone()
-    product_id = product['id']
-    product_name = product['product_name']
-    product_price = product['price']
-    product_discount = product['discount']
-    product_files = product['files']
-    user_name = session['user_username']
-    cur.execute("SELECT id FROM users WHERE username = %s", [session['user_username']])
-    res = cur.fetchone()
-    user_id = res['id']
-    cur.execute("INSERT INTO orders(user_id, user_name, product_id, quantity,\
-                                 product_name, price, discount, files)\
-                                 VALUES(%s, %s, %s, %s, %s, %s, %s, %s)", \
-                (user_id, user_name, product_id, 1, product_name, \
-                 product_price, product_discount, product_files))
-    mysql.connection.commit()
-    cur.close()
-    flash('Added successfully to your cart', 'success')
+
+    result = cur.execute("SELECT product_name FROM orders WHERE product_id = %s", [id])
+    if result > 0:
+        flash('You can not add this product because its already added before!', 'danger')
+        return redirect(url_for('add_to_cart'))
+    if result == 0:
+        cur.execute("SELECT * FROM products WHERE id = %s", [id])
+        product = cur.fetchone()
+        product_id = product['id']
+        product_name = product['product_name']
+        product_price = product['price']
+        product_discount = product['discount']
+        product_files = product['files']
+        user_name = session['user_username']
+        cur.execute("SELECT id FROM users WHERE username = %s", [session['user_username']])
+        res = cur.fetchone()
+        user_id = res['id']
+        cur.execute("INSERT INTO orders(user_id, user_name, product_id, quantity,\
+                                     product_name, price, discount, files)\
+                                     VALUES(%s, %s, %s, %s, %s, %s, %s, %s)", \
+                    (user_id, user_name, product_id, 1, product_name, \
+                     product_price, product_discount, product_files))
+        mysql.connection.commit()
+        cur.close()
+        flash('Added successfully to your cart', 'success')
+        return redirect(url_for('add_to_cart'))
     return redirect(url_for('home'))
 
 

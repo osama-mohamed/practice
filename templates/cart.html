@@ -126,7 +126,7 @@
                         </td>
                         <td class="cart_description">
                             <h4><a href="">{{ order.product_name }}</a></h4>
-                            <p>Web ID: {{ order.product_id }}</p>
+                            <p>Web id: {{ order.product_id }}</p>
                         </td>
                         <td class="cart_price">
                             <p> &#36; {{ order.price }}</p>
@@ -141,12 +141,13 @@
 								</div>
 							</td>
                         <td class="cart_total">
-                            <p class="cart_total_price">&#36; {{ order.price - order.discount }}</p>
+                            <p class="cart_total_price">&#36; {{ (order.price - order.discount) * order.quantity }}</p>
                         </td>
 							<td class="cart_delete">
 								<a class="cart_quantity_delete" href="/delete_product_from_cart/{{ order.product_id }}"><i class="fa fa-times"></i></a>
 							</td>
 						</tr>
+
                         {% endfor %}
 
 
@@ -169,7 +170,7 @@
 									</tr>
 									<tr>
 										<td>Total</td>
-										<td><span>$61</span></td>
+										<td><span>&#36; {{ price }}</span></td>
 									</tr>
 								</table>
 							</td>
