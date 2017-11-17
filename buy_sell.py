@@ -904,20 +904,20 @@ def add_category():
     if request.method == 'POST' and form.validate():
         category = form.category.data.lower()
         cur = mysql.connection.cursor()
-        cur.execute("SELECT * FROM categories WHERE category = BINARY %s", [category])
-        res = cur.fetchone()
-        if category in str(res):
+        result = cur.execute("SELECT * FROM categories WHERE category = BINARY %s", [category])
+        if result > 0:
             flash('This Category Already Exists', 'warning')
             return redirect(url_for('admin_dashboard'))
         if category == ' ':
             flash('You Should Type A Word!', 'warning')
             return redirect(url_for('add_category'))
-        cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO categories (category) VALUES(%s);", ([category]))
-        mysql.connection.commit()
-        cur.close()
-        flash('You Have Added New Category successfully!', 'success')
-        return redirect(url_for('admin_dashboard'))
+        if result == 0:
+            cur = mysql.connection.cursor()
+            cur.execute("INSERT INTO categories (category) VALUES(%s);", ([category]))
+            mysql.connection.commit()
+            cur.close()
+            flash('You Have Added New Category successfully!', 'success')
+            return redirect(url_for('admin_dashboard'))
     return render_template('admin_add_category.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'])
 
 
