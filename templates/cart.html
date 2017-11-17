@@ -103,6 +103,7 @@
 				  <li class="active">Shopping Cart</li>
 				</ol>
 			</div>
+            {% include 'includes/_messages.html' %}
 			<div class="table-responsive cart_info">
 				<table class="table table-condensed">
 					<thead>
@@ -118,10 +119,35 @@
 					<tbody>
 
 
-
+                        {% for order in orders %}
 						<tr>
-
+                        <td class="cart_product">
+							<a href=""><img style="max-width: 110px; max-height: 110px;" src="../../static/uploads/products/{{ order.product_name }}/{{ order.files }}"></a>
+                        </td>
+                        <td class="cart_description">
+                            <h4><a href="">{{ order.product_name }}</a></h4>
+                            <p>Web ID: {{ order.product_id }}</p>
+                        </td>
+                        <td class="cart_price">
+                            <p> &#36; {{ order.price }}</p>
+                        </td>
+							<td class="cart_quantity">
+								<div class="cart_quantity_button">
+									<a class="cart_quantity_up" href="/increase_cart_product_quantity/{{ order.product_id }}"> + </a>
+                                    <form method="post" action="/edit_cart_product_quantity/{{ order.product_id }}">
+                                        <input class="cart_quantity_input" type="text" name="quantity" value="{{ order.quantity }}" autocomplete="off" size="4">
+                                    </form>
+									<a class="cart_quantity_down" href="/decrease_cart_product_quantity/{{ order.product_id }}"> - </a>
+								</div>
+							</td>
+                        <td class="cart_total">
+                            <p class="cart_total_price">&#36; {{ order.price - order.discount }}</p>
+                        </td>
+							<td class="cart_delete">
+								<a class="cart_quantity_delete" href="/delete_product_from_cart/{{ order.product_id }}"><i class="fa fa-times"></i></a>
+							</td>
 						</tr>
+                        {% endfor %}
 
 
 

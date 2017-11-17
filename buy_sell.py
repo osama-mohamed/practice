@@ -262,6 +262,18 @@ def user_logout():
     return redirect(url_for('user_login'))
 
 
+# cart page
+
+@app.route('/add_to_cart', methods=['post', 'get'])
+@is_user_logged_in
+def add_to_cart():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM orders WHERE user_name = %s", [session['user_username']])
+    orders = cur.fetchall()
+    cur.close()
+    return render_template('cart.html', orders=orders)
+
+
 # add product to the cart
 
 @app.route('/add_product_to_cart/<id>', methods=['post', 'get'])
@@ -279,7 +291,6 @@ def add_product_to_cart(id):
     cur.execute("SELECT id FROM users WHERE username = %s", [session['user_username']])
     res = cur.fetchone()
     user_id = res['id']
-    print(user_id)
     cur.execute("INSERT INTO orders(user_id, user_name, product_id, quantity,\
                                  product_name, price, discount, files)\
                                  VALUES(%s, %s, %s, %s, %s, %s, %s, %s)", \
@@ -291,12 +302,67 @@ def add_product_to_cart(id):
     return redirect(url_for('home'))
 
 
-# add to cart page
+# increase cart product quantity in cart page
 
-@app.route('/add_to_cart', methods=['post', 'get'])
+@app.route('/increase_cart_product_quantity/<id>', methods=['post', 'get'])
 @is_user_logged_in
-def add_to_cart():
-    return render_template('cart.html')
+def increase_cart_product_quantity(id):
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE orders SET quantity = quantity + 1 WHERE product_id = {}".format(id))
+    mysql.connection.commit()
+    cur.close()
+    return redirect(url_for('add_to_cart'))
+
+
+# edit cart product quantity in cart page
+
+@app.route('/edit_cart_product_quantity/<id>', methods=['post', 'get'])
+@is_user_logged_in
+def edit_cart_product_quantity(id):
+    quantity = request.form['quantity']
+    if int(quantity) >= 1:
+        cur = mysql.connection.cursor()
+        cur.execute("UPDATE orders SET quantity = %s WHERE product_id = %s", [quantity, id])
+        mysql.connection.commit()
+        cur.close()
+        flash('You have updated the product quantity successfully!', 'success')
+    else:
+        pass
+        flash('You can not put the quantity less than one!', 'danger')
+    return redirect(url_for('add_to_cart'))
+
+
+# decrease cart product quantity in cart page
+
+@app.route('/decrease_cart_product_quantity/<id>', methods=['post', 'get'])
+@is_user_logged_in
+def decrease_cart_product_quantity(id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT quantity FROM orders WHERE product_id = %s", [id])
+    cart_product = cur.fetchone()
+    product_quantity = cart_product['quantity']
+    print(product_quantity)
+    if product_quantity <= 1:
+        flash('You can not put the quantity less than one!', 'danger')
+        pass
+    if product_quantity > 1:
+        cur.execute("UPDATE orders SET quantity = quantity - 1 WHERE product_id = {}".format(id))
+        mysql.connection.commit()
+    cur.close()
+    return redirect(url_for('add_to_cart'))
+
+
+# delete product from cart page
+
+@app.route('/delete_product_from_cart/<id>', methods=['post', 'get'])
+@is_user_logged_in
+def delete_product_from_cart(id):
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM orders WHERE product_id = %s", [id])
+    mysql.connection.commit()
+    cur.close()
+    flash('You have deleted the product successfully from your cart!', 'success')
+    return redirect(url_for('add_to_cart'))
 
 
 # A common part between the admin and the user ********************************************************
