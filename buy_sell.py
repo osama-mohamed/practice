@@ -1009,6 +1009,25 @@ def delete_all_categories():
     return redirect(url_for('admin_dashboard'))
 
 
+# admin search bar
+
+@app.route('/search', methods=['GET', 'POST'])
+@is_admin_logged_in
+def search():
+    if request.method == "POST":
+        cur = mysql.connection.cursor()
+    result = cur.execute("SELECT * FROM `buy_sell`.`products` \
+                         WHERE( CONVERT(`product_name` USING utf8)\
+                         LIKE %s)", [["%" + request.form['search'] + "%"]])
+    categories = cur.fetchall()
+    cur.close()
+    if result > 0:
+        return render_template('catigories.html', categories=categories)
+    else:
+        flash('No Products Found', 'warning')
+        return redirect(url_for('admin_dashboard'))
+
+
 # admin preview all slider products table page
 
 @app.route('/admin/slider_products_table')
