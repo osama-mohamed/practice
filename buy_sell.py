@@ -1022,19 +1022,27 @@ def products_table():
 @app.route('/admin/categories_table')
 @is_admin_logged_in
 def categories_table():
+    listt = []
     cur = mysql.connection.cursor()
     cur.execute("SELECT category FROM categories")
     categories = cur.fetchall()
     for category in categories:
         cc = category['category']
 
-        #
-        # cur.execute("SELECT COUNT(product_name) FROM products WHERE category=%s", [cc])
-        # count_products_by_category = cur.fetchall()
-        # for products_by_category in count_products_by_category:
-        #     print(products_by_category['COUNT(product_name)'])
-        #     session['cat'] = products_by_category['COUNT(product_name)']
-        #     print(session['cat'])
+
+        cur.execute("SELECT COUNT(product_name) FROM products WHERE category=%s", [cc])
+        count_products_by_category = cur.fetchall()
+
+        for products_by_category in count_products_by_category:
+            listt.append(products_by_category['COUNT(product_name)'])
+
+        f = open(r"C:\Users\OSAMA\Desktop\buy_sell\productsbycategory.txt", "w")
+        for item in listt:
+            f.write("%s \n" % item)
+        f.close()
+
+
+
 
 
     cur.execute("SELECT COUNT(category) FROM categories")
