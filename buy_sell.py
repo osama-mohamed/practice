@@ -261,8 +261,27 @@ def preview_production(id):
     products = cur.fetchall()
     cur.execute("SELECT * FROM categories")
     categories = cur.fetchall()
+    cur.execute("UPDATE products SET number_of_views = number_of_views + 1 WHERE id={}".format(id))
+    mysql.connection.commit()
     cur.close()
     return render_template('preview_production.html', product=product, products=products, categories=categories)
+
+
+# preview slider product page
+
+@app.route('/preview_production_slider/<id>/')
+def preview_production_slider(id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM slider_products WHERE id={}".format(id))
+    product = cur.fetchone()
+    cur.execute("SELECT * FROM products")
+    products = cur.fetchall()
+    cur.execute("SELECT * FROM categories")
+    categories = cur.fetchall()
+    cur.execute("UPDATE slider_products SET number_of_views = number_of_views + 1 WHERE id={}".format(id))
+    mysql.connection.commit()
+    cur.close()
+    return render_template('preview_production_slider.html', product=product, products=products, categories=categories)
 
 
 # show all products in specific category 
