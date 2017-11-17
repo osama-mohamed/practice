@@ -158,8 +158,15 @@ def user_register():
     form = RegisterForm(request.form)
     if request.method == 'POST' and form.validate():
         username = form.username.data
+
+        folder = os.path.exists(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(username))
+        if folder == True:
+            flash('Folder Name Already Exists', 'warning')
+            return redirect(url_for('user_register'))
+
+
         cur = mysql.connection.cursor()
-        cur.execute("SELECT username FROM users WHERE username = BINARY %s", [username])
+        cur.execute("SELECT username FROM users WHERE username = %s", [username])
         res = cur.fetchone()
         if username in str(res):
             msg = "User Name Already Exists"
@@ -377,59 +384,68 @@ class AddProductForm(Form):
 def add_product():
     form = AddProductForm(request.form)
     cur = mysql.connection.cursor()
-    cur.execute("SELECT category FROM categories")
+    result = cur.execute("SELECT category FROM categories")
     categories = cur.fetchall()
     cur.close()
+    if result > 0:
+        if request.method == 'POST' and form.validate():
+            product_name = form.product_name.data
 
-    if request.method == 'POST' and form.validate():
-        product_name = form.product_name.data
+            folder = os.path.exists(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name))
+            if folder == True:
+                flash('Folder Name Already Exists', 'warning')
+                return redirect(url_for('add_product'))
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT product_name FROM products WHERE product_name = %s", [product_name])
+            res = cur.fetchone()
+            if product_name in str(res):
+                msg = "Product Name Already Exists"
+                return render_template('admin_add_production.html', form=form, msg=msg, admin_name=session['admin_username'], admin_image=session['admin_image'])
 
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT product_name FROM products WHERE product_name = %s", [product_name])
-        res = cur.fetchone()
-        if product_name in str(res):
-            msg = "Product Name Already Exists"
-            return render_template('admin_add_production.html', form=form, msg=msg, admin_name=session['admin_username'], admin_image=session['admin_image'])
-        else:
+            if request.method == 'POST' and form.validate():
+                file = request.files['file']
+                if file.filename == '':
+                    flash('You Have to Select a File!', 'warning')
+                if file and allowed_file(file.filename):
+                    try:
+                        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name))
+                        os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name))
+                    except:
+                        os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name))
+                    filename = secure_filename(file.filename)
+                    dir = r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name)
+                    file.save(os.path.join(dir, filename))
+                    category = request.form['categories']
+                    description = form.description.data.lower()
+                    price = form.price.data
+                    discount = form.discount.data
 
-            file = request.files['file']
-            if file.filename == '':
-                flash('You Have to Select a File!', 'warning')
-            if file and allowed_file(file.filename):
-                try:
-                    rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name))
-                    os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name))
-                except:
-                    os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name))
-                filename = secure_filename(file.filename)
-                dir = r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name)
-                file.save(os.path.join(dir, filename))
-                category = request.form['categories']
-                description = form.description.data.lower()
-                price = form.price.data
-                discount = form.discount.data
-                
-                if discount != '' and discount != ' ':
-                    p = round((float(price) * float(discount)) / 100, 2)
-                    cur = mysql.connection.cursor()
-                    cur.execute("INSERT INTO products(category, product_name, description, price, discount, files)\
-                                                 VALUES(%s, %s, %s, %s, %s, %s)", \
-                                (category, product_name, description, price, p, filename))
-                    mysql.connection.commit()
-                    cur.close()
-                    flash('Your Product is published successfully!', 'success')
-                    return redirect(url_for('admin_dashboard'))
+                    if discount != '' and discount != ' ':
+                        p = round((float(price) * float(discount)) / 100, 2)
+                        cur = mysql.connection.cursor()
+                        cur.execute("INSERT INTO products(category, product_name, description, price, discount, files)\
+                                                     VALUES(%s, %s, %s, %s, %s, %s)", \
+                                    (category, product_name, description, price, p, filename))
+                        mysql.connection.commit()
+                        cur.close()
+                        flash('Your Product is published successfully!', 'success')
+                        return redirect(url_for('admin_dashboard'))
 
-                if discount == "" or discount == " ":
-                    p = 0
-                    cur = mysql.connection.cursor()
-                    cur.execute("INSERT INTO products(category, product_name, description, price, discount, files)\
-                                                 VALUES(%s, %s, %s, %s, %s, %s)", \
-                                (category, product_name, description, price, p, filename))
-                    mysql.connection.commit()
-                    cur.close()
-                    flash('Your Product is published successfully!', 'success')
-                    return redirect(url_for('admin_dashboard'))
+                    if discount == "" or discount == " ":
+                        p = 0
+                        cur = mysql.connection.cursor()
+                        cur.execute("INSERT INTO products(category, product_name, description, price, discount, files)\
+                                                     VALUES(%s, %s, %s, %s, %s, %s)", \
+                                    (category, product_name, description, price, p, filename))
+                        mysql.connection.commit()
+                        cur.close()
+                        flash('Your Product is published successfully!', 'success')
+                        return redirect(url_for('admin_dashboard'))
+
+    elif result == 0:
+        flash('Create an category first to add a new product', 'warning')
+        return redirect(url_for('admin_dashboard'))
+
     return render_template('admin_add_production.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'])
                                 
                 # cur = mysql.connection.cursor()
@@ -590,63 +606,70 @@ class AddProductsliderForm(Form):
 def add_product_slider():
     form = AddProductsliderForm(request.form)
     cur = mysql.connection.cursor()
-    cur.execute("SELECT category FROM categories")
+    result = cur.execute("SELECT category FROM categories")
     categories = cur.fetchall()
     cur.close()
+    if result > 0:
+        if request.method == 'POST' and form.validate():
+            product_name = form.product_name.data
 
-    if request.method == 'POST' and form.validate():
-        product_name = form.product_name.data
+            folder = os.path.exists(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name))
+            if folder == True :
+                flash('Folder Name Already Exists', 'warning')
+                return redirect(url_for('add_product_slider'))
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT product_name FROM slider_products WHERE product_name = BINARY %s", [product_name])
+            res = cur.fetchone()
+            if product_name in str(res):
+                msg = "Product Name Already Exists"
+                return render_template('admin_add_production_slider.html', form=form, msg=msg)
+            slider_result = cur.execute("SELECT * FROM slider_products")
+            if slider_result < 3:
 
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT product_name FROM slider_products WHERE product_name = BINARY %s", [product_name])
-        res = cur.fetchone()
-        if product_name in str(res):
-            msg = "Product Name Already Exists"
-            return render_template('admin_add_production_slider.html', form=form, msg=msg)
-        slider_result = cur.execute("SELECT * FROM slider_products")
-        if slider_result < 3:
-            
-            file = request.files['file']
-            if file.filename == '':
-                flash('You Have to Select a File!', 'warning')
-            if file and allowed_file(file.filename):
-                try:
-                    rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name))
-                    os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name))
-                except:
-                    os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name))
-                filename = secure_filename(file.filename)
-                dir = r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name)
-                file.save(os.path.join(dir, filename))
-                category = request.form['categories']
-                description = form.description.data.lower()
-                price = form.price.data
-                discount = form.discount.data
+                file = request.files['file']
+                if file.filename == '':
+                    flash('You Have to Select a File!', 'warning')
+                if file and allowed_file(file.filename):
+                    try:
+                        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name))
+                        os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name))
+                    except:
+                        os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name))
+                    filename = secure_filename(file.filename)
+                    dir = r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name)
+                    file.save(os.path.join(dir, filename))
+                    category = request.form['categories']
+                    description = form.description.data.lower()
+                    price = form.price.data
+                    discount = form.discount.data
 
-                if discount != '' and discount != ' ':
-                    p = round((float(price) * float(discount)) / 100, 2)
-                    cur = mysql.connection.cursor()
-                    cur.execute("INSERT INTO slider_products(category, product_name, description, price, discount, files)\
-                                                 VALUES(%s, %s, %s, %s, %s, %s)", \
-                                (category, product_name, description, price, p, filename))
-                    mysql.connection.commit()
-                    cur.close()
-                    flash('Your Product is published to the slider uccessfully!', 'success')
-                    return redirect(url_for('admin_dashboard'))
+                    if discount != '' and discount != ' ':
+                        p = round((float(price) * float(discount)) / 100, 2)
+                        cur = mysql.connection.cursor()
+                        cur.execute("INSERT INTO slider_products(category, product_name, description, price, discount, files)\
+                                                     VALUES(%s, %s, %s, %s, %s, %s)", \
+                                    (category, product_name, description, price, p, filename))
+                        mysql.connection.commit()
+                        cur.close()
+                        flash('Your Product is published to the slider uccessfully!', 'success')
+                        return redirect(url_for('admin_dashboard'))
 
-                if discount == "" or discount == " ":
-                    p = 0
-                    cur = mysql.connection.cursor()
-                    cur.execute("INSERT INTO slider_products(category, product_name, description, price, discount, files)\
-                                                 VALUES(%s, %s, %s, %s, %s, %s)", \
-                                (category, product_name, description, price, p, filename))
-                    mysql.connection.commit()
-                    cur.close()
-                    flash('Your Product is published to the slider successfully!', 'success')
-                    return redirect(url_for('admin_dashboard'))
-        else:
-            flash('You can not add more 3 products in the slider!', 'warning')
-            return redirect(url_for('admin_dashboard'))
+                    if discount == "" or discount == " ":
+                        p = 0
+                        cur = mysql.connection.cursor()
+                        cur.execute("INSERT INTO slider_products(category, product_name, description, price, discount, files)\
+                                                     VALUES(%s, %s, %s, %s, %s, %s)", \
+                                    (category, product_name, description, price, p, filename))
+                        mysql.connection.commit()
+                        cur.close()
+                        flash('Your Product is published to the slider successfully!', 'success')
+                        return redirect(url_for('admin_dashboard'))
+            else:
+                flash('You can not add more 3 products in the slider!', 'warning')
+                return redirect(url_for('admin_dashboard'))
+    elif result == 0:
+        flash('Create an category first to add new slider product', 'warning')
+        return redirect(url_for('admin_dashboard'))
     return render_template('admin_add_production_slider.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'])
 
 
@@ -799,8 +822,15 @@ def add_user():
     form = AdduserForm(request.form)
     if request.method == 'POST' and form.validate():
         username = form.username.data
+
+        folder = os.path.exists(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(username))
+        if folder == True:
+            flash('Folder Name Already Exists', 'warning')
+            return redirect(url_for('add_user'))
+
+
         cur = mysql.connection.cursor()
-        cur.execute("SELECT username FROM users WHERE username = BINARY %s", [username])
+        cur.execute("SELECT username FROM users WHERE username = %s", [username])
         res = cur.fetchone()
         if username in str(res):
             msg = "User Name Already Exists"
@@ -930,7 +960,14 @@ def delete_category(category):
             # pass
         products = cur.fetchall()
         for product in products:
-                rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product['product_name']))
+            rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product['product_name']))
+        slider = cur.execute("SELECT product_name FROM slider_products WHERE category=%s", [category])
+        if slider > 0:
+            pass
+        sliders = cur.fetchall()
+        for slider in sliders:
+            rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(slider['product_name']))
+        cur.execute("DELETE FROM slider_products WHERE category=%s", [category])
         cur.execute("DELETE FROM products WHERE category=%s", [category])
         cur.execute("DELETE FROM categories Where category=%s;", [category])
         mysql.connection.commit()
@@ -947,10 +984,12 @@ def delete_all_categories():
     cur = mysql.connection.cursor()
     cur.execute("TRUNCATE categories")
     cur.execute("TRUNCATE products")
+    cur.execute("TRUNCATE slider_products")
     mysql.connection.commit()
     cur.close()
     try:
         rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products")
+        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products")
         flash('You Has been Deleted All Categories and Products Successfully!', 'success')
     except:
         flash('You Has been Deleted All Categories and Products Successfully!', 'success')
@@ -995,13 +1034,13 @@ def categories_table():
     for category in categories:
         cc = category['category']
 
-
-        cur.execute("SELECT COUNT(product_name) FROM products WHERE category=%s", [cc])
-        count_products_by_category = cur.fetchall()
-        for products_by_category in count_products_by_category:
-            print(products_by_category['COUNT(product_name)'])
-            session['cat'] = products_by_category['COUNT(product_name)']
-            print(session['cat'])
+        #
+        # cur.execute("SELECT COUNT(product_name) FROM products WHERE category=%s", [cc])
+        # count_products_by_category = cur.fetchall()
+        # for products_by_category in count_products_by_category:
+        #     print(products_by_category['COUNT(product_name)'])
+        #     session['cat'] = products_by_category['COUNT(product_name)']
+        #     print(session['cat'])
 
 
     cur.execute("SELECT COUNT(category) FROM categories")
@@ -1011,7 +1050,7 @@ def categories_table():
     products = cur.fetchone()
     count_products = products['COUNT(id)']
     cur.close()
-    return render_template('admin_categories_table.html', categories=categories, count_products=count_products, count_categories=count_categories, products_by_category=session['cat'], admin_name=session['admin_username'], admin_image=session['admin_image'])
+    return render_template('admin_categories_table.html', categories=categories, count_products=count_products, count_categories=count_categories, admin_name=session['admin_username'], admin_image=session['admin_image'])
 
 
 # admin preview all users table page
