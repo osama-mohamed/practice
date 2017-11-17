@@ -66,9 +66,10 @@ cursor.execute("CREATE TABLE IF NOT EXISTS orders(\
                 id INT(11) AUTO_INCREMENT PRIMARY KEY,\
                 user_id INT(11) NOT NULL,\
                 user_name VARCHAR(255) NOT NULL,\
+                status VARCHAR(255) NOT NULL,\
                 product_id INT(11) NOT NULL,\
-                quantity INT(11) NOT NULL,\
                 product_name VARCHAR(255) NOT NULL,\
+                quantity INT(11) NOT NULL,\
                 price INT(10) NOT NULL,\
                 discount FLOAT NOT NULL,\
                 files TEXT NOT NULL,\
@@ -273,8 +274,11 @@ def add_to_cart():
     cur.execute("SELECT SUM((price * quantity) - (quantity * discount)) FROM orders WHERE user_name = %s", [session['user_username']])
     # cur.execute("SELECT SUM((price * quantity) - (quantity * discount)) AS total FROM orders WHERE user_name = %s", [session['user_username']])
     order_price = cur.fetchone()
+    cur.execute("SELECT SUM(quantity) FROM orders WHERE user_name = %s", [session['user_username']])
+    quantities = cur.fetchone()
+    print(quantities['SUM(quantity)'])
     cur.close()
-    return render_template('cart.html', orders=orders, price=order_price['SUM((price * quantity) - (quantity * discount))'])
+    return render_template('cart.html', orders=orders, price=order_price['SUM((price * quantity) - (quantity * discount))'], quantity=quantities['SUM(quantity)'])
 
 
 # add product to the cart
@@ -300,10 +304,10 @@ def add_product_to_cart(id):
         cur.execute("SELECT id FROM users WHERE username = %s", [session['user_username']])
         res = cur.fetchone()
         user_id = res['id']
-        cur.execute("INSERT INTO orders(user_id, user_name, product_id, quantity,\
+        cur.execute("INSERT INTO orders(user_id, user_name, status, product_id, quantity,\
                                      product_name, price, discount, files)\
-                                     VALUES(%s, %s, %s, %s, %s, %s, %s, %s)", \
-                    (user_id, user_name, product_id, 1, product_name, \
+                                     VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", \
+                    (user_id, user_name, 'Pending', product_id, 1, product_name, \
                      product_price, product_discount, product_files))
         mysql.connection.commit()
         cur.close()
@@ -1137,6 +1141,58 @@ def delete_all_categories():
     return redirect(url_for('admin_dashboard'))
 
 
+# admin accept orders
+
+@app.route('/admin/accept_orders/<id>', methods=['post', 'get'])
+@is_admin_logged_in
+def accept_orders(id):
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE orders SET status = %s WHERE product_id = %s", (['Accepted'], id))
+    mysql.connection.commit()
+    cur.close()
+    flash('You have accepted the order Successfully!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
+# admin accept all orders
+
+@app.route('/admin/accept_all_orders', methods=['post', 'get'])
+@is_admin_logged_in
+def accept_all_orders():
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE orders SET status = %s", (['Accepted']))
+    mysql.connection.commit()
+    cur.close()
+    flash('You have accepted all orders Successfully!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
+# admin reject orders
+
+@app.route('/admin/reject_orders/<id>', methods=['post', 'get'])
+@is_admin_logged_in
+def reject_orders(id):
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE orders SET status = %s WHERE product_id = %s", (['Rejected'], id))
+    mysql.connection.commit()
+    cur.close()
+    flash('You have rejected the order Successfully!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
+# admin reject all orders
+
+@app.route('/admin/reject_all_orders', methods=['post', 'get'])
+@is_admin_logged_in
+def reject_all_orders():
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE orders SET status = %s", (['Rejected']))
+    mysql.connection.commit()
+    cur.close()
+    flash('You have rejected all orders Successfully!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
 # admin search bar
 
 @app.route('/search', methods=['GET', 'POST'])
@@ -1232,6 +1288,17 @@ def users_table():
     cur.close()
     return render_template('admin_users_table.html', users=users, admin_name=session['admin_username'], admin_image=session['admin_image'])
 
+
+# admin preview all users table page
+
+@app.route('/admin/orders_table')
+@is_admin_logged_in
+def orders_table():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM orders")
+    orders = cur.fetchall()
+    cur.close()
+    return render_template('admin_orders_table.html', orders=orders, admin_name=session['admin_username'], admin_image=session['admin_image'])
 
 # run whole application function
 

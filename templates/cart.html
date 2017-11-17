@@ -109,11 +109,12 @@
 					<thead>
 						<tr class="cart_menu">
 							<td class="image">Product</td>
-							<td class="description"></td>
+							<td class="description">Name</td>
 							<td class="price">Price</td>
+                            <td class="price">Discount</td>
 							<td class="quantity">Quantity</td>
 							<td class="total">Total</td>
-							<td></td>
+							<td>Delete</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -122,24 +123,27 @@
                         {% for order in orders %}
 						<tr>
                         <td class="cart_product">
-							<a href=""><img style="max-width: 110px; max-height: 110px;" src="../../static/uploads/products/{{ order.product_name }}/{{ order.files }}"></a>
+							<a href="/preview_production/{{ order.product_id }}"><img style="max-width: 110px; max-height: 110px;" src="../../static/uploads/products/{{ order.product_name }}/{{ order.files }}"></a>
                         </td>
                         <td class="cart_description">
-                            <h4><a href="">{{ order.product_name }}</a></h4>
+                            <h4><a href="/preview_production/{{ order.product_id }}">{{ order.product_name }}</a></h4>
                             <p>Web id: {{ order.product_id }}</p>
                         </td>
                         <td class="cart_price">
                             <p> &#36; {{ order.price }}</p>
                         </td>
-							<td class="cart_quantity">
-								<div class="cart_quantity_button">
-									<a class="cart_quantity_up" href="/increase_cart_product_quantity/{{ order.product_id }}"> + </a>
-                                    <form method="post" action="/edit_cart_product_quantity/{{ order.product_id }}">
-                                        <input class="cart_quantity_input" type="text" name="quantity" value="{{ order.quantity }}" autocomplete="off" size="4">
-                                    </form>
-									<a class="cart_quantity_down" href="/decrease_cart_product_quantity/{{ order.product_id }}"> - </a>
-								</div>
-							</td>
+                        <td class="cart_price">
+                            <p> &#36; {{ order.discount }}</p>
+                        </td>
+                        <td class="cart_quantity">
+                            <div class="cart_quantity_button">
+                                <a class="cart_quantity_up" href="/increase_cart_product_quantity/{{ order.product_id }}"> <span style="display: block; margin-top: 3px;">+</span> </a>
+                                <form method="post" action="/edit_cart_product_quantity/{{ order.product_id }}">
+                                    <input class="cart_quantity_input" type="text" name="quantity" value="{{ order.quantity }}" autocomplete="off" size="4">
+                                </form>
+                                <a class="cart_quantity_down" href="/decrease_cart_product_quantity/{{ order.product_id }}"> <span style="display: block; margin-top: 3px;">-</span> </a>
+                            </div>
+                        </td>
                         <td class="cart_total">
                             <p class="cart_total_price">&#36; {{ (order.price - order.discount) * order.quantity }}</p>
                         </td>
@@ -157,12 +161,12 @@
 							<td colspan="2">
 								<table class="table table-condensed total-result">
 									<tr>
-										<td>Cart Sub Total</td>
-										<td>$59</td>
+										<td>Number Of Products</td>
+										<td>{{ orders | length }}</td>
 									</tr>
 									<tr>
-										<td>Exo Tax</td>
-										<td>$2</td>
+										<td>Quantity</td>
+										<td>{{ quantity }}</td>
 									</tr>
 									<tr class="shipping-cost">
 										<td>Shipping Cost</td>
@@ -212,18 +216,7 @@
 						<a class="btn btn-default check_out" href="">Continue</a>
 					</div>
 				</div>
-				<div class="col-sm-6">
-					<div class="total_area">
-						<ul>
-							<li>Cart Sub Total <span>$59</span></li>
-							<li>Eco Tax <span>$2</span></li>
-							<li>Shipping Cost <span>Free</span></li>
-							<li>Total <span>$61</span></li>
-						</ul>
-							<a class="btn btn-default update" href="">Update</a>
-							<a class="btn btn-default check_out" href="">Check Out</a>
-					</div>
-				</div>
+
 			</div>
 		</div>
 	</section><!--/#do_action-->
