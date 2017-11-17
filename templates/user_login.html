@@ -45,18 +45,21 @@
 				<div class="row">
 					<div class="col-sm-4">
 						<div class="logo pull-left">
-							<a href="index.html"><img src="../static/user/images/home/logo.png" alt="" /></a>
+							<a href="/"><img src="../static/user/images/home/logo.png" alt="" /></a>
 						</div>
 
 					</div>
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
+                                {% if session.user_logged_in %}
 								<li><a href=""><i class="fa fa-user"></i> Account</a></li>
 								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
 								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-								<li><a href="login.html"><i class="fa fa-lock"></i>Register</a></li>
-                                <li><a href="login.html" class="active"><i class="fa fa-lock"></i>Login</a></li>
+                                {% else %}
+								<li><a href="/user_register"><i class="fa fa-edit"></i>Register</a></li>
+                                <li><a href="/user_login" class="active"><i class="fa fa-lock"></i>Login</a></li>
+                                {% endif %}
 							</ul>
 						</div>
 					</div>
@@ -78,15 +81,17 @@
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="index.html">Home</a></li>
+								<li><a href="/">Home</a></li>
 								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="shop.html">Products</a></li>
-										<li><a href="product-details.html">Product Details</a></li>
+                                        <li><a href="/">Products</a></li>
+                                        {% if session.user_logged_in %}
 										<li><a href="checkout.html">Checkout</a></li>
 										<li><a href="cart.html">Cart</a></li>
-										<li><a href="login.html">Register</a></li>
-                                        <li><a href="login.html" class="active">Login</a></li>
+                                        {% else %}
+										<li><a href="/user_register">Register</a></li>
+                                        <li><a href="/user_login" class="active">Login</a></li>
+                                        {% endif %}
                                     </ul>
                                 </li>
 							</ul>

@@ -239,7 +239,7 @@ def is_user_logged_in(f):
 
 # user log out
 
-@app.route('/logout')
+@app.route('/user_logout')
 @is_user_logged_in
 def user_logout():
     session.clear()
