@@ -84,7 +84,7 @@
 								<li><a href="/" class="active">Home</a></li>
 								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="/">Products</a></li>
+                                        <li><a href="/products">Products</a></li>
                                         {% if session.user_logged_in %}
 										<li><a href="/add_to_cart">Cart</a></li>
                                         {% else %}
@@ -127,7 +127,7 @@
 									<h2>&#36; {{ slider.price }}</h2>
                                     <h3 style="color: red;">{{ ((100 * slider.discount) / slider.price) | round(2, 'common')}} &#37; OFF</h3>
 									<p>{{ slider.description | truncate(30) }}</p>
-									<button type="button" class="btn btn-default get">Get it now</button>
+                                    <a href="/add_product_to_cart_from_slider/{{ slider.id }}" class="btn btn-default get"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 								</div>
 								<div class="col-sm-6">
                                     <a href="/preview_production_slider/{{ slider.id }}/"><img src="../static/uploads/slider_products/{{ slider.product_name }}/{{ slider.files }}" class="girl img-responsive" style="max-width: 520px; height: 354px;" /></a>
@@ -143,7 +143,7 @@
 									<h2>&#36; {{ slider.price }}</h2>
                                     <h3 style="color: red;">{{ ((100 * slider.discount) / slider.price) | round(2, 'common')}} &#37; OFF</h3>
 									<p>{{ slider.description | truncate(30) }}</p>
-									<button type="button" class="btn btn-default get">Get it now</button>
+									<a href="/add_product_to_cart_from_slider/{{ slider.id }}" class="btn btn-default get"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 								</div>
 								<div class="col-sm-6">
                                     <a href="/preview_production_slider/{{ slider.id }}/"><img src="../static/uploads/slider_products/{{ slider.product_name }}/{{ slider.files }}" class="girl img-responsive" style="max-width: 520px; height: 354px;" /></a>
@@ -159,7 +159,7 @@
 									<h2>&#36; {{ slider.price }}</h2>
                                     <h3 style="color: red;">{{ ((100 * slider.discount) / slider.price) | round(2, 'common')}} &#37; OFF</h3>
 									<p>{{ slider.description | truncate(30) }}</p>
-									<button type="button" class="btn btn-default get">Get it now</button>
+									<a href="/add_product_to_cart_from_slider/{{ slider.id }}" class="btn btn-default get"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 								</div>
 								<div class="col-sm-6">
                                     <a href="/preview_production_slider/{{ slider.id }}/"><img src="../static/uploads/slider_products/{{ slider.product_name }}/{{ slider.files }}" class="girl img-responsive" style="max-width: 520px; height: 354px;" /></a>
@@ -254,47 +254,7 @@
 
 					</div><!--features_items-->
 
-					<div class="category-tab"><!--category-tab-->
-						<div class="col-sm-12">
 
-							<ul class="nav nav-tabs">
-                                {% for category in categories %}
-{#                                  <li class="active"><a href="#tshirt" data-toggle="tab">{{ category.category }}</a></li>#}
-                                    <li><a href="#{{ category.category }}" data-toggle="tab">{{ category.category }}</a></li>
-                                {% endfor %}
-							</ul>
-
-						</div>
-{#						<div class="tab-content">#}
-{##}
-{#                            {% for category in categories %}#}
-{#							<div class="tab-pane fade active in" id="{{ category.category }}">#}
-{##}
-{#                                {% for product in latest_productss %}#}
-{#								<div class="col-sm-3">#}
-{#									<div class="product-image-wrapper">#}
-{#										<div class="single-products">#}
-{##}
-{##}
-{#                                            <div class="productinfo text-center">#}
-{#                                                <a href="/preview_production/{{ product.id }}"><img src="../../static\uploads\products\{{ product.product_name }}\{{ product.files }}" /></a>#}
-{#                                                <h2>&#36;{{ product.price }}</h2>#}
-{#                                                <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | int}} &#37; OFF</h3>#}
-{#                                                <p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>#}
-{#                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>#}
-{#                                            </div>#}
-{##}
-{#										</div>#}
-{#									</div>#}
-{#								</div>#}
-{#                                {% endfor %}#}
-{##}
-{#							</div>#}
-{#                            {% endfor %}#}
-{##}
-{##}
-{#						</div>#}
-					</div><!--/category-tab-->
 
 					<div class="recommended_items"><!--recommended_items-->
 						<h2 class="title text-center">recommended items</h2>
@@ -408,7 +368,18 @@
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
 						</div>
 					</div>
-					<div class="col-sm-7">
+
+                    <div class="col-sm-2">
+						<div class="single-widget">
+							<h2>Service</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="/products">All Products</a></li>
+								<li><a href="/user_register">Register</a></li>
+								<li><a href="/user_login">Login</a></li>
+							</ul>
+						</div>
+					</div>
+                    <div class="col-sm-5">
 
 					</div>
 					<div class="col-sm-3">
@@ -421,71 +392,6 @@
 			</div>
 		</div>
 
-		<div class="footer-widget">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-2">
-						<div class="single-widget">
-							<h2>Service</h2>
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">Online Help</a></li>
-								<li><a href="#">Contact Us</a></li>
-								<li><a href="#">Order Status</a></li>
-								<li><a href="#">Change Location</a></li>
-								<li><a href="#">FAQ’s</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="single-widget">
-							<h2>Quock Shop</h2>
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">T-Shirt</a></li>
-								<li><a href="#">Mens</a></li>
-								<li><a href="#">Womens</a></li>
-								<li><a href="#">Gift Cards</a></li>
-								<li><a href="#">Shoes</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="single-widget">
-							<h2>Policies</h2>
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">Terms of Use</a></li>
-								<li><a href="#">Privecy Policy</a></li>
-								<li><a href="#">Refund Policy</a></li>
-								<li><a href="#">Billing System</a></li>
-								<li><a href="#">Ticket System</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="single-widget">
-							<h2>About Shopper</h2>
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">Company Information</a></li>
-								<li><a href="#">Careers</a></li>
-								<li><a href="#">Store Location</a></li>
-								<li><a href="#">Affillate Program</a></li>
-								<li><a href="#">Copyright</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-3 col-sm-offset-1">
-						<div class="single-widget">
-							<h2>About Shopper</h2>
-							<form action="#" class="searchform">
-								<input type="text" placeholder="Your email address" />
-								<button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
-								<p>Get the most recent updates from <br />our site and be updated your self...</p>
-							</form>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
 
 		<div class="footer-bottom">
 			<div class="container">

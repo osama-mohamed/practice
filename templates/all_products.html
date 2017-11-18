@@ -10,7 +10,6 @@
     <link href="../static/user/css/animate.css" rel="stylesheet">
 	<link href="../static/user/css/main.css" rel="stylesheet">
 	<link href="../static/user/css/responsive.css" rel="stylesheet">
-
 </head><!--/head-->
 
 <body>
@@ -48,7 +47,6 @@
 						<div class="logo pull-left">
 							<a href="/"><img src="../static/user/images/home/logo.png" alt="" /></a>
 						</div>
-
 					</div>
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
@@ -82,60 +80,49 @@
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-
-                                <li><a href="/">Home</a></li>
+								<li><a href="/">Home</a></li>
 								<li class="dropdown"><a href="#" class="active">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="/products">Products</a></li>
-										<li><a href="" class="active">Categories</a></li>
+                                        <li><a href="/products" class="active">Products</a></li>
                                         {% if session.user_logged_in %}
 										<li><a href="/add_to_cart">Cart</a></li>
                                         {% else %}
-										<li><a href="/user_login">Login</a></li>
+										<li><a href="/user_register">Register</a></li>
+                                        <li><a href="/user_login">Login</a></li>
                                         {% endif %}
                                     </ul>
-                                </li>
+                                </li> 
 
 							</ul>
 						</div>
 					</div>
-
+					<div class="col-sm-3">
+						<div class="search_box pull-right">
+							<input type="text" placeholder="Search"/>
+						</div>
+					</div>
 				</div>
 				</div>
 			</div>
 	</header>
-
+	
+	<section id="advertisement">
+		<div class="container">
+			<img src="../static/user/images/shop/advertisement.jpg" alt="" />
+		</div>
+	</section>
 	
 	<section>
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-3">
-					<div class="left-sidebar">
-						<h2>Category</h2>
-						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
 
-                            {% for category in all_categories %}
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title"><a href="/categories/{{ category.category }}">{{ category.category }}</a></h4>
-								</div>
-							</div>
-                            {% endfor %}
-
-						</div><!--/category-productsr-->
-
-
-						
-					</div>
-				</div>
-				
-				<div class="col-sm-9 padding-right">
+				<div class="col-sm-12 padding-right">
 					<div class="features_items"><!--features_items-->
-						<h2 class="title text-center">Category Items</h2>
-                        {% include 'includes/_messages.html' %}
+						<h2 class="title text-center">All Products</h2>
 
-                        {% for product in categories %}
-						<div class="col-sm-4">
+
+                        {% for product in all_products %}
+						<div class="col-sm-3">
 							<div class="product-image-wrapper">
 								<div class="single-products">
 									<div class="productinfo text-center">
@@ -143,10 +130,9 @@
 										<h2>&#36;{{ product.price }}</h2>
                                         <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | round(2, 'common')}} &#37; OFF</h3>
 										<p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>
-										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										<a href="/add_product_to_cart/{{ product.id }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 									</div>
                                     <img src="../static/user/images/home/new.png" class="new" alt="" />
-{#									<img src="../static/user/images/home/sale.png" class="new" alt="" />#}
 								</div>
 								<div class="choose">
 									<ul class="nav nav-pills nav-justified">
@@ -157,7 +143,13 @@
 						</div>
                         {% endfor %}
 
-
+						
+{#						<ul class="pagination">#}
+{#							<li class="active"><a href="">1</a></li>#}
+{#							<li><a href="">2</a></li>#}
+{#							<li><a href="">3</a></li>#}
+{#							<li><a href="">&raquo;</a></li>#}
+{#						</ul>#}
 					</div><!--features_items-->
 				</div>
 			</div>
@@ -186,9 +178,7 @@
 				</div>
 			</div>
 		</div>
-        <br>
-        <br>
-        <br>
+
 		
 		<div class="footer-bottom">
 			<div class="container">
