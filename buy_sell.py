@@ -18,9 +18,11 @@ cursor = database.cursor()
 cursor.execute("CREATE DATABASE IF NOT EXISTS buy_sell DEFAULT CHARSET UTF8")
 database.select_db('buy_sell')
 # cursor.execute("DROP TABLE IF EXISTS users;")
+# cursor.execute("DROP TABLE IF EXISTS categories;")
 # cursor.execute("DROP TABLE IF EXISTS products;")
 # cursor.execute("DROP TABLE IF EXISTS slider_products;")
 # cursor.execute("DROP TABLE IF EXISTS orders;")
+# cursor.execute("DROP TABLE IF EXISTS reviews;")
 
 
 cursor.execute("CREATE TABLE IF NOT EXISTS users(\
@@ -74,6 +76,16 @@ cursor.execute("CREATE TABLE IF NOT EXISTS orders(\
                 discount FLOAT NOT NULL,\
                 files TEXT NOT NULL,\
                 order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);")
+
+cursor.execute("CREATE TABLE IF NOT EXISTS reviews(\
+                id INT(11) AUTO_INCREMENT PRIMARY KEY,\
+                user_id INT(11) NOT NULL,\
+                user_name VARCHAR(255) NOT NULL,\
+                product_id INT(11) NOT NULL,\
+                product_name VARCHAR(255) NOT NULL,\
+                rate TINYINT(2) NOT NULL,\
+                review TEXT NOT NULL,\
+                review_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);")
 
 
 # create default admin account if not exists
@@ -140,7 +152,6 @@ def home():
     latest_products = cur.fetchall()
     cur.execute("SELECT * FROM categories")
     categories = cur.fetchall()
-
     cur.execute("SELECT * FROM products ORDER BY number_of_views DESC LIMIT 3;")
     recommended_products = cur.fetchall()
     cur.execute("SELECT * FROM products ORDER BY number_of_views DESC LIMIT 3 OFFSET 3")
@@ -155,7 +166,7 @@ def home():
 @app.route('/products')
 def products():
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM products")
+    cur.execute("SELECT * FROM products ORDER BY id DESC;")
     all_products = cur.fetchall()
     cur.close()
     return render_template('all_products.html', all_products=all_products)
@@ -335,9 +346,6 @@ def add_product_to_cart(id):
 @app.route('/add_product_to_cart_from_slider/<id>', methods=['post', 'get'])
 @is_user_logged_in
 def add_product_to_cart_from_slider(id):
-    # ide = int(id) * int(-1)
-    # print(ide)
-
     cur = mysql.connection.cursor()
 
     proid = (int(id) * int(-1))
@@ -434,6 +442,36 @@ def delete_product_from_cart(id):
     return redirect(url_for('add_to_cart'))
 
 
+# add product review
+@app.route('/product_review/<id>', methods=['post', 'get'])
+def product_review(id):
+    cur = mysql.connection.cursor()
+
+    result = cur.execute("SELECT user_name FROM reviews WHERE user_name = %s", [session['user_username']])
+    if result == 0:
+        cur.execute("SELECT id, product_name FROM products WHERE id = %s", [id])
+        product = cur.fetchone()
+        product_id = product['id']
+        product_name = product['product_name']
+        cur.execute("SELECT id, username FROM users WHERE username = %s", [session['user_username']])
+        user = cur.fetchone()
+        user_id = user['id']
+        user_name = user['username']
+
+        product_rate = request.form['rate']
+        review = request.form['product_review_area']
+
+        cur.execute("INSERT INTO reviews(user_id, user_name, product_id, product_name, rate, review)\
+                     VALUES(%s, %s, %s, %s, %s, %s)", \
+                    (user_id, user_name, product_id, product_name, product_rate, review))
+        mysql.connection.commit()
+        flash('Your review now added successfully!', 'success')
+    else:
+        flash('You can not add two reviews for one product!', 'danger')
+    cur.close()
+    return redirect(url_for('home'))
+
+
 # A common part between the admin and the user ********************************************************
 
 
@@ -442,6 +480,9 @@ def delete_product_from_cart(id):
 @app.route('/preview_production/<id>/')
 def preview_production(id):
     cur = mysql.connection.cursor()
+    cur.execute("SELECT COUNT(product_id) FROM reviews WHERE product_id={}".format(id))
+    reviews = cur.fetchone()
+    count_reviews = reviews['COUNT(product_id)']
     cur.execute("SELECT * FROM products WHERE id={}".format(id))
     product = cur.fetchone()
     cur.execute("SELECT * FROM products")
@@ -451,7 +492,7 @@ def preview_production(id):
     cur.execute("UPDATE products SET number_of_views = number_of_views + 1 WHERE id={}".format(id))
     mysql.connection.commit()
     cur.close()
-    return render_template('preview_production.html', product=product, products=products, categories=categories)
+    return render_template('preview_production.html', product=product, products=products, categories=categories, count_reviews=count_reviews)
 
 
 # preview slider product page

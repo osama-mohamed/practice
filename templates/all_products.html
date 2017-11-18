@@ -128,11 +128,10 @@
 									<div class="productinfo text-center">
                                         <a href="/preview_production/{{ product.id }}"><img src="../../static\uploads\products\{{ product.product_name }}\{{ product.files }}" style="height: 232px;"/></a>
 										<h2>&#36;{{ product.price }}</h2>
-                                        <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | round(2, 'common')}} &#37; OFF</h3>
+                                        <h4 style="color: red;">{{ ((100 * product.discount) / product.price) | round(2, 'common')}} &#37; OFF</h4>
 										<p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>
 										<a href="/add_product_to_cart/{{ product.id }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 									</div>
-                                    <img src="../static/user/images/home/new.png" class="new" alt="" />
 								</div>
 								<div class="choose">
 									<ul class="nav nav-pills nav-justified">
