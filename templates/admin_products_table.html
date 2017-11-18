@@ -213,12 +213,12 @@
 {#                            <td><a href="/admin/delete_product/{{ product.id }}" class="btn btn-sm btn-outline-danger"><i class="fa fa-times" aria-hidden="true"></i>&emsp; Delete</a></td>#}
                             <td>
                                 <!-- Button trigger modal -->
-                                <button class="btn btn-sm btn-outline-danger" href="" data-toggle="modal" data-target="#delete_product">
+                                <button class="btn btn-sm btn-outline-danger" href="" data-toggle="modal" data-target="#delete_product{{ product.id }}">
                                   <i class="fa fa-times"></i> &emsp; Delete
                                 </button>
                                 <!-- delete product modal -->
                                 <!-- Modal -->
-                                <div class="modal fade" id="delete_product" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="delete_product{{ product.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                   <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                       <div class="modal-header">
