@@ -140,10 +140,15 @@ def home():
     latest_products = cur.fetchall()
     cur.execute("SELECT * FROM categories")
     categories = cur.fetchall()
+
+    cur.execute("SELECT * FROM products ORDER BY number_of_views DESC LIMIT 3;")
+    recommended_products = cur.fetchall()
+    cur.execute("SELECT * FROM products ORDER BY number_of_views DESC LIMIT 3 OFFSET 3")
+    recommended_products_second = cur.fetchall()
     # cur.execute("SELECT * FROM products WHERE category = %s ORDER BY id DESC  LIMIT 8;", ['hosting'])
     # latest_productss = cur.fetchall()
     cur.close()
-    return render_template('home.html', latest_products=latest_products, categories=categories, slider_products_first=slider_products_first, slider_products_second=slider_products_second, slider_products_third=slider_products_third)
+    return render_template('home.html', latest_products=latest_products, categories=categories, slider_products_first=slider_products_first, slider_products_second=slider_products_second, slider_products_third=slider_products_third, recommended_products=recommended_products, recommended_products_second=recommended_products_second)
 
 
 # all products page

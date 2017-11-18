@@ -257,91 +257,63 @@
 
 
 					<div class="recommended_items"><!--recommended_items-->
-						<h2 class="title text-center">recommended items</h2>
+						<h2 class="title text-center">recommended</h2>
 
 						<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
 							<div class="carousel-inner">
+
+
 								<div class="item active">
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="../static/user/images/home/recommend1.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
 
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="../static/user/images/home/recommend2.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
+                                    {% for product in recommended_products %}
+                                    <div class="col-sm-4">
+                                        <div class="product-image-wrapper">
+                                            <div class="single-products">
+                                                <div class="productinfo text-center">
+                                                    <a href="/preview_production/{{ product.id }}"><img src="../../static\uploads\products\{{ product.product_name }}\{{ product.files }}" style="height: 232px;"/></a>
+                                                    <h2>&#36;{{ product.price }}</h2>
+                                                    <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | round(2, 'common')}} &#37; OFF</h3>
+                                                    <p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>
+                                                    <a href="/add_product_to_cart/{{ product.id }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                </div>
+                                            </div>
+                                            <div class="choose">
+                                                <ul class="nav nav-pills nav-justified">
+                                                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
 
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="../static/user/images/home/recommend3.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
-
-											</div>
-										</div>
-									</div>
 								</div>
+
+
 								<div class="item">
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="../static/user/images/home/recommend1.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
 
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="../static/user/images/home/recommend2.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
 
-											</div>
-										</div>
-									</div>
-									<div class="col-sm-4">
-										<div class="product-image-wrapper">
-											<div class="single-products">
-												<div class="productinfo text-center">
-													<img src="../static/user/images/home/recommend3.jpg" alt="" />
-													<h2>$56</h2>
-													<p>Easy Polo Black Edition</p>
-													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-												</div>
+                                    {% for product in recommended_products_second %}
+                                    <div class="col-sm-4">
+                                        <div class="product-image-wrapper">
+                                            <div class="single-products">
+                                                <div class="productinfo text-center">
+                                                    <a href="/preview_production/{{ product.id }}"><img src="../../static\uploads\products\{{ product.product_name }}\{{ product.files }}" style="height: 232px;"/></a>
+                                                    <h2>&#36;{{ product.price }}</h2>
+                                                    <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | round(2, 'common')}} &#37; OFF</h3>
+                                                    <p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>
+                                                    <a href="/add_product_to_cart/{{ product.id }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                </div>
+                                            </div>
+                                            <div class="choose">
+                                                <ul class="nav nav-pills nav-justified">
+                                                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
 
-											</div>
-										</div>
-									</div>
+
 								</div>
 							</div>
 							 <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
