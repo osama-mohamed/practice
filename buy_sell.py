@@ -87,6 +87,24 @@ cursor.execute("CREATE TABLE IF NOT EXISTS reviews(\
                 review TEXT NOT NULL,\
                 review_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);")
 
+cursor.execute("CREATE TABLE IF NOT EXISTS buy_orders(\
+                id INT(11) AUTO_INCREMENT PRIMARY KEY,\
+                user_id INT(11) NOT NULL,\
+                user_name VARCHAR(255) NOT NULL,\
+                status VARCHAR(255) NOT NULL,\
+                product_id INT(11) NOT NULL,\
+                product_name VARCHAR(255) NOT NULL,\
+                quantity INT(11) NOT NULL,\
+                price INT(10) NOT NULL,\
+                discount FLOAT NOT NULL,\
+                country VARCHAR(255) NOT NULL,\
+                region VARCHAR(255) NOT NULL,\
+                address VARCHAR(255) NOT NULL,\
+                phone_number VARCHAR(255) NOT NULL,\
+                comments TEXT NOT NULL,\
+                files TEXT NOT NULL,\
+                order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);")
+
 
 # create default admin account if not exists
 
@@ -256,7 +274,7 @@ def user_login():
                 session['user_username'] = username
                 cur.close()
                 flash('Now You Are Logged In ', 'success')
-                return redirect(url_for('home'))
+                return redirect(url_for('user_account'))
             else:
                 error = 'Wrong Password!'
                 return render_template('user_login.html', error=error)
@@ -289,6 +307,25 @@ def user_logout():
     return redirect(url_for('user_login'))
 
 
+# user account page
+
+@app.route('/user_account', methods=['post', 'get'])
+@is_user_logged_in
+def user_account():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM buy_orders WHERE user_name = %s", [session['user_username']])
+    orders = cur.fetchall()
+    return render_template('user_account.html', orders=orders)
+
+
+# user registration validators form
+
+class CartbuyForm(Form):
+    address = StringField('Address', [validators.InputRequired(), validators.length(min=10, max=200)])
+    phone_number = StringField('Phone Number', [validators.InputRequired()])
+    comments = TextAreaField('Comments', [validators.InputRequired()])
+
+
 # cart page
 
 @app.route('/add_to_cart', methods=['post', 'get'])
@@ -303,7 +340,55 @@ def add_to_cart():
     cur.execute("SELECT SUM(quantity) FROM orders WHERE user_name = %s", [session['user_username']])
     quantities = cur.fetchone()
     cur.close()
-    return render_template('cart.html', orders=orders, price=order_price['SUM((price * quantity) - (quantity * discount))'], quantity=quantities['SUM(quantity)'])
+
+    # result = cur.execute("SELECT count(country) FROM buy_orders WHERE user_name = %s", [session['user_username']])
+    # if result == 0:
+    form = CartbuyForm(request.form)
+    if request.method == 'POST' and form.validate():
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM orders WHERE user_name = %s", [session['user_username']])
+        buy_orders = cur.fetchall()
+        for order in buy_orders:
+            user_id = order['user_id']
+            user_name = order['user_name']
+            # status = order['status']
+            product_id = order['product_id']
+            product_name = order['product_name']
+            quantity = order['quantity']
+            price = order['price']
+            discount = order['discount']
+            files = order['files']
+            cur.execute("INSERT INTO buy_orders(user_id, user_name, status, product_id, product_name,\
+                                            quantity, price, discount, files)\
+                                            VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", \
+                                            (user_id, user_name, 'Pending', product_id, product_name, \
+                                             quantity, price, discount, files))
+            mysql.connection.commit()
+        country = request.form['country']
+        region = request.form['region']
+        address = form.address.data
+        phone_number = form.phone_number.data
+        comments = form.comments.data
+        # cur.execute("INSERT INTO buy_orders(country, region, address, phone_number, comments)\
+        #              VALUES(%s, %s, %s, %s, %s)", \
+        #             (country, region, address, phone_number, comments, [session['user_username']]))
+        cur.execute("UPDATE buy_orders SET country = %s, region = %s, address = %s, phone_number = %s, comments = %s WHERE user_name = %s", \
+                    [country, region, address, phone_number, comments, session['user_username']])
+        cur.execute("DELETE FROM orders WHERE user_name = %s", [session['user_username']])
+        mysql.connection.commit()
+        cur.close()
+        flash('Your order is successfully sent!', 'success')
+        return redirect(url_for('home'))
+    # else:
+    #     pass
+    # elif result >0:
+    #     return render_template('cart.html')
+    else:
+        flash('Your order is successfully sent!', 'danger')
+        # return redirect(url_for('add_to_cart'))
+
+
+    return render_template('cart.html', orders=orders, price=order_price['SUM((price * quantity) - (quantity * discount))'], quantity=quantities['SUM(quantity)'], form=form)
 
 
 # add product to the cart
@@ -485,7 +570,7 @@ def preview_production(id):
     reviews = cur.fetchone()
     count_reviews = reviews['COUNT(product_id)']
 
-    cur.execute("SELECT * FROM reviews WHERE product_id={} ORDER BY id DESC limit 1".format(id))
+    reviewresult = cur.execute("SELECT * FROM reviews WHERE product_id={} ORDER BY id DESC limit 1".format(id))
     review = cur.fetchone()
 
     cur.execute("SELECT * FROM products WHERE id={}".format(id))
@@ -497,7 +582,7 @@ def preview_production(id):
     cur.execute("UPDATE products SET number_of_views = number_of_views + 1 WHERE id={}".format(id))
     mysql.connection.commit()
     cur.close()
-    return render_template('preview_production.html', product=product, products=products, categories=categories, count_reviews=count_reviews, review=review)
+    return render_template('preview_production.html', product=product, products=products, categories=categories, count_reviews=count_reviews, review=review, reviewresult=reviewresult)
 
 
 # preview slider product page
@@ -1394,25 +1479,15 @@ def products_table():
 @app.route('/admin/categories_table')
 @is_admin_logged_in
 def categories_table():
-    listt = []
     cur = mysql.connection.cursor()
     cur.execute("SELECT category FROM categories")
     categories = cur.fetchall()
     for category in categories:
         cc = category['category']
-
-
-        cur.execute("SELECT COUNT(product_name) FROM products WHERE category=%s", [cc])
-        count_products_by_category = cur.fetchall()
-
-        for products_by_category in count_products_by_category:
-            listt.append(products_by_category['COUNT(product_name)'])
-
-        f = open(r"C:\Users\OSAMA\Desktop\buy_sell\productsbycategory.txt", "w")
-        for item in listt:
-            f.write("%s \n" % item)
-        f.close()
-
+        cur.execute("SELECT COUNT(product_name) FROM products WHERE category = %s", [cc])
+        pro_category = cur.fetchone()
+        cat = pro_category['COUNT(product_name)']
+        print(cat)
 
 
 
@@ -1448,7 +1523,7 @@ def users_table():
 @is_admin_logged_in
 def orders_table():
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM orders")
+    cur.execute("SELECT * FROM buy_orders")
     orders = cur.fetchall()
     cur.close()
     return render_template('admin_orders_table.html', orders=orders, admin_name=session['admin_username'], admin_image=session['admin_image'])

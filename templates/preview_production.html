@@ -52,7 +52,7 @@
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
                                 {% if session.user_logged_in %}
-                                <li><a href="/"><i class="fa fa-user"></i> Account</a></li>
+                                <li><a href="/user_account"><i class="fa fa-user"></i> Account</a></li>
 								<li><a href="/add_to_cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 <li><a href="/user_logout"><i class="fa fa-lock"></i>Logout</a></li>
                                 {% else %}
@@ -177,8 +177,10 @@
 								<div class="col-sm-12">
 									<ul>
 										<li><i class="fa fa-user" style="color: #FE980F;"></i>&ensp;{{ review.user_name }}</li> &emsp;
+                                        {% if reviewresult == 1 %}
 										<li><i class="fa fa-clock-o" style="color: #FE980F;"></i>&ensp;{{ review.review_date.strftime('%H:%M:%S') }}</li> &emsp;
 										<li><i class="fa fa-calendar-o" style="color: #FE980F;"></i> &ensp;{{ review.review_date.strftime('%A, %d %B %Y') }}</li>
+                                        {% endif %}
 									</ul>
 									<p>{{ review.review }}</p>
 
