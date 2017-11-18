@@ -313,7 +313,7 @@ def add_to_cart():
 def add_product_to_cart(id):
     cur = mysql.connection.cursor()
 
-    result = cur.execute("SELECT product_name FROM orders WHERE product_id = %s", [id])
+    result = cur.execute("SELECT product_name FROM orders WHERE product_id = %s AND user_name = %s ", [id, session['user_username']])
     if result > 0:
         flash('You can not add this product because its already added before!', 'danger')
         return redirect(url_for('add_to_cart'))
@@ -349,7 +349,7 @@ def add_product_to_cart_from_slider(id):
     cur = mysql.connection.cursor()
 
     proid = (int(id) * int(-1))
-    result = cur.execute("SELECT product_name FROM orders WHERE product_id = %s", [proid])
+    result = cur.execute("SELECT product_name FROM orders WHERE product_id = %s AND user_name = %s ", [proid, session['user_username']])
     if result > 0:
         flash('You can not add this product because its already added before!', 'danger')
         return redirect(url_for('add_to_cart'))
@@ -444,6 +444,7 @@ def delete_product_from_cart(id):
 
 # add product review
 @app.route('/product_review/<id>', methods=['post', 'get'])
+@is_user_logged_in
 def product_review(id):
     cur = mysql.connection.cursor()
 
@@ -483,6 +484,10 @@ def preview_production(id):
     cur.execute("SELECT COUNT(product_id) FROM reviews WHERE product_id={}".format(id))
     reviews = cur.fetchone()
     count_reviews = reviews['COUNT(product_id)']
+
+    cur.execute("SELECT * FROM reviews WHERE product_id={} ORDER BY id DESC limit 1".format(id))
+    review = cur.fetchone()
+
     cur.execute("SELECT * FROM products WHERE id={}".format(id))
     product = cur.fetchone()
     cur.execute("SELECT * FROM products")
@@ -492,7 +497,7 @@ def preview_production(id):
     cur.execute("UPDATE products SET number_of_views = number_of_views + 1 WHERE id={}".format(id))
     mysql.connection.commit()
     cur.close()
-    return render_template('preview_production.html', product=product, products=products, categories=categories, count_reviews=count_reviews)
+    return render_template('preview_production.html', product=product, products=products, categories=categories, count_reviews=count_reviews, review=review)
 
 
 # preview slider product page
