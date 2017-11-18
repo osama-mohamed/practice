@@ -167,6 +167,18 @@
                         <div aria-labelledby="closeCard2" class="dropdown-menu dropdown-menu-right has-shadow">
                             <a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a>
                             <a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a>
+
+                            <!-- Button trigger modal -->
+                            <a class="dropdown-item edit" href="" data-toggle="modal" data-target="#delete_all_users">
+                              <i class="fa fa-times"></i>Delete All Users Accounts
+                            </a>
+
+                            <!-- Button trigger modal -->
+                            <a class="dropdown-item edit" href="" data-toggle="modal" data-target="#delete_all_accounts">
+                              <i class="fa fa-times"></i>Delete All Accounts
+                            </a>
+
+
                         </div>
                       </div>
                     </div>
@@ -197,7 +209,39 @@
                             <td>{{ user.email }}</td>
                             <td>{{ user.gender }}</td>
                             <td>{{ user.username }}</td>
-                            <td><a href="/admin/delete_user/{{ user.id }}" class="btn btn-sm btn-outline-danger"><i class="fa fa-times" aria-hidden="true"></i>&emsp; Delete</a></td>
+{#                            <td><a href="/admin/delete_user/{{ user.id }}" class="btn btn-sm btn-outline-danger"><i class="fa fa-times" aria-hidden="true"></i>&emsp; Delete</a></td>#}
+
+
+                            <td>
+                                <!-- Button trigger modal -->
+                                <button class="btn btn-sm btn-outline-danger" href="" data-toggle="modal" data-target="#delete_user{{ user.id }}">
+                                  <i class="fa fa-times"></i> &emsp; Delete
+                                </button>
+                                <!-- delete product modal -->
+                                <!-- Modal -->
+                                <div class="modal fade" id="delete_user{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Delete Account</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        Are you sure you want to delete this account from the website and its file ?
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <a href="/admin/delete_user/{{ user.id }}"><button class="btn btn-danger">Confirm Delete</button></a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </td>
+
+
+
                           </tr>
                         {% endfor %}
                         </tbody>
@@ -208,6 +252,15 @@
                   <!-- end my users table -->
               </div>
             </div>
+
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
           </section>
         <br>
         <br>
@@ -231,6 +284,63 @@
         </div>
       </div>
     </div>
+
+
+    <!-- delete all users accounts modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="delete_all_users" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete All Users Accounts</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete all users accounts from the website and their files ?
+            <br>
+            <br>
+            You have : &emsp; {{ count_users }} &emsp; {% if count_users == 1 or count_users == 0 %} user {% else %} users {% endif %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <a href="{{ url_for('delete_all_users') }}"><button class="btn btn-danger">Confirm Delete</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- delete all accounts modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="delete_all_accounts" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete All Accounts</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete all accounts from the website and their files ?
+            <br>
+            <br>
+            You have : &emsp; {{ users | length }} &emsp; {% if users | length == 1 or users | length == 0 %} user {% else %} users {% endif %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <a href="{{ url_for('delete_all_accounts') }}"><button class="btn btn-danger">Confirm Delete</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
     <!-- Javascript files-->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="../static/vendor/popper.js/umd/popper.min.js"> </script>

@@ -812,6 +812,8 @@ def delete_product(id):
     except:
         pass
     cur.execute("DELETE FROM products WHERE id = %s", [id])
+    cur.execute("DELETE FROM orders WHERE product_id = %s", [id])
+    cur.execute("DELETE FROM reviews WHERE product_id = %s", [id])
     mysql.connection.commit()
     cur.close()
     flash('Your Product Has been Deleted successfully!', 'success')
@@ -825,6 +827,7 @@ def delete_product(id):
 def delete_all_products():
     cur = mysql.connection.cursor()
     cur.execute("TRUNCATE products")
+    cur.execute("TRUNCATE reviews")
     mysql.connection.commit()
     cur.close()
     try:
@@ -1231,6 +1234,8 @@ def delete_all_categories():
     cur.execute("TRUNCATE categories")
     cur.execute("TRUNCATE products")
     cur.execute("TRUNCATE slider_products")
+    cur.execute("TRUNCATE orders")
+    cur.execute("TRUNCATE reviews")
     mysql.connection.commit()
     cur.close()
     try:
@@ -1241,6 +1246,50 @@ def delete_all_categories():
         flash('You Has been Deleted All Categories and Products Successfully!', 'success')
     return redirect(url_for('admin_dashboard'))
 
+
+# admin delete all users
+
+@app.route('/admin/delete_all_users', methods=['post', 'get'])
+@is_admin_logged_in
+def delete_all_users():
+    cur = mysql.connection.cursor()
+    result = cur.execute("SELECT username FROM users WHERE permission = 'user'")
+    if result >0:
+        name = cur.fetchall()
+        for n in name:
+            rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(n['username']))
+    elif result == 0:
+        pass
+    cur.execute("DELETE FROM users WHERE permission = 'user' ")
+    mysql.connection.commit()
+    cur.close()
+    flash('You Have Deleted All Users Account with their files successfully!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
+# admin delete all accounts
+
+@app.route('/admin/delete_all_accounts', methods=['post', 'get'])
+@is_admin_logged_in
+def delete_all_accounts():
+    try:
+        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users")
+        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products")
+        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products")
+    except:
+        pass
+    cur = mysql.connection.cursor()
+    cur.execute("TRUNCATE users")
+    cur.execute("TRUNCATE categories")
+    cur.execute("TRUNCATE products")
+    cur.execute("TRUNCATE slider_products")
+    cur.execute("TRUNCATE orders")
+    cur.execute("TRUNCATE reviews")
+    mysql.connection.commit()
+    cur.close()
+    session.clear()
+    flash('You Have Deleted All Accounts with their files successfully!', 'success')
+    return redirect(url_for('admin_login'))
 
 # admin accept orders
 
@@ -1386,8 +1435,11 @@ def users_table():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM users")
     users = cur.fetchall()
+    cur.execute("SELECT COUNT(username) FROM users WHERE permission = 'user'")
+    count_userss = cur.fetchone()
+    count_users = count_userss['COUNT(username)']
     cur.close()
-    return render_template('admin_users_table.html', users=users, admin_name=session['admin_username'], admin_image=session['admin_image'])
+    return render_template('admin_users_table.html', users=users, count_users=count_users, admin_name=session['admin_username'], admin_image=session['admin_image'])
 
 
 # admin preview all users table page
@@ -1400,6 +1452,7 @@ def orders_table():
     orders = cur.fetchall()
     cur.close()
     return render_template('admin_orders_table.html', orders=orders, admin_name=session['admin_username'], admin_image=session['admin_image'])
+
 
 # run whole application function
 
