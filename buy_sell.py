@@ -143,8 +143,8 @@ mysql = MySQL(app)
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
-app.config['MAIL_USERNAME'] = 'osama.blog.py@gmail.com'
-app.config['MAIL_PASSWORD'] = 'blogPYosama'
+app.config['MAIL_USERNAME'] = 'osama.buy.sell@gmail.com'
+app.config['MAIL_PASSWORD'] = 'SELLbuyBYOSAMA'
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 mail = Mail(app)
@@ -208,6 +208,65 @@ def products():
     #     print(rate)
     cur.close()
     return render_template('all_products.html', all_products=all_products)
+
+
+# user reset password page
+
+@app.route('/user_forget_password')
+def user_forget_password():
+    return render_template('user_forget_password.html')
+
+
+# send e-mail with link to reset user account password
+
+@app.route("/user_forget_password_email", methods=['GET', 'POST'])
+def user_forget_password_email():
+    if request.form['username_reset'] == '':
+        flash('You did not write a username !', 'warning')
+        return render_template('user_forget_password.html')
+    user_name = request.form['username_reset']
+    cur = mysql.connection.cursor()
+    r = cur.execute("SELECT id, email, username FROM users WHERE username = %s AND permission='user' ", [user_name])
+    res = cur.fetchone()
+    if r > 0:
+        email = res['email']
+        msg = Message()
+        msg.sender = 'osama.buy.sell@gmail.com'
+        msg.subject = "Reset Your Password"
+        msg.recipients = [email]
+        msg.body = "Reset Your Password : http://localhost:5000/user_reset_password/%s \n message sent from Flask-Mail Automatic sender!" % (res['id'])
+        mail.send(msg)
+        flash("The Reset Message has been Sent to your email!", "success")
+        flash("Please check your email!", "warning")
+        return redirect(url_for('home'))
+    else:
+        flash("This username Not Found!", "warning")
+        return redirect(url_for('home'))
+
+
+# reset password form validators
+
+class reset_password(Form):
+    password = PasswordField('Password',
+                             [validators.DataRequired(), validators.Length(min=6, max=100),
+                              validators.EqualTo('confirm', message='Passwords do not match')])
+    confirm = PasswordField('Confirm Password', [validators.DataRequired()])
+
+
+# write new password page
+
+@app.route("/user_reset_password/<id>", methods=['GET', 'POST'])
+def user_reset_password(id):
+    form = reset_password(request.form)
+    if request.method == 'POST' and form.validate():
+        encrypted_password = sha256_crypt.encrypt(str(form.password.data))
+        cur = mysql.connection.cursor()
+        cur.execute("UPDATE users SET password = %s WHERE id = %s AND permission='user'", [encrypted_password, id])
+        mysql.connection.commit()
+        cur.close()
+        flash("You Have Successfully Changed Your Password Now!", "success")
+        return redirect(url_for('home'))
+    return render_template('user_reset_password.html', form=form)
 
 
 # user part ***********************************************************************************************

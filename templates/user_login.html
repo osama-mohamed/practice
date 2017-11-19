@@ -108,7 +108,6 @@
 					<div class="signup-form"><!--sign up form-->
 						<h2>Login!</h2>
 						{% include 'includes/_messages.html' %}
-                        {% from "includes/_formhelpers.html" import render_field %}
                         <form method="post" action="{{ url_for('user_login') }}" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label>Username</label>
@@ -118,10 +117,10 @@
                                 <label>Password</label>
                                 <input type="password" name="password" class="form-control" value="{{request.form.password}}">
                             </div>
-                            <button type="submit" class="btn btn-primary">Login</button>
-                            <a href="/user_login" class="btn btn-danger" style="margin-top: 10px; border-radius: 0; margin-bottom: 20px;">Reset</a>
+                            <button type="submit" class="btn btn-primary" style="margin-top: 20px; margin-bottom: 20px;">Login</button>
                         </form>
-                        <p style="margin-top: 10px; margin-bottom: 200px;">Do not have an account ? &ensp; <a href="/user_register">Click here to create account</a></p>
+                        <p style="margin-top: 10px;">Do not have an account ? &ensp; <a href="/user_register">Create Account</a></p>
+                        <p style="margin-top: 10px; margin-bottom: 200px;">Forget Password ? &ensp; <a href="/user_forget_password">Reset Your Password</a></p>
 					</div><!--/sign up form-->
 				</div>
 			</div>
