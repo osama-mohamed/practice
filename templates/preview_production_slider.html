@@ -143,10 +143,10 @@
 									<span>US {{ product.price }}</span>
 									<label>Quantity:</label>
 									<input type="text" value="3" />
-									<button type="button" class="btn btn-fefault cart">
+									<a href="/add_product_to_cart_from_slider/{{ product.id }}" class="btn btn-fefault cart">
 										<i class="fa fa-shopping-cart"></i>
 										Add to cart
-									</button>
+									</a>
 								</span>
 								<p><b>Discount Price:</b>&emsp; {{ product.price - product.discount }}</p>
                                 <p><b>Category:</b>&emsp; {{ product.category }}</p>

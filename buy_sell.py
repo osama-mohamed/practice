@@ -6,6 +6,7 @@ from passlib.hash import sha256_crypt
 from werkzeug.utils import secure_filename
 from shutil import rmtree, copyfile, copy2, copy, copyfileobj
 from functools import wraps
+from flask_mail import Mail, Message
 import MySQLdb
 import os
 
@@ -138,6 +139,17 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 mysql = MySQL(app)
 
 
+# application configuration to send email with gmail
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USERNAME'] = 'osama.blog.py@gmail.com'
+app.config['MAIL_PASSWORD'] = 'blogPYosama'
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+mail = Mail(app)
+
+
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 
@@ -186,6 +198,14 @@ def products():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM products ORDER BY id DESC;")
     all_products = cur.fetchall()
+
+
+    # for product in all_products:
+    #     product_name = product['product_name']
+    #     print(product_name)
+    #     cur.execute("SELECT SUM(rate) / COUNT(product_name) AS avg_rate FROM reviews WHERE product_name = %s;", [product_name])
+    #     rate = cur.fetchall()
+    #     print(rate)
     cur.close()
     return render_template('all_products.html', all_products=all_products)
 
@@ -315,7 +335,10 @@ def user_account():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM buy_orders WHERE user_name = %s", [session['user_username']])
     orders = cur.fetchall()
-    return render_template('user_account.html', orders=orders)
+    cur.execute("SELECT files FROM users WHERE username = %s", [session['user_username']])
+    image = cur.fetchone()
+    user_image = image['files']
+    return render_template('user_account.html', orders=orders, user_image=user_image)
 
 
 # user registration validators form
@@ -401,6 +424,7 @@ def buy():
                 flash('Your order is successfully sent!', 'success')
                 return redirect(url_for('home'))
             elif result == 0:
+                cur.close()
                 flash('you can not be able to buy until you add product to your cart', 'danger')
                 return redirect(url_for('add_to_cart'))
         return render_template('buy.html', form=form)
@@ -597,8 +621,12 @@ def preview_production(id):
     categories = cur.fetchall()
     cur.execute("UPDATE products SET number_of_views = number_of_views + 1 WHERE id={}".format(id))
     mysql.connection.commit()
+
+    cur.execute("SELECT SUM(rate) / COUNT(product_name) AS avg_rate FROM reviews WHERE product_id = %s;", [id])
+    rate = cur.fetchone()
+
     cur.close()
-    return render_template('preview_production.html', product=product, products=products, categories=categories, count_reviews=count_reviews, review=review, reviewresult=reviewresult)
+    return render_template('preview_production.html', product=product, products=products, categories=categories, count_reviews=count_reviews, review=review, reviewresult=reviewresult, rate=rate)
 
 
 # preview slider product page
