@@ -22,6 +22,7 @@ database.select_db('buy_sell')
 # cursor.execute("DROP TABLE IF EXISTS categories;")
 # cursor.execute("DROP TABLE IF EXISTS products;")
 # cursor.execute("DROP TABLE IF EXISTS slider_products;")
+# cursor.execute("DROP TABLE IF EXISTS buy_orders;")
 # cursor.execute("DROP TABLE IF EXISTS orders;")
 # cursor.execute("DROP TABLE IF EXISTS reviews;")
 
@@ -720,6 +721,24 @@ def categories(category):
     else:
         msg = 'No Products Found!'
         return render_template('catigories.html', msg=msg, all_categories=all_categories)
+
+
+# user search bar
+
+@app.route('/user_search', methods=['GET', 'POST'])
+def user_search():
+    if request.method == "POST":
+        cur = mysql.connection.cursor()
+        result = cur.execute("SELECT * FROM `buy_sell`.`products` \
+                             WHERE( CONVERT(`product_name` USING utf8)\
+                             LIKE %s)", [["%" + request.form['search'] + "%"]])
+        categories = cur.fetchall()
+        cur.close()
+        if result > 0:
+            return render_template('catigories.html', categories=categories)
+        else:
+            flash('No Products Found', 'warning')
+            return redirect(url_for('home'))
 
 
 # admin part ***********************************************************************************************
@@ -1540,16 +1559,16 @@ def reject_all_orders():
 def search():
     if request.method == "POST":
         cur = mysql.connection.cursor()
-    result = cur.execute("SELECT * FROM `buy_sell`.`products` \
-                         WHERE( CONVERT(`product_name` USING utf8)\
-                         LIKE %s)", [["%" + request.form['search'] + "%"]])
-    categories = cur.fetchall()
-    cur.close()
-    if result > 0:
-        return render_template('catigories.html', categories=categories)
-    else:
-        flash('No Products Found', 'warning')
-        return redirect(url_for('admin_dashboard'))
+        result = cur.execute("SELECT * FROM `buy_sell`.`products` \
+                             WHERE( CONVERT(`product_name` USING utf8)\
+                             LIKE %s)", [["%" + request.form['search'] + "%"]])
+        categories = cur.fetchall()
+        cur.close()
+        if result > 0:
+            return render_template('catigories.html', categories=categories)
+        else:
+            flash('No Products Found', 'warning')
+            return redirect(url_for('admin_dashboard'))
 
 
 # admin preview all slider products table page

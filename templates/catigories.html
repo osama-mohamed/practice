@@ -143,7 +143,7 @@
 										<h2>&#36;{{ product.price }}</h2>
                                         <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | round(2, 'common')}} &#37; OFF</h3>
 										<p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>
-										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										<a href="/add_product_to_cart/{{ product.id }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 									</div>
                                     <img src="../static/user/images/home/new.png" class="new" alt="" />
 {#									<img src="../static/user/images/home/sale.png" class="new" alt="" />#}
