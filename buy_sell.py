@@ -348,10 +348,10 @@ def add_to_cart():
 # buy orders page
 
 @app.route('/buy', methods=['post', 'get'])
+@is_user_logged_in
 def buy():
     cur = mysql.connection.cursor()
     nat = cur.execute("SELECT * FROM orders WHERE user_name = %s", [session['user_username']])
-    print(nat)
     if nat > 0:
         form = CartbuyForm(request.form)
         if request.method == 'POST' and form.validate():
@@ -374,7 +374,6 @@ def buy():
                              quantity, price, discount, files))
                 mysql.connection.commit()
             result = cur.execute("SELECT country FROM buy_orders WHERE country = '' AND user_name = %s", [session['user_username']])
-            print(result)
             if result > 0:
                 country = request.form['country']
                 region = request.form['region']
@@ -383,6 +382,21 @@ def buy():
                 comments = form.comments.data
                 cur.execute("UPDATE buy_orders SET country = %s, region = %s, address = %s, phone_number = %s, comments = %s WHERE  country = '' AND user_name = %s", \
                     [country, region, address, phone_number, comments, session['user_username']])
+
+                cur.execute("SELECT * FROM orders WHERE user_name = %s", [session['user_username']])
+                confirm_orders = cur.fetchall()
+                for confirm_order in confirm_orders:
+                    product_name = confirm_order['product_name']
+                    cur.execute("UPDATE products SET number_of_sales = number_of_sales + 1 WHERE product_name = %s", [product_name])
+                    mysql.connection.commit()
+
+                for confir_order in confirm_orders:
+                    produc_name = confir_order['product_name']
+                    cur.execute("UPDATE slider_products SET number_of_sales = number_of_sales + 1 WHERE product_name = %s", [produc_name])
+                    mysql.connection.commit()
+
+
+
                 cur.execute("DELETE FROM orders WHERE user_name = %s", [session['user_username']])
                 mysql.connection.commit()
                 cur.close()
