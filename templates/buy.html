@@ -54,7 +54,7 @@
 							<ul class="nav navbar-nav">
                                 {% if session.user_logged_in %}
 								<li><a href="/user_account"><i class="fa fa-user"></i> Account</a></li>
-								<li><a href="" class="active"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+								<li><a href="/add_to_cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
 								<li><a href="/user_logout"><i class="fa fa-lock"></i> Logout</a></li>
                                 {% endif %}
 							</ul>
@@ -83,7 +83,7 @@
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="/products">Products</a></li>
                                         {% if session.user_logged_in %}
-										<li><a href="/add_to_cart" class="active">Cart</a></li>
+										<li><a href="/buy" class="active">Checkout</a></li>
                                         {% endif %}
                                     </ul>
                                 </li>
@@ -104,96 +104,75 @@
 				</ol>
 			</div>
             {% include 'includes/_messages.html' %}
-			<div class="table-responsive cart_info">
-				<table class="table table-condensed">
-					<thead>
-						<tr class="cart_menu">
-							<td class="image">Product</td>
-							<td class="description">Name</td>
-							<td class="price">Price</td>
-                            <td class="price">Discount</td>
-							<td class="quantity">Quantity</td>
-							<td class="total">Total</td>
-							<td>Delete</td>
-						</tr>
-					</thead>
-					<tbody>
-
-
-                        {% for order in orders %}
-						<tr>
-                        <td class="cart_product">
-							<a href="/preview_production/{{ order.product_id }}"><img style="max-width: 110px; max-height: 110px;" src="../../static/uploads/products/{{ order.product_name }}/{{ order.files }}"></a>
-                            <a href="/preview_production_slider/{{ order.product_id - order.product_id - order.product_id }}"><img style="max-width: 110px; max-height: 110px;" src="../../static/uploads/slider_products/{{ order.product_name }}/{{ order.files }}"></a>
-                        </td>
-                        <td class="cart_description">
-                            <h4>{{ order.product_name }}</h4>
-                            <p>Web id: {{ order.product_id }}</p>
-                        </td>
-                        <td class="cart_price">
-                            <p> &#36; {{ order.price }}</p>
-                        </td>
-                        <td class="cart_price">
-                            <p> &#36; {{ order.discount }}</p>
-                        </td>
-                        <td class="cart_quantity">
-                            <div class="cart_quantity_button">
-                                <a class="cart_quantity_up" href="/increase_cart_product_quantity/{{ order.product_id }}"> <span style="display: block; margin-top: 3px;">+</span> </a>
-                                <form method="post" action="/edit_cart_product_quantity/{{ order.product_id }}">
-                                    <input class="cart_quantity_input" type="text" name="quantity" value="{{ order.quantity }}" autocomplete="off" size="4">
-                                </form>
-                                <a class="cart_quantity_down" href="/decrease_cart_product_quantity/{{ order.product_id }}"> <span style="display: block; margin-top: 3px;">-</span> </a>
-                            </div>
-                        </td>
-                        <td class="cart_total">
-                            <p class="cart_total_price">&#36; {{ ((order.price - order.discount) * order.quantity) | round(2, 'common') }}</p>
-                        </td>
-							<td class="cart_delete">
-								<a class="cart_quantity_delete" href="/delete_product_from_cart/{{ order.product_id }}"><i class="fa fa-times"></i></a>
-							</td>
-						</tr>
-
-                        {% endfor %}
-
-
-
-                        <tr>
-							<td colspan="4">&nbsp;</td>
-							<td colspan="2">
-								<table class="table table-condensed total-result">
-									<tr>
-										<td>Number Of Products</td>
-										<td>{{ orders | length }}</td>
-									</tr>
-									<tr>
-										<td>Quantity</td>
-                                        {% if f | length == 0 %}
-                                        <td>0</td>
-                                        {% else %}
-										<td>{{ quantity }}</td>
-                                        {% endif %}
-									</tr>
-									<tr class="shipping-cost">
-										<td>Shipping Cost</td>
-										<td>Free</td>
-									</tr>
-									<tr>
-										<td>Total</td>
-                                        {% if f | length == 0 %}
-                                        <td><span>&#36; 0</span></td>
-                                        {% else %}
-										<td><span>&#36; {{ price | round(2, 'common') }}</span></td>
-                                        {% endif %}
-									</tr>
-								</table>
-                            <a href="{{ url_for('buy') }}" class="btn btn-primary">Finish Buy Request &raquo;</a>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
 		</div>
 	</section> <!--/#cart_items-->
+
+	<section id="do_action">
+		<div class="container">
+			<div class="heading">
+				<h3>What would you like to do next?</h3>
+				<p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="chose_area">
+                        {% from "includes/_formhelpers.html" import render_field %}
+                        <form method="post" action="{{ url_for('buy') }}" style="margin-left: 25px;">
+                            <div class="form-group">
+                                <label>Select Country</label> &emsp;
+                                <select name="country" class="btn btn-default btn-sm dropdown-toggle">
+                                    {% include 'includes/select_country.html' %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Select Region</label> &emsp;
+                                <select name="region" class="btn btn-default btn-sm dropdown-toggle">
+                                    {% include 'includes/select_region.html' %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                {{ render_field(form.address, class="form-control", autocomplete="off") }}
+                            </div>
+                            <div class="form-group">
+                                {{ render_field(form.phone_number, class="form-control", autocomplete="off") }}
+                            </div>
+                            <div class="form-group">
+                                {{ render_field(form.comments, class="form-control", autocomplete="off") }}
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg" style="display: block; margin: 10px auto; padding: 10px 50px;">Buy</button>
+                        </form>
+{#                        <form method="post" action="{{ url_for('home') }}">#}
+{#                            <ul class="user_info">#}
+{#                                <li class="single_field">#}
+{#                                    <label>Country:</label>#}
+{#                                    <select name="">#}
+{#                                        {% include 'includes/select_country.html' %}#}
+{#                                    </select>#}
+{#                                </li>#}
+{#                                <li class="single_field">#}
+{#                                    <label>Region / State:</label>#}
+{#                                    <select name="">#}
+{#                                        {% include 'includes/select_region.html' %}#}
+{#                                    </select>#}
+{#                                </li>#}
+{#                            </ul>#}
+{#                            <label style="margin-left: 16px;">Address</label>#}
+{#                            <input type="text" name="" class="form-control" style="margin-left: 13px;">#}
+{#                            <br>#}
+{#                            <label style="margin-left: 16px;">Phone Number</label>#}
+{#                            <input type="text" name="" class="form-control" style="margin-left: 13px;">#}
+{#                            <br>#}
+{#                            <label style="margin-left: 16px;">Comments</label>#}
+{#                            <textarea name="" cols="60" rows="6" class="form-control" style="display: block; margin: 10px 10px 13px;"></textarea>#}
+{#                            <a class="btn btn-default update" href="">Get Quotes</a>#}
+{#                            <a class="btn btn-default check_out" href="">Continue</a>#}
+{#                        </form>#}
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section><!--/#do_action-->
 
 	<footer id="footer"><!--Footer-->
 		<div class="footer-top">

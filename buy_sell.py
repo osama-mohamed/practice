@@ -334,12 +334,21 @@ def add_to_cart():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM orders WHERE user_name = %s", [session['user_username']])
     orders = cur.fetchall()
+    cur.execute("SELECT user_name FROM orders WHERE user_name = %s", [session['user_username']])
+    f = cur.fetchall()
     cur.execute("SELECT SUM((price * quantity) - (quantity * discount)) FROM orders WHERE user_name = %s", [session['user_username']])
     # cur.execute("SELECT SUM((price * quantity) - (quantity * discount)) AS total FROM orders WHERE user_name = %s", [session['user_username']])
     order_price = cur.fetchone()
     cur.execute("SELECT SUM(quantity) FROM orders WHERE user_name = %s", [session['user_username']])
     quantities = cur.fetchone()
     cur.close()
+    return render_template('cart.html', orders=orders, price=order_price['SUM((price * quantity) - (quantity * discount))'], quantity=quantities['SUM(quantity)'], f=f)
+
+
+# buy orders page
+
+@app.route('/buy', methods=['post', 'get'])
+def buy():
 
     # result = cur.execute("SELECT count(country) FROM buy_orders WHERE user_name = %s", [session['user_username']])
     # if result == 0:
@@ -361,8 +370,8 @@ def add_to_cart():
             cur.execute("INSERT INTO buy_orders(user_id, user_name, status, product_id, product_name,\
                                             quantity, price, discount, files)\
                                             VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", \
-                                            (user_id, user_name, 'Pending', product_id, product_name, \
-                                             quantity, price, discount, files))
+                        (user_id, user_name, 'Pending', product_id, product_name, \
+                         quantity, price, discount, files))
             mysql.connection.commit()
         country = request.form['country']
         region = request.form['region']
@@ -372,23 +381,19 @@ def add_to_cart():
         # cur.execute("INSERT INTO buy_orders(country, region, address, phone_number, comments)\
         #              VALUES(%s, %s, %s, %s, %s)", \
         #             (country, region, address, phone_number, comments, [session['user_username']]))
-        cur.execute("UPDATE buy_orders SET country = %s, region = %s, address = %s, phone_number = %s, comments = %s WHERE user_name = %s", \
-                    [country, region, address, phone_number, comments, session['user_username']])
+        cur.execute(
+            "UPDATE buy_orders SET country = %s, region = %s, address = %s, phone_number = %s, comments = %s WHERE user_name = %s", \
+            [country, region, address, phone_number, comments, session['user_username']])
         cur.execute("DELETE FROM orders WHERE user_name = %s", [session['user_username']])
         mysql.connection.commit()
         cur.close()
         flash('Your order is successfully sent!', 'success')
         return redirect(url_for('home'))
+
     # else:
-    #     pass
-    # elif result >0:
-    #     return render_template('cart.html')
-    else:
-        flash('Your order is successfully sent!', 'danger')
+    #     flash('Your order is successfully sent!', 'danger')
         # return redirect(url_for('add_to_cart'))
-
-
-    return render_template('cart.html', orders=orders, price=order_price['SUM((price * quantity) - (quantity * discount))'], quantity=quantities['SUM(quantity)'], form=form)
+    return render_template('buy.html', form=form)
 
 
 # add product to the cart
