@@ -361,7 +361,6 @@ def buy():
             for order in buy_orders:
                 user_id = order['user_id']
                 user_name = order['user_name']
-                # status = order['status']
                 product_id = order['product_id']
                 product_name = order['product_name']
                 quantity = order['quantity']
@@ -396,55 +395,6 @@ def buy():
     elif nat == 0:
         flash('you can not be able to buy until you add product to your cart 1', 'danger')
         return redirect(url_for('add_to_cart'))
-
-
-
-            # form = CartbuyForm(request.form)
-            # if request.method == 'POST' and form.validate():
-            #     cur = mysql.connection.cursor()
-            #     cur.execute("SELECT * FROM orders WHERE user_name = %s", [session['user_username']])
-            #     buy_orders = cur.fetchall()
-            #     for order in buy_orders:
-            #         user_id = order['user_id']
-            #         user_name = order['user_name']
-            #         # status = order['status']
-            #         product_id = order['product_id']
-            #         product_name = order['product_name']
-            #         quantity = order['quantity']
-            #         price = order['price']
-            #         discount = order['discount']
-            #         files = order['files']
-            #         cur.execute("INSERT INTO buy_orders(user_id, user_name, status, product_id, product_name,\
-            #                                         quantity, price, discount, files)\
-            #                                         VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", \
-            #                     (user_id, user_name, 'Pending', product_id, product_name, \
-            #                      quantity, price, discount, files))
-            #         mysql.connection.commit()
-            #     country = request.form['country']
-            #     region = request.form['region']
-            #     address = form.address.data
-            #     phone_number = form.phone_number.data
-            #     comments = form.comments.data
-                # cur.execute("INSERT INTO buy_orders(country, region, address, phone_number, comments)\
-                #              VALUES(%s, %s, %s, %s, %s)", \
-                #             (country, region, address, phone_number, comments, [session['user_username']]))
-                # cur.execute(
-                #     "UPDATE buy_orders SET country = %s, region = %s, address = %s, phone_number = %s, comments = %s WHERE user_name = %s", \
-                #     [country, region, address, phone_number, comments, session['user_username']])
-                # cur.execute("DELETE FROM orders WHERE user_name = %s", [session['user_username']])
-                # mysql.connection.commit()
-                # cur.close()
-                # flash('Your order is successfully sent!', 'success')
-                # return redirect(url_for('home'))
-        # elif result == 0:
-        #     flash('you can not be able to buy until you add product to your cart', 'danger')
-        #     return redirect(url_for('add_to_cart'))
-
-        # else:
-        #     flash('Your order is successfully sent!', 'danger')
-            # return redirect(url_for('add_to_cart'))
-
-
 
 
 # add product to the cart
