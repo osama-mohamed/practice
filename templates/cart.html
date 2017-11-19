@@ -10,6 +10,11 @@
     <link href="../static/user/css/animate.css" rel="stylesheet">
 	<link href="../static/user/css/main.css" rel="stylesheet">
 	<link href="../static/user/css/responsive.css" rel="stylesheet">
+    <style>
+        .cart_product{
+            margin: 0;
+        }
+    </style>
 </head><!--/head-->
 
 <body>
@@ -148,9 +153,9 @@
                         <td class="cart_total">
                             <p class="cart_total_price">&#36; {{ ((order.price - order.discount) * order.quantity) | round(2, 'common') }}</p>
                         </td>
-							<td class="cart_delete">
-								<a class="cart_quantity_delete" href="/delete_product_from_cart/{{ order.product_id }}"><i class="fa fa-times"></i></a>
-							</td>
+                        <td class="cart_delete">
+                            <a class="cart_quantity_delete" href="/delete_product_from_cart/{{ order.product_id }}"><i class="fa fa-times"></i></a>
+                        </td>
 						</tr>
 
                         {% endfor %}
@@ -159,7 +164,7 @@
 
                         <tr>
 							<td colspan="4">&nbsp;</td>
-							<td colspan="2">
+							<td colspan="4">
 								<table class="table table-condensed total-result">
 									<tr>
 										<td>Number Of Products</td>

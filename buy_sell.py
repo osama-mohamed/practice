@@ -395,19 +395,17 @@ def buy():
                     cur.execute("UPDATE slider_products SET number_of_sales = number_of_sales + 1 WHERE product_name = %s", [produc_name])
                     mysql.connection.commit()
 
-
-
                 cur.execute("DELETE FROM orders WHERE user_name = %s", [session['user_username']])
                 mysql.connection.commit()
                 cur.close()
                 flash('Your order is successfully sent!', 'success')
                 return redirect(url_for('home'))
             elif result == 0:
-                flash('you can not be able to buy until you add product to your cart 2', 'danger')
+                flash('you can not be able to buy until you add product to your cart', 'danger')
                 return redirect(url_for('add_to_cart'))
         return render_template('buy.html', form=form)
     elif nat == 0:
-        flash('you can not be able to buy until you add product to your cart 1', 'danger')
+        flash('you can not be able to buy until you add product to your cart', 'danger')
         return redirect(url_for('add_to_cart'))
 
 
@@ -463,7 +461,6 @@ def add_product_to_cart_from_slider(id):
         product = cur.fetchone()
         # product_id = product['id']
         product_id = (int(product['id']) * int(-1))
-        print(product_id)
         product_name = product['product_name']
         product_price = product['price']
         product_discount = product['discount']
@@ -523,7 +520,6 @@ def decrease_cart_product_quantity(id):
     cur.execute("SELECT quantity FROM orders WHERE product_id = %s", [id])
     cart_product = cur.fetchone()
     product_quantity = cart_product['quantity']
-    print(product_quantity)
     if product_quantity <= 1:
         flash('You can not put the quantity less than one!', 'danger')
         pass
@@ -657,7 +653,6 @@ def admin_login():
                 cur.execute("SELECT files FROM users WHERE username = %s", [username])
                 files = cur.fetchone()
                 image = files['files']
-                print(image)
                 session['admin_logged_in'] = True
                 session['admin_username'] = username
                 session['admin_image'] = image
@@ -1340,6 +1335,7 @@ def delete_all_categories():
     cur.execute("TRUNCATE products")
     cur.execute("TRUNCATE slider_products")
     cur.execute("TRUNCATE orders")
+    cur.execute("TRUNCATE buy_orders")
     cur.execute("TRUNCATE reviews")
     mysql.connection.commit()
     cur.close()
@@ -1389,6 +1385,7 @@ def delete_all_accounts():
     cur.execute("TRUNCATE products")
     cur.execute("TRUNCATE slider_products")
     cur.execute("TRUNCATE orders")
+    cur.execute("TRUNCATE buy_orders")
     cur.execute("TRUNCATE reviews")
     mysql.connection.commit()
     cur.close()
@@ -1396,13 +1393,14 @@ def delete_all_accounts():
     flash('You Have Deleted All Accounts with their files successfully!', 'success')
     return redirect(url_for('admin_login'))
 
+
 # admin accept orders
 
 @app.route('/admin/accept_orders/<id>', methods=['post', 'get'])
 @is_admin_logged_in
 def accept_orders(id):
     cur = mysql.connection.cursor()
-    cur.execute("UPDATE orders SET status = %s WHERE product_id = %s", (['Accepted'], id))
+    cur.execute("UPDATE buy_orders SET status = %s WHERE product_id = %s", (['Accepted'], id))
     mysql.connection.commit()
     cur.close()
     flash('You have accepted the order Successfully!', 'success')
@@ -1415,7 +1413,7 @@ def accept_orders(id):
 @is_admin_logged_in
 def accept_all_orders():
     cur = mysql.connection.cursor()
-    cur.execute("UPDATE orders SET status = %s", (['Accepted']))
+    cur.execute("UPDATE buy_orders SET status = %s", (['Accepted']))
     mysql.connection.commit()
     cur.close()
     flash('You have accepted all orders Successfully!', 'success')
@@ -1428,7 +1426,7 @@ def accept_all_orders():
 @is_admin_logged_in
 def reject_orders(id):
     cur = mysql.connection.cursor()
-    cur.execute("UPDATE orders SET status = %s WHERE product_id = %s", (['Rejected'], id))
+    cur.execute("UPDATE buy_orders SET status = %s WHERE product_id = %s", (['Rejected'], id))
     mysql.connection.commit()
     cur.close()
     flash('You have rejected the order Successfully!', 'success')
@@ -1441,7 +1439,7 @@ def reject_orders(id):
 @is_admin_logged_in
 def reject_all_orders():
     cur = mysql.connection.cursor()
-    cur.execute("UPDATE orders SET status = %s", (['Rejected']))
+    cur.execute("UPDATE buy_orders SET status = %s", (['Rejected']))
     mysql.connection.commit()
     cur.close()
     flash('You have rejected all orders Successfully!', 'success')
@@ -1507,7 +1505,6 @@ def categories_table():
         cur.execute("SELECT COUNT(product_name) FROM products WHERE category = %s", [cc])
         pro_category = cur.fetchone()
         cat = pro_category['COUNT(product_name)']
-        print(cat)
 
 
 
