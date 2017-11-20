@@ -115,7 +115,7 @@
 
                 <div class="card-body">
                     {% include 'includes/_messages.html' %}
-                    <h3 class="text-center" style="margin-top: -30px;">Hello {{ session['user_username'] }}</h3>
+                    <h3 class="text-center" style="margin-top: 0;">Hello {{ session['user_username'] }}</h3>
                     <img src="../static/uploads/users/{{ session['user_username'] }}/{{ user_image }}" style="max-width: 20%; max-height: 20%; display: block; margin: 30px auto 65px; border-radius: 6px;">
                       <table class="table table-striped">
                         <thead>

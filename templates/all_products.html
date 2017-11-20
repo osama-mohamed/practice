@@ -146,10 +146,10 @@
 
 
 {#						<ul class="pagination">#}
-{#							<li class="active"><a href="/products/1">1</a></li>#}
-{#                            {% for product in all_products %}#}
-{#							<li><a href="">2</a></li>#}
-{#							<li><a href="">3</a></li>#}
+{#							<li><a href="/products/1">1</a></li>#}
+{#                            {% for product in number_of_products %}#}
+{##}
+{#							<li><a href="/products/{{ product.id + 1 }}">{{ product.id + 1 }}</a></li>#}
 {#                            {% endfor %}#}
 {#							<li><a href="">&raquo;</a></li>#}
 {#						</ul>#}

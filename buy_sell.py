@@ -64,7 +64,8 @@ cursor.execute("CREATE TABLE IF NOT EXISTS slider_products(\
                 files TEXT NOT NULL,\
                 create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);")
 
-cursor.execute("CREATE TABLE IF NOT EXISTS categories (category VARCHAR(255) PRIMARY KEY);")
+cursor.execute("CREATE TABLE IF NOT EXISTS categories (category VARCHAR(255) PRIMARY KEY,\
+                number_of_products INT(11) NOT NULL);")
 
 cursor.execute("CREATE TABLE IF NOT EXISTS orders(\
                 id INT(11) AUTO_INCREMENT PRIMARY KEY,\
@@ -199,6 +200,11 @@ def products():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM products ORDER BY id DESC;")
     all_products = cur.fetchall()
+
+    # cur.execute("SELECT * FROM products ORDER BY id ASC LIMIT 2;")
+    # number_of_products = cur.fetchall()
+    # cur.execute("SELECT * FROM products ORDER BY id DESC LIMIT 2 OFFSET {};".format(id))
+    # all_products = cur.fetchall()
 
 
     # for product in all_products:
@@ -878,6 +884,7 @@ def add_product():
                         cur.execute("INSERT INTO products(category, product_name, description, price, discount, files)\
                                                      VALUES(%s, %s, %s, %s, %s, %s)", \
                                     (category, product_name, description, price, p, filename))
+                        cur.execute("UPDATE categories SET number_of_products = number_of_products + 1 WHERE category = %s", [category])
                         mysql.connection.commit()
                         cur.close()
                         flash('Your Product is published successfully!', 'success')
@@ -889,6 +896,7 @@ def add_product():
                         cur.execute("INSERT INTO products(category, product_name, description, price, discount, files)\
                                                      VALUES(%s, %s, %s, %s, %s, %s)", \
                                     (category, product_name, description, price, p, filename))
+                        cur.execute("UPDATE categories SET number_of_products = number_of_products + 1 WHERE category = %s", [category])
                         mysql.connection.commit()
                         cur.close()
                         flash('Your Product is published successfully!', 'success')
@@ -1010,9 +1018,10 @@ def edit_product(id):
 @is_admin_logged_in
 def delete_product(id):
     cur = mysql.connection.cursor()
-    cur.execute("SELECT product_name FROM products WHERE id = %s", [id])
+    cur.execute("SELECT product_name, category FROM products WHERE id = %s", [id])
     name = cur.fetchone()
     n = name['product_name']
+    category = name['category']
     try:
         rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(n))
     except:
@@ -1020,6 +1029,7 @@ def delete_product(id):
     cur.execute("DELETE FROM products WHERE id = %s", [id])
     cur.execute("DELETE FROM orders WHERE product_id = %s", [id])
     cur.execute("DELETE FROM reviews WHERE product_id = %s", [id])
+    cur.execute("UPDATE categories SET number_of_products = number_of_products - 1 WHERE category = %s", [category])
     mysql.connection.commit()
     cur.close()
     flash('Your Product Has been Deleted successfully!', 'success')
@@ -1604,16 +1614,8 @@ def products_table():
 @is_admin_logged_in
 def categories_table():
     cur = mysql.connection.cursor()
-    cur.execute("SELECT category FROM categories")
+    cur.execute("SELECT * FROM categories")
     categories = cur.fetchall()
-    for category in categories:
-        cc = category['category']
-        cur.execute("SELECT COUNT(product_name) FROM products WHERE category = %s", [cc])
-        pro_category = cur.fetchone()
-        cat = pro_category['COUNT(product_name)']
-
-
-
 
     cur.execute("SELECT COUNT(category) FROM categories")
     category = cur.fetchone()
