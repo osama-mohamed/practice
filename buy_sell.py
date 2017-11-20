@@ -1312,6 +1312,7 @@ def delete_product_slider(id):
     except:
         pass
     cur.execute("DELETE FROM slider_products WHERE id = %s", [id])
+    cur.execute("DELETE FROM slider_reviews WHERE product_id = %s", [id])
     mysql.connection.commit()
     cur.close()
     flash('Your slider Product Has been Deleted successfully!', 'success')
@@ -1325,6 +1326,7 @@ def delete_product_slider(id):
 def delete_all_slider_products():
     cur = mysql.connection.cursor()
     cur.execute("TRUNCATE slider_products")
+    cur.execute("TRUNCATE slider_reviews")
     mysql.connection.commit()
     cur.close()
     try:
@@ -1474,6 +1476,8 @@ def edit_category(current_category):
             cur.execute("UPDATE categories SET category=%s WHERE category=%s;", ([category], [current_category]))
             cur.execute("UPDATE products SET category=%s WHERE category=%s", \
                         ([category], [current_category]))
+            cur.execute("UPDATE slider_products SET category=%s WHERE category=%s", \
+                        ([category], [current_category]))
             mysql.connection.commit()
             cur.close()
             flash('You Have Edited Category successfully!', 'success')
@@ -1521,6 +1525,7 @@ def delete_all_categories():
     cur.execute("TRUNCATE orders")
     cur.execute("TRUNCATE buy_orders")
     cur.execute("TRUNCATE reviews")
+    cur.execute("TRUNCATE slider_reviews")
     mysql.connection.commit()
     cur.close()
     try:
@@ -1571,6 +1576,7 @@ def delete_all_accounts():
     cur.execute("TRUNCATE orders")
     cur.execute("TRUNCATE buy_orders")
     cur.execute("TRUNCATE reviews")
+    cur.execute("TRUNCATE slider_reviews")
     mysql.connection.commit()
     cur.close()
     session.clear()
