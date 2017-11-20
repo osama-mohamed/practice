@@ -1382,6 +1382,32 @@ def delete_all_slider_products():
     return redirect(url_for('admin_dashboard'))
 
 
+# admin delete slider product review
+
+@app.route('/admin/delete_review_slider_product/<id>', methods=['post', 'get'])
+@is_admin_logged_in
+def delete_review_slider_product(id):
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM slider_reviews WHERE product_id = %s", [id])
+    mysql.connection.commit()
+    cur.close()
+    flash('Slider product review has been deleted successfully!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
+# admin delete all products reviews
+
+@app.route('/admin/delete_all_slider_products_reviews', methods=['post', 'get'])
+@is_admin_logged_in
+def delete_all_slider_products_reviews():
+    cur = mysql.connection.cursor()
+    cur.execute("TRUNCATE slider_reviews")
+    mysql.connection.commit()
+    cur.close()
+    flash('All slider products reviews has been deleted successfully!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
 # admin create user account validator form
 
 class AdduserForm(Form):
