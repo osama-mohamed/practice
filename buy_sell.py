@@ -1141,6 +1141,32 @@ def delete_all_products():
     return redirect(url_for('admin_dashboard'))
 
 
+# admin delete product review
+
+@app.route('/admin/delete_review_products/<id>', methods=['post', 'get'])
+@is_admin_logged_in
+def delete_review_products(id):
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM reviews WHERE product_id = %s", [id])
+    mysql.connection.commit()
+    cur.close()
+    flash('Product review has been deleted successfully!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
+# admin delete all products reviews
+
+@app.route('/admin/delete_all_review_products', methods=['post', 'get'])
+@is_admin_logged_in
+def delete_all_review_products():
+    cur = mysql.connection.cursor()
+    cur.execute("TRUNCATE reviews")
+    mysql.connection.commit()
+    cur.close()
+    flash('All products reviews has been deleted successfully!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
 # slider product validators form
 
 class AddProductsliderForm(Form):
@@ -1755,6 +1781,30 @@ def orders_table():
     orders = cur.fetchall()
     cur.close()
     return render_template('admin_orders_table.html', orders=orders, admin_name=session['admin_username'], admin_image=session['admin_image'])
+
+
+# admin review products table page
+
+@app.route('/admin/review_products')
+@is_admin_logged_in
+def review_products():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM reviews")
+    review_products = cur.fetchall()
+    cur.close()
+    return render_template('admin_products_reviews.html', review_products=review_products, admin_name=session['admin_username'], admin_image=session['admin_image'])
+
+
+# admin review products table page
+
+@app.route('/admin/review_slider_products')
+@is_admin_logged_in
+def review_slider_products():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM slider_reviews")
+    review_slider_products = cur.fetchall()
+    cur.close()
+    return render_template('admin_slider_products_reviews.html', review_slider_products=review_slider_products, admin_name=session['admin_username'], admin_image=session['admin_image'])
 
 
 # run whole application function

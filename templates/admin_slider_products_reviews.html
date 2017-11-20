@@ -131,8 +131,8 @@
               </ul>
             </li>
             <li><a href="/admin/slider_products_table"> <i class="fa fa-sliders"></i>Slider Products Table</a></li>
-            <li><a href="/admin/review_slider_products"> <i class="fa fa-comments-o"></i>Slider Review Table</a></li>
-            <li class="active"><a href="/admin/products_table"> <i class="icon-grid"></i>Products Table</a></li>
+            <li class="active"><a href="/admin/review_slider_products"> <i class="fa fa-comments-o"></i>Slider Review Table</a></li>
+            <li><a href="/admin/products_table"> <i class="icon-grid"></i>Products Table</a></li>
             <li><a href="/admin/review_products"> <i class="fa fa-comment-o"></i>Review Products Table</a></li>
             <li><a href="/admin/categories_table"> <i class="fa fa-bars"></i>Categories Table</a></li>
             <li><a href="/admin/users_table"> <i class="fa fa-users"></i>users Table</a></li>
@@ -154,7 +154,7 @@
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/admin/">Home</a></li>
                 <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active">Products Table</li>
+                <li class="breadcrumb-item active">Review Slider Products Table</li>
             </ul>
           </div>
           <section class="tables">   
@@ -182,37 +182,34 @@
                       </div>
                     </div>
                     <div class="card-header d-flex align-items-center">
-                      <h3 class="h4">Products Table &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; products : &emsp; {{ products | length }}</h3>
+                      <h3 class="h4">Review Slider Products Table &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; Reviews : &emsp; {{ review_slider_products | length }}</h3>
                     </div>
                     <div class="card-body">
                       <table class="table table-striped">
                         <thead>
                           <tr>
-                            <th>ID</th>
-                            <th>Category</th>
+                            <th>User id</th>
+                            <th>User Name</th>
+                            <th>Product id</th>
                             <th>Product Name</th>
-                            <th>Price</th>
-                            <th>Discount</th>
-                            <th>Sales</th>
-                            <th>Views</th>
+                            <th>Rate</th>
+                            <th>Review</th>
+                            <th>Review Date</th>
                             <th>Preview</th>
-                            <th>Edit</th>
                             <th>Delete</th>
                           </tr>
                         </thead>
                         <tbody>
-                        {% for product in products %}
+                        {% for product in review_slider_products %}
                           <tr>
-                            <td>{{ product.id }}</td>
-                            <td><a href="/categories/{{ product.category }}" >{{ product.category }}</a></td>
+                            <td>{{ product.user_id }}</td>
+                            <td>{{ product.user_name }}</td>
+                            <td>{{ product.product_id }}</td>
                             <td>{{ product.product_name }}</td>
-                            <td>{{ product.price }}</td>
-                            <td>{{ product.discount }}</td>
-                            <td>{{ product.number_of_sales }}</td>
-                            <td>{{ product.number_of_views }}</td>
-                            <td><a href="/preview_production/{{ product.id }}" class="btn btn-sm btn-outline-info"><i class="fa fa-eye" aria-hidden="true"></i>&emsp; Preview</a></td>
-                            <td><a href="/admin/edit_product/{{ product.id }}" class="btn btn-sm btn-outline-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&emsp; Edit</a></td>
-{#                            <td><a href="/admin/delete_product/{{ product.id }}" class="btn btn-sm btn-outline-danger"><i class="fa fa-times" aria-hidden="true"></i>&emsp; Delete</a></td>#}
+                            <td>{{ product.rate }}</td>
+                            <td>{{ product.review | truncate(30) }}</td>
+                            <td>{{ product.review_date.strftime('%a, %d %b %Y %H:%M:%S') }}</td>
+                            <td><a href="/preview_production_slider/{{ product.product_id }}" class="btn btn-sm btn-outline-info"><i class="fa fa-eye" aria-hidden="true"></i>&emsp; Preview</a></td>
                             <td>
                                 <!-- Button trigger modal -->
                                 <button class="btn btn-sm btn-outline-danger" href="" data-toggle="modal" data-target="#delete_product{{ product.id }}">
@@ -304,10 +301,8 @@
             You have : &emsp; {{ products | length }} &emsp; {% if products|length == 1 or products|length == 0 %} product {% else %} products {% endif %}
           </div>
           <div class="modal-footer">
-{#              <form method="post" action="{{ url_for('delete_all_products') }}">#}
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             <a href="{{ url_for('delete_all_products') }}"><button class="btn btn-danger">Confirm Delete</button></a>
-{#              </form>#}
           </div>
         </div>
       </div>
