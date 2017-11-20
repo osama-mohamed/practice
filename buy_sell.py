@@ -787,6 +787,9 @@ def preview_production_slider(id):
     reviews = cur.fetchone()
     count_reviews = reviews['COUNT(product_id)']
 
+    cur.execute("SELECT SUM(rate) / COUNT(product_name) AS avg_rate FROM slider_reviews WHERE product_id = %s;", [id])
+    rate = cur.fetchone()
+
     cur.execute("SELECT * FROM slider_products WHERE id={}".format(id))
     product = cur.fetchone()
     cur.execute("SELECT * FROM products ORDER BY id DESC LIMIT 6")
@@ -796,7 +799,7 @@ def preview_production_slider(id):
     cur.execute("UPDATE slider_products SET number_of_views = number_of_views + 1 WHERE id={}".format(id))
     mysql.connection.commit()
     cur.close()
-    return render_template('preview_production_slider.html', product=product, products=products, categories=categories, slider_reviewresult=slider_reviewresult, slider_review=slider_review, count_reviews=count_reviews)
+    return render_template('preview_production_slider.html', product=product, products=products, categories=categories, slider_reviewresult=slider_reviewresult, slider_review=slider_review, count_reviews=count_reviews, rate=rate)
 
 
 # show all products in specific category 
@@ -896,20 +899,55 @@ def admin_logout():
 @is_admin_logged_in
 def admin_dashboard():
     cur = mysql.connection.cursor()
+    # count slider products
     cur.execute("SELECT COUNT(id) FROM slider_products")
     sliders = cur.fetchone()
     count_sliders = sliders['COUNT(id)']
+    # count products
     cur.execute("SELECT COUNT(id) FROM products")
     products = cur.fetchone()
     count_products = products['COUNT(id)']
+    # count users
     cur.execute("SELECT COUNT(id) FROM users")
     users = cur.fetchone()
     count_users = users['COUNT(id)']
+    # count categories
     cur.execute("SELECT COUNT(category) FROM categories")
     categories = cur.fetchone()
     count_categories = categories['COUNT(category)']
+    # count number of sales for products
+    cur.execute("SELECT SUM(number_of_sales) FROM products")
+    number_of_sales = cur.fetchone()
+    count_number_of_sales = number_of_sales['SUM(number_of_sales)']
+    # count number of sales for slider products
+    cur.execute("SELECT SUM(number_of_sales) FROM slider_products")
+    number_of_sales = cur.fetchone()
+    count_number_of_sales_slider = number_of_sales['SUM(number_of_sales)']
+    # show product where it has a big number of sales
+    cur.execute("SELECT * FROM products ORDER BY number_of_sales DESC LIMIT 1")
+    product_saled = cur.fetchone()
+    # show slider product where it has a big number of sales
+    cur.execute("SELECT * FROM slider_products ORDER BY number_of_sales DESC LIMIT 1")
+    slider_saled = cur.fetchone()
+    # show slider product where it has a big number of rates
+    cur.execute("SELECT * FROM slider_reviews ORDER BY rate DESC LIMIT 1")
+    slider_big = cur.fetchone()
+    # show slider product where it has a small number of rates
+    cur.execute("SELECT * FROM slider_reviews ORDER BY rate ASC LIMIT 1")
+    slider_small = cur.fetchone()
+
+    # show product product where it has a big number of rates
+    cur.execute("SELECT * FROM reviews ORDER BY rate DESC LIMIT 1")
+    product_big = cur.fetchone()
+    # show product product where it has a small number of rates
+    cur.execute("SELECT * FROM reviews ORDER BY rate ASC LIMIT 1")
+    product_small = cur.fetchone()
+
+
+
+    #
     cur.close()
-    return render_template('admin_dashboard.html', count_sliders=count_sliders, count_products=count_products, count_users=count_users, count_categories=count_categories, admin_name=session['admin_username'], admin_image=session['admin_image'])
+    return render_template('admin_dashboard.html', count_sliders=count_sliders, count_products=count_products, count_users=count_users, count_categories=count_categories, admin_name=session['admin_username'], admin_image=session['admin_image'], count_number_of_sales=count_number_of_sales, count_number_of_sales_slider=count_number_of_sales_slider, product_saled=product_saled, slider_saled=slider_saled, slider_big=slider_big, slider_small=slider_small, product_big=product_big, product_small=product_small)
 
 
 # product validators form

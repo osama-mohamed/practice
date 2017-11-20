@@ -153,7 +153,7 @@
               <p class="lead">Hello {{ admin_name }}</p>
             </div>
           </header>
-            <!-- start my dashboard -->
+            <!-- start my dashboard 1 -->
             <section class="dashboard-counts no-padding-bottom">
                 <div class="container-fluid">
                     {% include 'includes/_messages.html' %}
@@ -218,7 +218,148 @@
                   </div>
                 </div>
             </section>
-            <!-- end my dashboard -->
+            <!-- end my dashboard 1 -->
+
+
+
+
+
+
+            <!-- start my dashboard 2 -->
+            <section class="dashboard-counts no-padding-bottom">
+                <div class="container-fluid">
+                  <div class="row bg-white has-shadow">
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                          <a href="/admin/slider_products_table" style="color: #54e69d;"><div class="icon bg-green"><i class="fa fa-plus" style="margin-top: 12px;"></i></div>
+                        <div class="title"><span>Slider<br>Sum Sales</span></a>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #54e69d;"><strong>{{ count_number_of_sales_slider | safe }}</strong></div>
+                      </div>
+                      </div>
+
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <a href="/admin/products_table" style="color: #17a2b8;"><div class="icon bg-info"><i class="fa fa-plus-circle" style="color: #fff; margin-top: 12px;"></i></div>
+                        <div class="title"><span>Product<br>Sum Sales</span></a>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #17a2b8;"><strong>{{ count_number_of_sales | safe }}</strong></div>
+                      </div>
+                    </div>
+
+                    <!-- Item -->
+                    <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <a href="/preview_production_slider/{{ slider_saled.id }}" style="color: #796AEE;"><div class="icon bg-violet"><i class="fa fa-user-plus" style="margin-left: 5px; margin-top: 11px;"></i></div>
+                        <div class="title"><span>Slider<br>Sales</span></a>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #796AEE;"><strong>{{ slider_saled.number_of_sales | safe }}</strong></div>
+                      </div>
+                    </div>
+
+
+                    <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <a href="/preview_production/{{ product_saled.id }}" style="color: #ffc36d;"><div class="icon bg-orange"><i class="fa fa-star-o" style="margin-top: 12px; margin-left: 1px;"></i></div>
+                        <div class="title"><span>Product<br>Sales</span></a>
+                          <div class="progress">
+                          </div>
+                        </div>
+                          <div class="number" style="color: #ffc36d;"><strong>{{ product_saled.number_of_sales | safe }}</strong></div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+            </section>
+            <!-- end my dashboard 2 -->
+
+
+
+
+
+
+           <!-- start my dashboard 3 -->
+            <section class="dashboard-counts no-padding-bottom">
+                <div class="container-fluid">
+                  <div class="row bg-white has-shadow">
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                          <a href="/preview_production_slider/{{ slider_big.product_id }}" style="color: #54e69d;"><div class="icon bg-green"><i class="fa fa-plus" style="margin-top: 12px;"></i></div>
+                        <div class="title"><span>Slider<br>High Rate</span></a>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #54e69d;"><strong>{{ slider_big.rate | safe }}</strong></div>
+                      </div>
+                      </div>
+
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <a href="/preview_production_slider/{{ slider_small.product_id }}" style="color: #17a2b8;"><div class="icon bg-info"><i class="fa fa-plus-circle" style="color: #fff; margin-top: 12px;"></i></div>
+                        <div class="title"><span>Slider<br>Low Rate</span></a>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #17a2b8;"><strong>{{ slider_small.rate | safe }}</strong></div>
+                      </div>
+                    </div>
+
+                    <!-- Item -->
+                    <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <a href="/preview_production/{{ product_big.product_id }}" style="color: #796AEE;"><div class="icon bg-violet"><i class="fa fa-user-plus" style="margin-left: 5px; margin-top: 11px;"></i></div>
+                        <div class="title"><span>Product<br>High Rate</span></a>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #796AEE;"><strong>{{ product_big.rate | safe }}</strong></div>
+                      </div>
+                    </div>
+
+
+                    <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <a href="/preview_production/{{ product_small.product_id }}" style="color: #ffc36d;"><div class="icon bg-orange"><i class="fa fa-star-o" style="margin-top: 12px; margin-left: 1px;"></i></div>
+                        <div class="title"><span>Product<br>Low Rate</span></a>
+                          <div class="progress">
+                          </div>
+                        </div>
+                          <div class="number" style="color: #ffc36d;"><strong>{{ product_small.rate | safe }}</strong></div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+            </section>
+            <!-- end my dashboard 3 -->
+
+
+
+
+
+
+
+
+
+
+
 
           <br>
           <br>

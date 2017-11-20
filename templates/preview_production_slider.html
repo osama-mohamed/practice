@@ -150,6 +150,23 @@
 								</span>
 								<p><b>Discount Price:</b>&emsp; {{ product.price - product.discount }}</p>
                                 <p><b>Category:</b>&emsp; {{ product.category }}</p>
+                                <p><b>AVG Rate:</b>&emsp;
+                                    {% if rate['avg_rate'] in range(1,6) %}
+                                    {{ rate['avg_rate'] | int }}
+                                    &#47; 5
+                                    {% elif rate['avg_rate'] == 0.1,6.0 %}
+                                        {% if rate['avg_rate'] == None %}
+                                        {{ 'Not Rated Yet' }}
+                                        {% else %}
+                                        {{ rate['avg_rate'] | round(2, 'common') }}
+                                        &#47; 5
+                                        {% endif %}
+{#                                    {{ rate['avg_rate'] | round(2, 'common') }}#}
+{#                                    &#47; 5#}
+                                    {% elif rate['avg_rate'] == None %}
+                                    {{ 'Not Rated Yet' }}
+                                    {% endif %}
+                                </p>
                                 <p><b>Availability:</b>&emsp; In Stock</p>
                                 <p><b>Puplished In:</b>&emsp; {{ product.create_date.strftime('%a, %d %b %Y %H:%M:%S') }}</p>
 {#								<a href=""><img src="../../static/user/images/product-details/share.png" class="share img-responsive"  alt="" /></a>#}
