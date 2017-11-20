@@ -430,6 +430,25 @@ def user_account():
     return render_template('user_account.html', orders=orders, user_image=user_image)
 
 
+# delete user account
+
+@app.route('/delete_user_account', methods=['post', 'get'])
+@is_user_logged_in
+def delete_user_account():
+    rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(session['user_username']))
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM orders WHERE user_name = %s", [session['user_username']])
+    cur.execute("DELETE FROM buy_orders WHERE user_name = %s", [session['user_username']])
+    cur.execute("DELETE FROM reviews WHERE user_name = %s", [session['user_username']])
+    cur.execute("DELETE FROM slider_reviews WHERE user_name = %s", [session['user_username']])
+    cur.execute("DELETE FROM users WHERE username = %s", [session['user_username']])
+    mysql.connection.commit()
+    cur.close()
+    session.clear()
+    flash('You Have Deleted Your Account successfully!', 'success')
+    return redirect(url_for('home'))
+
+
 # user registration validators form
 
 class CartbuyForm(Form):
@@ -1417,6 +1436,10 @@ def delete_user(id):
         rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(n))
     except:
         pass
+    cur.execute("DELETE FROM orders WHERE user_name = %s", [n])
+    cur.execute("DELETE FROM buy_orders WHERE user_name = %s", [n])
+    cur.execute("DELETE FROM reviews WHERE user_name = %s", [n])
+    cur.execute("DELETE FROM slider_reviews WHERE user_name = %s", [n])
     cur.execute("DELETE FROM users WHERE id = %s", [id])
     mysql.connection.commit()
     cur.close()

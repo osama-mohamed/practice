@@ -116,7 +116,13 @@
                 <div class="card-body">
                     {% include 'includes/_messages.html' %}
                     <h3 class="text-center" style="margin-top: 0;">Hello {{ session['user_username'] }}</h3>
-                    <img src="../static/uploads/users/{{ session['user_username'] }}/{{ user_image }}" style="max-width: 20%; max-height: 20%; display: block; margin: 30px auto 65px; border-radius: 6px;">
+
+                    <!-- Button trigger modal -->
+                    <button class="dropdown-item btn btn-danger" href="" data-toggle="modal" data-target="#delete_my_account">
+                        <i class="fa fa-trash-o"></i> &emsp; Delete My Account
+                    </button>
+
+                    <img src="../static/uploads/users/{{ session['user_username'] }}/{{ user_image }}" style="max-width: 20%; max-height: 20%; display: block; margin: 0 auto 65px; border-radius: 6px;">
                       <table class="table table-striped">
                         <thead>
                           <tr>
@@ -196,7 +202,32 @@
 		</div>
 		
 	</footer><!--/Footer-->
-	
+
+
+
+    <!-- delete_my_account modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="delete_my_account" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete Your Account</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete your account from the website and their files and product reviews ?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <a href="{{ url_for('delete_user_account') }}"><button class="btn btn-danger">Confirm Delete My Account</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
 
 
     <script src="../static/user/js/jquery.js"></script>
