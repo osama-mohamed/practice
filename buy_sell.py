@@ -194,7 +194,20 @@ def home():
     return render_template('home.html', latest_products=latest_products, categories=categories, slider_products_first=slider_products_first, slider_products_second=slider_products_second, slider_products_third=slider_products_third, recommended_products=recommended_products, recommended_products_second=recommended_products_second)
 
 
+# products range price
+
+@app.route('/products_price_range', methods=['post', 'get'])
+def products_price_range():
+    # price_range = request.form['price_range']
+    # cur = mysql.connection.cursor()
+    # cur.execute("SELECT * FROM products WHERE (price BETWEEN 100 AND 1000)")
+    # cur.close()
+    # print(price_range)
+    return render_template('catigories.html')
+
+
 # all products page
+
 @app.route('/products')
 def products():
     cur = mysql.connection.cursor()
@@ -411,7 +424,7 @@ def user_account():
 
 class CartbuyForm(Form):
     address = StringField('Address', [validators.InputRequired(), validators.length(min=10, max=200)])
-    phone_number = StringField('Phone Number', [validators.InputRequired()])
+    phone_number = IntegerField('Phone Number', [validators.InputRequired()])
     comments = TextAreaField('Comments', [validators.InputRequired()])
 
 

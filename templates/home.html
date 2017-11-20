@@ -209,7 +209,9 @@
 						<div class="price-range"><!--price-range-->
 							<h2>Price Range</h2>
 							<div class="well text-center">
-								 <input type="text" class="span2" value="" data-slider-min="1000" data-slider-max="100000" data-slider-step="1000" data-slider-value="[10000, 100000]" id="sl2" >
+                                <form action="{{ url_for('products_price_range') }}" method="post">
+								    <input type="text" name="price_range" class="span2" value="{{ request.form.price_range }}" data-slider-min="1000" data-slider-max="100000" data-slider-step="1000" data-slider-value="[10000, 100000]" id="sl2">
+                                </form>
                                  <br />
 								 <b class="pull-left">&#36; 1000</b> <b class="pull-right">&#36; 100000</b>
 							</div>
