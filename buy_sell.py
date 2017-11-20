@@ -25,6 +25,7 @@ database.select_db('buy_sell')
 # cursor.execute("DROP TABLE IF EXISTS buy_orders;")
 # cursor.execute("DROP TABLE IF EXISTS orders;")
 # cursor.execute("DROP TABLE IF EXISTS reviews;")
+# cursor.execute("DROP TABLE IF EXISTS slider_reviews;")
 
 
 cursor.execute("CREATE TABLE IF NOT EXISTS users(\
@@ -108,6 +109,15 @@ cursor.execute("CREATE TABLE IF NOT EXISTS buy_orders(\
                 files TEXT NOT NULL,\
                 order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);")
 
+cursor.execute("CREATE TABLE IF NOT EXISTS slider_reviews(\
+                id INT(11) AUTO_INCREMENT PRIMARY KEY,\
+                user_id INT(11) NOT NULL,\
+                user_name VARCHAR(255) NOT NULL,\
+                product_id INT(11) NOT NULL,\
+                product_name VARCHAR(255) NOT NULL,\
+                rate TINYINT(2) NOT NULL,\
+                review TEXT NOT NULL,\
+                review_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);")
 
 # create default admin account if not exists
 
@@ -681,6 +691,41 @@ def product_review(id):
     return redirect(url_for('home'))
 
 
+# add slider product review
+@app.route('/slider_product_review/<id>', methods=['post', 'get'])
+@is_user_logged_in
+def slider_product_review(id):
+    cur = mysql.connection.cursor()
+
+    result = cur.execute("SELECT product_id FROM slider_reviews WHERE user_name = %s AND product_id = %s", [session['user_username'], id])
+    if result == 0:
+        cur.execute("SELECT id, product_name FROM slider_products WHERE id = %s", [id])
+        product = cur.fetchone()
+        product_id = product['id']
+        product_name = product['product_name']
+        cur.execute("SELECT id, username FROM users WHERE username = %s", [session['user_username']])
+        user = cur.fetchone()
+        user_id = user['id']
+        user_name = user['username']
+
+        product_rate = request.form['rate']
+        review = request.form['product_review_area']
+
+        if review == '':
+            flash('You must write a review!', 'danger')
+            return redirect(url_for('home'))
+        else:
+            cur.execute("INSERT INTO slider_reviews(user_id, user_name, product_id, product_name, rate, review)\
+                         VALUES(%s, %s, %s, %s, %s, %s)", \
+                        (user_id, user_name, product_id, product_name, product_rate, review))
+            mysql.connection.commit()
+            flash('Your review now added successfully!', 'success')
+    else:
+        flash('You can not add two reviews for one product!', 'danger')
+    cur.close()
+    return redirect(url_for('home'))
+
+
 # A common part between the admin and the user ********************************************************
 
 
@@ -717,6 +762,12 @@ def preview_production(id):
 @app.route('/preview_production_slider/<id>/')
 def preview_production_slider(id):
     cur = mysql.connection.cursor()
+    slider_reviewresult = cur.execute("SELECT * FROM slider_reviews WHERE product_id={} ORDER BY id DESC limit 1".format(id))
+    slider_review = cur.fetchone()
+    cur.execute("SELECT COUNT(product_id) FROM slider_reviews WHERE product_id={}".format(id))
+    reviews = cur.fetchone()
+    count_reviews = reviews['COUNT(product_id)']
+
     cur.execute("SELECT * FROM slider_products WHERE id={}".format(id))
     product = cur.fetchone()
     cur.execute("SELECT * FROM products ORDER BY id DESC LIMIT 6")
@@ -726,7 +777,7 @@ def preview_production_slider(id):
     cur.execute("UPDATE slider_products SET number_of_views = number_of_views + 1 WHERE id={}".format(id))
     mysql.connection.commit()
     cur.close()
-    return render_template('preview_production_slider.html', product=product, products=products, categories=categories)
+    return render_template('preview_production_slider.html', product=product, products=products, categories=categories, slider_reviewresult=slider_reviewresult, slider_review=slider_review, count_reviews=count_reviews)
 
 
 # show all products in specific category 

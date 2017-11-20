@@ -138,11 +138,11 @@
 								<img src="../../static/user/images/product-details/new.jpg" class="newarrival" alt="" />
 								<h2>{{ product.product_name }}</h2>
 								<p>Web ID: {{ product.id }}</p>
-								<img src="../../static/user/images/product-details/rating.png" alt="" />
+{#								<img src="../../static/user/images/product-details/rating.png" alt="" />#}
 								<span>
-									<span>US {{ product.price }}</span>
-									<label>Quantity:</label>
-									<input type="text" value="3" />
+									<span>&#36; {{ product.price }}</span>
+{#									<label>Quantity:</label>#}
+{#									<input type="text" value="3" />#}
 									<a href="/add_product_to_cart_from_slider/{{ product.id }}" class="btn btn-fefault cart">
 										<i class="fa fa-shopping-cart"></i>
 										Add to cart
@@ -152,7 +152,7 @@
                                 <p><b>Category:</b>&emsp; {{ product.category }}</p>
                                 <p><b>Availability:</b>&emsp; In Stock</p>
                                 <p><b>Puplished In:</b>&emsp; {{ product.create_date.strftime('%a, %d %b %Y %H:%M:%S') }}</p>
-								<a href=""><img src="../../static/user/images/product-details/share.png" class="share img-responsive"  alt="" /></a>
+{#								<a href=""><img src="../../static/user/images/product-details/share.png" class="share img-responsive"  alt="" /></a>#}
 							</div><!--/product-information-->
 						</div>
 					</div><!--/product-details-->
@@ -161,7 +161,7 @@
 						<div class="col-sm-12">
 							<ul class="nav nav-tabs">
 								<li class="active"><a href="#details" data-toggle="tab">Product Details</a></li>
-								<li><a href="#reviews" data-toggle="tab">Reviews (5)</a></li>
+								<li><a href="#reviews" data-toggle="tab">Reviews ({{ count_reviews }})</a></li>
 							</ul>
 						</div>
 						<div class="tab-content">
@@ -176,22 +176,30 @@
 							<div class="tab-pane fade " id="reviews" >
 								<div class="col-sm-12">
 									<ul>
-										<li><a href=""><i class="fa fa-user"></i>EUGEN</a></li>
-										<li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>
-										<li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>
+										<li><i class="fa fa-user" style="color: #FE980F;"></i>&ensp;{{ slider_review.user_name }}</li> &emsp;
+                                        {% if slider_reviewresult == 1 %}
+										<li><i class="fa fa-clock-o" style="color: #FE980F;"></i>&ensp;{{ slider_review.review_date.strftime('%H:%M:%S') }}</li> &emsp;
+										<li><i class="fa fa-calendar-o" style="color: #FE980F;"></i> &ensp;{{ slider_review.review_date.strftime('%A, %d %B %Y') }}</li>
+                                        {% endif %}
 									</ul>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+									<p>{{ slider_review.review }}</p>
+
 									<p><b>Write Your Review</b></p>
-									
-									<form action="#">
-										<span>
-											<input type="text" placeholder="Your Name"/>
-											<input type="email" placeholder="Email Address"/>
-										</span>
-										<textarea name="" ></textarea>
-										<b>Rating: </b> <img src="../../static/user/images/product-details/rating.png" alt="" />
-										<button type="button" class="btn btn-default pull-right">
-											Submit
+
+									<form action="{{ url_for('slider_product_review', id=product.id) }}" method="post">
+										<textarea name="product_review_area"></textarea>
+										<b>Rate: </b> &emsp;
+                                        <select name="rate" style="width: 80px;" class="btn btn-default dropdown-toggle">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                        <br>
+                                        <br>
+										<button type="submit" class="btn btn-default pull-left">
+											Add Review
 										</button>
 									</form>
 								</div>
