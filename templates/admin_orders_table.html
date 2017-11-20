@@ -220,12 +220,12 @@
                             <td>
 
                                 <!-- Button trigger modal -->
-                                <button class="btn btn-sm btn-outline-primary" href="" data-toggle="modal" data-target="#accept{{ order.product_id }}">
+                                <button class="btn btn-sm btn-outline-primary" href="" data-toggle="modal" data-target="#accept{{ order.id }}">
                                   <i class="fa fa-check"></i> &emsp; Accept
                                 </button>
                                 <!-- accept order modal -->
                                 <!-- Modal -->
-                                <div class="modal fade" id="accept{{ order.product_id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="accept{{ order.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                   <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                       <div class="modal-header">
@@ -239,7 +239,7 @@
                                       </div>
                                       <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                        <a href="/admin/accept_orders/{{ order.product_id }}"><button class="btn btn-primary">Confirm Accept</button></a>
+                                        <a href="/admin/accept_orders/{{ order.id }}"><button class="btn btn-primary">Confirm Accept</button></a>
                                       </div>
                                     </div>
                                   </div>
@@ -252,12 +252,12 @@
                             <td>
 
                                 <!-- Button trigger modal -->
-                                <button class="btn btn-sm btn-outline-danger" href="" data-toggle="modal" data-target="#reject{{ order.product_id }}">
+                                <button class="btn btn-sm btn-outline-danger" href="" data-toggle="modal" data-target="#reject{{ order.id }}">
                                   <i class="fa fa-times"></i> &emsp; Reject
                                 </button>
                                 <!-- reject order modal -->
                                 <!-- Modal -->
-                                <div class="modal fade" id="reject{{ order.product_id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="reject{{ order.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                   <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                       <div class="modal-header">
@@ -271,7 +271,7 @@
                                       </div>
                                       <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                        <a href="/admin/reject_orders/{{ order.product_id }}"><button class="btn btn-danger">Confirm Reject</button></a>
+                                        <a href="/admin/reject_orders/{{ order.id }}"><button class="btn btn-danger">Confirm Reject</button></a>
                                       </div>
                                     </div>
                                   </div>

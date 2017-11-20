@@ -1506,7 +1506,7 @@ def delete_all_accounts():
 @is_admin_logged_in
 def accept_orders(id):
     cur = mysql.connection.cursor()
-    cur.execute("UPDATE buy_orders SET status = %s WHERE product_id = %s", (['Accepted'], id))
+    cur.execute("UPDATE buy_orders SET status = %s WHERE id = %s", (['Accepted'], id))
     mysql.connection.commit()
     cur.close()
     flash('You have accepted the order Successfully!', 'success')
@@ -1532,7 +1532,7 @@ def accept_all_orders():
 @is_admin_logged_in
 def reject_orders(id):
     cur = mysql.connection.cursor()
-    cur.execute("UPDATE buy_orders SET status = %s WHERE product_id = %s", (['Rejected'], id))
+    cur.execute("UPDATE buy_orders SET status = %s WHERE id = %s", (['Rejected'], id))
     mysql.connection.commit()
     cur.close()
     flash('You have rejected the order Successfully!', 'success')
