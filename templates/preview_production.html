@@ -138,12 +138,12 @@
 								<img src="../../static/user/images/product-details/new.jpg" class="newarrival" alt="" />
 								<h2>{{ product.product_name }}</h2>
 								<p>Web ID: {{ product.id }}</p>
-								<img src="../../static/user/images/product-details/rating.png" alt="" />
+{#								<img src="../../static/user/images/product-details/rating.png" alt="" />#}
 								<span>
-									<span>US {{ product.price }}</span>
-									<label>Quantity:</label>
-									<input type="text" value="3" />
-									<a href="/add_product_to_cart/{{ product.id }}" class="btn btn-fefault cart">
+									<span>&#36; {{ product.price }}</span>
+{#									<label>Quantity:</label>#}
+{#									<input type="text" value="3" />#}
+									<a href="/add_product_to_cart/{{ product.id }}" class="btn btn-fefault cart" style="margin-top: 4px;">
 										<i class="fa fa-shopping-cart"></i>
 										Add to cart
 									</a>
@@ -169,7 +169,7 @@
                                 </p>
                                 <p><b>Availability:</b>&emsp; In Stock</p>
                                 <p><b>Puplished In:</b>&emsp; {{ product.create_date.strftime('%a, %d %b %Y %H:%M:%S') }}</p>
-								<a href=""><img src="../../static/user/images/product-details/share.png" class="share img-responsive"  alt="" /></a>
+{#								<a href=""><img src="../../static/user/images/product-details/share.png" class="share img-responsive"  alt="" /></a>#}
 							</div><!--/product-information-->
 						</div>
 					</div><!--/product-details-->

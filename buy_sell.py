@@ -652,7 +652,7 @@ def delete_product_from_cart(id):
 def product_review(id):
     cur = mysql.connection.cursor()
 
-    result = cur.execute("SELECT user_name FROM reviews WHERE user_name = %s", [session['user_username']])
+    result = cur.execute("SELECT product_id FROM reviews WHERE user_name = %s AND product_id = %s", [session['user_username'], id])
     if result == 0:
         cur.execute("SELECT id, product_name FROM products WHERE id = %s", [id])
         product = cur.fetchone()
@@ -666,11 +666,15 @@ def product_review(id):
         product_rate = request.form['rate']
         review = request.form['product_review_area']
 
-        cur.execute("INSERT INTO reviews(user_id, user_name, product_id, product_name, rate, review)\
-                     VALUES(%s, %s, %s, %s, %s, %s)", \
-                    (user_id, user_name, product_id, product_name, product_rate, review))
-        mysql.connection.commit()
-        flash('Your review now added successfully!', 'success')
+        if review == '':
+            flash('You must write a review!', 'danger')
+            return redirect(url_for('home'))
+        else:
+            cur.execute("INSERT INTO reviews(user_id, user_name, product_id, product_name, rate, review)\
+                         VALUES(%s, %s, %s, %s, %s, %s)", \
+                        (user_id, user_name, product_id, product_name, product_rate, review))
+            mysql.connection.commit()
+            flash('Your review now added successfully!', 'success')
     else:
         flash('You can not add two reviews for one product!', 'danger')
     cur.close()
@@ -694,7 +698,7 @@ def preview_production(id):
 
     cur.execute("SELECT * FROM products WHERE id={}".format(id))
     product = cur.fetchone()
-    cur.execute("SELECT * FROM products")
+    cur.execute("SELECT * FROM products ORDER BY id DESC LIMIT 6")
     products = cur.fetchall()
     cur.execute("SELECT * FROM categories")
     categories = cur.fetchall()
@@ -715,7 +719,7 @@ def preview_production_slider(id):
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM slider_products WHERE id={}".format(id))
     product = cur.fetchone()
-    cur.execute("SELECT * FROM products")
+    cur.execute("SELECT * FROM products ORDER BY id DESC LIMIT 6")
     products = cur.fetchall()
     cur.execute("SELECT * FROM categories")
     categories = cur.fetchall()
