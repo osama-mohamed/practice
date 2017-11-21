@@ -180,7 +180,7 @@
                       </div>
                     </div>
                     <div class="card-header d-flex align-items-center">
-                      <h3 class="h4">Slider Products Table</h3>
+                      <h3 class="h4">Slider Products Table &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; Slider products : &emsp; {{ slider_products | length }}</h3>
                     </div>
                     <div class="card-body">
                       <table class="table table-striped">
@@ -191,6 +191,7 @@
                             <th>Product Name</th>
                             <th>Price</th>
                             <th>Discount</th>
+                            <th>Quantity</th>
                             <th>Sales</th>
                             <th>Views</th>
                             <th>Preview</th>
@@ -206,6 +207,7 @@
                             <td>{{ product.product_name }}</td>
                             <td>{{ product.price }}</td>
                             <td>{{ product.discount }}</td>
+                            <td>{{ product.quantity }}</td>
                             <td>{{ product.number_of_sales }}</td>
                             <td>{{ product.number_of_views }}</td>
                             <td><a href="/preview_production_slider/{{ product.id }}" class="btn btn-sm btn-outline-info"><i class="fa fa-eye" aria-hidden="true"></i>&emsp; Preview</a></td>
