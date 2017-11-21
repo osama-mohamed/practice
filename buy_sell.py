@@ -958,7 +958,7 @@ def admin_dashboard():
 
     #
     cur.close()
-    return render_template('admin_dashboard.html', count_sliders=count_sliders, count_products=count_products, count_users=count_users, count_categories=count_categories, admin_name=session['admin_username'], admin_image=session['admin_image'], count_number_of_sales=count_number_of_sales, count_number_of_sales_slider=count_number_of_sales_slider, product_saled=product_saled, slider_saled=slider_saled, slider_big=slider_big, slider_small=slider_small, product_big=product_big, product_small=product_small)
+    return render_template('admin_dashboard.html', count_sliders=count_sliders, count_products=count_products, count_users=count_users, count_categories=count_categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], count_number_of_sales=count_number_of_sales, count_number_of_sales_slider=count_number_of_sales_slider, product_saled=product_saled, slider_saled=slider_saled, slider_big=slider_big, slider_small=slider_small, product_big=product_big, product_small=product_small)
 
 
 # product validators form
@@ -1044,7 +1044,7 @@ def add_product():
         flash('Create an category first to add a new product', 'warning')
         return redirect(url_for('admin_dashboard'))
 
-    return render_template('admin_add_production.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'])
+    return render_template('admin_add_production.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
                                 
                 # cur = mysql.connection.cursor()
                 # cur.execute("INSERT INTO products(category, product_name, description, price, discount, files)\
@@ -1150,7 +1150,7 @@ def edit_product(id):
             cur.close()
             flash('Your Product Has been Edited successfully!', 'success')
             return redirect(url_for('admin_dashboard'))
-    return render_template('admin_edit_production.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'])
+    return render_template('admin_edit_production.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
 
 
 # admin delete product
@@ -1304,7 +1304,7 @@ def add_product_slider():
     elif result == 0:
         flash('Create an category first to add new slider product', 'warning')
         return redirect(url_for('admin_dashboard'))
-    return render_template('admin_add_production_slider.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'])
+    return render_template('admin_add_production_slider.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
 
 
 # admin edit slider product page
@@ -1399,7 +1399,7 @@ def edit_product_slider(id):
             cur.close()
             flash('Your slider Product Has been Edited successfully!', 'success')
             return redirect(url_for('admin_dashboard'))
-    return render_template('admin_edit_production_slider.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'])
+    return render_template('admin_edit_production_slider.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
 
 
 # admin delete slider product
@@ -1531,7 +1531,7 @@ def add_user():
                 cur.close()
                 flash('You Have Created a User Account successfully!', 'success')
                 return redirect(url_for('admin_dashboard'))
-    return render_template('admin_add_user.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'])
+    return render_template('admin_add_user.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
 
 
 # admin delete user 
@@ -1587,7 +1587,7 @@ def add_category():
             cur.close()
             flash('You Have Added New Category successfully!', 'success')
             return redirect(url_for('admin_dashboard'))
-    return render_template('admin_add_category.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'])
+    return render_template('admin_add_category.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
 
 
 # admin edit category page
@@ -1616,7 +1616,7 @@ def edit_category(current_category):
             cur.close()
             flash('You Have Edited Category successfully!', 'success')
             return redirect(url_for('admin_dashboard'))
-        return render_template('admin_edit_category.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'])
+        return render_template('admin_edit_category.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
 
 
 # admin delete category 
@@ -1865,7 +1865,7 @@ def orders_table():
     cur.execute("SELECT * FROM buy_orders")
     orders = cur.fetchall()
     cur.close()
-    return render_template('admin_orders_table.html', orders=orders, admin_name=session['admin_username'], admin_image=session['admin_image'])
+    return render_template('admin_orders_table.html', orders=orders, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
 
 
 # admin review products table page
@@ -1877,7 +1877,7 @@ def review_products():
     cur.execute("SELECT * FROM reviews")
     review_products = cur.fetchall()
     cur.close()
-    return render_template('admin_products_reviews.html', review_products=review_products, admin_name=session['admin_username'], admin_image=session['admin_image'])
+    return render_template('admin_products_reviews.html', review_products=review_products, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
 
 
 # admin review products table page
@@ -1889,7 +1889,7 @@ def review_slider_products():
     cur.execute("SELECT * FROM slider_reviews")
     review_slider_products = cur.fetchall()
     cur.close()
-    return render_template('admin_slider_products_reviews.html', review_slider_products=review_slider_products, admin_name=session['admin_username'], admin_image=session['admin_image'])
+    return render_template('admin_slider_products_reviews.html', review_slider_products=review_slider_products, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
 
 
 # run whole application function
