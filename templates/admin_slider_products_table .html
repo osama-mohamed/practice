@@ -164,6 +164,7 @@
                   <div class="col-lg-12">
                   <div class="card">
                     <div class="card-close">
+                      {% if permission == 'admin' %}
                       <div class="dropdown">
                         <button type="button" id="closeCard2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
                         <div aria-labelledby="closeCard2" class="dropdown-menu dropdown-menu-right has-shadow">
@@ -178,6 +179,7 @@
 
                         </div>
                       </div>
+                      {% endif %}
                     </div>
                     <div class="card-header d-flex align-items-center">
                       <h3 class="h4">Slider Products Table &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; Slider products : &emsp; {{ slider_products | length }}</h3>
@@ -196,7 +198,9 @@
                             <th>Views</th>
                             <th>Preview</th>
                             <th>Edit</th>
+                            {% if permission == 'admin' %}
                             <th>Delete</th>
+                            {% endif %}
                           </tr>
                         </thead>
                         <tbody>
@@ -213,6 +217,9 @@
                             <td><a href="/preview_production_slider/{{ product.id }}" class="btn btn-sm btn-outline-info"><i class="fa fa-eye" aria-hidden="true"></i>&emsp; Preview</a></td>
                             <td><a href="/admin/edit_product_slider/{{ product.id }}" class="btn btn-sm btn-outline-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&emsp; Edit</a></td>
 {#                            <td><a href="/admin/delete_product_slider/{{ product.id }}" class="btn btn-sm btn-outline-danger"><i class="fa fa-times" aria-hidden="true"></i>&emsp; Delete</a></td>#}
+
+
+                            {% if permission == 'admin' %}
                             <td>
 
                                 <!-- Button trigger modal -->
@@ -244,6 +251,7 @@
 
 
                             </td>
+                            {% endif %}
                           </tr>
                         {% endfor %}
                         </tbody>

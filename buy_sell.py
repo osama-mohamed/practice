@@ -856,17 +856,19 @@ def admin_login():
         username = request.form['username']
         password_candidate = request.form['password']
         cur = mysql.connection.cursor()
-        result = cur.execute("SELECT * FROM users WHERE username = BINARY %s AND permission='admin'", [username])
+        result = cur.execute("SELECT * FROM users WHERE username = BINARY %s AND permission='admin' OR permission='editor'", [username])
         if result > 0:
             data = cur.fetchone()
             password = data['password']
             if sha256_crypt.verify(password_candidate, password):
-                cur.execute("SELECT files FROM users WHERE username = %s", [username])
+                cur.execute("SELECT files, permission FROM users WHERE username = %s", [username])
                 files = cur.fetchone()
                 image = files['files']
+                permission = files['permission']
                 session['admin_logged_in'] = True
                 session['admin_username'] = username
                 session['admin_image'] = image
+                session['permission'] = permission
                 cur.close()
                 flash('Now You Are Logged In ', 'success')
                 return redirect(url_for('admin_dashboard'))
@@ -1805,7 +1807,7 @@ def slider_products_table():
     sliders = cur.fetchone()
     count_sliders = sliders['COUNT(id)']
     cur.close()
-    return render_template('admin_slider_products_table .html', slider_products=slider_products, count_sliders=count_sliders, admin_name=session['admin_username'], admin_image=session['admin_image'])
+    return render_template('admin_slider_products_table .html', slider_products=slider_products, count_sliders=count_sliders, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
 
 
 # admin preview all products table page
@@ -1817,7 +1819,7 @@ def products_table():
     cur.execute("SELECT * FROM products")
     products = cur.fetchall()
     cur.close()
-    return render_template('admin_products_table.html', products=products, admin_name=session['admin_username'], admin_image=session['admin_image'])
+    return render_template('admin_products_table.html', products=products, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
 
 
 # admin preview all categories table page
@@ -1836,7 +1838,7 @@ def categories_table():
     products = cur.fetchone()
     count_products = products['COUNT(id)']
     cur.close()
-    return render_template('admin_categories_table.html', categories=categories, count_products=count_products, count_categories=count_categories, admin_name=session['admin_username'], admin_image=session['admin_image'])
+    return render_template('admin_categories_table.html', categories=categories, count_products=count_products, count_categories=count_categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
 
 
 # admin preview all users table page
@@ -1851,7 +1853,7 @@ def users_table():
     count_userss = cur.fetchone()
     count_users = count_userss['COUNT(username)']
     cur.close()
-    return render_template('admin_users_table.html', users=users, count_users=count_users, admin_name=session['admin_username'], admin_image=session['admin_image'])
+    return render_template('admin_users_table.html', users=users, count_users=count_users, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
 
 
 # admin preview all users table page
