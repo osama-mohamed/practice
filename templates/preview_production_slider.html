@@ -149,6 +149,7 @@
 										Add to cart
 									</a>
                                     {% elif product.quantity == 0 %}
+                                    <a href="" class="btn btn-danger" style="margin-top: 4px; margin-left: 25px; border-radius: 0;" disabled=""><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Out Of Stock</a>
                                     {% endif %}
 								</span>
 								<p><b>Discount Price:</b>&emsp; {{ product.price - product.discount }}</p>
@@ -243,7 +244,11 @@
 													<h2>&#36;{{ product.price }}</h2>
                                                     <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | int}} &#37; OFF</h3>
 													<p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>
+                                                    {% if product.quantity == 1 or product.quantity > 1  %}
 													<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                                    {% elif product.quantity == 0 %}
+                                                    <a href="" class="btn btn-danger" style="margin-bottom: 24px; margin-left: 25px; border-radius: 0;" disabled=""><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Out Of Stock</a>
+                                                    {% endif %}
 												</div>
 											</div>
 										</div>

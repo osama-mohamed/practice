@@ -130,7 +130,11 @@
 									<h2>&#36; {{ slider.price }}</h2>
                                     <h3 style="color: red;">{{ ((100 * slider.discount) / slider.price) | round(2, 'common')}} &#37; OFF</h3>
 									<p>{{ slider.description | truncate(30) }}</p>
-                                    <a href="/add_product_to_cart_from_slider/{{ slider.id }}" class="btn btn-default get"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    {% if slider.quantity == 1 or slider.quantity > 1  %}
+                                    <a href="/add_product_to_cart_from_slider/{{ slider.id }}" class="btn btn-default get"><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Add to cart</a>
+                                    {% elif slider.quantity == 0 %}
+                                    <a href="" class="btn btn-danger" style="margin-top: 24px; border-radius: 0;" disabled=""><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Out Of Stock</a>
+                                    {% endif %}
 								</div>
 								<div class="col-sm-6">
                                     <a href="/preview_production_slider/{{ slider.id }}/"><img src="../static/uploads/slider_products/{{ slider.product_name }}/{{ slider.files }}" class="girl img-responsive" style="max-width: 520px; height: 354px;" /></a>
@@ -146,7 +150,11 @@
 									<h2>&#36; {{ slider.price }}</h2>
                                     <h3 style="color: red;">{{ ((100 * slider.discount) / slider.price) | round(2, 'common')}} &#37; OFF</h3>
 									<p>{{ slider.description | truncate(30) }}</p>
-									<a href="/add_product_to_cart_from_slider/{{ slider.id }}" class="btn btn-default get"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    {% if slider.quantity == 1 or slider.quantity > 1  %}
+									<a href="/add_product_to_cart_from_slider/{{ slider.id }}" class="btn btn-default get"><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Add to cart</a>
+                                    {% elif slider.quantity == 0 %}
+                                    <a href="" class="btn btn-danger" style="margin-top: 24px; border-radius: 0;" disabled=""><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Out Of Stock</a>
+                                    {% endif %}
 								</div>
 								<div class="col-sm-6">
                                     <a href="/preview_production_slider/{{ slider.id }}/"><img src="../static/uploads/slider_products/{{ slider.product_name }}/{{ slider.files }}" class="girl img-responsive" style="max-width: 520px; height: 354px;" /></a>
@@ -162,7 +170,11 @@
 									<h2>&#36; {{ slider.price }}</h2>
                                     <h3 style="color: red;">{{ ((100 * slider.discount) / slider.price) | round(2, 'common')}} &#37; OFF</h3>
 									<p>{{ slider.description | truncate(30) }}</p>
-									<a href="/add_product_to_cart_from_slider/{{ slider.id }}" class="btn btn-default get"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    {% if slider.quantity == 1 or slider.quantity > 1  %}
+									<a href="/add_product_to_cart_from_slider/{{ slider.id }}" class="btn btn-default get"><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Add to cart</a>
+                                    {% elif slider.quantity == 0 %}
+                                    <a href="" class="btn btn-danger" style="margin-top: 24px; border-radius: 0;" disabled=""><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Out Of Stock</a>
+                                    {% endif %}
 								</div>
 								<div class="col-sm-6">
                                     <a href="/preview_production_slider/{{ slider.id }}/"><img src="../static/uploads/slider_products/{{ slider.product_name }}/{{ slider.files }}" class="girl img-responsive" style="max-width: 520px; height: 354px;" /></a>
@@ -239,7 +251,11 @@
 										<h2>&#36;{{ product.price }}</h2>
                                         <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | round(2, 'common')}} &#37; OFF</h3>
 										<p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>
+                                        {% if product.quantity == 1 or product.quantity > 1  %}
 										<a href="/add_product_to_cart/{{ product.id }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        {% elif product.quantity == 0 %}
+                                        <a href="" class="btn btn-danger" style="margin-bottom: 24px; border-radius: 0;" disabled=""><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Out Of Stock</a>
+                                        {% endif %}
 									</div>
 {#									<div class="product-overlay">#}
 {#										<div class="overlay-content">#}
@@ -284,7 +300,11 @@
                                                     <h2>&#36;{{ product.price }}</h2>
                                                     <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | round(2, 'common')}} &#37; OFF</h3>
                                                     <p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>
+                                                    {% if product.quantity == 1 or product.quantity > 1  %}
                                                     <a href="/add_product_to_cart/{{ product.id }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                    {% elif product.quantity == 0 %}
+                                                    <a href="" class="btn btn-danger" style="margin-bottom: 24px; border-radius: 0;" disabled=""><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Out Of Stock</a>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                             <div class="choose">
@@ -311,7 +331,11 @@
                                                     <h2>&#36;{{ product.price }}</h2>
                                                     <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | round(2, 'common')}} &#37; OFF</h3>
                                                     <p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>
+                                                    {% if product.quantity == 1 or product.quantity > 1  %}
                                                     <a href="/add_product_to_cart/{{ product.id }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                    {% elif product.quantity == 0 %}
+                                                    <a href="" class="btn btn-danger" style="margin-bottom: 24px; border-radius: 0;" disabled=""><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Out Of Stock</a>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                             <div class="choose">
