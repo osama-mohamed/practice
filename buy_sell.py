@@ -912,7 +912,7 @@ def admin_logout():
 def admin_dashboard():
     cur = mysql.connection.cursor()
 
-    
+
     # count slider products
     cur.execute("SELECT COUNT(id) FROM slider_products")
     sliders = cur.fetchone()
