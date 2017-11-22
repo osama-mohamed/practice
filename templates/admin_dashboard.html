@@ -233,14 +233,37 @@
                   <div class="row bg-white has-shadow">
 
                       <!-- Item -->
-                      <div class="col-xl-3 col-sm-6">
+                    <div class="col-xl-3 col-sm-6">
                       <div class="item d-flex align-items-center">
-                          <a href="/admin/slider_products_table" style="color: #54e69d;"><div class="icon bg-green"><i class="fa fa-plus" style="margin-top: 12px;"></i></div>
-                        <div class="title"><span>Slider<br>Sum Sales</span></a>
+                        <a href="/preview_production_slider/{{ slider_saled.id }}" style="color: #54e69d;">
+                        <div class="title"><span>Slider<br>Top Sale</span></a>
                           <div class="progress">
                           </div>
                         </div>
-                        <div class="number" style="color: #54e69d;"><strong>{{ count_number_of_sales_slider | safe }}</strong></div>
+                        <div class="number" style="color: #54e69d;"><strong>
+                            {% if not slider_saled.number_of_sales %}
+                            {{ 0 }}
+                            {% else %}
+                            {{ slider_saled.number_of_sales | safe }}
+                            {% endif %}</strong></div>
+                      </div>
+                    </div>
+
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                          <a href="/preview_production_slider/{{ slider_saled_low.id }}" style="color: #dc3545;">
+                        <div class="title"><span>Slider<br>Low Sale</span></a>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #dc3545;"><strong>
+                            {% if not slider_saled_low.number_of_sales %}
+                            {{ 0 }}
+                            {% else %}
+                            {{ slider_saled_low.number_of_sales | safe }}
+                            {% endif %}</strong></div>
                       </div>
                       </div>
 
@@ -248,37 +271,35 @@
                       <!-- Item -->
                       <div class="col-xl-3 col-sm-6">
                       <div class="item d-flex align-items-center">
-                        <a href="/admin/products_table" style="color: #17a2b8;"><div class="icon bg-info"><i class="fa fa-plus-circle" style="color: #fff; margin-top: 12px;"></i></div>
-                        <div class="title"><span>Product<br>Sum Sales</span></a>
+                        <a href="/preview_production/{{ product_saled.id }}" style="color: #54e69d;">
+                        <div class="title"><span>Product<br>Top Sale</span></a>
                           <div class="progress">
                           </div>
                         </div>
-                        <div class="number" style="color: #17a2b8;"><strong>{{ count_number_of_sales | safe }}</strong></div>
-                      </div>
-                    </div>
-
-                    <!-- Item -->
-                    <div class="col-xl-3 col-sm-6">
-                      <div class="item d-flex align-items-center">
-                        <a href="/preview_production_slider/{{ slider_saled.id }}" style="color: #796AEE;"><div class="icon bg-violet"><i class="fa fa-user-plus" style="margin-left: 5px; margin-top: 11px;"></i></div>
-                        <div class="title"><span>Slider<br>Sales</span></a>
-                          <div class="progress">
-                          </div>
-                        </div>
-                        <div class="number" style="color: #796AEE;"><strong>{{ slider_saled.number_of_sales | safe }}</strong></div>
+                          <div class="number" style="color: #54e69d;"><strong>
+                            {% if not product_saled.number_of_sales %}
+                            {{ 0 }}
+                            {% else %}
+                            {{ product_saled.number_of_sales | safe }}
+                            {% endif %}</strong></div>
                       </div>
                     </div>
 
 
-                    <!-- Item -->
+                      <!-- Item -->
                       <div class="col-xl-3 col-sm-6">
                       <div class="item d-flex align-items-center">
-                        <a href="/preview_production/{{ product_saled.id }}" style="color: #ffc36d;"><div class="icon bg-orange"><i class="fa fa-star-o" style="margin-top: 12px; margin-left: 1px;"></i></div>
-                        <div class="title"><span>Product<br>Sales</span></a>
+                        <a href="/preview_production/{{ product_saled_low.id }}" style="color: #dc3545;">
+                        <div class="title"><span>Product<br>Low Sale</span></a>
                           <div class="progress">
                           </div>
                         </div>
-                          <div class="number" style="color: #ffc36d;"><strong>{{ product_saled.number_of_sales | safe }}</strong></div>
+                        <div class="number" style="color: #dc3545;"><strong>
+                            {% if not product_saled_low.number_of_sales %}
+                            {{ 0 }}
+                            {% else %}
+                            {{ product_saled_low.number_of_sales | safe }}
+                            {% endif %}</strong></div>
                       </div>
                     </div>
 
@@ -300,12 +321,17 @@
                       <!-- Item -->
                       <div class="col-xl-3 col-sm-6">
                       <div class="item d-flex align-items-center">
-                          <a href="/preview_production_slider/{{ slider_big.product_id }}" style="color: #54e69d;"><div class="icon bg-green"><i class="fa fa-plus" style="margin-top: 12px;"></i></div>
+                          <a href="/preview_production_slider/{{ slider_big.id }}" style="color: #54e69d;">
                         <div class="title"><span>Slider<br>High Rate</span></a>
                           <div class="progress">
                           </div>
                         </div>
-                        <div class="number" style="color: #54e69d;"><strong>{{ slider_big.rate | safe }}</strong></div>
+                        <div class="number" style="color: #54e69d;"><strong>
+                            {% if not slider_big.rate %}
+                            {{ 0 }}
+                            {% else %}
+                            {{ slider_big.rate | safe }}
+                            {% endif %}</strong></div>
                       </div>
                       </div>
 
@@ -313,24 +339,35 @@
                       <!-- Item -->
                       <div class="col-xl-3 col-sm-6">
                       <div class="item d-flex align-items-center">
-                        <a href="/preview_production_slider/{{ slider_small.product_id }}" style="color: #17a2b8;"><div class="icon bg-info"><i class="fa fa-plus-circle" style="color: #fff; margin-top: 12px;"></i></div>
+                        <a href="/preview_production_slider/{{ slider_small.id }}" style="color: #dc3545;">
                         <div class="title"><span>Slider<br>Low Rate</span></a>
                           <div class="progress">
                           </div>
                         </div>
-                        <div class="number" style="color: #17a2b8;"><strong>{{ slider_small.rate | safe }}</strong></div>
+                        <div class="number" style="color: #dc3545;"><strong>
+                            {% if not slider_small.rate %}
+                            {{ 0 }}
+                            {% else %}
+                            {{ slider_small.rate | safe }}
+                            {% endif %}</strong></div>
                       </div>
                     </div>
+
 
                     <!-- Item -->
                     <div class="col-xl-3 col-sm-6">
                       <div class="item d-flex align-items-center">
-                        <a href="/preview_production/{{ product_big.product_id }}" style="color: #796AEE;"><div class="icon bg-violet"><i class="fa fa-user-plus" style="margin-left: 5px; margin-top: 11px;"></i></div>
+                        <a href="/preview_production/{{ product_big.id }}" style="color: #54e69d;">
                         <div class="title"><span>Product<br>High Rate</span></a>
                           <div class="progress">
                           </div>
                         </div>
-                        <div class="number" style="color: #796AEE;"><strong>{{ product_big.rate | safe }}</strong></div>
+                        <div class="number" style="color: #54e69d;"><strong>
+                            {% if not product_big.rate %}
+                            {{ 0 }}
+                            {% else %}
+                            {{ product_big.rate | safe }}
+                            {% endif %}</strong></div>
                       </div>
                     </div>
 
@@ -338,12 +375,17 @@
                     <!-- Item -->
                       <div class="col-xl-3 col-sm-6">
                       <div class="item d-flex align-items-center">
-                        <a href="/preview_production/{{ product_small.product_id }}" style="color: #ffc36d;"><div class="icon bg-orange"><i class="fa fa-star-o" style="margin-top: 12px; margin-left: 1px;"></i></div>
+                        <a href="/preview_production/{{ product_small.id }}" style="color: #dc3545;">
                         <div class="title"><span>Product<br>Low Rate</span></a>
                           <div class="progress">
                           </div>
                         </div>
-                          <div class="number" style="color: #ffc36d;"><strong>{{ product_small.rate | safe }}</strong></div>
+                          <div class="number" style="color: #dc3545;"><strong>
+                              {% if not product_small.rate %}
+                              {{ 0 }}
+                              {% else %}
+                              {{ product_small.rate | safe }}
+                              {% endif %}</strong></div>
                       </div>
                     </div>
 
@@ -353,6 +395,141 @@
             <!-- end my dashboard 3 -->
 
 
+
+
+
+            <!-- start my dashboard 4 -->
+            <section class="dashboard-counts no-padding-bottom">
+                <div class="container-fluid">
+                  <div class="row bg-white has-shadow">
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <div class="title"><span>Sliders<br>Last Week</span>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #796AEE;"><strong>{{ slider_add | safe }}</strong></div>
+                      </div>
+                      </div>
+
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+
+                        <div class="title"><span>Products<br>Last Week</span>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #796AEE;"><strong>{{ product_add | safe }}</strong></div>
+                      </div>
+                    </div>
+
+                    <!-- Item -->
+                    <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+
+                        <div class="title"><span>Sliders Last<br>Week Sales</span>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #796AEE;"><strong>
+                            {% if slider_last_week == None %}
+                            {{ 0 }}
+                            {% else %}
+                            {{ slider_last_week | safe }}
+                            {% endif %}</strong></div>
+                      </div>
+                    </div>
+
+
+                    <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+
+                        <div class="title"><span>Products Last<br>Week Sales</span>
+                          <div class="progress">
+                          </div>
+                        </div>
+                          <div class="number" style="color: #796AEE;"><strong>
+                              {% if product_last_week == None %}
+                              {{ 0 }}
+                              {% else %}
+                              {{ product_last_week | safe }}
+                              {% endif %}</strong></div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+            </section>
+            <!-- end my dashboard 4 -->
+
+
+
+
+            <!-- start my dashboard 5 -->
+            <section class="dashboard-counts no-padding-bottom">
+                <div class="container-fluid">
+                  <div class="row bg-white has-shadow">
+
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <div class="title"><span>Slider<br>Total Sales</span>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #796AEE;"><strong>
+                            {% if count_number_of_sales_slider == None %}
+                            {{ 0 }}
+                            {% else %}
+                            {{ count_number_of_sales_slider | safe }}
+                            {% endif %}</strong></div>
+                      </div>
+                      </div>
+
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <div class="title"><span>Product<br>Total Sales</span>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #796AEE;"><strong>
+                            {% if count_number_of_sales == None %}
+                            {{ 0 }}
+                            {% else %}
+                            {{ count_number_of_sales | safe }}
+                            {% endif %}</strong></div>
+                      </div>
+                    </div>
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <div class="title"><span>Total<br>AVG Rate</span>
+                          <div class="progress">
+                          </div>
+                        </div>
+                          <div class="number" style="color: #796AEE;"><strong>
+                              {% if total_avg_rate == None %}
+                              {{ 0 }}
+                              {% else %}
+                              {{ total_avg_rate | round(2, 'common') | safe }}
+                              {% endif %}
+                              </strong></div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+            </section>
+            <!-- end my dashboard 5 -->
 
 
 
