@@ -772,7 +772,7 @@ def preview_production(id):
 
     cur.execute("SELECT * FROM products WHERE id={}".format(id))
     product = cur.fetchone()
-    cur.execute("SELECT * FROM products ORDER BY id DESC LIMIT 6")
+    cur.execute("SELECT * FROM products WHERE id != %s ORDER BY id DESC LIMIT 6", [id])
     products = cur.fetchall()
     cur.execute("SELECT * FROM categories")
     categories = cur.fetchall()
@@ -802,7 +802,7 @@ def preview_production_slider(id):
 
     cur.execute("SELECT * FROM slider_products WHERE id={}".format(id))
     product = cur.fetchone()
-    cur.execute("SELECT * FROM products ORDER BY id DESC LIMIT 6")
+    cur.execute("SELECT * FROM slider_products WHERE id != %s ORDER BY id DESC LIMIT 6", [id])
     products = cur.fetchall()
     cur.execute("SELECT * FROM categories")
     categories = cur.fetchall()
