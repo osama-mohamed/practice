@@ -230,9 +230,11 @@ def products():
     cur.execute("SELECT * FROM products ORDER BY id DESC;")
     all_products = cur.fetchall()
 
-    # cur.execute("SELECT * FROM products ORDER BY id ASC LIMIT 2;")
-    # number_of_products = cur.fetchall()
-    # cur.execute("SELECT * FROM products ORDER BY id DESC LIMIT 2 OFFSET {};".format(id))
+    cur.execute("SELECT COUNT(id) FROM products ORDER BY id ASC;")
+    pr = cur.fetchone()
+    number_of_products = int(pr['COUNT(id)'] / 10)
+    print(number_of_products)
+    # cur.execute("SELECT * FROM products ORDER BY id DESC LIMIT 2 OFFSET {} * 10 -10 ;".format(id))
     # all_products = cur.fetchall()
 
 
@@ -243,7 +245,7 @@ def products():
     #     rate = cur.fetchall()
     #     print(rate)
     cur.close()
-    return render_template('all_products.html', all_products=all_products)
+    return render_template('all_products.html', all_products=all_products, number_of_products=number_of_products)
 
 
 # user reset password page
