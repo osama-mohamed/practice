@@ -224,18 +224,19 @@ def products_price_range():
 
 # all products page
 
-@app.route('/products')
-def products():
+@app.route('/products/<id>')
+def products(id):
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM products ORDER BY id DESC;")
-    all_products = cur.fetchall()
+    # cur.execute("SELECT * FROM products ORDER BY id DESC;")
+    # all_products = cur.fetchall()
 
     cur.execute("SELECT COUNT(id) FROM products ORDER BY id ASC;")
     pr = cur.fetchone()
     number_of_products = int(pr['COUNT(id)'] / 10)
-    print(number_of_products)
-    # cur.execute("SELECT * FROM products ORDER BY id DESC LIMIT 2 OFFSET {} * 10 -10 ;".format(id))
-    # all_products = cur.fetchall()
+    
+    off = (int(id) * 10) - 10
+    cur.execute("SELECT * FROM products ORDER BY id DESC LIMIT 10 OFFSET %s;", [off])
+    all_products = cur.fetchall()
 
 
     # for product in all_products:
