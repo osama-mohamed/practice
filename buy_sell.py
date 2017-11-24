@@ -233,7 +233,7 @@ def products(id):
     cur.execute("SELECT COUNT(id) FROM products ORDER BY id ASC;")
     pr = cur.fetchone()
     number_of_products = int(pr['COUNT(id)'] / 10)
-    
+
     off = (int(id) * 10) - 10
     cur.execute("SELECT * FROM products ORDER BY id DESC LIMIT 10 OFFSET %s;", [off])
     all_products = cur.fetchall()
