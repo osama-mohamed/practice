@@ -635,6 +635,7 @@ def increase_cart_product_quantity(id):
     cur.execute("UPDATE orders SET quantity = quantity + 1 WHERE product_id = {}".format(id))
     mysql.connection.commit()
     cur.close()
+    flash('You have updated the product quantity successfully!', 'success')
     return redirect(url_for('add_to_cart'))
 
 
@@ -671,6 +672,7 @@ def decrease_cart_product_quantity(id):
     if product_quantity > 1:
         cur.execute("UPDATE orders SET quantity = quantity - 1 WHERE product_id = {}".format(id))
         mysql.connection.commit()
+        flash('You have updated the product quantity successfully!', 'success')
     cur.close()
     return redirect(url_for('add_to_cart'))
 
@@ -1935,6 +1937,38 @@ def review_slider_products():
     review_slider_products = cur.fetchall()
     cur.close()
     return render_template('admin_slider_products_reviews.html', review_slider_products=review_slider_products, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
+
+
+# admin preview product
+
+@app.route('/admin/product/<id>')
+@is_admin_logged_in
+def product(id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM products WHERE id = %s", [id])
+    product = cur.fetchone()
+    reviewresult = cur.execute("SELECT * FROM reviews WHERE product_id={} ORDER BY id DESC limit 1".format(id))
+    review = cur.fetchone()
+    cur.execute("SELECT SUM(rate) / COUNT(product_name) AS avg_rate FROM reviews WHERE product_id = %s;", [id])
+    rate = cur.fetchone()
+    cur.close()
+    return render_template('admin_product.html', product=product, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], reviewresult=reviewresult, review=review, rate=rate)
+
+
+# admin preview product
+
+@app.route('/admin/slider/<id>')
+@is_admin_logged_in
+def slider(id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM slider_products WHERE id = %s", [id])
+    product = cur.fetchone()
+    reviewresult = cur.execute("SELECT * FROM slider_reviews WHERE product_id={} ORDER BY id DESC limit 1".format(id))
+    review = cur.fetchone()
+    cur.execute("SELECT SUM(rate) / COUNT(product_name) AS avg_rate FROM slider_reviews WHERE product_id = %s;", [id])
+    rate = cur.fetchone()
+    cur.close()
+    return render_template('admin_slider.html', product=product, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], reviewresult=reviewresult, review=review, rate=rate)
 
 
 # run whole application function

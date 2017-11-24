@@ -209,7 +209,8 @@
                             <td>{{ product.quantity }}</td>
                             <td>{{ product.number_of_sales }}</td>
                             <td>{{ product.number_of_views }}</td>
-                            <td><a href="/preview_production/{{ product.id }}" class="btn btn-sm btn-outline-info"><i class="fa fa-eye" aria-hidden="true"></i>&emsp; Preview</a></td>
+{#                            <td><a href="/preview_production/{{ product.id }}" class="btn btn-sm btn-outline-info"><i class="fa fa-eye" aria-hidden="true"></i>&emsp; Preview</a></td>#}
+                            <td><a href="/admin/product/{{ product.id }}" class="btn btn-sm btn-outline-info"><i class="fa fa-eye" aria-hidden="true"></i>&emsp; Preview</a></td>
                             <td><a href="/admin/edit_product/{{ product.id }}" class="btn btn-sm btn-outline-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&emsp; Edit</a></td>
 {#                            <td><a href="/admin/delete_product/{{ product.id }}" class="btn btn-sm btn-outline-danger"><i class="fa fa-times" aria-hidden="true"></i>&emsp; Delete</a></td>#}
                             {% if permission == 'admin' %}
