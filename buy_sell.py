@@ -284,6 +284,7 @@ def user_forget_password_email():
         flash("Please check your email!", "warning")
         return redirect(url_for('home'))
     else:
+        cur.close()
         flash("This username Not Found!", "warning")
         return redirect(url_for('home'))
 
@@ -354,9 +355,11 @@ def user_register():
         cur.execute("SELECT username FROM users WHERE username = %s", [username])
         res = cur.fetchone()
         if username in str(res):
+            cur.close()
             msg = "User Name Already Exists"
             return render_template('user_register.html', form=form, msg=msg)
         else:
+            cur.close()
             first_name = form.first_name.data.lower()
             last_name = form.last_name.data.lower()
             email = request.form['email'].lower()
@@ -408,9 +411,11 @@ def user_login():
                 flash('Now You Are Logged In ', 'success')
                 return redirect(url_for('user_account'))
             else:
+                cur.close()
                 error = 'Wrong Password!'
                 return render_template('user_login.html', error=error)
         else:
+            cur.close()
             error = 'Username Can Not Be Found!'
             return render_template('user_login.html', error=error)
     return render_template('user_login.html')
@@ -450,6 +455,7 @@ def user_account():
     cur.execute("SELECT files FROM users WHERE username = %s", [session['user_username']])
     image = cur.fetchone()
     user_image = image['files']
+    cur.close()
     return render_template('user_account.html', orders=orders, user_image=user_image)
 
 
@@ -507,6 +513,7 @@ def buy():
     cur = mysql.connection.cursor()
     nat = cur.execute("SELECT * FROM orders WHERE user_name = %s", [session['user_username']])
     if nat > 0:
+        cur.close()
         form = CartbuyForm(request.form)
         if request.method == 'POST' and form.validate():
             cur = mysql.connection.cursor()
@@ -564,6 +571,7 @@ def buy():
                 return redirect(url_for('add_to_cart'))
         return render_template('buy.html', form=form)
     elif nat == 0:
+        cur.close()
         flash('you can not be able to buy until you add product to your cart', 'danger')
         return redirect(url_for('add_to_cart'))
 
@@ -577,6 +585,7 @@ def add_product_to_cart(id):
 
     result = cur.execute("SELECT product_name FROM orders WHERE product_id = %s AND user_name = %s ", [id, session['user_username']])
     if result > 0:
+        cur.close()
         flash('You can not add this product because its already added before!', 'danger')
         return redirect(url_for('add_to_cart'))
     if result == 0:
@@ -613,6 +622,7 @@ def add_product_to_cart_from_slider(id):
     proid = (int(id) * int(-1))
     result = cur.execute("SELECT product_name FROM orders WHERE product_id = %s AND user_name = %s ", [proid, session['user_username']])
     if result > 0:
+        cur.close()
         flash('You can not add this product because its already added before!', 'danger')
         return redirect(url_for('add_to_cart'))
     if result == 0:
@@ -893,9 +903,11 @@ def admin_login():
                 flash('Now You Are Logged In ', 'success')
                 return redirect(url_for('admin_dashboard'))
             else:
+                cur.close()
                 error = 'Wrong Password!'
                 return render_template('admin_login.html', error=error)
         else:
+            cur.close()
             error = 'Username Can Not Be Found!'
             return render_template('admin_login.html', error=error)
     return render_template('admin_login.html')
@@ -1102,6 +1114,7 @@ def add_product():
                         return redirect(url_for('admin_dashboard'))
 
     elif result == 0:
+        cur.close()
         flash('Create an category first to add a new product', 'warning')
         return redirect(url_for('admin_dashboard'))
 
@@ -1558,6 +1571,7 @@ def add_user():
         cur = mysql.connection.cursor()
         cur.execute("SELECT username FROM users WHERE username = %s", [username])
         res = cur.fetchone()
+        cur.close()
         if username in str(res):
             msg = "User Name Already Exists"
             return render_template('admin_add_user.html', form=form, msg=msg, admin_name=session['admin_username'], admin_image=session['admin_image'])
@@ -1636,9 +1650,11 @@ def add_category():
         cur = mysql.connection.cursor()
         result = cur.execute("SELECT * FROM categories WHERE category = BINARY %s", [category])
         if result > 0:
+            cur.close()
             flash('This Category Already Exists', 'warning')
             return redirect(url_for('admin_dashboard'))
         if category == ' ':
+            cur.close()
             flash('You Should Type A Word!', 'warning')
             return redirect(url_for('add_category'))
         if result == 0:
@@ -1665,6 +1681,7 @@ def edit_category(current_category):
         if request.method == 'POST' and form.validate():
             category = request.form['category'].lower()
             if category == ' ':
+                cur.close()
                 flash('You Should Type A Word!', 'warning')
                 return redirect(url_for('add_category'))
             cur = mysql.connection.cursor()
