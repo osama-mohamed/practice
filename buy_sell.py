@@ -38,6 +38,7 @@ cursor.execute("CREATE TABLE IF NOT EXISTS users(\
                 country VARCHAR(50) NOT NULL,\
                 username VARCHAR(100) NOT NULL,\
                 password VARCHAR(100) NOT NULL,\
+                reset_password_permission VARCHAR(12) NOT NULL,\
                 files TEXT NOT NULL,\
                 register_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP );")
 
@@ -275,6 +276,10 @@ def user_forget_password_email():
         msg.recipients = [email]
         msg.body = "Reset Your Password : http://localhost:5000/user_reset_password/%s \n message sent from Flask-Mail Automatic sender!" % (res['id'])
         mail.send(msg)
+        cur = mysql.connection.cursor()
+        cur.execute("UPDATE users SET reset_password_permission = 'reset' WHERE username = %s AND permission='user'", [user_name])
+        mysql.connection.commit()
+        cur.close()
         flash("The Reset Message has been Sent to your email!", "success")
         flash("Please check your email!", "warning")
         return redirect(url_for('home'))
@@ -301,6 +306,7 @@ def user_reset_password(id):
         encrypted_password = sha256_crypt.encrypt(str(form.password.data))
         cur = mysql.connection.cursor()
         cur.execute("UPDATE users SET password = %s WHERE id = %s AND permission='user'", [encrypted_password, id])
+        cur.execute("UPDATE users SET reset_password_permission = 'no_reset' WHERE id = %s AND permission='user'", [id])
         mysql.connection.commit()
         cur.close()
         flash("You Have Successfully Changed Your Password Now!", "success")
