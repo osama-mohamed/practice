@@ -303,14 +303,22 @@ class reset_password(Form):
 def user_reset_password(id):
     form = reset_password(request.form)
     if request.method == 'POST' and form.validate():
-        encrypted_password = sha256_crypt.encrypt(str(form.password.data))
         cur = mysql.connection.cursor()
-        cur.execute("UPDATE users SET password = %s WHERE id = %s AND permission='user'", [encrypted_password, id])
-        cur.execute("UPDATE users SET reset_password_permission = 'no_reset' WHERE id = %s AND permission='user'", [id])
-        mysql.connection.commit()
-        cur.close()
-        flash("You Have Successfully Changed Your Password Now!", "success")
-        return redirect(url_for('home'))
+        cur.execute("SELECT reset_password_permission FROM users WHERE id = %s AND permission='user'", [id])
+        permission = cur.fetchone()
+        password_permission = permission['reset_password_permission']
+        if password_permission == 'reset':
+            encrypted_password = sha256_crypt.encrypt(str(form.password.data))
+            cur.execute("UPDATE users SET password = %s WHERE id = %s AND permission='user'", [encrypted_password, id])
+            cur.execute("UPDATE users SET reset_password_permission = 'no_reset' WHERE id = %s AND permission='user'", [id])
+            mysql.connection.commit()
+            cur.close()
+            flash("You Have Successfully Changed Your Password Now!", "success")
+            return redirect(url_for('home'))
+        else:
+            cur.close()
+            flash("You Have Changed Your Password before!", "warning")
+            return redirect(url_for('home'))
     return render_template('user_reset_password.html', form=form)
 
 
