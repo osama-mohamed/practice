@@ -49,14 +49,14 @@
           </div>
           <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
           <ul class="list-unstyled">
-            <li><a href="/admin/"><i class="icon-home"></i>Home</a></li>
-            <li><a href="/admin/add_product_slider"><i class="fa fa-plus-circle"></i>Add New Slider Product</a></li>
-            <li><a href="/admin/add_product"><i class="fa fa-plus"></i>Add New Product</a></li>
-            <li><a href="/admin/add_category"><i class="fa fa-star-o"></i>Add New Category</a></li>
+            <li> <a href="/admin/"><i class="icon-home"></i>Home</a></li>
+            <li> <a href="/admin/add_product_slider"><i class="fa fa-plus-circle"></i>Add New Slider Product</a></li>
+            <li> <a href="/admin/add_product"><i class="fa fa-plus"></i>Add New Product</a></li>
+            <li> <a href="/admin/add_category"><i class="fa fa-star-o"></i>Add New Category</a></li>
             {% if permission == 'admin' %}
             <li><a href="/admin/add_user"><i class="fa fa-user-plus"></i>Create Account</a></li>
             {% endif %}
-            <li><a href="/admin/edit_product/1"><i class="fa fa-pencil-square-o"></i>Edit Product</a></li>
+            <li> <a href="/admin/edit_product/1"><i class="fa fa-pencil-square-o"></i>Edit Product</a></li>
             <li><a href="/admin/slider_products_table"> <i class="fa fa-sliders"></i>Slider Products Table</a></li>
             <li><a href="/admin/review_slider_products"> <i class="fa fa-comments-o"></i>Slider Review Table</a></li>
             <li><a href="/admin/products_table"> <i class="icon-grid"></i>Products Table</a></li>
@@ -72,14 +72,13 @@
           <!-- Page Header-->
           <header class="page-header">
             <div class="container-fluid">
-              <h2 class="no-margin-bottom">Edit Category</h2>
+              <h2 class="no-margin-bottom">View Message</h2>
             </div>
           </header>
           <!-- Breadcrumb-->
           <div class="breadcrumb-holder container-fluid">
             <ul class="breadcrumb">
-              <li class="breadcrumb-item"><a href="/admin/">Home</a></li>
-              <li class="breadcrumb-item active">Edit Category</li>
+              <li class="breadcrumb-item active">View Message {{ message.id }}</li>
             </ul>
           </div>
           <section class="tables">
@@ -89,14 +88,12 @@
               <div class="container">
                 {% block body %}
                 {% include 'includes/_messages.html' %}
-                {% from "includes/_formhelpers.html" import render_field %}
-                <form method="post" action="" style="color: #FFF;">
-                    <div class="form-group">
-                        {{ render_field(form.category, class="form-control", style="max-width: 20%;", autocomplete="off") }}
-                    </div>
-                    <input type="submit" class="btn btn-primary" value="Edit Category">
-                </form>
+                    <h3>Name : &emsp; {{ message.username }}</h3>
                     <br>
+                    <p><b>Phone</b> : &emsp; {{ message.phone }}</p>
+                    <p><b>E-mail</b> : &emsp; {{ message.email }}</p>
+                    <p class="text-justify"><b>Message</b> : &emsp; <br> &emsp; &emsp; &emsp; &emsp; {{ message.message }}</p>
+
                     <br>
                     <br>
                     <br>
@@ -107,6 +104,9 @@
               </div>
             </div>
           </section>
+        <br>
+        <br>
+        <br>
         <br>
         <br>
         <br>

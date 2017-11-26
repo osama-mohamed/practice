@@ -26,6 +26,7 @@ database.select_db('buy_sell')
 # cursor.execute("DROP TABLE IF EXISTS orders;")
 # cursor.execute("DROP TABLE IF EXISTS reviews;")
 # cursor.execute("DROP TABLE IF EXISTS slider_reviews;")
+# cursor.execute("DROP TABLE IF EXISTS contact_us;")
 
 
 cursor.execute("CREATE TABLE IF NOT EXISTS users(\
@@ -122,6 +123,16 @@ cursor.execute("CREATE TABLE IF NOT EXISTS slider_reviews(\
                 review TEXT NOT NULL,\
                 review_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);")
 
+cursor.execute("CREATE TABLE IF NOT EXISTS contact_us(\
+                id INT(11) AUTO_INCREMENT PRIMARY KEY,\
+                status VARCHAR(10) NOT NULL,\
+                username VARCHAR(255) NOT NULL,\
+                phone VARCHAR(255) NOT NULL,\
+                email VARCHAR(255) NOT NULL,\
+                message TEXT NOT NULL,\
+                write_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);")
+
+
 # create default admin account if not exists
 
 result = cursor.execute('SELECT username FROM users WHERE username=%s', ['admin'])
@@ -207,7 +218,38 @@ def home():
     # cur.execute("SELECT * FROM products WHERE category = %s ORDER BY id DESC  LIMIT 8;", ['hosting'])
     # latest_productss = cur.fetchall()
     cur.close()
+
     return render_template('home.html', latest_products=latest_products, categories=categories, slider_products_first=slider_products_first, slider_products_second=slider_products_second, slider_products_third=slider_products_third, recommended_products=recommended_products, recommended_products_second=recommended_products_second)
+
+
+# contact us form validators
+
+class Contact_us(Form):
+    name = StringField('Name', [validators.DataRequired()])
+    mobile_phone = StringField('Phone', [validators.DataRequired()])
+    email = StringField('E-mail', [validators.DataRequired()])
+    message = TextAreaField('Message', [validators.DataRequired()])
+
+
+# contact us form from home page
+
+@app.route('/contact_us', methods=['post', 'get'])
+def contact_us():
+    form = Contact_us(request.form)
+    if request.method == 'POST' and form.validate():
+        name = form.name.data
+        mobile_phone = form.mobile_phone.data
+        # email = form.email.data
+        email = request.form['email']
+        message = form.message.data
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO contact_us(status, username, phone, email, message)\
+                     VALUES(%s, %s, %s, %s, %s)", ("not_seen", name, mobile_phone, email, message))
+        mysql.connection.commit()
+        cur.close()
+        flash("Your Message has been Sent to Us successfully!", "success")
+        return redirect(url_for('home'))
+    return render_template('contact_us.html', form=form)
 
 
 # products range price
@@ -1030,8 +1072,20 @@ def admin_dashboard():
     cur.execute("SELECT SUM(rate) / COUNT(rate) AS AVG_RATE FROM (SELECT rate FROM slider_reviews UNION ALL SELECT rate FROM reviews) T;")
     avg_rate = cur.fetchone()
     total_avg_rate = avg_rate['AVG_RATE']
+
+
+    # view messages
+    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    messages = cur.fetchall()
+
+    # show messages number
+    cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+    count_message = cur.fetchone()
+    count_messages = count_message['COUNT(id)']
+
+
     cur.close()
-    return render_template('admin_dashboard.html', count_sliders=count_sliders, count_products=count_products, count_users=count_users, count_categories=count_categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], count_number_of_sales=count_number_of_sales, count_number_of_sales_slider=count_number_of_sales_slider, product_saled=product_saled, slider_saled=slider_saled, slider_big=slider_big, slider_small=slider_small, product_big=product_big, product_small=product_small, slider_add=slider_add, product_add=product_add, slider_last_week=slider_last_week, product_last_week=product_last_week, total_avg_rate=total_avg_rate, product_saled_low=product_saled_low, slider_saled_low=slider_saled_low)
+    return render_template('admin_dashboard.html', count_sliders=count_sliders, count_products=count_products, count_users=count_users, count_categories=count_categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], count_number_of_sales=count_number_of_sales, count_number_of_sales_slider=count_number_of_sales_slider, product_saled=product_saled, slider_saled=slider_saled, slider_big=slider_big, slider_small=slider_small, product_big=product_big, product_small=product_small, slider_add=slider_add, product_add=product_add, slider_last_week=slider_last_week, product_last_week=product_last_week, total_avg_rate=total_avg_rate, product_saled_low=product_saled_low, slider_saled_low=slider_saled_low, messages=messages, count_messages=count_messages)
 
 
 # product validators form
@@ -1054,6 +1108,15 @@ def add_product():
     cur = mysql.connection.cursor()
     result = cur.execute("SELECT category FROM categories")
     categories = cur.fetchall()
+
+    # view messages
+    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    messages = cur.fetchall()
+
+    # show messages number
+    cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+    count_message = cur.fetchone()
+    count_messages = count_message['COUNT(id)']
     cur.close()
     if result > 0:
         if request.method == 'POST' and form.validate():
@@ -1118,7 +1181,7 @@ def add_product():
         flash('Create an category first to add a new product', 'warning')
         return redirect(url_for('admin_dashboard'))
 
-    return render_template('admin_add_production.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
+    return render_template('admin_add_production.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
                                 
                 # cur = mysql.connection.cursor()
                 # cur.execute("INSERT INTO products(category, product_name, description, price, discount, files)\
@@ -1144,6 +1207,16 @@ def edit_product(id):
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM products WHERE id={}".format(id))
     product = cur.fetchone()
+
+    # view messages
+    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    messages = cur.fetchall()
+
+    # show messages number
+    cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+    count_message = cur.fetchone()
+    count_messages = count_message['COUNT(id)']
+
     cur.close()
     form = AddProductForm(request.form)
     form.product_name.data = product['product_name']
@@ -1224,7 +1297,7 @@ def edit_product(id):
             cur.close()
             flash('Your Product Has been Edited successfully!', 'success')
             return redirect(url_for('admin_dashboard'))
-    return render_template('admin_edit_production.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
+    return render_template('admin_edit_production.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
 
 
 # admin delete product
@@ -1315,6 +1388,16 @@ def add_product_slider():
     cur = mysql.connection.cursor()
     result = cur.execute("SELECT category FROM categories")
     categories = cur.fetchall()
+
+    # view messages
+    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    messages = cur.fetchall()
+
+    # show messages number
+    cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+    count_message = cur.fetchone()
+    count_messages = count_message['COUNT(id)']
+
     cur.close()
     if result > 0:
         if request.method == 'POST' and form.validate():
@@ -1378,7 +1461,7 @@ def add_product_slider():
     elif result == 0:
         flash('Create an category first to add new slider product', 'warning')
         return redirect(url_for('admin_dashboard'))
-    return render_template('admin_add_production_slider.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
+    return render_template('admin_add_production_slider.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
 
 
 # admin edit slider product page
@@ -1389,6 +1472,16 @@ def edit_product_slider(id):
     cur = mysql.connection.cursor()
     cur.execute("SELECT category FROM categories")
     categories = cur.fetchall()
+
+    # view messages
+    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    messages = cur.fetchall()
+
+    # show messages number
+    cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+    count_message = cur.fetchone()
+    count_messages = count_message['COUNT(id)']
+
     cur.close()
 
     cur = mysql.connection.cursor()
@@ -1473,7 +1566,7 @@ def edit_product_slider(id):
             cur.close()
             flash('Your slider Product Has been Edited successfully!', 'success')
             return redirect(url_for('admin_dashboard'))
-    return render_template('admin_edit_production_slider.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
+    return render_template('admin_edit_production_slider.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
 
 
 # admin delete slider product
@@ -1558,6 +1651,17 @@ class AdduserForm(Form):
 @app.route('/admin/add_user', methods=['post', 'get'])
 @is_admin_logged_in
 def add_user():
+    cur = mysql.connection.cursor()
+    # view messages
+    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    messages = cur.fetchall()
+
+    # show messages number
+    cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+    count_message = cur.fetchone()
+    count_messages = count_message['COUNT(id)']
+
+    cur.close()
     form = AdduserForm(request.form)
     if request.method == 'POST' and form.validate():
         username = form.username.data
@@ -1606,7 +1710,7 @@ def add_user():
                 cur.close()
                 flash('You Have Created a User Account successfully!', 'success')
                 return redirect(url_for('admin_dashboard'))
-    return render_template('admin_add_user.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
+    return render_template('admin_add_user.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
 
 
 # admin delete user 
@@ -1644,6 +1748,18 @@ class CategoryForm(Form):
 @app.route('/admin/add_category', methods=['post', 'get'])
 @is_admin_logged_in
 def add_category():
+    cur = mysql.connection.cursor()
+
+    # view messages
+    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    messages = cur.fetchall()
+
+    # show messages number
+    cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+    count_message = cur.fetchone()
+    count_messages = count_message['COUNT(id)']
+
+    cur.close()
     form = CategoryForm(request.form)
     if request.method == 'POST' and form.validate():
         category = form.category.data.lower()
@@ -1664,7 +1780,7 @@ def add_category():
             cur.close()
             flash('You Have Added New Category successfully!', 'success')
             return redirect(url_for('admin_dashboard'))
-    return render_template('admin_add_category.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
+    return render_template('admin_add_category.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
 
 
 # admin edit category page
@@ -1675,6 +1791,16 @@ def edit_category(current_category):
         cur = mysql.connection.cursor()
         cur.execute("SELECT category FROM categories Where category=%s;", [current_category])
         cat = cur.fetchone()
+
+        # view messages
+        cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+        messages = cur.fetchall()
+
+        # show messages number
+        cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+        count_message = cur.fetchone()
+        count_messages = count_message['COUNT(id)']
+
         cur.close()
         form = CategoryForm(request.form)
         form.category.data = cat['category']
@@ -1694,7 +1820,7 @@ def edit_category(current_category):
             cur.close()
             flash('You Have Edited Category successfully!', 'success')
             return redirect(url_for('admin_dashboard'))
-        return render_template('admin_edit_category.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
+        return render_template('admin_edit_category.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
 
 
 # admin delete category 
@@ -1884,8 +2010,18 @@ def slider_products_table():
     cur.execute("SELECT COUNT(id) FROM slider_products")
     sliders = cur.fetchone()
     count_sliders = sliders['COUNT(id)']
+
+    # view messages
+    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    messages = cur.fetchall()
+
+    # show messages number
+    cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+    count_message = cur.fetchone()
+    count_messages = count_message['COUNT(id)']
+
     cur.close()
-    return render_template('admin_slider_products_table .html', slider_products=slider_products, count_sliders=count_sliders, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
+    return render_template('admin_slider_products_table .html', slider_products=slider_products, count_sliders=count_sliders, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
 
 
 # admin preview all products table page
@@ -1896,8 +2032,18 @@ def products_table():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM products")
     products = cur.fetchall()
+
+    # view messages
+    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    messages = cur.fetchall()
+
+    # show messages number
+    cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+    count_message = cur.fetchone()
+    count_messages = count_message['COUNT(id)']
+
     cur.close()
-    return render_template('admin_products_table.html', products=products, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
+    return render_template('admin_products_table.html', products=products, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
 
 
 # admin preview all categories table page
@@ -1915,8 +2061,18 @@ def categories_table():
     cur.execute("SELECT COUNT(id) FROM products")
     products = cur.fetchone()
     count_products = products['COUNT(id)']
+
+    # view messages
+    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    messages = cur.fetchall()
+
+    # show messages number
+    cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+    count_message = cur.fetchone()
+    count_messages = count_message['COUNT(id)']
+
     cur.close()
-    return render_template('admin_categories_table.html', categories=categories, count_products=count_products, count_categories=count_categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
+    return render_template('admin_categories_table.html', categories=categories, count_products=count_products, count_categories=count_categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
 
 
 # admin preview all users table page
@@ -1930,8 +2086,18 @@ def users_table():
     cur.execute("SELECT COUNT(username) FROM users WHERE permission = 'user'")
     count_userss = cur.fetchone()
     count_users = count_userss['COUNT(username)']
+
+    # view messages
+    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    messages = cur.fetchall()
+
+    # show messages number
+    cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+    count_message = cur.fetchone()
+    count_messages = count_message['COUNT(id)']
+
     cur.close()
-    return render_template('admin_users_table.html', users=users, count_users=count_users, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
+    return render_template('admin_users_table.html', users=users, count_users=count_users, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
 
 
 # admin preview all users table page
@@ -1942,8 +2108,18 @@ def orders_table():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM buy_orders")
     orders = cur.fetchall()
+
+    # view messages
+    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    messages = cur.fetchall()
+
+    # show messages number
+    cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+    count_message = cur.fetchone()
+    count_messages = count_message['COUNT(id)']
+
     cur.close()
-    return render_template('admin_orders_table.html', orders=orders, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
+    return render_template('admin_orders_table.html', orders=orders, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
 
 
 # admin review products table page
@@ -1954,8 +2130,18 @@ def review_products():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM reviews")
     review_products = cur.fetchall()
+
+    # view messages
+    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    messages = cur.fetchall()
+
+    # show messages number
+    cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+    count_message = cur.fetchone()
+    count_messages = count_message['COUNT(id)']
+
     cur.close()
-    return render_template('admin_products_reviews.html', review_products=review_products, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
+    return render_template('admin_products_reviews.html', review_products=review_products, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
 
 
 # admin review products table page
@@ -1966,8 +2152,18 @@ def review_slider_products():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM slider_reviews")
     review_slider_products = cur.fetchall()
+
+    # view messages
+    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    messages = cur.fetchall()
+
+    # show messages number
+    cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+    count_message = cur.fetchone()
+    count_messages = count_message['COUNT(id)']
+
     cur.close()
-    return render_template('admin_slider_products_reviews.html', review_slider_products=review_slider_products, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'])
+    return render_template('admin_slider_products_reviews.html', review_slider_products=review_slider_products, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
 
 
 # admin preview product
@@ -1982,8 +2178,18 @@ def product(id):
     review = cur.fetchone()
     cur.execute("SELECT SUM(rate) / COUNT(product_name) AS avg_rate FROM reviews WHERE product_id = %s;", [id])
     rate = cur.fetchone()
+
+    # view messages
+    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    messages = cur.fetchall()
+
+    # show messages number
+    cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+    count_message = cur.fetchone()
+    count_messages = count_message['COUNT(id)']
+
     cur.close()
-    return render_template('admin_product.html', product=product, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], reviewresult=reviewresult, review=review, rate=rate)
+    return render_template('admin_product.html', product=product, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], reviewresult=reviewresult, review=review, rate=rate, messages=messages, count_messages=count_messages)
 
 
 # admin preview product
@@ -1998,8 +2204,80 @@ def slider(id):
     review = cur.fetchone()
     cur.execute("SELECT SUM(rate) / COUNT(product_name) AS avg_rate FROM slider_reviews WHERE product_id = %s;", [id])
     rate = cur.fetchone()
+
+    # view messages
+    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    messages = cur.fetchall()
+
+    # show messages number
+    cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+    count_message = cur.fetchone()
+    count_messages = count_message['COUNT(id)']
+
     cur.close()
-    return render_template('admin_slider.html', product=product, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], reviewresult=reviewresult, review=review, rate=rate)
+    return render_template('admin_slider.html', product=product, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], reviewresult=reviewresult, review=review, rate=rate, messages=messages, count_messages=count_messages)
+
+
+# view messages table page
+
+@app.route('/admin/messages_table', methods=['post', 'get'])
+@is_admin_logged_in
+def admin_messages_table():
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM contact_us ;")
+    all_messages = cur.fetchall()
+
+    # view messages
+    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    messages = cur.fetchall()
+
+    # show messages number
+    cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+    count_message = cur.fetchone()
+    count_messages = count_message['COUNT(id)']
+
+    cur.close()
+    return render_template('admin_messages_table.html', admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], all_messages=all_messages, messages=messages, count_messages=count_messages)
+
+
+# view message page
+
+@app.route('/admin/message/<id>', methods=['post', 'get'])
+@is_admin_logged_in
+def admin_message(id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM contact_us WHERE id = %s ;", [id])
+    message = cur.fetchone()
+    cur.execute("UPDATE contact_us SET status = %s WHERE id = %s", (['seen'], id))
+    mysql.connection.commit()
+    cur.close()
+    return render_template('admin_message.html', admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], message=message)
+
+
+# delete message
+
+@app.route('/admin/delete_message/<id>', methods=['post', 'get'])
+@is_admin_logged_in
+def admin_delete_message(id):
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM contact_us WHERE id = %s ;", [id])
+    mysql.connection.commit()
+    cur.close()
+    flash('You have successfully deleted the message!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
+# delete all messages
+
+@app.route('/admin/delete_all_messages', methods=['post', 'get'])
+@is_admin_logged_in
+def admin_delete_all_messages():
+    cur = mysql.connection.cursor()
+    cur.execute("TRUNCATE contact_us")
+    mysql.connection.commit()
+    cur.close()
+    flash('You have successfully deleted all messages!', 'success')
+    return redirect(url_for('admin_dashboard'))
 
 
 # run whole application function
