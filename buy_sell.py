@@ -2226,6 +2226,10 @@ def admin_messages_table():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM contact_us ;")
     all_messages = cur.fetchall()
+    cur.execute("SELECT status FROM contact_us WHERE status = %s ;", ['seen'])
+    seen_messages = cur.fetchall()
+    cur.execute("SELECT status FROM contact_us WHERE status = %s ;", ['not_seen'])
+    not_seen_messages = cur.fetchall()
 
     # view messages
     cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
@@ -2237,7 +2241,7 @@ def admin_messages_table():
     count_messages = count_message['COUNT(id)']
 
     cur.close()
-    return render_template('admin_messages_table.html', admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], all_messages=all_messages, messages=messages, count_messages=count_messages)
+    return render_template('admin_messages_table.html', admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], all_messages=all_messages, seen_messages=seen_messages, not_seen_messages=not_seen_messages, messages=messages, count_messages=count_messages)
 
 
 # view message page
@@ -2247,11 +2251,21 @@ def admin_messages_table():
 def admin_message(id):
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM contact_us WHERE id = %s ;", [id])
-    message = cur.fetchone()
+    current_message = cur.fetchone()
     cur.execute("UPDATE contact_us SET status = %s WHERE id = %s", (['seen'], id))
     mysql.connection.commit()
+
+    # view messages
+    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    messages = cur.fetchall()
+
+    # show messages number
+    cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+    count_message = cur.fetchone()
+    count_messages = count_message['COUNT(id)']
+
     cur.close()
-    return render_template('admin_message.html', admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], message=message)
+    return render_template('admin_message.html', admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], current_message=current_message, messages=messages, count_messages=count_messages)
 
 
 # delete message
@@ -2271,12 +2285,38 @@ def admin_delete_message(id):
 
 @app.route('/admin/delete_all_messages', methods=['post', 'get'])
 @is_admin_logged_in
-def admin_delete_all_messages():
+def delete_all_messages():
     cur = mysql.connection.cursor()
     cur.execute("TRUNCATE contact_us")
     mysql.connection.commit()
     cur.close()
     flash('You have successfully deleted all messages!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
+# delete all seen messages
+
+@app.route('/admin/delete_all_seen_messages', methods=['post', 'get'])
+@is_admin_logged_in
+def delete_all_seen_messages():
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM contact_us WHERE status = %s ", ['seen'])
+    mysql.connection.commit()
+    cur.close()
+    flash('You have successfully deleted all seen messages!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
+# delete all not seen messages
+
+@app.route('/admin/delete_all_not_seen_messages', methods=['post', 'get'])
+@is_admin_logged_in
+def delete_all_not_seen_messages():
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM contact_us WHERE status = %s ", ['not_seen'])
+    mysql.connection.commit()
+    cur.close()
+    flash('You have successfully deleted all not seen messages!', 'success')
     return redirect(url_for('admin_dashboard'))
 
 

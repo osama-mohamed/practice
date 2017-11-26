@@ -97,6 +97,16 @@
                               <i class="fa fa-times"></i>Delete All Messages
                             </a>
 
+                            <!-- Button trigger modal -->
+                            <a class="dropdown-item edit" href="" data-toggle="modal" data-target="#delete_all_seen_messages">
+                              <i class="fa fa-times"></i>Delete All Seen Messages
+                            </a>
+
+                            <!-- Button trigger modal -->
+                            <a class="dropdown-item edit" href="" data-toggle="modal" data-target="#delete_all_not_seen_messages">
+                              <i class="fa fa-times"></i>Delete All Not Seen Messages
+                            </a>
+
 
 
                         </div>
@@ -104,13 +114,14 @@
                       {% endif %}
                     </div>
                     <div class="card-header d-flex align-items-center">
-                      <h3 class="h4">Messages Table &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; Messages : &emsp; {{ messages | length }}</h3>
+                      <h3 class="h4">Messages Table &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; Messages : &emsp; {{ all_messages | length }}</h3>
                     </div>
                     <div class="card-body">
                       <table class="table table-striped">
                         <thead>
                           <tr>
                             <th>ID</th>
+                            <th>Seen</th>
                             <th>User Name</th>
                             <th>Phone</th>
                             <th>E-mail</th>
@@ -123,9 +134,17 @@
                           </tr>
                         </thead>
                         <tbody>
-                        {% for msg in messages %}
+                        {% for msg in all_messages %}
                           <tr>
                             <td>{{ msg.id }}</td>
+                            <td>
+                            {% if msg.status == 'seen' %}
+                             <i class="fa fa-check" style="color: #080;"></i>
+                            {% else %}
+                            <i class="fa fa-times" style="color: #f00;"></i>
+                            {% endif %}
+                            </td>
+{#                            <td>{{ msg.status }}</td>#}
                             <td>{{ msg.username | truncate(50) }}</td>
                             <td>{{ msg.phone }}</td>
                             <td>{{ msg.email }}</td>
@@ -207,7 +226,7 @@
 
 
 
-    <!-- delete_all_products modal -->
+    <!-- delete_all_messages modal -->
     <!-- Modal -->
     <div class="modal fade" id="delete_all_messages" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -222,11 +241,65 @@
             Are you sure you want to delete all messages ?
             <br>
             <br>
-            You have : &emsp; {{ messages | length }} &emsp; {% if messages|length == 1 or messages|length == 0 %} Message {% else %} Messages {% endif %}
+            You have : &emsp; {{ all_messages | length }} &emsp; {% if all_messages|length == 1 or all_messages|length == 0 %} Message {% else %} Messages {% endif %}
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <a href="{{ url_for('admin_delete_all_messages') }}"><button class="btn btn-danger">Confirm Delete</button></a>
+            <a href="{{ url_for('delete_all_messages') }}"><button class="btn btn-danger">Confirm Delete</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- delete_all_seen_messages modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="delete_all_seen_messages" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete All Seen Messages</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete all seen messages ?
+            <br>
+            <br>
+            You have : &emsp; {{ seen_messages | length }} &emsp; {% if seen_messages|length == 1 or seen_messages|length == 0 %} Message {% else %} Messages {% endif %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <a href="{{ url_for('delete_all_seen_messages') }}"><button class="btn btn-danger">Confirm Delete</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- delete_all_not_seen_messages modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="delete_all_not_seen_messages" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete All Not Seen Messages</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete all not seen messages ?
+            <br>
+            <br>
+            You have : &emsp; {{ not_seen_messages | length }} &emsp; {% if not_seen_messages|length == 1 or not_seen_messages|length == 0 %} Message {% else %} Messages {% endif %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <a href="{{ url_for('delete_all_not_seen_messages') }}"><button class="btn btn-danger">Confirm Delete</button></a>
           </div>
         </div>
       </div>

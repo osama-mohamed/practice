@@ -78,7 +78,7 @@
           <!-- Breadcrumb-->
           <div class="breadcrumb-holder container-fluid">
             <ul class="breadcrumb">
-              <li class="breadcrumb-item active">View Message {{ message.id }}</li>
+              <li class="breadcrumb-item active">View Message {{ current_message.id }}</li>
             </ul>
           </div>
           <section class="tables">
@@ -88,11 +88,11 @@
               <div class="container">
                 {% block body %}
                 {% include 'includes/_messages.html' %}
-                    <h3>Name : &emsp; {{ message.username }}</h3>
+                    <h3>Name : &emsp; {{ current_message.username }}</h3>
                     <br>
-                    <p><b>Phone</b> : &emsp; {{ message.phone }}</p>
-                    <p><b>E-mail</b> : &emsp; {{ message.email }}</p>
-                    <p class="text-justify"><b>Message</b> : &emsp; <br> &emsp; &emsp; &emsp; &emsp; {{ message.message }}</p>
+                    <p><b>Phone</b> : &emsp; {{ current_message.phone }}</p>
+                    <p><b>E-mail</b> : &emsp; {{ current_message.email }}</p>
+                    <p class="text-justify"><b>Message</b> : &emsp; <br> &emsp; &emsp; &emsp; &emsp; {{ current_message.message }}</p>
 
                     <br>
                     <br>
