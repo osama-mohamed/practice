@@ -1075,7 +1075,7 @@ def admin_dashboard():
 
 
     # view messages
-    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
     messages = cur.fetchall()
 
     # show messages number
@@ -1110,7 +1110,7 @@ def add_product():
     categories = cur.fetchall()
 
     # view messages
-    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
     messages = cur.fetchall()
 
     # show messages number
@@ -1209,7 +1209,7 @@ def edit_product(id):
     product = cur.fetchone()
 
     # view messages
-    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
     messages = cur.fetchall()
 
     # show messages number
@@ -1396,7 +1396,7 @@ def add_product_slider():
     categories = cur.fetchall()
 
     # view messages
-    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
     messages = cur.fetchall()
 
     # show messages number
@@ -1480,7 +1480,7 @@ def edit_product_slider(id):
     categories = cur.fetchall()
 
     # view messages
-    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
     messages = cur.fetchall()
 
     # show messages number
@@ -1665,7 +1665,7 @@ class AdduserForm(Form):
 def add_user():
     cur = mysql.connection.cursor()
     # view messages
-    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
     messages = cur.fetchall()
 
     # show messages number
@@ -1763,7 +1763,7 @@ def add_category():
     cur = mysql.connection.cursor()
 
     # view messages
-    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
     messages = cur.fetchall()
 
     # show messages number
@@ -1805,7 +1805,7 @@ def edit_category(current_category):
         cat = cur.fetchone()
 
         # view messages
-        cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+        cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
         messages = cur.fetchall()
 
         # show messages number
@@ -2024,7 +2024,7 @@ def slider_products_table():
     count_sliders = sliders['COUNT(id)']
 
     # view messages
-    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
     messages = cur.fetchall()
 
     # show messages number
@@ -2046,7 +2046,7 @@ def products_table():
     products = cur.fetchall()
 
     # view messages
-    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
     messages = cur.fetchall()
 
     # show messages number
@@ -2075,7 +2075,7 @@ def categories_table():
     count_products = products['COUNT(id)']
 
     # view messages
-    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
     messages = cur.fetchall()
 
     # show messages number
@@ -2100,7 +2100,7 @@ def users_table():
     count_users = count_userss['COUNT(username)']
 
     # view messages
-    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
     messages = cur.fetchall()
 
     # show messages number
@@ -2122,7 +2122,7 @@ def orders_table():
     orders = cur.fetchall()
 
     # view messages
-    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
     messages = cur.fetchall()
 
     # show messages number
@@ -2144,7 +2144,7 @@ def review_products():
     review_products = cur.fetchall()
 
     # view messages
-    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
     messages = cur.fetchall()
 
     # show messages number
@@ -2166,7 +2166,7 @@ def review_slider_products():
     review_slider_products = cur.fetchall()
 
     # view messages
-    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
     messages = cur.fetchall()
 
     # show messages number
@@ -2192,7 +2192,7 @@ def product(id):
     rate = cur.fetchone()
 
     # view messages
-    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
     messages = cur.fetchall()
 
     # show messages number
@@ -2218,7 +2218,7 @@ def slider(id):
     rate = cur.fetchone()
 
     # view messages
-    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
     messages = cur.fetchall()
 
     # show messages number
@@ -2244,7 +2244,7 @@ def admin_messages_table():
     not_seen_messages = cur.fetchall()
 
     # view messages
-    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
     messages = cur.fetchall()
 
     # show messages number
@@ -2268,7 +2268,7 @@ def admin_message(id):
     mysql.connection.commit()
 
     # view messages
-    cur.execute("SELECT * FROM contact_us ORDER BY id DESC LIMIT 6;")
+    cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
     messages = cur.fetchall()
 
     # show messages number
