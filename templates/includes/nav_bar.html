@@ -21,16 +21,22 @@
                 <!-- Search-->
                 <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i class="icon-search"></i></a></li>
                 <!-- Notifications-->
-                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o"></i><span class="badge" style="background-color: #dc3545;">{{ count_orders }}</span></a>
+                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o"></i><span class="badge" style="background-color: #dc3545;">{{ count_orders_where_pending }}</span></a>
                   <ul aria-labelledby="notifications" class="dropdown-menu">
 
 
-
-                    <li><a rel="nofollow" href="#" class="dropdown-item">
+                      {% for user in count_orders_by_user %}
+                    <li><a rel="nofollow" href="/admin/show_orders/{{ user['user_name'] }}" class="dropdown-item">
                         <div class="notification">
-                          <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
-                          <div class="notification-time"><small>4 minutes ago</small></div>
+                          <div class="notification-content">{{ user['user_name'] }} ordered {{ user['COUNT(status)'] }}
+                              {% if user['COUNT(status)'] == 1 %}
+                              order
+                              {% else %}
+                              orders
+                              {% endif %}
+                          </div>
                         </div></a></li>
+                      {% endfor %}
 
 
 

@@ -1084,13 +1084,17 @@ def admin_dashboard():
     count_messages = count_message['COUNT(id)']
 
     # show new orders number
-    cur.execute("SELECT COUNT(id) FROM buy_orders WHERE status = %s ", ['Pending'])
+    cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
     count_order = cur.fetchone()
-    count_orders = count_order['COUNT(id)']
+    count_orders_where_pending = count_order['COUNT(status)']
+
+    # show new orders
+    cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+    count_orders_by_user = cur.fetchall()
 
 
     cur.close()
-    return render_template('admin_dashboard.html', count_sliders=count_sliders, count_products=count_products, count_users=count_users, count_categories=count_categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], count_number_of_sales=count_number_of_sales, count_number_of_sales_slider=count_number_of_sales_slider, product_saled=product_saled, slider_saled=slider_saled, slider_big=slider_big, slider_small=slider_small, product_big=product_big, product_small=product_small, slider_add=slider_add, product_add=product_add, slider_last_week=slider_last_week, product_last_week=product_last_week, total_avg_rate=total_avg_rate, product_saled_low=product_saled_low, slider_saled_low=slider_saled_low, messages=messages, count_messages=count_messages, count_orders=count_orders)
+    return render_template('admin_dashboard.html', count_sliders=count_sliders, count_products=count_products, count_users=count_users, count_categories=count_categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], count_number_of_sales=count_number_of_sales, count_number_of_sales_slider=count_number_of_sales_slider, product_saled=product_saled, slider_saled=slider_saled, slider_big=slider_big, slider_small=slider_small, product_big=product_big, product_small=product_small, slider_add=slider_add, product_add=product_add, slider_last_week=slider_last_week, product_last_week=product_last_week, total_avg_rate=total_avg_rate, product_saled_low=product_saled_low, slider_saled_low=slider_saled_low, messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
 
 # product validators form
@@ -1122,6 +1126,16 @@ def add_product():
     cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
     count_message = cur.fetchone()
     count_messages = count_message['COUNT(id)']
+
+    # show new orders number
+    cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+    count_order = cur.fetchone()
+    count_orders_where_pending = count_order['COUNT(status)']
+
+    # show new orders
+    cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+    count_orders_by_user = cur.fetchall()
+
     cur.close()
     if result > 0:
         if request.method == 'POST' and form.validate():
@@ -1186,7 +1200,7 @@ def add_product():
         flash('Create an category first to add a new product', 'warning')
         return redirect(url_for('admin_dashboard'))
 
-    return render_template('admin_add_production.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
+    return render_template('admin_add_production.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
                                 
                 # cur = mysql.connection.cursor()
                 # cur.execute("INSERT INTO products(category, product_name, description, price, discount, files)\
@@ -1221,6 +1235,15 @@ def edit_product(id):
     cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
     count_message = cur.fetchone()
     count_messages = count_message['COUNT(id)']
+
+    # show new orders number
+    cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+    count_order = cur.fetchone()
+    count_orders_where_pending = count_order['COUNT(status)']
+
+    # show new orders
+    cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+    count_orders_by_user = cur.fetchall()
 
     cur.close()
     form = AddProductForm(request.form)
@@ -1308,7 +1331,7 @@ def edit_product(id):
             cur.close()
             flash('Your Product Has been Edited successfully!', 'success')
             return redirect(url_for('admin_dashboard'))
-    return render_template('admin_edit_production.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
+    return render_template('admin_edit_production.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
 
 # admin delete product
@@ -1409,6 +1432,15 @@ def add_product_slider():
     count_message = cur.fetchone()
     count_messages = count_message['COUNT(id)']
 
+    # show new orders number
+    cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+    count_order = cur.fetchone()
+    count_orders_where_pending = count_order['COUNT(status)']
+
+    # show new orders
+    cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+    count_orders_by_user = cur.fetchall()
+
     cur.close()
     if result > 0:
         if request.method == 'POST' and form.validate():
@@ -1472,7 +1504,7 @@ def add_product_slider():
     elif result == 0:
         flash('Create an category first to add new slider product', 'warning')
         return redirect(url_for('admin_dashboard'))
-    return render_template('admin_add_production_slider.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
+    return render_template('admin_add_production_slider.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
 
 # admin edit slider product page
@@ -1492,6 +1524,15 @@ def edit_product_slider(id):
     cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
     count_message = cur.fetchone()
     count_messages = count_message['COUNT(id)']
+
+    # show new orders number
+    cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+    count_order = cur.fetchone()
+    count_orders_where_pending = count_order['COUNT(status)']
+
+    # show new orders
+    cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+    count_orders_by_user = cur.fetchall()
 
     cur.close()
 
@@ -1583,7 +1624,7 @@ def edit_product_slider(id):
             cur.close()
             flash('Your slider Product Has been Edited successfully!', 'success')
             return redirect(url_for('admin_dashboard'))
-    return render_template('admin_edit_production_slider.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
+    return render_template('admin_edit_production_slider.html', form=form, categories=categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
 
 # admin delete slider product
@@ -1678,6 +1719,15 @@ def add_user():
     count_message = cur.fetchone()
     count_messages = count_message['COUNT(id)']
 
+    # show new orders number
+    cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+    count_order = cur.fetchone()
+    count_orders_where_pending = count_order['COUNT(status)']
+
+    # show new orders
+    cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+    count_orders_by_user = cur.fetchall()
+
     cur.close()
     form = AdduserForm(request.form)
     if request.method == 'POST' and form.validate():
@@ -1727,7 +1777,7 @@ def add_user():
                 cur.close()
                 flash('You Have Created a User Account successfully!', 'success')
                 return redirect(url_for('admin_dashboard'))
-    return render_template('admin_add_user.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
+    return render_template('admin_add_user.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
 
 # admin delete user 
@@ -1776,6 +1826,15 @@ def add_category():
     count_message = cur.fetchone()
     count_messages = count_message['COUNT(id)']
 
+    # show new orders number
+    cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+    count_order = cur.fetchone()
+    count_orders_where_pending = count_order['COUNT(status)']
+
+    # show new orders
+    cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+    count_orders_by_user = cur.fetchall()
+
     cur.close()
     form = CategoryForm(request.form)
     if request.method == 'POST' and form.validate():
@@ -1797,7 +1856,7 @@ def add_category():
             cur.close()
             flash('You Have Added New Category successfully!', 'success')
             return redirect(url_for('admin_dashboard'))
-    return render_template('admin_add_category.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
+    return render_template('admin_add_category.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
 
 # admin edit category page
@@ -1818,6 +1877,15 @@ def edit_category(current_category):
         count_message = cur.fetchone()
         count_messages = count_message['COUNT(id)']
 
+        # show new orders number
+        cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+        count_order = cur.fetchone()
+        count_orders_where_pending = count_order['COUNT(status)']
+
+        # show new orders
+        cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+        count_orders_by_user = cur.fetchall()
+
         cur.close()
         form = CategoryForm(request.form)
         form.category.data = cat['category']
@@ -1837,7 +1905,7 @@ def edit_category(current_category):
             cur.close()
             flash('You Have Edited Category successfully!', 'success')
             return redirect(url_for('admin_dashboard'))
-        return render_template('admin_edit_category.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
+        return render_template('admin_edit_category.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
 
 # admin delete category 
@@ -2037,8 +2105,17 @@ def slider_products_table():
     count_message = cur.fetchone()
     count_messages = count_message['COUNT(id)']
 
+    # show new orders number
+    cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+    count_order = cur.fetchone()
+    count_orders_where_pending = count_order['COUNT(status)']
+
+    # show new orders
+    cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+    count_orders_by_user = cur.fetchall()
+
     cur.close()
-    return render_template('admin_slider_products_table .html', slider_products=slider_products, count_sliders=count_sliders, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
+    return render_template('admin_slider_products_table .html', slider_products=slider_products, count_sliders=count_sliders, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
 
 # admin preview all products table page
@@ -2059,8 +2136,17 @@ def products_table():
     count_message = cur.fetchone()
     count_messages = count_message['COUNT(id)']
 
+    # show new orders number
+    cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+    count_order = cur.fetchone()
+    count_orders_where_pending = count_order['COUNT(status)']
+
+    # show new orders
+    cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+    count_orders_by_user = cur.fetchall()
+
     cur.close()
-    return render_template('admin_products_table.html', products=products, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
+    return render_template('admin_products_table.html', products=products, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
 
 # admin preview all categories table page
@@ -2088,8 +2174,17 @@ def categories_table():
     count_message = cur.fetchone()
     count_messages = count_message['COUNT(id)']
 
+    # show new orders number
+    cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+    count_order = cur.fetchone()
+    count_orders_where_pending = count_order['COUNT(status)']
+
+    # show new orders
+    cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+    count_orders_by_user = cur.fetchall()
+
     cur.close()
-    return render_template('admin_categories_table.html', categories=categories, count_products=count_products, count_categories=count_categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
+    return render_template('admin_categories_table.html', categories=categories, count_products=count_products, count_categories=count_categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
 
 # admin preview all users table page
@@ -2113,8 +2208,17 @@ def users_table():
     count_message = cur.fetchone()
     count_messages = count_message['COUNT(id)']
 
+    # show new orders number
+    cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+    count_order = cur.fetchone()
+    count_orders_where_pending = count_order['COUNT(status)']
+
+    # show new orders
+    cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+    count_orders_by_user = cur.fetchall()
+
     cur.close()
-    return render_template('admin_users_table.html', users=users, count_users=count_users, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
+    return render_template('admin_users_table.html', users=users, count_users=count_users, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
 
 # admin preview all users table page
@@ -2136,8 +2240,17 @@ def orders_table():
     count_message = cur.fetchone()
     count_messages = count_message['COUNT(id)']
 
+    # show new orders number
+    cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+    count_order = cur.fetchone()
+    count_orders_where_pending = count_order['COUNT(status)']
+
+    # show new orders
+    cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+    count_orders_by_user = cur.fetchall()
+
     cur.close()
-    return render_template('admin_orders_table.html', orders=orders, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
+    return render_template('admin_orders_table.html', orders=orders, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
 
 # admin review products table page
@@ -2158,8 +2271,17 @@ def review_products():
     count_message = cur.fetchone()
     count_messages = count_message['COUNT(id)']
 
+    # show new orders number
+    cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+    count_order = cur.fetchone()
+    count_orders_where_pending = count_order['COUNT(status)']
+
+    # show new orders
+    cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+    count_orders_by_user = cur.fetchall()
+
     cur.close()
-    return render_template('admin_products_reviews.html', review_products=review_products, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
+    return render_template('admin_products_reviews.html', review_products=review_products, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
 
 # admin review products table page
@@ -2180,8 +2302,17 @@ def review_slider_products():
     count_message = cur.fetchone()
     count_messages = count_message['COUNT(id)']
 
+    # show new orders number
+    cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+    count_order = cur.fetchone()
+    count_orders_where_pending = count_order['COUNT(status)']
+
+    # show new orders
+    cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+    count_orders_by_user = cur.fetchall()
+
     cur.close()
-    return render_template('admin_slider_products_reviews.html', review_slider_products=review_slider_products, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages)
+    return render_template('admin_slider_products_reviews.html', review_slider_products=review_slider_products, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
 
 # admin preview product
@@ -2206,8 +2337,17 @@ def product(id):
     count_message = cur.fetchone()
     count_messages = count_message['COUNT(id)']
 
+    # show new orders number
+    cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+    count_order = cur.fetchone()
+    count_orders_where_pending = count_order['COUNT(status)']
+
+    # show new orders
+    cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+    count_orders_by_user = cur.fetchall()
+
     cur.close()
-    return render_template('admin_product.html', product=product, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], reviewresult=reviewresult, review=review, rate=rate, messages=messages, count_messages=count_messages)
+    return render_template('admin_product.html', product=product, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], reviewresult=reviewresult, review=review, rate=rate, messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
 
 # admin preview product
@@ -2232,8 +2372,17 @@ def slider(id):
     count_message = cur.fetchone()
     count_messages = count_message['COUNT(id)']
 
+    # show new orders number
+    cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+    count_order = cur.fetchone()
+    count_orders_where_pending = count_order['COUNT(status)']
+
+    # show new orders
+    cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+    count_orders_by_user = cur.fetchall()
+
     cur.close()
-    return render_template('admin_slider.html', product=product, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], reviewresult=reviewresult, review=review, rate=rate, messages=messages, count_messages=count_messages)
+    return render_template('admin_slider.html', product=product, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], reviewresult=reviewresult, review=review, rate=rate, messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
 
 # view messages table page
@@ -2258,8 +2407,17 @@ def admin_messages_table():
     count_message = cur.fetchone()
     count_messages = count_message['COUNT(id)']
 
+    # show new orders number
+    cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+    count_order = cur.fetchone()
+    count_orders_where_pending = count_order['COUNT(status)']
+
+    # show new orders
+    cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+    count_orders_by_user = cur.fetchall()
+
     cur.close()
-    return render_template('admin_messages_table.html', admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], all_messages=all_messages, seen_messages=seen_messages, not_seen_messages=not_seen_messages, messages=messages, count_messages=count_messages)
+    return render_template('admin_messages_table.html', admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], all_messages=all_messages, seen_messages=seen_messages, not_seen_messages=not_seen_messages, messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
 
 # view message page
@@ -2282,8 +2440,17 @@ def admin_message(id):
     count_message = cur.fetchone()
     count_messages = count_message['COUNT(id)']
 
+    # show new orders number
+    cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+    count_order = cur.fetchone()
+    count_orders_where_pending = count_order['COUNT(status)']
+
+    # show new orders
+    cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+    count_orders_by_user = cur.fetchall()
+
     cur.close()
-    return render_template('admin_message.html', admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], current_message=current_message, messages=messages, count_messages=count_messages)
+    return render_template('admin_message.html', admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], current_message=current_message, messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
 
 # delete message
@@ -2358,8 +2525,17 @@ def show_orders(username):
     count_message = cur.fetchone()
     count_messages = count_message['COUNT(id)']
 
+    # show new orders number
+    cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+    count_order = cur.fetchone()
+    count_orders_where_pending = count_order['COUNT(status)']
+
+    # show new orders
+    cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+    count_orders_by_user = cur.fetchall()
+
     cur.close()
-    return render_template('admin_show_orders_by_user_table.html', admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], orders=orders, messages=messages, count_messages=count_messages)
+    return render_template('admin_show_orders_by_user_table.html', admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], orders=orders, messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
 
 # admin accept orders for user
