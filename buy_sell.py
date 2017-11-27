@@ -192,7 +192,7 @@ def allowed_file(filename):
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'favicon.png', mimetype='image/vnd.microsoft.icon')
+                               'admin.png', mimetype='image/vnd.microsoft.icon')
 
 
 # home page
