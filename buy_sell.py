@@ -1232,6 +1232,12 @@ def edit_product(id):
     
     if request.method == 'POST' and form.validate():
         product_name = request.form['product_name']
+
+        folder = os.path.exists(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name))
+        if folder == True:
+            flash('Folder Name Already Exists', 'warning')
+            return redirect(request.url)
+
         file = request.files['file']
         if file and allowed_file(file.filename):
             rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product['product_name']))
@@ -1500,6 +1506,12 @@ def edit_product_slider(id):
 
     if request.method == 'POST' and form.validate():
         product_name = request.form['product_name']
+
+        folder = os.path.exists(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name))
+        if folder == True:
+            flash('Folder Name Already Exists', 'warning')
+            return redirect(request.url)
+
         file = request.files['file']
         if file and allowed_file(file.filename):
             rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product['product_name']))
