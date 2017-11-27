@@ -215,8 +215,6 @@ def home():
     recommended_products = cur.fetchall()
     cur.execute("SELECT * FROM products ORDER BY number_of_views DESC LIMIT 3 OFFSET 3")
     recommended_products_second = cur.fetchall()
-    # cur.execute("SELECT * FROM products WHERE category = %s ORDER BY id DESC  LIMIT 8;", ['hosting'])
-    # latest_productss = cur.fetchall()
     cur.close()
 
     return render_template('home.html', latest_products=latest_products, categories=categories, slider_products_first=slider_products_first, slider_products_second=slider_products_second, slider_products_third=slider_products_third, recommended_products=recommended_products, recommended_products_second=recommended_products_second)
@@ -499,6 +497,37 @@ def user_account():
     user_image = image['files']
     cur.close()
     return render_template('user_account.html', orders=orders, user_image=user_image)
+
+
+# upload user profile picture
+
+@app.route('/user_profile_picture', methods=['post'])
+@is_user_logged_in
+def user_profile_picture():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            flash('No file part', 'warning')
+            return redirect(url_for('user_account'))
+        file = request.files['file']
+        if file.filename == '':
+            flash('You Have to Select a File!', 'warning')
+            return redirect(url_for('user_account'))
+        if file and allowed_file(file.filename):
+            try:
+                rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(session['user_username']))
+                os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(session['user_username']))
+            except:
+                os.makedirs(r"\static\uploads\users\{}".format(session['user_username']))
+            filename = secure_filename(file.filename)
+            dir = r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(session['user_username'])
+            file.save(os.path.join(dir, filename))
+            cur = mysql.connection.cursor()
+            cur.execute("UPDATE users SET files = %s WHERE username = %s;", [filename, session['user_username']])
+            mysql.connection.commit()
+            cur.close()
+            flash('You Have successfully uploaded Your Profile Picture!', 'success')
+            return redirect(url_for('user_account'))
+    return redirect(url_for('user_account'))
 
 
 # delete user account

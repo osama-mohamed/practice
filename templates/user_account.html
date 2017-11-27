@@ -125,6 +125,10 @@
                     </button>
 
                     <img src="../static/uploads/users/{{ session['user_username'] }}/{{ user_image }}" style="max-width: 20%; max-height: 20%; display: block; margin: 0 auto 65px; border-radius: 6px;">
+                    <form action="{{ url_for('user_profile_picture') }}" method="post" enctype="multipart/form-data" class="form-group">
+                        <input type="file" name="file" class="form-control" style="max-width: 20%; display: block; margin: 10px auto;">
+                        <input type="submit" value="Upload" class="btn btn-primary" style="display: block; margin: 25px auto 50px;">
+                    </form>
                       <table class="table table-striped">
                         <thead>
                           <tr>
