@@ -1083,9 +1083,14 @@ def admin_dashboard():
     count_message = cur.fetchone()
     count_messages = count_message['COUNT(id)']
 
+    # show new orders number
+    cur.execute("SELECT COUNT(id) FROM buy_orders WHERE status = %s ", ['Pending'])
+    count_order = cur.fetchone()
+    count_orders = count_order['COUNT(id)']
+
 
     cur.close()
-    return render_template('admin_dashboard.html', count_sliders=count_sliders, count_products=count_products, count_users=count_users, count_categories=count_categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], count_number_of_sales=count_number_of_sales, count_number_of_sales_slider=count_number_of_sales_slider, product_saled=product_saled, slider_saled=slider_saled, slider_big=slider_big, slider_small=slider_small, product_big=product_big, product_small=product_small, slider_add=slider_add, product_add=product_add, slider_last_week=slider_last_week, product_last_week=product_last_week, total_avg_rate=total_avg_rate, product_saled_low=product_saled_low, slider_saled_low=slider_saled_low, messages=messages, count_messages=count_messages)
+    return render_template('admin_dashboard.html', count_sliders=count_sliders, count_products=count_products, count_users=count_users, count_categories=count_categories, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], count_number_of_sales=count_number_of_sales, count_number_of_sales_slider=count_number_of_sales_slider, product_saled=product_saled, slider_saled=slider_saled, slider_big=slider_big, slider_small=slider_small, product_big=product_big, product_small=product_small, slider_add=slider_add, product_add=product_add, slider_last_week=slider_last_week, product_last_week=product_last_week, total_avg_rate=total_avg_rate, product_saled_low=product_saled_low, slider_saled_low=slider_saled_low, messages=messages, count_messages=count_messages, count_orders=count_orders)
 
 
 # product validators form
@@ -2118,7 +2123,8 @@ def users_table():
 @is_admin_logged_in
 def orders_table():
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM buy_orders")
+    # cur.execute("SELECT SUM(quantity) AS QUANTITY , user_name AS USERNAME, SUM((price * quantity) - (quantity * discount)) AS TOTAL FROM buy_orders T GROUP BY user_id")
+    cur.execute("SELECT * FROM buy_orders ;")
     orders = cur.fetchall()
 
     # view messages
@@ -2329,6 +2335,82 @@ def delete_all_not_seen_messages():
     mysql.connection.commit()
     cur.close()
     flash('You have successfully deleted all not seen messages!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
+# admin show orders details for user
+
+@app.route('/admin/show_orders/<username>', methods=['post', 'get'])
+@is_admin_logged_in
+def show_orders(username):
+    session['orders_username'] = username
+    cur = mysql.connection.cursor()
+    # cur.execute("SELECT SUM(quantity) AS QUANTITY , user_name AS USERNAME, SUM((price * quantity) - (quantity * discount)) AS TOTAL FROM buy_orders T GROUP BY user_id")
+    cur.execute("SELECT * FROM buy_orders WHERE user_name = %s ;", [username])
+    orders = cur.fetchall()
+
+    # view messages
+    cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
+    messages = cur.fetchall()
+
+    # show messages number
+    cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+    count_message = cur.fetchone()
+    count_messages = count_message['COUNT(id)']
+
+    cur.close()
+    return render_template('admin_show_orders_by_user_table.html', admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], orders=orders, messages=messages, count_messages=count_messages)
+
+
+# admin accept orders for user
+
+@app.route('/admin/accept_order_user/<username>/<id>', methods=['post', 'get'])
+@is_admin_logged_in
+def accept_order_user(username, id):
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE buy_orders SET status = %s WHERE id = %s AND user_name = %s", (['Accepted'], id, username))
+    mysql.connection.commit()
+    cur.close()
+    flash('You have accepted the order Successfully!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
+# admin accept all orders for user
+
+@app.route('/admin/accept_all_orders_user/<username>', methods=['post', 'get'])
+@is_admin_logged_in
+def accept_all_orders_user(username):
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE buy_orders SET status = %s WHERE user_name = %s ", (['Accepted'], username))
+    mysql.connection.commit()
+    cur.close()
+    flash('You have accepted all orders Successfully!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
+# admin reject orders for user
+
+@app.route('/admin/reject_order_user/<username>/<id>', methods=['post', 'get'])
+@is_admin_logged_in
+def reject_order_user(username, id):
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE buy_orders SET status = %s WHERE id = %s AND user_name = %s", (['Rejected'], id, username))
+    mysql.connection.commit()
+    cur.close()
+    flash('You have rejected the order Successfully!', 'success')
+    return redirect(url_for('admin_dashboard'))
+
+
+# admin reject all orders for user
+
+@app.route('/admin/reject_all_orders_user/<username>', methods=['post', 'get'])
+@is_admin_logged_in
+def reject_all_orders_user(username):
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE buy_orders SET status = %s WHERE user_name = %s", (['Rejected'], username))
+    mysql.connection.commit()
+    cur.close()
+    flash('You have rejected all orders Successfully!', 'success')
     return redirect(url_for('admin_dashboard'))
 
 

@@ -8,17 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
     <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="../static/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/vendor/bootstrap/css/bootstrap.min.css">
     <!-- Fontastic Custom icon font-->
-    <link rel="stylesheet" href="../static/css/fontastic.css">
+    <link rel="stylesheet" href="../../static/css/fontastic.css">
     <!-- Font Awesome CSS-->
-    <link rel="stylesheet" href="../static/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../static/vendor/font-awesome/css/font-awesome.min.css">
     <!-- Google fonts - Poppins -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
     <!-- theme stylesheet-->
-    <link rel="stylesheet" href="../static/css/style.default.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="../../static/css/style.default.css" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="../static/css/custom.css">
+    <link rel="stylesheet" href="../../static/css/custom.css">
     <!-- Favicon-->
 {#    <!-- Tweaks for older IEs--><!--[if lt IE 9]>#}
 {#        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>#}
@@ -34,7 +34,7 @@
         <nav class="side-navbar">
           <!-- Sidebar Header-->
           <div class="sidebar-header d-flex align-items-center">
-            <div class="avatar"><img src="../static/uploads/users/{{ admin_name }}/{{ admin_image }}" class="img-fluid rounded-circle" style="width: 46px; height: 46px;"></div>
+            <div class="avatar"><img src="../../static/uploads/users/{{ admin_name }}/{{ admin_image }}" class="img-fluid rounded-circle" style="width: 46px; height: 46px;"></div>
             <div class="title">
               <h1 class="h4">{{ admin_name }}</h1>
               <p style="min-width: 164px; max-width: 195px;">Website Administrator</p>
@@ -73,7 +73,7 @@
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/admin/">Home</a></li>
                 <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active">Orders Table</li>
+                <li class="breadcrumb-item active">Orders Table  for {{ session['orders_username'] }}</li>
             </ul>
           </div>
           <section class="tables">   
@@ -93,12 +93,12 @@
 
                             <!-- Button trigger modal -->
                             <a class="dropdown-item edit" href="" data-toggle="modal" data-target="#accept_all_orders">
-                              <i class="fa fa-check"></i>Accept All Orders
+                              <i class="fa fa-check"></i>Accept All Orders for {{ session['orders_username'] }}
                             </a>
 
                             <!-- Button trigger modal -->
                             <a class="dropdown-item edit" href="" data-toggle="modal" data-target="#reject_all_orders">
-                              <i class="fa fa-times"></i>Reject All Orders
+                              <i class="fa fa-times"></i>Reject All Orders for {{ session['orders_username'] }}
                             </a>
 
 
@@ -127,7 +127,7 @@
                         <tbody>
                         {% for order in orders %}
                           <tr>
-                            <td><a href="/admin/show_orders/{{ order.user_name }}">{{ order.user_name }}</a></td>
+                            <td>{{ order.user_name }}</td>
                             <td>{{ order.product_name }}</td>
                             <td>{{ order.status }}</td>
                             <td>{{ order.quantity }}</td>
@@ -160,7 +160,7 @@
                                       </div>
                                       <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                        <a href="/admin/accept_orders/{{ order.id }}"><button class="btn btn-primary">Confirm Accept</button></a>
+                                        <a href="/admin/accept_order_user/{{ order.user_name }}/{{ order.id }}"><button class="btn btn-primary">Confirm Accept</button></a>
                                       </div>
                                     </div>
                                   </div>
@@ -192,7 +192,7 @@
                                       </div>
                                       <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                        <a href="/admin/reject_orders/{{ order.id }}"><button class="btn btn-danger">Confirm Reject</button></a>
+                                        <a href="/admin/reject_order_user/{{ order.user_name }}/{{ order.id }}"><button class="btn btn-danger">Confirm Reject</button></a>
                                       </div>
                                     </div>
                                   </div>
@@ -268,7 +268,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <a href="/admin/accept_all_orders"><button class="btn btn-primary">Confirm Accept</button></a>
+            <a href="/admin/accept_all_orders_user/{{ session['orders_username'] }}"><button class="btn btn-primary">Confirm Accept</button></a>
           </div>
         </div>
       </div>
@@ -296,7 +296,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <a href="/admin/reject_all_orders"><button class="btn btn-danger">Confirm Reject</button></a>
+            <a href="/admin/reject_all_orders_user/{{ session['orders_username'] }}"><button class="btn btn-danger">Confirm Reject</button></a>
           </div>
         </div>
       </div>
@@ -307,10 +307,10 @@
 
     <!-- Javascript files-->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="../static/vendor/popper.js/umd/popper.min.js"> </script>
-    <script src="../static/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../static/vendor/jquery.cookie/jquery.cookie.js"> </script>
-    <script src="../static/vendor/jquery-validation/jquery.validate.min.js"></script>
-    <script src="../static/js/front.js"></script>
+    <script src="../../static/vendor/popper.js/umd/popper.min.js"> </script>
+    <script src="../../static/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../static/vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="../../static/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="../../static/js/front.js"></script>
   </body>
 </html>
