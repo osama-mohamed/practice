@@ -133,6 +133,9 @@ cursor.execute("CREATE TABLE IF NOT EXISTS contact_us(\
                 write_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);")
 
 
+app = Flask(__name__)
+
+
 # create default admin account if not exists
 
 result = cursor.execute('SELECT username FROM users WHERE username=%s', ['admin'])
@@ -147,15 +150,12 @@ else:
              'admin', 'admin', admin_password, 'admin.png'))
     database.commit()
     try:
-        os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\admin")
-        copy(r'C:\Users\OSAMA\Desktop\buy_sell\static\admin.png', r'C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\admin\admin.png')
+        os.makedirs(app.root_path + r"\static\uploads\users\admin")
+        copy(app.root_path + r'\static\admin.png', app.root_path + r'\static\uploads\users\admin\admin.png')
     except:
         pass
 
 database.close()
-
-
-app = Flask(__name__)
 
 
 # application configuration
@@ -173,7 +173,7 @@ mysql = MySQL(app)
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USERNAME'] = 'osama.buy.sell@gmail.com'
-app.config['MAIL_PASSWORD'] = 'SELLbuyBYOSAMA'
+app.config['MAIL_PASSWORD'] = 'chnuxoeikqtyeclg'
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 mail = Mail(app)
@@ -386,7 +386,7 @@ def user_register():
     if request.method == 'POST' and form.validate():
         username = form.username.data
 
-        folder = os.path.exists(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(username))
+        folder = os.path.exists(app.root_path + r"\static\uploads\users\{}".format(username))
         if folder == True:
             flash('Folder Name Already Exists', 'warning')
             return redirect(url_for('user_register'))
@@ -412,12 +412,12 @@ def user_register():
                 flash('You Have to Select a File!', 'warning')
             if file and allowed_file(file.filename):
                 try:
-                    rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(username))
-                    os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(username))
+                    rmtree(app.root_path + r"\static\uploads\users\{}".format(username))
+                    os.makedirs(app.root_path + r"\static\uploads\users\{}".format(username))
                 except:
-                    os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(username))
+                    os.makedirs(app.root_path + r"\static\uploads\users\{}".format(username))
                 filename = secure_filename(file.filename)
-                dir = r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(username)
+                dir = app.root_path + r"\static\uploads\users\{}".format(username)
                 file.save(os.path.join(dir, filename))
                 cur = mysql.connection.cursor()
                 cur.execute("INSERT INTO users(permission, first_name, last_name,\
@@ -514,12 +514,12 @@ def user_profile_picture():
             return redirect(url_for('user_account'))
         if file and allowed_file(file.filename):
             try:
-                rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(session['user_username']))
-                os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(session['user_username']))
+                rmtree(app.root_path + r"\static\uploads\users\{}".format(session['user_username']))
+                os.makedirs(app.root_path + r"\static\uploads\users\{}".format(session['user_username']))
             except:
-                os.makedirs(r"\static\uploads\users\{}".format(session['user_username']))
+                os.makedirs(app.root_path + r"\static\uploads\users\{}".format(session['user_username']))
             filename = secure_filename(file.filename)
-            dir = r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(session['user_username'])
+            dir = app.root_path + r"\static\uploads\users\{}".format(session['user_username'])
             file.save(os.path.join(dir, filename))
             cur = mysql.connection.cursor()
             cur.execute("UPDATE users SET files = %s WHERE username = %s;", [filename, session['user_username']])
@@ -535,7 +535,7 @@ def user_profile_picture():
 @app.route('/delete_user_account', methods=['post', 'get'])
 @is_user_logged_in
 def delete_user_account():
-    rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(session['user_username']))
+    rmtree(app.root_path + r"\static\uploads\users\{}".format(session['user_username']))
     cur = mysql.connection.cursor()
     cur.execute("DELETE FROM orders WHERE user_name = %s", [session['user_username']])
     cur.execute("DELETE FROM buy_orders WHERE user_name = %s", [session['user_username']])
@@ -1170,7 +1170,7 @@ def add_product():
         if request.method == 'POST' and form.validate():
             product_name = form.product_name.data
 
-            folder = os.path.exists(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name))
+            folder = os.path.exists(app.root_path + r"\static\uploads\products\{}".format(product_name))
             if folder == True:
                 flash('Folder Name Already Exists', 'warning')
                 return redirect(url_for('add_product'))
@@ -1187,12 +1187,12 @@ def add_product():
                     flash('You Have to Select a File!', 'warning')
                 if file and allowed_file(file.filename):
                     try:
-                        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name))
-                        os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name))
+                        rmtree(app.root_path + r"\static\uploads\products\{}".format(product_name))
+                        os.makedirs(app.root_path + r"\static\uploads\products\{}".format(product_name))
                     except:
-                        os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name))
+                        os.makedirs(app.root_path + r"\static\uploads\products\{}".format(product_name))
                     filename = secure_filename(file.filename)
-                    dir = r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name)
+                    dir = app.root_path + r"\static\uploads\products\{}".format(product_name)
                     file.save(os.path.join(dir, filename))
                     category = request.form['categories']
                     description = form.description.data.lower()
@@ -1290,17 +1290,21 @@ def edit_product(id):
     if request.method == 'POST' and form.validate():
         product_name = request.form['product_name']
 
-        folder = os.path.exists(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name))
-        if folder == True:
+        folder = os.path.exists(app.root_path + r"\static\uploads\products\{}".format(product_name))
+        if folder == True and form.product_name.data == product_name:
+            pass
+        elif folder == False and form.product_name.data != product_name:
+            pass
+        else:
             flash('Folder Name Already Exists', 'warning')
             return redirect(request.url)
 
         file = request.files['file']
         if file and allowed_file(file.filename):
-            rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product['product_name']))
-            os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name))
+            rmtree(app.root_path + r"\static\uploads\products\{}".format(product['product_name']))
+            os.makedirs(app.root_path + r"\static\uploads\products\{}".format(product_name))
             filename = secure_filename(file.filename)
-            dir = r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name)
+            dir = app.root_path + r"\static\uploads\products\{}".format(product_name)
             file.save(os.path.join(dir, filename))
         
             category = request.form['categories']
@@ -1331,8 +1335,8 @@ def edit_product(id):
             flash('Your Product Has been Edited successfully!', 'success')
             return redirect(url_for('admin_dashboard'))
         elif file.filename == '' or 'file' not in request.files:
-            os.rename(os.path.join(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product['product_name'])),
-                      os.path.join(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product_name)))
+            os.rename(os.path.join(app.root_path + r"\static\uploads\products\{}".format(product['product_name'])),
+                      os.path.join(app.root_path + r"\static\uploads\products\{}".format(product_name)))
             category = request.form['categories']
             description = request.form['description']
             price = request.form['price']
@@ -1374,7 +1378,7 @@ def delete_product(id):
     n = name['product_name']
     category = name['category']
     try:
-        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(n))
+        rmtree(app.root_path + r"\static\uploads\products\{}".format(n))
     except:
         pass
     cur.execute("DELETE FROM products WHERE id = %s", [id])
@@ -1398,7 +1402,7 @@ def delete_all_products():
     mysql.connection.commit()
     cur.close()
     try:
-        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products")
+        rmtree(app.root_path + r"\static\uploads\products")
         flash('You Has been Deleted All Products successfully!', 'success')
     except:
         flash('You Has been Already Deleted All Products successfully!', 'success')
@@ -1475,7 +1479,7 @@ def add_product_slider():
         if request.method == 'POST' and form.validate():
             product_name = form.product_name.data
 
-            folder = os.path.exists(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name))
+            folder = os.path.exists(app.root_path + r"\static\uploads\slider_products\{}".format(product_name))
             if folder == True :
                 flash('Folder Name Already Exists', 'warning')
                 return redirect(url_for('add_product_slider'))
@@ -1493,12 +1497,12 @@ def add_product_slider():
                     flash('You Have to Select a File!', 'warning')
                 if file and allowed_file(file.filename):
                     try:
-                        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name))
-                        os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name))
+                        rmtree(app.root_path + r"\static\uploads\slider_products\{}".format(product_name))
+                        os.makedirs(app.root_path + r"\static\uploads\slider_products\{}".format(product_name))
                     except:
-                        os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name))
+                        os.makedirs(app.root_path + r"\static\uploads\slider_products\{}".format(product_name))
                     filename = secure_filename(file.filename)
-                    dir = r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name)
+                    dir = app.root_path + r"\static\uploads\slider_products\{}".format(product_name)
                     file.save(os.path.join(dir, filename))
                     category = request.form['categories']
                     description = form.description.data.lower()
@@ -1582,17 +1586,23 @@ def edit_product_slider(id):
     if request.method == 'POST' and form.validate():
         product_name = request.form['product_name']
 
-        folder = os.path.exists(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name))
-        if folder == True:
+
+        folder = os.path.exists(app.root_path + r"\static\uploads\slider_products\{}".format(product_name))
+        if folder is True and form.product_name.data == product_name:
+            pass
+        elif folder is False and form.product_name.data != product_name:
+            pass
+        else:
             flash('Folder Name Already Exists', 'warning')
             return redirect(request.url)
 
+
         file = request.files['file']
         if file and allowed_file(file.filename):
-            rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product['product_name']))
-            os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name))
+            rmtree(app.root_path + r"\static\uploads\slider_products\{}".format(product['product_name']))
+            os.makedirs(app.root_path + r"\static\uploads\slider_products\{}".format(product_name))
             filename = secure_filename(file.filename)
-            dir = r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name)
+            dir = app.root_path + r"\static\uploads\slider_products\{}".format(product_name)
             file.save(os.path.join(dir, filename))
 
             category = request.form['categories']
@@ -1623,8 +1633,8 @@ def edit_product_slider(id):
             flash('Your slider Product Has been Edited successfully!', 'success')
             return redirect(url_for('admin_dashboard'))
         elif file.filename == '' or 'file' not in request.files:
-            os.rename(os.path.join(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product['product_name'])),
-                      os.path.join(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(product_name)))
+            os.rename(os.path.join(app.root_path + r"\static\uploads\slider_products\{}".format(product['product_name'])),
+                      os.path.join(app.root_path + r"\static\uploads\slider_products\{}".format(product_name)))
             category = request.form['categories']
             description = request.form['description']
             price = request.form['price']
@@ -1666,7 +1676,7 @@ def delete_product_slider(id):
     name = cur.fetchone()
     n = name['product_name']
     try:
-        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(n))
+        rmtree(app.root_path + r"\static\uploads\slider_products\{}".format(n))
     except:
         pass
     cur.execute("DELETE FROM slider_products WHERE id = %s", [id])
@@ -1688,7 +1698,7 @@ def delete_all_slider_products():
     mysql.connection.commit()
     cur.close()
     try:
-        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products")
+        rmtree(app.root_path + r"\static\uploads\slider_products")
         flash('You Has been Deleted All slider Products successfully!', 'success')
     except:
         flash('You Has been Already Deleted All slider Products successfully!', 'success')
@@ -1762,7 +1772,7 @@ def add_user():
     if request.method == 'POST' and form.validate():
         username = form.username.data
 
-        folder = os.path.exists(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(username))
+        folder = os.path.exists(app.root_path + r"\static\uploads\users\{}".format(username))
         if folder == True:
             flash('Folder Name Already Exists', 'warning')
             return redirect(url_for('add_user'))
@@ -1788,13 +1798,13 @@ def add_user():
             if file.filename == '':
                 flash('You Have to Select a File!', 'warning')
             try:
-                rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(username))
-                os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(username))
+                rmtree(app.root_path + r"\static\uploads\users\{}".format(username))
+                os.makedirs(app.root_path + r"\static\uploads\users\{}".format(username))
             except:
-                os.makedirs(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(username))
+                os.makedirs(app.root_path + r"\static\uploads\users\{}".format(username))
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
-                dir = r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(username)
+                dir = app.root_path + r"\static\uploads\users\{}".format(username)
                 file.save(os.path.join(dir, filename))
                 cur = mysql.connection.cursor()
                 cur.execute("INSERT INTO users(permission, first_name, last_name,\
@@ -1819,7 +1829,7 @@ def delete_user(id):
     name = cur.fetchone()
     n = name['username']
     try:
-        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(n))
+        rmtree(app.root_path + r"\static\uploads\users\{}".format(n))
     except:
         pass
     cur.execute("DELETE FROM orders WHERE user_name = %s", [n])
@@ -1949,7 +1959,7 @@ def delete_category(category):
             pass
         products = cur.fetchall()
         for product in products:
-            rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products\{}".format(product['product_name']))
+            rmtree(app.root_path + r"\static\uploads\products\{}".format(product['product_name']))
             cur.execute("DELETE FROM reviews WHERE product_name=%s", [product['product_name']])
             mysql.connection.commit()
 
@@ -1958,7 +1968,7 @@ def delete_category(category):
             pass
         sliders = cur.fetchall()
         for slider in sliders:
-            rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products\{}".format(slider['product_name']))
+            rmtree(app.root_path + r"\static\uploads\slider_products\{}".format(slider['product_name']))
             cur.execute("DELETE FROM slider_reviews WHERE product_name=%s", [slider['product_name']])
             mysql.connection.commit()
 
@@ -1987,8 +1997,8 @@ def delete_all_categories():
     mysql.connection.commit()
     cur.close()
     try:
-        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products")
-        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products")
+        rmtree(app.root_path + r"\static\uploads\products")
+        rmtree(app.root_path + r"\static\uploads\slider_products")
         flash('You Has been Deleted All Categories and Products Successfully!', 'success')
     except:
         flash('You Has been Deleted All Categories and Products Successfully!', 'success')
@@ -2005,7 +2015,7 @@ def delete_all_users():
     if result >0:
         name = cur.fetchall()
         for n in name:
-            rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users\{}".format(n['username']))
+            rmtree(app.root_path + r"\static\uploads\users\{}".format(n['username']))
     elif result == 0:
         pass
     cur.execute("DELETE FROM users WHERE permission = 'user' ")
@@ -2021,9 +2031,9 @@ def delete_all_users():
 @is_admin_logged_in
 def delete_all_accounts():
     try:
-        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\users")
-        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\products")
-        rmtree(r"C:\Users\OSAMA\Desktop\buy_sell\static\uploads\slider_products")
+        rmtree(app.root_path + r"\static\uploads\users")
+        rmtree(app.root_path + r"\static\uploads\products")
+        rmtree(app.root_path + r"\static\uploads\slider_products")
     except:
         pass
     cur = mysql.connection.cursor()
