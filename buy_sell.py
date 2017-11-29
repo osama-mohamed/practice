@@ -408,8 +408,8 @@ def user_register():
             username = form.username.data
             password = sha256_crypt.encrypt(str(form.password.data))
             file = request.files['file']
-            if file.filename == '':
-                flash('You Have to Select a File!', 'warning')
+            # if file.filename == '':
+            #     flash('You Have to Select a File!', 'warning')
             if file and allowed_file(file.filename):
                 try:
                     rmtree(app.root_path + r"\static\uploads\users\{}".format(username))
@@ -425,6 +425,23 @@ def user_register():
                              VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", \
                             ("user", first_name, last_name, email, gender,\
                              country, username, password, filename))
+                mysql.connection.commit()
+                cur.close()
+                flash('You Have Created Account successfully!', 'success')
+                return redirect(url_for('user_login'))
+            elif file.filename == '' or 'file' not in request.files:
+                try:
+                    rmtree(app.root_path + r"\static\uploads\users\{}".format(username))
+                    os.makedirs(app.root_path + r"\static\uploads\users\{}".format(username))
+                except:
+                    os.makedirs(app.root_path + r"\static\uploads\users\{}".format(username))
+                copy(app.root_path + r'\static\admin.png', app.root_path + r'\static\uploads\users\{}\admin.png'.format(username))
+                cur = mysql.connection.cursor()
+                cur.execute("INSERT INTO users(permission, first_name, last_name,\
+                                             email, gender, country, username, password, files)\
+                                             VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", \
+                            ("user", first_name, last_name, email, gender, \
+                             country, username, password, 'admin.png'))
                 mysql.connection.commit()
                 cur.close()
                 flash('You Have Created Account successfully!', 'success')
@@ -1862,8 +1879,8 @@ def add_user():
             username = form.username.data
             password = sha256_crypt.encrypt(str(form.password.data))
             file = request.files['file']
-            if file.filename == '':
-                flash('You Have to Select a File!', 'warning')
+            # if file.filename == '':
+            #     flash('You Have to Select a File!', 'warning')
             try:
                 rmtree(app.root_path + r"\static\uploads\users\{}".format(username))
                 os.makedirs(app.root_path + r"\static\uploads\users\{}".format(username))
@@ -1881,7 +1898,19 @@ def add_user():
                              country, username, password, filename))
                 mysql.connection.commit()
                 cur.close()
-                flash('You Have Created a User Account successfully!', 'success')
+                flash('You Have Created an Account successfully!', 'success')
+                return redirect(url_for('admin_dashboard'))
+            elif file.filename == '' or 'file' not in request.files:
+                copy(app.root_path + r'\static\admin.png', app.root_path + r'\static\uploads\users\{}\admin.png'.format(username))
+                cur = mysql.connection.cursor()
+                cur.execute("INSERT INTO users(permission, first_name, last_name,\
+                                             email, gender, country, username, password, files)\
+                                             VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", \
+                            (permission, first_name, last_name, email, gender, \
+                             country, username, password, 'admin.png'))
+                mysql.connection.commit()
+                cur.close()
+                flash('You Have Created an Account successfully!', 'success')
                 return redirect(url_for('admin_dashboard'))
     return render_template('admin_add_user.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
