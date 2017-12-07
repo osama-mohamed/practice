@@ -309,7 +309,7 @@ def user_forget_password_email():
         return render_template('user_forget_password.html')
     user_name = request.form['username_reset']
     cur = mysql.connection.cursor()
-    r = cur.execute("SELECT id, email, username FROM users WHERE username = %s AND permission='user' ", [user_name])
+    r = cur.execute("SELECT id, email, username FROM users WHERE username = BINARY %s AND permission='user' ", [user_name])
     res = cur.fetchone()
     if r > 0:
         random_for_reset = "".join([random.choice(string.ascii_letters + string.digits) for i in range(250)])
@@ -354,9 +354,10 @@ def user_reset_password(id, random_for_reset):
         password_permission = permission['reset_password_permission']
         reset_random = permission['reset_password_random']
         if password_permission == 'reset' and random_for_reset == reset_random:
+            random_reset = "".join([random.choice(string.ascii_letters + string.digits) for i in range(250)])
             encrypted_password = sha256_crypt.encrypt(str(form.password.data))
             cur.execute("UPDATE users SET password = %s WHERE id = %s AND permission='user'", [encrypted_password, id])
-            cur.execute("UPDATE users SET reset_password_permission = 'no_reset' WHERE id = %s AND permission='user'", [id])
+            cur.execute("UPDATE users SET reset_password_permission = 'no_reset', reset_password_random = %s WHERE id = %s AND permission='user'", [random_reset, id])
             mysql.connection.commit()
             cur.close()
             flash("You Have Successfully Changed Your Password Now!", "success")
