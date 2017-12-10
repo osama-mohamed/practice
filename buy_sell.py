@@ -153,8 +153,8 @@ else:
              'admin', 'admin', admin_password, 'admin.png'))
     database.commit()
     try:
-        os.makedirs(app.root_path + r"\static\uploads\users\admin")
-        copy(app.root_path + r'\static\admin.png', app.root_path + r'\static\uploads\users\admin\admin.png')
+        os.makedirs(app.root_path + "/static/uploads/users/admin")
+        copy(app.root_path + '/static/admin.png', app.root_path + '/static/uploads/users/admin/admin.png')
     except:
         pass
 
@@ -392,7 +392,7 @@ def user_register():
     if request.method == 'POST' and form.validate():
         username = form.username.data
 
-        folder = os.path.exists(app.root_path + r"\static\uploads\users\{}".format(username))
+        folder = os.path.exists(app.root_path + "/static/uploads/users/{}".format(username))
         if folder == True:
             flash('Folder Name Already Exists', 'warning')
             return redirect(url_for('user_register'))
@@ -418,12 +418,12 @@ def user_register():
             #     flash('You Have to Select a File!', 'warning')
             if file and allowed_file(file.filename):
                 try:
-                    rmtree(app.root_path + r"\static\uploads\users\{}".format(username))
-                    os.makedirs(app.root_path + r"\static\uploads\users\{}".format(username))
+                    rmtree(app.root_path + "/static/uploads/users/{}".format(username))
+                    os.makedirs(app.root_path + "/static/uploads/users/{}".format(username))
                 except:
-                    os.makedirs(app.root_path + r"\static\uploads\users\{}".format(username))
+                    os.makedirs(app.root_path + "/static/uploads/users/{}".format(username))
                 filename = secure_filename(file.filename)
-                dir = app.root_path + r"\static\uploads\users\{}".format(username)
+                dir = app.root_path + "/static/uploads/users/{}".format(username)
                 file.save(os.path.join(dir, filename))
                 cur = mysql.connection.cursor()
                 cur.execute("INSERT INTO users(permission, first_name, last_name,\
@@ -437,11 +437,11 @@ def user_register():
                 return redirect(url_for('user_login'))
             elif file.filename == '' or 'file' not in request.files:
                 try:
-                    rmtree(app.root_path + r"\static\uploads\users\{}".format(username))
-                    os.makedirs(app.root_path + r"\static\uploads\users\{}".format(username))
+                    rmtree(app.root_path + "/static/uploads/users/{}".format(username))
+                    os.makedirs(app.root_path + "/static/uploads/users/{}".format(username))
                 except:
-                    os.makedirs(app.root_path + r"\static\uploads\users\{}".format(username))
-                copy(app.root_path + r'\static\admin.png', app.root_path + r'\static\uploads\users\{}\admin.png'.format(username))
+                    os.makedirs(app.root_path + "/static/uploads/users/{}".format(username))
+                copy(app.root_path + '/static/admin.png', app.root_path + '/static/uploads/users/{}/admin.png'.format(username))
                 cur = mysql.connection.cursor()
                 cur.execute("INSERT INTO users(permission, first_name, last_name,\
                                              email, gender, country, username, password, files)\
@@ -537,12 +537,12 @@ def user_profile_picture():
             return redirect(url_for('user_account'))
         if file and allowed_file(file.filename):
             try:
-                rmtree(app.root_path + r"\static\uploads\users\{}".format(session['user_username']))
-                os.makedirs(app.root_path + r"\static\uploads\users\{}".format(session['user_username']))
+                rmtree(app.root_path + "/static/uploads/users/{}".format(session['user_username']))
+                os.makedirs(app.root_path + "/static/uploads/users/{}".format(session['user_username']))
             except:
-                os.makedirs(app.root_path + r"\static\uploads\users\{}".format(session['user_username']))
+                os.makedirs(app.root_path + "/static/uploads/users/{}".format(session['user_username']))
             filename = secure_filename(file.filename)
-            dir = app.root_path + r"\static\uploads\users\{}".format(session['user_username'])
+            dir = app.root_path + "/static/uploads/users/{}".format(session['user_username'])
             file.save(os.path.join(dir, filename))
             cur = mysql.connection.cursor()
             cur.execute("UPDATE users SET files = %s WHERE username = %s AND permission = %s;", [filename, session['user_username'], 'user'])
@@ -558,7 +558,7 @@ def user_profile_picture():
 @app.route('/delete_user_account', methods=['post', 'get'])
 @is_user_logged_in
 def delete_user_account():
-    rmtree(app.root_path + r"\static\uploads\users\{}".format(session['user_username']))
+    rmtree(app.root_path + "/static/uploads/users/{}".format(session['user_username']))
     cur = mysql.connection.cursor()
     cur.execute("DELETE FROM orders WHERE user_name = %s", [session['user_username']])
     cur.execute("DELETE FROM buy_orders WHERE user_name = %s", [session['user_username']])
@@ -750,11 +750,43 @@ def add_product_to_cart_from_slider(id):
 @is_user_logged_in
 def increase_cart_product_quantity(id):
     cur = mysql.connection.cursor()
-    cur.execute("UPDATE orders SET quantity = quantity + 1 WHERE product_id = {}".format(id))
-    mysql.connection.commit()
+    if int(id) > 0:
+        cur.execute("SELECT quantity FROM products WHERE id = %s", [id])
+        result = cur.fetchone()
+        product_quantity = result['quantity']
+    elif int(id) < 0:
+        fixid = abs(int(id))
+        cur.execute("SELECT quantity FROM slider_products WHERE id = %s", [fixid])
+        result = cur.fetchone()
+        slider_quantity = result['quantity']
+    cur.execute("SELECT quantity FROM orders WHERE product_id = {}".format(id))
+    res = cur.fetchone()
+    order_quantity = res['quantity']
     cur.close()
-    flash('You have updated the product quantity successfully!', 'success')
-    return redirect(url_for('add_to_cart'))
+    if int(id) > 0:
+        if order_quantity <= product_quantity - 1:
+            cur = mysql.connection.cursor()
+            cur.execute("UPDATE orders SET quantity = quantity + 1 WHERE product_id = {}".format(id))
+            mysql.connection.commit()
+            cur.close()
+            flash('You have updated the product quantity successfully!', 'success')
+            return redirect(url_for('add_to_cart'))
+        else:
+            message = 'You can not put the quantity more than ' + str(product_quantity) + ' products!'
+            flash(message, 'danger')
+            return redirect(url_for('add_to_cart'))
+    else:
+        if order_quantity <= slider_quantity - 1:
+            cur = mysql.connection.cursor()
+            cur.execute("UPDATE orders SET quantity = quantity + 1 WHERE product_id = {}".format(id))
+            mysql.connection.commit()
+            cur.close()
+            flash('You have updated the product quantity successfully!', 'success')
+            return redirect(url_for('add_to_cart'))
+        else:
+            message = 'You can not put the quantity more than ' + str(slider_quantity) + ' products!'
+            flash(message, 'danger')
+            return redirect(url_for('add_to_cart'))
 
 
 # edit cart product quantity in cart page
@@ -762,17 +794,51 @@ def increase_cart_product_quantity(id):
 @app.route('/edit_cart_product_quantity/<id>', methods=['post', 'get'])
 @is_user_logged_in
 def edit_cart_product_quantity(id):
+    cur = mysql.connection.cursor()
+    if int(id) > 0:
+        cur.execute("SELECT quantity FROM products WHERE id = %s", [id])
+        result = cur.fetchone()
+        product_quantity = result['quantity']
+    elif int(id) < 0:
+        fixid = abs(int(id))
+        cur.execute("SELECT quantity FROM slider_products WHERE id = %s", [fixid])
+        res = cur.fetchone()
+        slider_quantity = res['quantity']
+    cur.close()
     quantity = request.form['quantity']
-    if int(quantity) >= 1:
-        cur = mysql.connection.cursor()
-        cur.execute("UPDATE orders SET quantity = %s WHERE product_id = %s", [quantity, id])
-        mysql.connection.commit()
-        cur.close()
-        flash('You have updated the product quantity successfully!', 'success')
-    else:
-        pass
-        flash('You can not put the quantity less than one!', 'danger')
-    return redirect(url_for('add_to_cart'))
+    try:
+        if int(quantity) > 0:
+            if int(id) > 0:
+                if int(quantity) <= product_quantity:
+                    cur = mysql.connection.cursor()
+                    cur.execute("UPDATE orders SET quantity = %s WHERE product_id = %s", [quantity, id])
+                    mysql.connection.commit()
+                    cur.close()
+                    flash('You have updated the product quantity successfully!', 'success')
+                    return redirect(url_for('add_to_cart'))
+                else:
+                    message = 'You can not put the quantity more than ' + str(product_quantity) + ' products!'
+                    flash(message, 'danger')
+                    return redirect(url_for('add_to_cart'))
+            else:
+                if int(quantity) <= slider_quantity:
+                    cur = mysql.connection.cursor()
+                    cur.execute("UPDATE orders SET quantity = %s WHERE product_id = %s", [quantity, id])
+                    mysql.connection.commit()
+                    cur.close()
+                    flash('You have updated the product quantity successfully!', 'success')
+                    return redirect(url_for('add_to_cart'))
+                else:
+                    message = 'You can not put the quantity more than ' + str(slider_quantity) + ' products!'
+                    flash(message, 'danger')
+                    return redirect(url_for('add_to_cart'))
+        else:
+            pass
+            flash('You can not put the quantity less than one!', 'danger')
+            return redirect(url_for('add_to_cart'))
+    except ValueError:
+        flash('You have to write a right number!', 'danger')
+        return redirect(url_for('add_to_cart'))
 
 
 # decrease cart product quantity in cart page
@@ -784,6 +850,7 @@ def decrease_cart_product_quantity(id):
     cur.execute("SELECT quantity FROM orders WHERE product_id = %s", [id])
     cart_product = cur.fetchone()
     product_quantity = cart_product['quantity']
+    cur.close()
     if product_quantity <= 1:
         flash('You can not put the quantity less than one!', 'danger')
         pass
@@ -791,7 +858,6 @@ def decrease_cart_product_quantity(id):
         cur.execute("UPDATE orders SET quantity = quantity - 1 WHERE product_id = {}".format(id))
         mysql.connection.commit()
         flash('You have updated the product quantity successfully!', 'success')
-    cur.close()
     return redirect(url_for('add_to_cart'))
 
 
@@ -958,7 +1024,7 @@ def categories(category):
 def user_search():
     if request.method == "POST":
         cur = mysql.connection.cursor()
-        result = cur.execute("SELECT * FROM `buy_sell`.`products` \
+        result = cur.execute("SELECT * FROM products \
                              WHERE( CONVERT(`product_name` USING utf8)\
                              LIKE %s)", [["%" + request.form['search'] + "%"]])
         categories = cur.fetchall()
@@ -1012,7 +1078,7 @@ def admin_login():
 def is_admin_logged_in(f):
     @wraps(f)
     def wrap(*args, **kwargs):
-        if 'admin_logged_in' in session :
+        if 'admin_logged_in' in session:
             return f(*args, **kwargs)
         else:
             flash('Unauthorized, Please Login', 'danger')
@@ -1200,12 +1266,12 @@ def admin_profile_picture():
             return redirect(url_for('admin_dashboard'))
         if file and allowed_file(file.filename):
             try:
-                rmtree(app.root_path + r"\static\uploads\users\{}".format(session['admin_username']))
-                os.makedirs(app.root_path + r"\static\uploads\users\{}".format(session['admin_username']))
+                rmtree(app.root_path + "/static/uploads/users/{}".format(session['admin_username']))
+                os.makedirs(app.root_path + "/static/uploads/users/{}".format(session['admin_username']))
             except:
-                os.makedirs(app.root_path + r"\static\uploads\users\{}".format(session['admin_username']))
+                os.makedirs(app.root_path + "/static/uploads/users/{}".format(session['admin_username']))
             filename = secure_filename(file.filename)
-            dir = app.root_path + r"\static\uploads\users\{}".format(session['admin_username'])
+            dir = app.root_path + "/static/uploads/users/{}".format(session['admin_username'])
             file.save(os.path.join(dir, filename))
             cur = mysql.connection.cursor()
             cur.execute("UPDATE users SET files = %s WHERE username = %s AND permission = %s ;", [filename, session['admin_username'], session['permission']])
@@ -1260,7 +1326,7 @@ def add_product():
         if request.method == 'POST' and form.validate():
             product_name = form.product_name.data
 
-            folder = os.path.exists(app.root_path + r"\static\uploads\products\{}".format(product_name))
+            folder = os.path.exists(app.root_path + "/static/uploads/products/{}".format(product_name))
             if folder == True:
                 flash('Folder Name Already Exists', 'warning')
                 return redirect(url_for('add_product'))
@@ -1277,12 +1343,12 @@ def add_product():
                     flash('You Have to Select a File!', 'warning')
                 if file and allowed_file(file.filename):
                     try:
-                        rmtree(app.root_path + r"\static\uploads\products\{}".format(product_name))
-                        os.makedirs(app.root_path + r"\static\uploads\products\{}".format(product_name))
+                        rmtree(app.root_path + "/static/uploads/products/{}".format(product_name))
+                        os.makedirs(app.root_path + "/static/uploads/products/{}".format(product_name))
                     except:
-                        os.makedirs(app.root_path + r"\static\uploads\products\{}".format(product_name))
+                        os.makedirs(app.root_path + "/static/uploads/products/{}".format(product_name))
                     filename = secure_filename(file.filename)
-                    dir = app.root_path + r"\static\uploads\products\{}".format(product_name)
+                    dir = app.root_path + "/static/uploads/products/{}".format(product_name)
                     file.save(os.path.join(dir, filename))
                     category = request.form['categories']
                     description = form.description.data.lower()
@@ -1380,7 +1446,7 @@ def edit_product(id):
     if request.method == 'POST' and form.validate():
         product_name = request.form['product_name']
 
-        folder = os.path.exists(app.root_path + r"\static\uploads\products\{}".format(product_name))
+        folder = os.path.exists(app.root_path + "/static/uploads/products/{}".format(product_name))
         if folder == True and form.product_name.data == product_name:
             pass
         elif folder == False and form.product_name.data != product_name:
@@ -1391,10 +1457,10 @@ def edit_product(id):
 
         file = request.files['file']
         if file and allowed_file(file.filename):
-            rmtree(app.root_path + r"\static\uploads\products\{}".format(product['product_name']))
-            os.makedirs(app.root_path + r"\static\uploads\products\{}".format(product_name))
+            rmtree(app.root_path + "/static/uploads/products/{}".format(product['product_name']))
+            os.makedirs(app.root_path + "/static/uploads/products/{}".format(product_name))
             filename = secure_filename(file.filename)
-            dir = app.root_path + r"\static\uploads\products\{}".format(product_name)
+            dir = app.root_path + "/static/uploads/products/{}".format(product_name)
             file.save(os.path.join(dir, filename))
         
             category = request.form['categories']
@@ -1425,8 +1491,8 @@ def edit_product(id):
             flash('Your Product Has been Edited successfully!', 'success')
             return redirect(url_for('admin_dashboard'))
         elif file.filename == '' or 'file' not in request.files:
-            os.rename(os.path.join(app.root_path + r"\static\uploads\products\{}".format(product['product_name'])),
-                      os.path.join(app.root_path + r"\static\uploads\products\{}".format(product_name)))
+            os.rename(os.path.join(app.root_path + "/static/uploads/products/{}".format(product['product_name'])),
+                      os.path.join(app.root_path + "/static/uploads/products/{}".format(product_name)))
             category = request.form['categories']
             description = request.form['description']
             price = request.form['price']
@@ -1468,7 +1534,7 @@ def delete_product(id):
     n = name['product_name']
     category = name['category']
     try:
-        rmtree(app.root_path + r"\static\uploads\products\{}".format(n))
+        rmtree(app.root_path + "/static/uploads/products/{}".format(n))
     except:
         pass
     cur.execute("DELETE FROM products WHERE id = %s", [id])
@@ -1492,7 +1558,7 @@ def delete_all_products():
     mysql.connection.commit()
     cur.close()
     try:
-        rmtree(app.root_path + r"\static\uploads\products")
+        rmtree(app.root_path + "/static/uploads/products")
         flash('You Has been Deleted All Products successfully!', 'success')
     except:
         flash('You Has been Already Deleted All Products successfully!', 'success')
@@ -1569,7 +1635,7 @@ def add_product_slider():
         if request.method == 'POST' and form.validate():
             product_name = form.product_name.data
 
-            folder = os.path.exists(app.root_path + r"\static\uploads\slider_products\{}".format(product_name))
+            folder = os.path.exists(app.root_path + "/static/uploads/slider_products/{}".format(product_name))
             if folder == True :
                 flash('Folder Name Already Exists', 'warning')
                 return redirect(url_for('add_product_slider'))
@@ -1587,12 +1653,12 @@ def add_product_slider():
                     flash('You Have to Select a File!', 'warning')
                 if file and allowed_file(file.filename):
                     try:
-                        rmtree(app.root_path + r"\static\uploads\slider_products\{}".format(product_name))
-                        os.makedirs(app.root_path + r"\static\uploads\slider_products\{}".format(product_name))
+                        rmtree(app.root_path + "/static/uploads/slider_products/{}".format(product_name))
+                        os.makedirs(app.root_path + "/static/uploads/slider_products/{}".format(product_name))
                     except:
-                        os.makedirs(app.root_path + r"\static\uploads\slider_products\{}".format(product_name))
+                        os.makedirs(app.root_path + "/static/uploads/slider_products/{}".format(product_name))
                     filename = secure_filename(file.filename)
-                    dir = app.root_path + r"\static\uploads\slider_products\{}".format(product_name)
+                    dir = app.root_path + "/static/uploads/slider_products/{}".format(product_name)
                     file.save(os.path.join(dir, filename))
                     category = request.form['categories']
                     description = form.description.data.lower()
@@ -1677,7 +1743,7 @@ def edit_product_slider(id):
         product_name = request.form['product_name']
 
 
-        folder = os.path.exists(app.root_path + r"\static\uploads\slider_products\{}".format(product_name))
+        folder = os.path.exists(app.root_path + "/static/uploads/slider_products/{}".format(product_name))
         if folder is True and form.product_name.data == product_name:
             pass
         elif folder is False and form.product_name.data != product_name:
@@ -1689,10 +1755,10 @@ def edit_product_slider(id):
 
         file = request.files['file']
         if file and allowed_file(file.filename):
-            rmtree(app.root_path + r"\static\uploads\slider_products\{}".format(product['product_name']))
-            os.makedirs(app.root_path + r"\static\uploads\slider_products\{}".format(product_name))
+            rmtree(app.root_path + "/static/uploads/slider_products/{}".format(product['product_name']))
+            os.makedirs(app.root_path + "/static/uploads/slider_products/{}".format(product_name))
             filename = secure_filename(file.filename)
-            dir = app.root_path + r"\static\uploads\slider_products\{}".format(product_name)
+            dir = app.root_path + "/static/uploads/slider_products/{}".format(product_name)
             file.save(os.path.join(dir, filename))
 
             category = request.form['categories']
@@ -1723,8 +1789,8 @@ def edit_product_slider(id):
             flash('Your slider Product Has been Edited successfully!', 'success')
             return redirect(url_for('admin_dashboard'))
         elif file.filename == '' or 'file' not in request.files:
-            os.rename(os.path.join(app.root_path + r"\static\uploads\slider_products\{}".format(product['product_name'])),
-                      os.path.join(app.root_path + r"\static\uploads\slider_products\{}".format(product_name)))
+            os.rename(os.path.join(app.root_path + "/static/uploads/slider_products/{}".format(product['product_name'])),
+                      os.path.join(app.root_path + "/static/uploads/slider_products/{}".format(product_name)))
             category = request.form['categories']
             description = request.form['description']
             price = request.form['price']
@@ -1766,7 +1832,7 @@ def delete_product_slider(id):
     name = cur.fetchone()
     n = name['product_name']
     try:
-        rmtree(app.root_path + r"\static\uploads\slider_products\{}".format(n))
+        rmtree(app.root_path + "/static/uploads/slider_products/{}".format(n))
     except:
         pass
     cur.execute("DELETE FROM slider_products WHERE id = %s", [id])
@@ -1788,7 +1854,7 @@ def delete_all_slider_products():
     mysql.connection.commit()
     cur.close()
     try:
-        rmtree(app.root_path + r"\static\uploads\slider_products")
+        rmtree(app.root_path + "/static/uploads/slider_products")
         flash('You Has been Deleted All slider Products successfully!', 'success')
     except:
         flash('You Has been Already Deleted All slider Products successfully!', 'success')
@@ -1862,7 +1928,7 @@ def add_user():
     if request.method == 'POST' and form.validate():
         username = form.username.data
 
-        folder = os.path.exists(app.root_path + r"\static\uploads\users\{}".format(username))
+        folder = os.path.exists(app.root_path + "/static/uploads/users/{}".format(username))
         if folder == True:
             flash('Folder Name Already Exists', 'warning')
             return redirect(url_for('add_user'))
@@ -1888,13 +1954,13 @@ def add_user():
             # if file.filename == '':
             #     flash('You Have to Select a File!', 'warning')
             try:
-                rmtree(app.root_path + r"\static\uploads\users\{}".format(username))
-                os.makedirs(app.root_path + r"\static\uploads\users\{}".format(username))
+                rmtree(app.root_path + "/static/uploads/users/{}".format(username))
+                os.makedirs(app.root_path + "/static/uploads/users/{}".format(username))
             except:
-                os.makedirs(app.root_path + r"\static\uploads\users\{}".format(username))
+                os.makedirs(app.root_path + "/static/uploads/users/{}".format(username))
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
-                dir = app.root_path + r"\static\uploads\users\{}".format(username)
+                dir = app.root_path + "/static/uploads/users/{}".format(username)
                 file.save(os.path.join(dir, filename))
                 cur = mysql.connection.cursor()
                 cur.execute("INSERT INTO users(permission, first_name, last_name,\
@@ -1907,7 +1973,7 @@ def add_user():
                 flash('You Have Created an Account successfully!', 'success')
                 return redirect(url_for('admin_dashboard'))
             elif file.filename == '' or 'file' not in request.files:
-                copy(app.root_path + r'\static\admin.png', app.root_path + r'\static\uploads\users\{}\admin.png'.format(username))
+                copy(app.root_path + '/static/admin.png', app.root_path + '/static/uploads/users/{}/admin.png'.format(username))
                 cur = mysql.connection.cursor()
                 cur.execute("INSERT INTO users(permission, first_name, last_name,\
                                              email, gender, country, username, password, files)\
@@ -1931,7 +1997,7 @@ def delete_user(id):
     name = cur.fetchone()
     n = name['username']
     try:
-        rmtree(app.root_path + r"\static\uploads\users\{}".format(n))
+        rmtree(app.root_path + "/static/uploads/users/{}".format(n))
     except:
         pass
     cur.execute("DELETE FROM orders WHERE user_name = %s", [n])
@@ -2061,7 +2127,7 @@ def delete_category(category):
             pass
         products = cur.fetchall()
         for product in products:
-            rmtree(app.root_path + r"\static\uploads\products\{}".format(product['product_name']))
+            rmtree(app.root_path + "/static/uploads/products/{}".format(product['product_name']))
             cur.execute("DELETE FROM reviews WHERE product_name=%s", [product['product_name']])
             mysql.connection.commit()
 
@@ -2070,7 +2136,7 @@ def delete_category(category):
             pass
         sliders = cur.fetchall()
         for slider in sliders:
-            rmtree(app.root_path + r"\static\uploads\slider_products\{}".format(slider['product_name']))
+            rmtree(app.root_path + "/static/uploads/slider_products/{}".format(slider['product_name']))
             cur.execute("DELETE FROM slider_reviews WHERE product_name=%s", [slider['product_name']])
             mysql.connection.commit()
 
@@ -2099,8 +2165,8 @@ def delete_all_categories():
     mysql.connection.commit()
     cur.close()
     try:
-        rmtree(app.root_path + r"\static\uploads\products")
-        rmtree(app.root_path + r"\static\uploads\slider_products")
+        rmtree(app.root_path + "/static/uploads/products")
+        rmtree(app.root_path + "/static/uploads/slider_products")
         flash('You Has been Deleted All Categories and Products Successfully!', 'success')
     except:
         flash('You Has been Deleted All Categories and Products Successfully!', 'success')
@@ -2117,7 +2183,7 @@ def delete_all_users():
     if result >0:
         name = cur.fetchall()
         for n in name:
-            rmtree(app.root_path + r"\static\uploads\users\{}".format(n['username']))
+            rmtree(app.root_path + "/static/uploads/users/{}".format(n['username']))
     elif result == 0:
         pass
     cur.execute("DELETE FROM users WHERE permission = 'user' ")
@@ -2133,9 +2199,9 @@ def delete_all_users():
 @is_admin_logged_in
 def delete_all_accounts():
     try:
-        rmtree(app.root_path + r"\static\uploads\users")
-        rmtree(app.root_path + r"\static\uploads\products")
-        rmtree(app.root_path + r"\static\uploads\slider_products")
+        rmtree(app.root_path + "/static/uploads/users")
+        rmtree(app.root_path + "/static/uploads/products")
+        rmtree(app.root_path + "/static/uploads/slider_products")
     except:
         pass
     cur = mysql.connection.cursor()
@@ -2213,7 +2279,7 @@ def reject_all_orders():
 def search():
     if request.method == "POST":
         cur = mysql.connection.cursor()
-        result = cur.execute("SELECT * FROM `buy_sell`.`products` \
+        result = cur.execute("SELECT * FROM products \
                              WHERE( CONVERT(`product_name` USING utf8)\
                              LIKE %s)", [["%" + request.form['search'] + "%"]])
         categories = cur.fetchall()
@@ -2734,5 +2800,5 @@ def reject_all_orders_user(username):
 # run whole application function
 
 if __name__ == '__main__':
-    app.secret_key = 'osama_blog'
+    app.secret_key = 'PGHhsV7MXGJlsFAiSq9Y5kngjUKJeKtSBjjdyjnr2gDa01irRsNC7ZNwg3NlsTIHv39N8iOsV6z87wG3d5CGBqIRAm29pWXM9czwVmkcH0qjvvIi7INPhTwCNoDelyute2ljQQXoYuonzUzcF9ToPD2gL0coxbrOhwMeaxZeFK7y4AtRgya27lSASLKjQf5bYRfZkjl1v7q9JvpJBwaGNuwK5fxOPsxciRp8Hf4PEmfeFXBkIYsKzIqGwE'
     app.run(debug=True)
