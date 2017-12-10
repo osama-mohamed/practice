@@ -48,11 +48,11 @@
                   {% include 'includes/_messages.html' %}
                   <form id="login-form" method="post" action="">
                     <div class="form-group">
-                      <input id="login-username" type="text" name="username" value="{{request.form.username}}" required="" class="input-material">
+                      <input id="login-username" type="text" name="username" value="{{request.form.username}}" required="" class="input-material" autocomplete="off">
                       <label for="login-username" class="label-material">User Name</label>
                     </div>
                     <div class="form-group">
-                      <input id="login-password" type="password" name="password" value="{{request.form.password}}" required="" class="input-material">
+                      <input id="login-password" type="password" name="password" value="{{request.form.password}}" required="" class="input-material" autocomplete="off">
                       <label for="login-password" class="label-material">Password</label>
                     </div>
                       <button type="submit" class="btn btn-primary align-center">Log in &ensp;<i class="fa fa-sign-in" aria-hidden="true"></i></button>
@@ -65,7 +65,7 @@
         </div>
       </div>
       <div class="copyrights text-center">
-        <p>Design by OSAMA MOHAMED</p>
+        <p>Developed by OSAMA MOHAMED</p>
         <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
       </div>
     </div>
