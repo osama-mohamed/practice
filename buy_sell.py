@@ -264,6 +264,8 @@ def contact_us():
 
 @app.route('/products_price_range', methods=['post', 'get'])
 def products_price_range():
+    # min_price = request.form['price'].split(',')[0]
+    # max_price = request.form['price'].split(',')[1]
     min_price = request.form['min_price']
     max_price = request.form['max_price']
     cur = mysql.connection.cursor()
