@@ -2298,10 +2298,10 @@ def search():
         result = cur.execute("SELECT * FROM products \
                              WHERE( CONVERT(`product_name` USING utf8)\
                              LIKE %s)", [["%" + request.form['search'] + "%"]])
-        categories = cur.fetchall()
+        search_products = cur.fetchall()
         cur.close()
         if result > 0:
-            return render_template('catigories.html', categories=categories)
+            return render_template('user_search.html', search_products=search_products)
         else:
             flash('No Products Found', 'warning')
             return redirect(url_for('admin_dashboard'))
