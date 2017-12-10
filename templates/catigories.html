@@ -12,7 +12,11 @@
     <link href="../static/user/css/animate.css" rel="stylesheet">
 	<link href="../static/user/css/main.css" rel="stylesheet">
 	<link href="../static/user/css/responsive.css" rel="stylesheet">
-
+    <style>
+        h2.no_border:after{
+            border: hidden;
+        }
+    </style>
 </head><!--/head-->
 
 <body>
@@ -109,7 +113,8 @@
 				
 				<div class="col-sm-9 padding-right">
 					<div class="features_items"><!--features_items-->
-						<h2 class="title text-center">Category Items</h2>
+						<h2 class="title text-center">Category Products</h2>
+                        <h2 class="title text-center no_border">Found {{ categories | length }} {% if categories | length == 0 or categories | length == 1 %} Product {% else %} Products {% endif %}</h2>
                         {% include 'includes/_messages.html' %}
 
                         {% for product in categories %}
