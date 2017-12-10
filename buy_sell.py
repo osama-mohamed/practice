@@ -267,10 +267,17 @@ def products_price_range():
     min_price = request.form['min_price']
     max_price = request.form['max_price']
     cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM products WHERE (price BETWEEN %s AND %s)", [min_price, max_price])
-    categories = cur.fetchall()
+    result = cur.execute("SELECT * FROM products WHERE (price BETWEEN %s AND %s)", [min_price, max_price])
     cur.close()
-    return render_template('catigories.html', categories=categories)
+    if result > 0:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM products WHERE (price BETWEEN %s AND %s)", [min_price, max_price])
+        search_products = cur.fetchall()
+        cur.close()
+        return render_template('user_search.html', search_products=search_products)
+    else:
+        flash('No Products Found', 'warning')
+        return render_template('user_search.html')
 
 
 # all products page
@@ -1034,13 +1041,13 @@ def user_search():
         result = cur.execute("SELECT * FROM products \
                              WHERE( CONVERT(`product_name` USING utf8)\
                              LIKE %s)", [["%" + request.form['search'] + "%"]])
-        categories = cur.fetchall()
+        search_products = cur.fetchall()
         cur.close()
         if result > 0:
-            return render_template('catigories.html', categories=categories)
+            return render_template('user_search.html', search_products=search_products)
         else:
             flash('No Products Found', 'warning')
-            return redirect(url_for('home'))
+            return render_template('user_search.html')
 
 
 # admin part ***********************************************************************************************
