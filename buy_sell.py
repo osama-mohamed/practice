@@ -51,6 +51,7 @@ cursor.execute("CREATE TABLE IF NOT EXISTS products(\
                 category VARCHAR(100) NOT NULL,\
                 number_of_sales INT(11) NOT NULL,\
                 number_of_views INT(11) NOT NULL,\
+                avg_rate FLOAT NOT NULL,\
                 product_name VARCHAR(255) NOT NULL,\
                 description TEXT NOT NULL,\
                 price INT(11) NOT NULL,\
@@ -64,6 +65,7 @@ cursor.execute("CREATE TABLE IF NOT EXISTS slider_products(\
                 category VARCHAR(100) NOT NULL,\
                 number_of_sales INT(11) NOT NULL,\
                 number_of_views INT(11) NOT NULL,\
+                avg_rate FLOAT NOT NULL,\
                 product_name VARCHAR(255) NOT NULL,\
                 description TEXT NOT NULL,\
                 price INT(11) NOT NULL,\
@@ -897,7 +899,9 @@ def product_review(id):
     cur = mysql.connection.cursor()
 
     result = cur.execute("SELECT product_id FROM reviews WHERE user_name = %s AND product_id = %s", [session['user_username'], id])
+    cur.close()
     if result == 0:
+        cur = mysql.connection.cursor()
         cur.execute("SELECT id, product_name FROM products WHERE id = %s", [id])
         product = cur.fetchone()
         product_id = product['id']
@@ -906,6 +910,7 @@ def product_review(id):
         user = cur.fetchone()
         user_id = user['id']
         user_name = user['username']
+        cur.close()
 
         product_rate = request.form['rate']
         review = request.form['product_review_area']
@@ -914,15 +919,22 @@ def product_review(id):
             flash('You must write a review!', 'danger')
             return redirect(url_for('home'))
         else:
+            cur = mysql.connection.cursor()
             cur.execute("INSERT INTO reviews(user_id, user_name, product_id, product_name, rate, review)\
                          VALUES(%s, %s, %s, %s, %s, %s)", \
                         (user_id, user_name, product_id, product_name, product_rate, review))
             mysql.connection.commit()
+            cur.execute("SELECT SUM(rate) / COUNT(product_id) AS total_avg_rate FROM reviews WHERE product_id = %s", [id])
+            total = cur.fetchone()
+            total_rate = total['total_avg_rate']
+            cur.execute("UPDATE products SET avg_rate = %s WHERE id = %s", [total_rate, id])
+            mysql.connection.commit()
+            cur.close()
             flash('Your review now added successfully!', 'success')
+            return redirect(url_for('home'))
     else:
         flash('You can not add two reviews for one product!', 'danger')
-    cur.close()
-    return redirect(url_for('home'))
+        return redirect(url_for('home'))
 
 
 # add slider product review
@@ -932,13 +944,16 @@ def slider_product_review(id):
     cur = mysql.connection.cursor()
 
     result = cur.execute("SELECT product_id FROM slider_reviews WHERE user_name = %s AND product_id = %s", [session['user_username'], id])
+    cur.close()
     if result == 0:
+        cur = mysql.connection.cursor()
         cur.execute("SELECT id, product_name FROM slider_products WHERE id = %s", [id])
         product = cur.fetchone()
         product_id = product['id']
         product_name = product['product_name']
         cur.execute("SELECT id, username FROM users WHERE username = %s", [session['user_username']])
         user = cur.fetchone()
+        cur.close()
         user_id = user['id']
         user_name = user['username']
 
@@ -949,15 +964,22 @@ def slider_product_review(id):
             flash('You must write a review!', 'danger')
             return redirect(url_for('home'))
         else:
+            cur = mysql.connection.cursor()
             cur.execute("INSERT INTO slider_reviews(user_id, user_name, product_id, product_name, rate, review)\
                          VALUES(%s, %s, %s, %s, %s, %s)", \
                         (user_id, user_name, product_id, product_name, product_rate, review))
             mysql.connection.commit()
+            cur.execute("SELECT SUM(rate) / COUNT(product_id) AS total_avg_rate FROM slider_reviews WHERE product_id = %s", [id])
+            total = cur.fetchone()
+            total_rate = total['total_avg_rate']
+            cur.execute("UPDATE slider_products SET avg_rate = %s WHERE id = %s", [total_rate, id])
+            mysql.connection.commit()
+            cur.close()
             flash('Your review now added successfully!', 'success')
+            return redirect(url_for('home'))
     else:
         flash('You can not add two reviews for one product!', 'danger')
-    cur.close()
-    return redirect(url_for('home'))
+        return redirect(url_for('home'))
 
 
 # A common part between the admin and the user ********************************************************
@@ -1022,7 +1044,7 @@ def preview_production_slider(id):
 @app.route('/categories/<category>', methods=['post', 'get'])
 def categories(category):
     cur = mysql.connection.cursor()
-    cur.execute("SELECT category FROM categories")
+    cur.execute("SELECT category, number_of_products FROM categories")
     all_categories = cur.fetchall()
     result = cur.execute("SELECT * FROM products WHERE category=%s", [category])
     categories = cur.fetchall()
@@ -1583,11 +1605,16 @@ def delete_all_products():
 
 # admin delete product review
 
-@app.route('/admin/delete_review_products/<id>', methods=['post', 'get'])
+@app.route('/admin/delete_review_products/<id>/<id2>', methods=['post', 'get'])
 @is_admin_logged_in
-def delete_review_products(id):
+def delete_review_products(id, id2):
     cur = mysql.connection.cursor()
-    cur.execute("DELETE FROM reviews WHERE product_id = %s", [id])
+    cur.execute("DELETE FROM reviews WHERE product_id = %s AND id = %s", [id, id2])
+    mysql.connection.commit()
+    cur.execute("SELECT SUM(rate) / COUNT(product_id) AS total_avg_rate FROM reviews WHERE product_id = %s", [id])
+    total = cur.fetchone()
+    total_rate = total['total_avg_rate']
+    cur.execute("UPDATE products SET avg_rate = %s WHERE id = %s", [total_rate, id])
     mysql.connection.commit()
     cur.close()
     flash('Product review has been deleted successfully!', 'success')
@@ -1601,6 +1628,7 @@ def delete_review_products(id):
 def delete_all_review_products():
     cur = mysql.connection.cursor()
     cur.execute("TRUNCATE reviews")
+    cur.execute("UPDATE products SET avg_rate = '' ")
     mysql.connection.commit()
     cur.close()
     flash('All products reviews has been deleted successfully!', 'success')
@@ -1879,11 +1907,16 @@ def delete_all_slider_products():
 
 # admin delete slider product review
 
-@app.route('/admin/delete_review_slider_product/<id>', methods=['post', 'get'])
+@app.route('/admin/delete_review_slider_product/<id>/<id2>', methods=['post', 'get'])
 @is_admin_logged_in
-def delete_review_slider_product(id):
+def delete_review_slider_product(id, id2):
     cur = mysql.connection.cursor()
-    cur.execute("DELETE FROM slider_reviews WHERE product_id = %s", [id])
+    cur.execute("DELETE FROM slider_reviews WHERE product_id = %s AND id = %s", [id, id2])
+    mysql.connection.commit()
+    cur.execute("SELECT SUM(rate) / COUNT(product_id) AS total_avg_rate FROM slider_reviews WHERE product_id = %s", [id])
+    total = cur.fetchone()
+    total_rate = total['total_avg_rate']
+    cur.execute("UPDATE slider_products SET avg_rate = %s WHERE id = %s", [total_rate, id])
     mysql.connection.commit()
     cur.close()
     flash('Slider product review has been deleted successfully!', 'success')
@@ -1897,6 +1930,7 @@ def delete_review_slider_product(id):
 def delete_all_slider_products_reviews():
     cur = mysql.connection.cursor()
     cur.execute("TRUNCATE slider_reviews")
+    cur.execute("UPDATE slider_products SET avg_rate = '' ")
     mysql.connection.commit()
     cur.close()
     flash('All slider products reviews has been deleted successfully!', 'success')

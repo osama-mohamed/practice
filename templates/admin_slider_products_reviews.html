@@ -130,12 +130,12 @@
                             <td><a href="/preview_production_slider/{{ product.product_id }}" class="btn btn-sm btn-outline-info"><i class="fa fa-eye" aria-hidden="true"></i>&emsp; Preview</a></td>
                             <td>
                                 <!-- Button trigger modal -->
-                                <button class="btn btn-sm btn-outline-danger" href="" data-toggle="modal" data-target="#delete_slider_review{{ product.product_id  }}">
+                                <button class="btn btn-sm btn-outline-danger" href="" data-toggle="modal" data-target="#delete_slider_review{{ product.product_id  }}{{ product.id }}">
                                   <i class="fa fa-times"></i> &emsp; Delete
                                 </button>
                                 <!-- delete product modal -->
                                 <!-- Modal -->
-                                <div class="modal fade" id="delete_slider_review{{ product.product_id  }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="delete_slider_review{{ product.product_id  }}{{ product.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                   <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                       <div class="modal-header">
@@ -149,7 +149,7 @@
                                       </div>
                                       <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                        <a href="/admin/delete_review_slider_product/{{ product.product_id  }}"><button class="btn btn-danger">Confirm Delete</button></a>
+                                        <a href="/admin/delete_review_slider_product/{{ product.product_id  }}/{{ product.id }}"><button class="btn btn-danger">Confirm Delete</button></a>
                                       </div>
                                     </div>
                                   </div>
