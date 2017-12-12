@@ -67,7 +67,25 @@
             <div class="container-fluid">
               <h2 class="no-margin-bottom">Admin Dashboard</h2>
               <p class="lead">Hello {{ admin_name }}</p>
-              <a href="/admin/upload_picture" style="color: #796AEE;">Change Profile Picture</a>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-gear" aria-hidden="true"></i> &ensp; Settings
+                </button>
+                <div class="dropdown-menu" style="padding: 12px; width: 300px;">
+                    <a href="/admin/upload_picture" class="dropdown-item" style="color: #796AEE;">Change Profile Picture</a>
+                    <a href="/admin/admin_change_password/" class="dropdown-item" style="color: #796AEE;">Change Account Password</a>
+{#                <div class="dropdown-divider"></div>#}
+{#                    <a class="dropdown-item" href="#">Separated link</a>#}
+{#                </div>#}
+                </div>
+
+
+{#              <button class="btn btn-primary account_settings" style="margin-bottom: -15px;"><i class="fa fa-gear" aria-hidden="true"></i> &ensp; Settings</button>#}
+{#              <br>#}
+{#              <a href="/admin/upload_picture" style="color: #796AEE; margin-top: 25px; display: none;" class="a1">Change Profile Picture</a>#}
+{#              <br>#}
+{#              <a href="/admin/admin_change_password/" style="color: #796AEE; display: none;" class="a2">Change Account Password</a>#}
             </div>
           </header>
             <!-- start my dashboard 1 -->
@@ -496,5 +514,13 @@
     <script src="../static/https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script src="../static/js/charts-home.js"></script>
     <script src="../static/js/front.js"></script>
+{#    <script>#}
+{#      $(document).ready(function () {#}
+{#          $("button.account_settings").click(function () {#}
+{#              $("a.a1").fadeToggle(500);#}
+{#              $("a.a2").fadeToggle(500);#}
+{#          });#}
+{#      });#}
+{#    </script>#}
   </body>
 </html>

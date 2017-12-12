@@ -149,10 +149,10 @@ if result > 0:
 else:
     admin_password = sha256_crypt.encrypt(str('admin')) 
     cursor.execute("INSERT INTO users(permission, first_name, last_name,\
-             email, gender, country, username, password, files)\
-             VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", \
+             email, gender, country, username, password, reset_password_permission, files)\
+             VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", \
             ('admin', 'admin', 'admin', 'admin', 'admin', \
-             'admin', 'admin', admin_password, 'admin.png'))
+             'admin', 'admin', admin_password, 'no_reset', 'admin.png'))
     database.commit()
     try:
         os.makedirs(app.root_path + "/static/uploads/users/admin")
@@ -445,10 +445,10 @@ def user_register():
                 file.save(os.path.join(dir, filename))
                 cur = mysql.connection.cursor()
                 cur.execute("INSERT INTO users(permission, first_name, last_name,\
-                             email, gender, country, username, password, files)\
-                             VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", \
+                             email, gender, country, username, password, reset_password_permission, files)\
+                             VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", \
                             ("user", first_name, last_name, email, gender,\
-                             country, username, password, filename))
+                             country, username, password, 'no_reset', filename))
                 mysql.connection.commit()
                 cur.close()
                 flash('You Have Created Account successfully!', 'success')
@@ -462,10 +462,10 @@ def user_register():
                 copy(app.root_path + '/static/admin.png', app.root_path + '/static/uploads/users/{}/admin.png'.format(username))
                 cur = mysql.connection.cursor()
                 cur.execute("INSERT INTO users(permission, first_name, last_name,\
-                                             email, gender, country, username, password, files)\
-                                             VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", \
+                                             email, gender, country, username, password, reset_password_permission, files)\
+                                             VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", \
                             ("user", first_name, last_name, email, gender, \
-                             country, username, password, 'admin.png'))
+                             country, username, password, 'no_reset', 'admin.png'))
                 mysql.connection.commit()
                 cur.close()
                 flash('You Have Created Account successfully!', 'success')
@@ -1208,6 +1208,74 @@ def admin_logout():
     session.clear()
     flash('You Are Now Logged Out', 'success')
     return redirect(url_for('admin_login'))
+
+
+# admin change password form validators
+
+class adminchange_password(Form):
+    old_password = PasswordField('Old Password',
+                             [validators.DataRequired(), validators.Length(min=6, max=100)])
+    password = PasswordField('New Password',
+                             [validators.DataRequired(), validators.Length(min=6, max=100),
+                              validators.EqualTo('confirm', message='Passwords do not match')])
+    confirm = PasswordField('Confirm Password', [validators.DataRequired()])
+
+
+# admin change password page
+
+@app.route("/admin/admin_change_password/", methods=['GET', 'POST'])
+@is_admin_logged_in
+def admin_change_password():
+    cur = mysql.connection.cursor()
+
+    # view messages
+    cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
+    messages = cur.fetchall()
+
+    # show messages number
+    cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+    count_message = cur.fetchone()
+    count_messages = count_message['COUNT(id)']
+
+    # show new orders number
+    cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+    count_order = cur.fetchone()
+    count_orders_where_pending = count_order['COUNT(status)']
+
+    # show new orders
+    cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+    count_orders_by_user = cur.fetchall()
+
+    cur.close()
+    form = adminchange_password(request.form)
+    if request.method == 'POST' and form.validate():
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT password FROM users WHERE username = %s AND permission='admin' OR permission='editor'", [session['admin_username']])
+        check_password = cur.fetchone()
+        cur.close()
+        current_password = check_password['password']
+        if sha256_crypt.verify(form.old_password.data, current_password):
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT reset_password_permission, reset_password_random FROM users WHERE username = %s AND permission='admin' OR permission='editor'", [session['admin_username']])
+            permission = cur.fetchone()
+            cur.close()
+            password_permission = permission['reset_password_permission']
+            # reset_random = permission['reset_password_random']
+            if password_permission == 'reset' or password_permission == 'no_reset' or password_permission == '':
+                random_reset = "".join([random.choice(string.ascii_letters + string.digits) for i in range(250)])
+                encrypted_password = sha256_crypt.encrypt(str(form.password.data))
+                cur = mysql.connection.cursor()
+                cur.execute("UPDATE users SET password = %s WHERE username = %s AND permission='admin' OR permission='editor'", [encrypted_password, session['admin_username']])
+                cur.execute("UPDATE users SET reset_password_permission = 'no_reset', reset_password_random = %s WHERE username = %s AND permission='admin' OR permission='editor'", [random_reset, session['admin_username']])
+                mysql.connection.commit()
+                cur.close()
+                session.clear()
+                flash("You Have Successfully Changed Your Password Now!", "success")
+                return redirect(url_for('admin_login'))
+        else:
+            flash("You Have Entered a wrong old Password!", "danger")
+            return redirect(url_for('admin_change_password'))
+    return render_template('admin_change_password.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
 
 
 # admin dashboard page
@@ -2090,10 +2158,10 @@ def add_user():
                 file.save(os.path.join(dir, filename))
                 cur = mysql.connection.cursor()
                 cur.execute("INSERT INTO users(permission, first_name, last_name,\
-                             email, gender, country, username, password, files)\
-                             VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", \
+                             email, gender, country, username, password, reset_password_permission, files)\
+                             VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", \
                             (permission, first_name, last_name, email, gender,\
-                             country, username, password, filename))
+                             country, username, password, 'no_reset', filename))
                 mysql.connection.commit()
                 cur.close()
                 flash('You Have Created an Account successfully!', 'success')
@@ -2102,10 +2170,10 @@ def add_user():
                 copy(app.root_path + '/static/admin.png', app.root_path + '/static/uploads/users/{}/admin.png'.format(username))
                 cur = mysql.connection.cursor()
                 cur.execute("INSERT INTO users(permission, first_name, last_name,\
-                                             email, gender, country, username, password, files)\
-                                             VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)", \
+                                             email, gender, country, username, password, reset_password_permission, files)\
+                                             VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", \
                             (permission, first_name, last_name, email, gender, \
-                             country, username, password, 'admin.png'))
+                             country, username, password, 'no_reset', 'admin.png'))
                 mysql.connection.commit()
                 cur.close()
                 flash('You Have Created an Account successfully!', 'success')
@@ -2405,13 +2473,31 @@ def reject_all_orders():
 def search():
     if request.method == "POST":
         cur = mysql.connection.cursor()
+        # view messages
+        cur.execute("SELECT * FROM contact_us WHERE status = %s ORDER BY id DESC LIMIT 6;", ["not_seen"])
+        messages = cur.fetchall()
+
+        # show messages number
+        cur.execute("SELECT COUNT(id) FROM contact_us WHERE status = %s ", ['not_seen'])
+        count_message = cur.fetchone()
+        count_messages = count_message['COUNT(id)']
+
+        # show new orders number
+        cur.execute("SELECT COUNT(status) FROM buy_orders WHERE status = %s", ['Pending'])
+        count_order = cur.fetchone()
+        count_orders_where_pending = count_order['COUNT(status)']
+
+        # show new orders
+        cur.execute("SELECT COUNT(status), user_name FROM buy_orders WHERE status = %s GROUP BY user_name ASC LIMIT 12", ['Pending'])
+        count_orders_by_user = cur.fetchall()
+
         result = cur.execute("SELECT * FROM products \
                              WHERE( CONVERT(`product_name` USING utf8)\
                              LIKE %s)", [["%" + request.form['search'] + "%"]])
         search_products = cur.fetchall()
         cur.close()
         if result > 0:
-            return render_template('user_search.html', search_products=search_products)
+            return render_template('admin_search.html', search_products=search_products, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
         else:
             flash('No Products Found', 'warning')
             return redirect(url_for('admin_dashboard'))
