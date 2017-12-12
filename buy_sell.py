@@ -1076,6 +1076,82 @@ def user_search():
 
 # admin part ***********************************************************************************************
 
+
+# user reset password page
+
+@app.route('/admin/admin_forget_password')
+def admin_forget_password():
+    return render_template('admin_forget_password.html')
+
+
+# send e-mail with link to reset user account password
+
+@app.route("/admin/admin_forget_password_email", methods=['GET', 'POST'])
+def admin_forget_password_email():
+    if request.method == 'POST' and request.form['admin_username'] != '':
+        user_name = request.form['admin_username']
+        cur = mysql.connection.cursor()
+        r = cur.execute("SELECT id, email, username FROM users WHERE username = BINARY %s AND permission='admin' OR permission='editor' ", [user_name])
+        res = cur.fetchone()
+        cur.close()
+        if r > 0:
+            random_for_reset = "".join([random.choice(string.ascii_letters + string.digits) for i in range(250)])
+            email = res['email']
+            msg = Message()
+            msg.sender = 'osama.buy.sell@gmail.com'
+            msg.subject = "Reset Your Password"
+            msg.recipients = [email]
+            msg.body = "Reset Your Password : http://localhost:5000/admin/admin_reset_password/%s/%s \n message sent from Flask-Mail Automatic sender!" % (res['id'], random_for_reset)
+            mail.send(msg)
+            cur = mysql.connection.cursor()
+            cur.execute("UPDATE users SET reset_password_permission = 'reset',  reset_password_random = %s WHERE username = %s AND permission='admin' OR permission='editor'", [random_for_reset, user_name])
+            mysql.connection.commit()
+            cur.close()
+            flash("The Reset Message has been Sent to your email!", "success")
+            flash("Please check your email!", "warning")
+            return redirect(url_for('admin_forget_password'))
+        else:
+            flash("This username Not Found!", "warning")
+            return redirect(url_for('admin_forget_password'))
+
+
+# reset password form validators
+
+class adminreset_password(Form):
+    password = PasswordField('',
+                             [validators.DataRequired(), validators.Length(min=6, max=100),
+                              validators.EqualTo('confirm', message='Passwords do not match')])
+    confirm = PasswordField('', [validators.DataRequired()])
+
+
+# write new password page
+
+@app.route("/admin/admin_reset_password/<id>/<random_for_reset>", methods=['GET', 'POST'])
+def admin_reset_password(id, random_for_reset):
+    form = adminreset_password(request.form)
+    if request.method == 'POST' and form.validate():
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT reset_password_permission, reset_password_random FROM users WHERE id = %s AND permission='admin' OR permission='editor'", [id])
+        permission = cur.fetchone()
+        cur.close()
+        password_permission = permission['reset_password_permission']
+        reset_random = permission['reset_password_random']
+        if password_permission == 'reset' and random_for_reset == reset_random:
+            random_reset = "".join([random.choice(string.ascii_letters + string.digits) for i in range(250)])
+            encrypted_password = sha256_crypt.encrypt(str(form.password.data))
+            cur = mysql.connection.cursor()
+            cur.execute("UPDATE users SET password = %s WHERE id = %s AND permission='admin' OR permission='editor'", [encrypted_password, id])
+            cur.execute("UPDATE users SET reset_password_permission = 'no_reset', reset_password_random = %s WHERE id = %s AND permission='admin' OR permission='editor'", [random_reset, id])
+            mysql.connection.commit()
+            cur.close()
+            flash("You Have Successfully Changed Your Password Now!", "success")
+            return redirect(url_for('admin_login'))
+        else:
+            flash("You Have Changed Your Password before!", "warning")
+            return redirect(url_for('admin_login'))
+    return render_template('admin_reset_password.html', form=form)
+
+
 # admin login page
 
 @app.route('/admin/login', methods=['GET', 'POST'])
