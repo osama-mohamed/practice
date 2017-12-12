@@ -571,6 +571,52 @@ def user_profile_picture():
     return redirect(url_for('user_account'))
 
 
+# user change password form validators
+
+class userchange_password(Form):
+    old_password = PasswordField('Old Password',
+                             [validators.DataRequired(), validators.Length(min=6, max=100)])
+    password = PasswordField('New Password',
+                             [validators.DataRequired(), validators.Length(min=6, max=100),
+                              validators.EqualTo('confirm', message='Passwords do not match')])
+    confirm = PasswordField('Confirm Password', [validators.DataRequired()])
+
+
+# admin change password page
+
+@app.route("/user_change_password/", methods=['GET', 'POST'])
+@is_user_logged_in
+def user_change_password():
+    form = userchange_password(request.form)
+    if request.method == 'POST' and form.validate():
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT password FROM users WHERE username = %s AND permission='user'", [session['user_username']])
+        check_password = cur.fetchone()
+        cur.close()
+        current_password = check_password['password']
+        if sha256_crypt.verify(form.old_password.data, current_password):
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT reset_password_permission, reset_password_random FROM users WHERE username = %s AND permission='user'", [session['user_username']])
+            permission = cur.fetchone()
+            cur.close()
+            password_permission = permission['reset_password_permission']
+            if password_permission == 'reset' or password_permission == 'no_reset':
+                random_reset = "".join([random.choice(string.ascii_letters + string.digits) for i in range(250)])
+                encrypted_password = sha256_crypt.encrypt(str(form.password.data))
+                cur = mysql.connection.cursor()
+                cur.execute("UPDATE users SET password = %s WHERE username = %s AND permission='user'", [encrypted_password, session['user_username']])
+                cur.execute("UPDATE users SET reset_password_permission = 'no_reset', reset_password_random = %s WHERE username = %s AND permission='user'", [random_reset, session['user_username']])
+                mysql.connection.commit()
+                cur.close()
+                session.clear()
+                flash("You Have Successfully Changed Your Password Now!", "success")
+                return redirect(url_for('user_login'))
+        else:
+            flash("You Have Entered a wrong old Password!", "danger")
+            return redirect(url_for('user_change_password'))
+    return render_template('user_change_password.html', form=form)
+
+
 # delete user account
 
 @app.route('/delete_user_account', methods=['post', 'get'])
@@ -1276,6 +1322,21 @@ def admin_change_password():
             flash("You Have Entered a wrong old Password!", "danger")
             return redirect(url_for('admin_change_password'))
     return render_template('admin_change_password.html', form=form, admin_name=session['admin_username'], admin_image=session['admin_image'], permission=session['permission'], messages=messages, count_messages=count_messages, count_orders_where_pending=count_orders_where_pending, count_orders_by_user=count_orders_by_user)
+
+
+# delete admin account
+
+@app.route('/admin/delete_admin_account', methods=['post', 'get'])
+@is_admin_logged_in
+def delete_admin_account():
+    rmtree(app.root_path + "/static/uploads/users/{}".format(session['admin_username']))
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM users WHERE username = %s", [session['admin_username']])
+    mysql.connection.commit()
+    cur.close()
+    session.clear()
+    flash('You Have Deleted Your Account successfully!', 'success')
+    return redirect(url_for('admin_login'))
 
 
 # admin dashboard page

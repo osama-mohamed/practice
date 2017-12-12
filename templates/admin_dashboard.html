@@ -72,14 +72,17 @@
                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-gear" aria-hidden="true"></i> &ensp; Settings
                 </button>
-                <div class="dropdown-menu" style="padding: 12px; width: 300px;">
-                    <a href="/admin/upload_picture" class="dropdown-item" style="color: #796AEE;">Change Profile Picture</a>
-                    <a href="/admin/admin_change_password/" class="dropdown-item" style="color: #796AEE;">Change Account Password</a>
-{#                <div class="dropdown-divider"></div>#}
-{#                    <a class="dropdown-item" href="#">Separated link</a>#}
-{#                </div>#}
+                <div class="dropdown-menu" style="padding: 12px; width: 320px;">
+                    <a href="/admin/upload_picture" class="dropdown-item" style="color: #796AEE;"><i class="fa fa-image" aria-hidden="true"></i> &ensp; Change Profile Picture</a>
+                    <a href="/admin/admin_change_password/" class="dropdown-item" style="color: #796AEE;"><i class="fa fa-user" aria-hidden="true"></i> &emsp; Change Account Password</a>
+                <div class="dropdown-divider"></div>
+{#                    <a href="/admin/delete_admin_account" class="dropdown-item" style="color: #dc3545;"><i class="fa fa-remove" aria-hidden="true"></i> &emsp; Delete My Account</a>#}
+                    <!-- Button trigger modal -->
+                    <a class="dropdown-item edit"  style="color: #dc3545;" href="" data-toggle="modal" data-target="#delete_admin_account">
+                      <i class="fa fa-remove"></i> &emsp; Delete My Account
+                    </a>
                 </div>
-
+                </div>
 
 {#              <button class="btn btn-primary account_settings" style="margin-bottom: -15px;"><i class="fa fa-gear" aria-hidden="true"></i> &ensp; Settings</button>#}
 {#              <br>#}
@@ -505,6 +508,33 @@
         </div>
       </div>
     </div>
+
+
+
+    <!-- delete Admin account modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="delete_admin_account" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius: 6px;">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete My Account</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete your account from the website permanently ?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <a href="{{ url_for('delete_admin_account') }}"><button class="btn btn-danger">Confirm Delete Permanently</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
     <!-- Javascript files-->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="../static/vendor/popper.js/umd/popper.min.js"> </script>
