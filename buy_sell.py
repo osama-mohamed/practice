@@ -1,5 +1,5 @@
 # some imports
-from flask import Flask, render_template, flash, redirect, url_for, session, request, send_from_directory
+from flask import Flask, render_template, flash, redirect, url_for, session, request, send_from_directory, jsonify
 from flask_mysqldb import MySQL
 from wtforms import Form, StringField, TextAreaField, validators, FileField, IntegerField, PasswordField
 from passlib.hash import sha256_crypt
@@ -11,6 +11,7 @@ import MySQLdb
 import os
 import random
 import string
+import getip
 
 
 # connect to database in localhost to create database and their tables
@@ -205,6 +206,43 @@ def favicon():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
+
+# add to compare route
+
+lis = []
+@app.route('/add_to_compare/<id>', methods=['post', 'get'])
+def add_to_compare(id):
+    if len(lis) <= 3:
+        lis.append(id)
+        session['ids'] = lis
+        print(session['ids'])
+        flash('added successfully to compare!', 'success')
+        return redirect(request.referrer)
+    else:
+        flash('not added because the limit is reached (4 products only!)', 'danger')
+        return redirect(request.referrer)
+
+
+# compare page
+
+@app.route('/compare')
+def compare():
+    id1 = session['ids'][0]
+    id2 = session['ids'][1]
+    id3 = session['ids'][2]
+    id4 = session['ids'][3]
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM products WHERE id = %s", [id1])
+    result1 = cur.fetchone()
+    cur.execute("SELECT * FROM products WHERE id = %s", [id2])
+    result2 = cur.fetchone()
+    cur.execute("SELECT * FROM products WHERE id = %s", [id3])
+    result3 = cur.fetchone()
+    cur.execute("SELECT * FROM products WHERE id = %s", [id4])
+    result4 = cur.fetchone()
+    cur.close()
+    return jsonify(result1, result2, result3, result4)
 
 
 # home page
