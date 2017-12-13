@@ -9,6 +9,8 @@ from python.all_products.all import *
 from python.product.product import *
 from python.profile.profile import *
 from python.catigories.categories import *
+from python.delete_product.delete import *
+from python.edit_product.edit import *
 
 
 app = Flask(__name__)
@@ -36,6 +38,8 @@ app.register_blueprint(all_productss)
 app.register_blueprint(one_product)
 app.register_blueprint(prof)
 app.register_blueprint(category)
+app.register_blueprint(delete_product_bluprint)
+app.register_blueprint(edit_product_bluprint)
 
 
 
