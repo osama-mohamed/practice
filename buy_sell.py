@@ -207,37 +207,6 @@ def favicon():
 def page_not_found(e):
     return render_template('404.html'), 404
 
-lis = []
-# add to compare route
-
-@app.route('/add_to_compare/<id>', methods=['post', 'get'])
-def add_to_compare(id):
-    if len(lis) <= 3:
-        lis.append(id)
-        session['ids'] = lis
-        print(session['ids'])
-        return 'added!'
-    else:
-        return 'not added'
-
-
-# compare page
-
-@app.route('/compare')
-def compare():
-    cur = mysql.connection.cursor()
-    for id in session['ids']:
-
-        cur.execute("SELECT * FROM products WHERE id = %s", [id])
-        return 'done'
-    result = cur.fetchall()
-
-    print(session['ids'])
-    print(result)
-
-    cur.close()
-    return 'error'
-
 
 # home page
 
