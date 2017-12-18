@@ -1,0 +1,795 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="43dc6ebc-4288-47a3-bce8-8cc8cebc48e8" name="Default" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/sell$sell.coverage" NAME="sell Coverage Results" MODIFIED="1513589753668" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="footer.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/includes/footer.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="12" column="10" lean-forward="true" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/buy_sell_updated" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/templates/admin_dashboard.html" />
+        <option value="$PROJECT_DIR$/templates/admin_add_category.html" />
+        <option value="$PROJECT_DIR$/templates/admin_add_production.html" />
+        <option value="$PROJECT_DIR$/templates/admin_add_production_slider.html" />
+        <option value="$PROJECT_DIR$/templates/admin_add_user.html" />
+        <option value="$PROJECT_DIR$/templates/admin_categories_table.html" />
+        <option value="$PROJECT_DIR$/templates/admin_catigories.html" />
+        <option value="$PROJECT_DIR$/templates/admin_change_password.html" />
+        <option value="$PROJECT_DIR$/templates/admin_edit_category.html" />
+        <option value="$PROJECT_DIR$/templates/admin_edit_production.html" />
+        <option value="$PROJECT_DIR$/templates/admin_edit_production_slider.html" />
+        <option value="$PROJECT_DIR$/templates/admin_message.html" />
+        <option value="$PROJECT_DIR$/templates/admin_messages_table.html" />
+        <option value="$PROJECT_DIR$/templates/admin_orders_table.html" />
+        <option value="$PROJECT_DIR$/templates/admin_product.html" />
+        <option value="$PROJECT_DIR$/templates/admin_products_reviews.html" />
+        <option value="$PROJECT_DIR$/templates/admin_products_table.html" />
+        <option value="$PROJECT_DIR$/templates/admin_search.html" />
+        <option value="$PROJECT_DIR$/templates/admin_show_orders_by_user_table.html" />
+        <option value="$PROJECT_DIR$/templates/admin_slider.html" />
+        <option value="$PROJECT_DIR$/templates/admin_slider_products_reviews.html" />
+        <option value="$PROJECT_DIR$/templates/admin_slider_products_table .html" />
+        <option value="$PROJECT_DIR$/templates/admin_upload_profile_picture.html" />
+        <option value="$PROJECT_DIR$/templates/admin_users_table.html" />
+        <option value="$PROJECT_DIR$/templates/includes/footer.html" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-1" />
+    <option name="width" value="1385" />
+    <option name="height" value="745" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>Python</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>Python</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="sell" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sell" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Issue.Navigation" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.sell">
+    <configuration name="sell" type="PythonConfigurationType" factoryName="Python" singleton="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="sell" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/buy_sell.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="43dc6ebc-4288-47a3-bce8-8cc8cebc48e8" name="Default" comment="" />
+      <created>1513589008878</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1513589008878</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="7" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20058565" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22152886" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/buy_sell.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="447">
+          <caret line="3151" column="0" lean-forward="true" selection-start-line="3151" selection-start-column="0" selection-end-line="3151" selection-end-column="0" />
+          <folding>
+            <marker date="1513588960119" expanded="true" signature="1353:2064" ph="CREATE TABLE... IF" />
+            <marker date="1513588960119" expanded="true" signature="2085:2698" ph="CREATE TABLE... IF" />
+            <marker date="1513588960119" expanded="true" signature="2719:3339" ph="CREATE TABLE... IF" />
+            <marker date="1513588960119" expanded="true" signature="3360:3487" ph="CREATE TABLE... IF" />
+            <marker date="1513588960119" expanded="true" signature="3508:4067" ph="CREATE TABLE... IF" />
+            <marker date="1513588960119" expanded="true" signature="4088:4519" ph="CREATE TABLE... IF" />
+            <marker date="1513588960119" expanded="true" signature="4540:5340" ph="CREATE TABLE... IF" />
+            <marker date="1513588960119" expanded="true" signature="5361:5799" ph="CREATE TABLE... IF" />
+            <marker date="1513588960119" expanded="true" signature="5820:6206" ph="CREATE TABLE... IF" />
+            <marker date="1513588960119" expanded="true" signature="6307:6351" ph="SELECT usern... users" />
+            <marker date="1513588960119" expanded="true" signature="6472:6677" ph="INSERT INTO users... " />
+            <marker date="1513588960119" expanded="true" signature="8832:8868" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="8924:8960" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="9016:9052" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="9108:9144" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="9375:9412" ph="SELECT * FRO... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="9475:9521" ph="SELECT * FRO... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="9661:9707" ph="SELECT * FRO... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="9770:9817" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="9875:9899" ph="SELECT * FRO... categories" />
+            <marker date="1513588960119" expanded="true" signature="9951:10011" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="10074:10143" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="11300:11412" ph="INSERT INTO contact_us... " />
+            <marker date="1513588960119" expanded="true" signature="12061:12115" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="12238:12292" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="12793:12839" ph="SELECT COUNT... products" />
+            <marker date="1513588960119" expanded="true" signature="12966:13024" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="14076:14162" ph="SELECT id, e... users" />
+            <marker date="1513588960119" expanded="true" signature="14763:14886" ph="UPDATE users... " />
+            <marker date="1513588960119" expanded="true" signature="15951:16053" ph="SELECT reset... users" />
+            <marker date="1513588960119" expanded="true" signature="16521:16587" ph="UPDATE users... " />
+            <marker date="1513588960119" expanded="true" signature="16641:16760" ph="UPDATE users... " />
+            <marker date="1513588960119" expanded="true" signature="18410:18456" ph="SELECT usern... users" />
+            <marker date="1513588960119" expanded="true" signature="19862:20099" ph="INSERT INTO users... " />
+            <marker date="1513588960119" expanded="true" signature="21055:21324" ph="INSERT INTO users... " />
+            <marker date="1513588960119" expanded="true" signature="22041:22109" ph="SELECT * FRO... users" />
+            <marker date="1513588960119" expanded="true" signature="23579:23624" ph="SELECT * FRO... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="23700:23743" ph="SELECT files... users" />
+            <marker date="1513588960119" expanded="true" signature="25085:25152" ph="UPDATE users... " />
+            <marker date="1513588960119" expanded="true" signature="26274:26342" ph="SELECT passw... users" />
+            <marker date="1513588960119" expanded="true" signature="26630:26738" ph="SELECT reset... users" />
+            <marker date="1513588960119" expanded="true" signature="27265:27337" ph="UPDATE users... " />
+            <marker date="1513588960119" expanded="true" signature="27417:27542" ph="UPDATE users... " />
+            <marker date="1513588960119" expanded="true" signature="28313:28352" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="28400:28443" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="28491:28531" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="28579:28626" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="28674:28711" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="29387:29428" ph="SELECT * FRO... orders" />
+            <marker date="1513588960119" expanded="true" signature="29504:29553" ph="SELECT user_... orders" />
+            <marker date="1513588960119" expanded="true" signature="29624:29711" ph="SELECT SUM((... orders" />
+            <marker date="1513588960119" expanded="true" signature="29938:29991" ph="SELECT SUM(q... orders" />
+            <marker date="1513588960119" expanded="true" signature="30392:30433" ph="SELECT * FRO... orders" />
+            <marker date="1513588960119" expanded="true" signature="30667:30708" ph="SELECT * FRO... orders" />
+            <marker date="1513588960119" expanded="true" signature="31205:31488" ph="INSERT INTO buy_orders... " />
+            <marker date="1513588960119" expanded="true" signature="31721:31789" ph="SELECT count... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="32118:32252" ph="UPDATE buy_o... " />
+            <marker date="1513588960119" expanded="true" signature="32385:32426" ph="SELECT * FRO... orders" />
+            <marker date="1513588960119" expanded="true" signature="32713:32794" ph="UPDATE produ... " />
+            <marker date="1513588960119" expanded="true" signature="32846:32914" ph="UPDATE produ... " />
+            <marker date="1513588960119" expanded="true" signature="33194:33282" ph="UPDATE slide... " />
+            <marker date="1513588960119" expanded="true" signature="33333:33408" ph="UPDATE slide... " />
+            <marker date="1513588960119" expanded="true" signature="33512:33551" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="34416:34488" ph="SELECT produ... orders" />
+            <marker date="1513588960119" expanded="true" signature="34742:34778" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="35097:35137" ph="SELECT id FR... users" />
+            <marker date="1513588960119" expanded="true" signature="35246:35471" ph="INSERT INTO orders... " />
+            <marker date="1513588960119" expanded="true" signature="36101:36173" ph="SELECT produ... orders" />
+            <marker date="1513588960119" expanded="true" signature="36430:36473" ph="SELECT * FRO... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="36846:36886" ph="SELECT id FR... users" />
+            <marker date="1513588960119" expanded="true" signature="36995:37220" ph="INSERT INTO orders... " />
+            <marker date="1513588960119" expanded="true" signature="37838:37881" ph="SELECT quant... products" />
+            <marker date="1513588960119" expanded="true" signature="38040:38090" ph="SELECT quant... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="38196:38243" ph="SELECT quant... orders" />
+            <marker date="1513588960119" expanded="true" signature="38477:38538" ph="UPDATE order... " />
+            <marker date="1513588960119" expanded="true" signature="39087:39148" ph="UPDATE order... " />
+            <marker date="1513588960119" expanded="true" signature="39816:39859" ph="SELECT quant... products" />
+            <marker date="1513588960119" expanded="true" signature="40018:40068" ph="SELECT quant... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="40413:40466" ph="UPDATE order... " />
+            <marker date="1513588960119" expanded="true" signature="41109:41162" ph="UPDATE order... " />
+            <marker date="1513588960119" expanded="true" signature="42175:42224" ph="SELECT quant... orders" />
+            <marker date="1513588960119" expanded="true" signature="42495:42556" ph="UPDATE order... " />
+            <marker date="1513588960119" expanded="true" signature="42941:42981" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="43351:43422" ph="SELECT produ... reviews" />
+            <marker date="1513588960119" expanded="true" signature="43554:43605" ph="SELECT id, p... products" />
+            <marker date="1513588960119" expanded="true" signature="43750:43800" ph="SELECT id, u... users" />
+            <marker date="1513588960119" expanded="true" signature="44255:44391" ph="INSERT INTO reviews... " />
+            <marker date="1513588960119" expanded="true" signature="44553:44642" ph="SELECT SUM(r... reviews" />
+            <marker date="1513588960119" expanded="true" signature="44760:44807" ph="UPDATE produ... " />
+            <marker date="1513588960119" expanded="true" signature="45336:45414" ph="SELECT produ... slider_reviews" />
+            <marker date="1513588960119" expanded="true" signature="45546:45604" ph="SELECT id, p... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="45749:45799" ph="SELECT id, u... users" />
+            <marker date="1513588960119" expanded="true" signature="46254:46397" ph="INSERT INTO slider_reviews... " />
+            <marker date="1513588960119" expanded="true" signature="46559:46655" ph="SELECT SUM(r... slider_reviews" />
+            <marker date="1513588960119" expanded="true" signature="46773:46827" ph="UPDATE slide... " />
+            <marker date="1513588960119" expanded="true" signature="47399:47454" ph="SELECT COUNT... reviews" />
+            <marker date="1513588960119" expanded="true" signature="47581:47647" ph="SELECT * FRO... reviews" />
+            <marker date="1513588960119" expanded="true" signature="47707:47739" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="47801:47863" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="47919:47943" ph="SELECT * FRO... categories" />
+            <marker date="1513588960119" expanded="true" signature="47995:48062" ph="UPDATE produ... " />
+            <marker date="1513588960119" expanded="true" signature="48126:48211" ph="SELECT SUM(r... reviews" />
+            <marker date="1513588960119" expanded="true" signature="48649:48722" ph="SELECT * FRO... slider_reviews" />
+            <marker date="1513588960119" expanded="true" signature="48788:48850" ph="SELECT COUNT... slider_reviews" />
+            <marker date="1513588960119" expanded="true" signature="48962:49054" ph="SELECT SUM(r... slider_reviews" />
+            <marker date="1513588960119" expanded="true" signature="49108:49147" ph="SELECT * FRO... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="49209:49278" ph="SELECT * FRO... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="49334:49358" ph="SELECT * FRO... categories" />
+            <marker date="1513588960119" expanded="true" signature="49410:49484" ph="UPDATE slide... " />
+            <marker date="1513588960119" expanded="true" signature="49962:50013" ph="SELECT categ... categories" />
+            <marker date="1513588960119" expanded="true" signature="50078:50118" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="50634:50768" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="51729:51839" ph="SELECT id, e... users" />
+            <marker date="1513588960119" expanded="true" signature="52515:52662" ph="UPDATE users... " />
+            <marker date="1513588960119" expanded="true" signature="53767:53893" ph="SELECT reset... users" />
+            <marker date="1513588960119" expanded="true" signature="54425:54515" ph="UPDATE users... " />
+            <marker date="1513588960119" expanded="true" signature="54569:54712" ph="UPDATE users... " />
+            <marker date="1513588960119" expanded="true" signature="55428:55520" ph="SELECT * FRO... users" />
+            <marker date="1513588960119" expanded="true" signature="55727:55782" ph="SELECT files... users" />
+            <marker date="1513588960119" expanded="true" signature="57916:57983" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="58076:58126" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="58274:58328" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="58479:58576" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="58811:58903" ph="SELECT passw... users" />
+            <marker date="1513588960119" expanded="true" signature="59192:59324" ph="SELECT reset... users" />
+            <marker date="1513588960119" expanded="true" signature="59946:60042" ph="UPDATE users... " />
+            <marker date="1513588960119" expanded="true" signature="60123:60272" ph="UPDATE users... " />
+            <marker date="1513588960119" expanded="true" signature="61314:61351" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="61781:61836" ph="SELECT files... users" />
+            <marker date="1513588960119" expanded="true" signature="62004:62041" ph="SELECT COUNT... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="62152:62182" ph="SELECT COUNT... products" />
+            <marker date="1513588960119" expanded="true" signature="62295:62322" ph="SELECT COUNT... users" />
+            <marker date="1513588960119" expanded="true" signature="62429:62467" ph="SELECT COUNT... categories" />
+            <marker date="1513588960119" expanded="true" signature="62615:62656" ph="SELECT SUM(n... products" />
+            <marker date="1513588960119" expanded="true" signature="62829:62877" ph="SELECT SUM(n... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="63065:63125" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="63236:63295" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="63417:63484" ph="SELECT * FRO... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="63601:63667" ph="SELECT * FRO... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="63788:63843" ph="SELECT * FRO... slider_reviews" />
+            <marker date="1513588960119" expanded="true" signature="63958:64012" ph="SELECT * FRO... slider_reviews" />
+            <marker date="1513588960119" expanded="true" signature="64122:64170" ph="SELECT * FRO... reviews" />
+            <marker date="1513588960119" expanded="true" signature="64279:64326" ph="SELECT * FRO... reviews" />
+            <marker date="1513588960119" expanded="true" signature="64431:64510" ph="SELECT SUM(n... products" />
+            <marker date="1513588960119" expanded="true" signature="64680:64766" ph="SELECT SUM(n... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="64919:64997" ph="SELECT COUNT... products" />
+            <marker date="1513588960119" expanded="true" signature="65159:65244" ph="SELECT COUNT... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="65402:65520" ph="SELECT SUM(r... rate" />
+            <marker date="1513588960119" expanded="true" signature="65451:65482" ph="SELECT rate slider_reviews" />
+            <marker date="1513588960119" expanded="true" signature="65493:65517" ph="SELECT rate reviews" />
+            <marker date="1513588960119" expanded="true" signature="65635:65702" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="65795:65845" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="65993:66047" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="66198:66295" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="67501:67568" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="67661:67711" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="67859:67913" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="68064:68161" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="69726:69793" ph="UPDATE users... " />
+            <marker date="1513588960119" expanded="true" signature="70861:70892" ph="SELECT categ... categories" />
+            <marker date="1513588960119" expanded="true" signature="70965:71032" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="71125:71175" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="71323:71377" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="71528:71625" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="72150:72207" ph="SELECT produ... products" />
+            <marker date="1513588960119" expanded="true" signature="73855:74035" ph="INSERT INTO products... " />
+            <marker date="1513588960119" expanded="true" signature="74182:74267" ph="UPDATE categ... " />
+            <marker date="1513588960119" expanded="true" signature="74702:74882" ph="INSERT INTO products... " />
+            <marker date="1513588960119" expanded="true" signature="75029:75114" ph="UPDATE categ... " />
+            <marker date="1513588960119" expanded="true" signature="76729:76760" ph="SELECT categ... categories" />
+            <marker date="1513588960119" expanded="true" signature="76869:76901" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="76984:77051" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="77144:77194" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="77342:77396" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="77547:77644" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="79488:79652" ph="UPDATE produ... " />
+            <marker date="1513588960119" expanded="true" signature="80127:80275" ph="UPDATE produ... " />
+            <marker date="1513588960119" expanded="true" signature="81246:81388" ph="UPDATE produ... " />
+            <marker date="1513588960119" expanded="true" signature="81853:81991" ph="UPDATE produ... " />
+            <marker date="1513588960119" expanded="true" signature="82812:82869" ph="SELECT produ... products" />
+            <marker date="1513588960119" expanded="true" signature="83088:83122" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="83148:83188" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="83214:83255" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="83281:83366" ph="UPDATE categ... " />
+            <marker date="1513588960119" expanded="true" signature="84353:84406" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="84467:84556" ph="SELECT SUM(r... reviews" />
+            <marker date="1513588960119" expanded="true" signature="84650:84697" ph="UPDATE produ... " />
+            <marker date="1513588960119" expanded="true" signature="85137:85170" ph="UPDATE produ... " />
+            <marker date="1513588960119" expanded="true" signature="86134:86165" ph="SELECT categ... categories" />
+            <marker date="1513588960119" expanded="true" signature="86238:86305" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="86398:86448" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="86596:86650" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="86801:86898" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="87438:87509" ph="SELECT produ... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="87790:87819" ph="SELECT * FRO... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="89164:89351" ph="INSERT INTO slider_products... " />
+            <marker date="1513588960119" expanded="true" signature="89894:90081" ph="INSERT INTO slider_products... " />
+            <marker date="1513588960119" expanded="true" signature="91319:91350" ph="SELECT categ... categories" />
+            <marker date="1513588960119" expanded="true" signature="91423:91490" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="91583:91633" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="91781:91835" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="91986:92083" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="92212:92251" ph="SELECT * FRO... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="94088:94247" ph="UPDATE slide... " />
+            <marker date="1513588960119" expanded="true" signature="94717:94872" ph="UPDATE slide... " />
+            <marker date="1513588960119" expanded="true" signature="95864:96013" ph="UPDATE slide... " />
+            <marker date="1513588960119" expanded="true" signature="96498:96643" ph="UPDATE slide... " />
+            <marker date="1513588960119" expanded="true" signature="97499:97553" ph="SELECT produ... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="97747:97788" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="97814:97862" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="98925:98985" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="99046:99142" ph="SELECT SUM(r... slider_reviews" />
+            <marker date="1513588960119" expanded="true" signature="99236:99290" ph="UPDATE slide... " />
+            <marker date="1513588960119" expanded="true" signature="99760:99800" ph="UPDATE slide... " />
+            <marker date="1513588960119" expanded="true" signature="100772:100839" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="100932:100982" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="101130:101184" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="101335:101432" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="101927:101973" ph="SELECT usern... users" />
+            <marker date="1513588960119" expanded="true" signature="103459:103696" ph="INSERT INTO users... " />
+            <marker date="1513588960119" expanded="true" signature="104345:104614" ph="INSERT INTO users... " />
+            <marker date="1513588960119" expanded="true" signature="105490:105530" ph="SELECT usern... users" />
+            <marker date="1513588960119" expanded="true" signature="105710:105749" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="105774:105817" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="105842:105882" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="105907:105954" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="105979:106010" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="106564:106631" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="106724:106774" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="106922:106976" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="107127:107224" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="107506:107557" ph="SELECT * FRO... categories" />
+            <marker date="1513588960119" expanded="true" signature="107990:108034" ph="INSERT INTO categories... " />
+            <marker date="1513588960119" expanded="true" signature="108792:108841" ph="SELECT categ... categories" />
+            <marker date="1513588960119" expanded="true" signature="108940:109007" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="109112:109162" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="109326:109380" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="109547:109644" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="110173:110224" ph="UPDATE categ... " />
+            <marker date="1513588960119" expanded="true" signature="110287:110336" ph="UPDATE produ... " />
+            <marker date="1513588960119" expanded="true" signature="110424:110480" ph="UPDATE slide... " />
+            <marker date="1513588960119" expanded="true" signature="111278:111329" ph="SELECT produ... products" />
+            <marker date="1513588960119" expanded="true" signature="111641:111682" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="111781:111839" ph="SELECT produ... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="112087:112135" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="112224:112269" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="112305:112343" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="112379:112419" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="113714:113766" ph="SELECT usern... users" />
+            <marker date="1513588960119" expanded="true" signature="113977:114020" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="115291:115338" ph="UPDATE buy_o... " />
+            <marker date="1513588960119" expanded="true" signature="115712:115745" ph="UPDATE buy_o... " />
+            <marker date="1513588960119" expanded="true" signature="116111:116158" ph="UPDATE buy_o... " />
+            <marker date="1513588960119" expanded="true" signature="116532:116565" ph="UPDATE buy_o... " />
+            <marker date="1513588960119" expanded="true" signature="116966:117033" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="117138:117188" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="117352:117406" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="117573:117670" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="117763:117897" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="118684:118713" ph="SELECT * FRO... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="118770:118807" ph="SELECT COUNT... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="118918:118985" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="119078:119128" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="119276:119330" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="119481:119578" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="120209:120231" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="120302:120369" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="120462:120512" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="120660:120714" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="120865:120962" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="121548:121572" ph="SELECT * FRO... categories" />
+            <marker date="1513588960119" expanded="true" signature="121625:121663" ph="SELECT COUNT... categories" />
+            <marker date="1513588960119" expanded="true" signature="121764:121794" ph="SELECT COUNT... products" />
+            <marker date="1513588960119" expanded="true" signature="121908:121975" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="122068:122118" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="122266:122320" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="122471:122568" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="123283:123350" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="123443:123493" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="123641:123695" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="123846:123943" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="124019:124070" ph="SELECT categ... categories" />
+            <marker date="1513588960119" expanded="true" signature="124135:124175" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="125223:125242" ph="SELECT * FRO... users" />
+            <marker date="1513588960119" expanded="true" signature="125289:125348" ph="SELECT COUNT... users" />
+            <marker date="1513588960119" expanded="true" signature="125473:125540" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="125633:125683" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="125831:125885" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="126036:126133" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="126893:126917" ph="SELECT * FRO... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="126988:127055" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="127148:127198" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="127346:127400" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="127551:127648" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="128219:128240" ph="SELECT * FRO... reviews" />
+            <marker date="1513588960119" expanded="true" signature="128318:128385" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="128478:128528" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="128676:128730" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="128881:128978" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="129585:129613" ph="SELECT * FRO... slider_reviews" />
+            <marker date="1513588960119" expanded="true" signature="129698:129765" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="129858:129908" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="130056:130110" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="130261:130358" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="130952:130988" ph="SELECT * FRO... products" />
+            <marker date="1513588960119" expanded="true" signature="131058:131124" ph="SELECT * FRO... reviews" />
+            <marker date="1513588960119" expanded="true" signature="131183:131268" ph="SELECT SUM(r... reviews" />
+            <marker date="1513588960119" expanded="true" signature="131342:131409" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="131502:131552" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="131700:131754" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="131905:132002" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="132601:132644" ph="SELECT * FRO... slider_products" />
+            <marker date="1513588960119" expanded="true" signature="132714:132787" ph="SELECT * FRO... slider_reviews" />
+            <marker date="1513588960119" expanded="true" signature="132846:132938" ph="SELECT SUM(r... slider_reviews" />
+            <marker date="1513588960119" expanded="true" signature="133012:133079" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="133172:133222" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="133370:133424" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="133575:133672" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="134313:134337" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="134393:134440" ph="SELECT statu... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="134507:134554" ph="SELECT statu... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="134650:134717" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="134810:134860" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="135008:135062" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="135213:135310" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="135968:136006" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="136071:136118" ph="UPDATE conta... " />
+            <marker date="1513588960119" expanded="true" signature="136205:136272" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="136365:136415" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="136563:136617" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="136768:136865" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="137467:137503" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="138256:138296" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="138695:138735" ph="DELETE FROM " />
+            <marker date="1513588960119" expanded="true" signature="139346:139391" ph="SELECT * FRO... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="139474:139541" ph="SELECT * FRO... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="139634:139684" ph="SELECT COUNT... contact_us" />
+            <marker date="1513588960119" expanded="true" signature="139832:139886" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="140037:140134" ph="SELECT COUNT... buy_orders" />
+            <marker date="1513588960119" expanded="true" signature="140771:140837" ph="UPDATE buy_o... " />
+            <marker date="1513588960119" expanded="true" signature="141259:141313" ph="UPDATE buy_o... " />
+            <marker date="1513588960119" expanded="true" signature="141728:141794" ph="UPDATE buy_o... " />
+            <marker date="1513588960119" expanded="true" signature="142216:142270" ph="UPDATE buy_o... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_add_category.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="116" column="46" lean-forward="false" selection-start-line="116" selection-start-column="46" selection-end-line="116" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_add_production.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="132" column="46" lean-forward="false" selection-start-line="132" selection-start-column="46" selection-end-line="132" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_add_production_slider.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="132" column="46" lean-forward="false" selection-start-line="132" selection-start-column="46" selection-end-line="132" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_add_user.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="147" column="46" lean-forward="false" selection-start-line="147" selection-start-column="46" selection-end-line="147" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_categories_table.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="73">
+          <caret line="195" column="46" lean-forward="false" selection-start-line="195" selection-start-column="46" selection-end-line="195" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_catigories.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="130" column="46" lean-forward="false" selection-start-line="130" selection-start-column="46" selection-end-line="130" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_change_password.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="122" column="46" lean-forward="false" selection-start-line="122" selection-start-column="46" selection-end-line="122" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_dashboard.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="493" column="10" lean-forward="false" selection-start-line="493" selection-start-column="10" selection-end-line="493" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_edit_category.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="116" column="46" lean-forward="false" selection-start-line="116" selection-start-column="46" selection-end-line="116" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_edit_production.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="132" column="46" lean-forward="false" selection-start-line="132" selection-start-column="46" selection-end-line="132" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_edit_production_slider.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="132" column="46" lean-forward="false" selection-start-line="132" selection-start-column="46" selection-end-line="132" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_forget_password.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="67" column="0" lean-forward="false" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="71" column="0" lean-forward="false" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_messages_table.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="206" column="46" lean-forward="false" selection-start-line="206" selection-start-column="46" selection-end-line="206" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_message.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="113" column="46" lean-forward="false" selection-start-line="113" selection-start-column="46" selection-end-line="113" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_orders_table.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="229" column="46" lean-forward="false" selection-start-line="229" selection-start-column="46" selection-end-line="229" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_product.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="147" column="46" lean-forward="false" selection-start-line="147" selection-start-column="46" selection-end-line="147" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_products_reviews.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="182" column="46" lean-forward="false" selection-start-line="182" selection-start-column="46" selection-end-line="182" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_products_table.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="195" column="46" lean-forward="false" selection-start-line="195" selection-start-column="46" selection-end-line="195" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_reset_password.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="535">
+          <caret line="89" column="7" lean-forward="true" selection-start-line="89" selection-start-column="7" selection-end-line="89" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_search.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="130" column="46" lean-forward="false" selection-start-line="130" selection-start-column="46" selection-end-line="130" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_show_orders_by_user_table.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="73">
+          <caret line="229" column="46" lean-forward="false" selection-start-line="229" selection-start-column="46" selection-end-line="229" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_slider.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="147" column="46" lean-forward="false" selection-start-line="147" selection-start-column="46" selection-end-line="147" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_slider_products_reviews.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="29">
+          <caret line="182" column="46" lean-forward="false" selection-start-line="182" selection-start-column="46" selection-end-line="182" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_slider_products_table .html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="197" column="46" lean-forward="false" selection-start-line="197" selection-start-column="46" selection-end-line="197" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_upload_profile_picture.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="114" column="46" lean-forward="false" selection-start-line="114" selection-start-column="46" selection-end-line="114" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin_users_table.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="195" column="46" lean-forward="false" selection-start-line="195" selection-start-column="46" selection-end-line="195" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/includes/footer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="12" column="10" lean-forward="true" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
