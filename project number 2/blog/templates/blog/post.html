@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+</head>
+<body>
+{% extends 'personal/header.html' %}
+{% block content %}
+    <h3>{{ post.title }}</h3>
+    <h5>on {{ post.post_date }}</h5>
+    <p class="lead">{{ post.body | safe | linebreaks}}</p>
+{% endblock %}
+</body>
+</html>
