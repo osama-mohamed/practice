@@ -1,0 +1,33 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Profile</title>
+{% endblock %}
+
+
+{% block body %}
+    <h1>Profile!</h1>
+    <p>Id : {{ user.id }}</p>
+    <p>Username : {{ user.username }}</p>
+    <p>First Name : {{ user.first_name }}</p>
+    <p>Last Name : {{ user.last_name }}</p>
+    <p>E-mail : {{ user.email }}</p>
+    <p>Date Joined : {{ user.date_joined }}</p>
+    <p>Last Login : {{ user.last_login }}</p>
+    <hr>
+    <p>Id : {{ user.userprofile.id }}</p>
+    <p>Description : {{ user.userprofile.description }}</p>
+    <p>City : {{ user.userprofile.city }}</p>
+    <p>Phone : {{ user.userprofile.phone }}</p>
+    <p>Website : <a href="{{ user.userprofile.website }}" target="_blank">{{ user.userprofile.website }}</a></p>
+    {% if user.userprofile.image %}
+        <img src="{{ user.userprofile.image.url }}" width="250">
+    {% endif %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+{% endblock %}
