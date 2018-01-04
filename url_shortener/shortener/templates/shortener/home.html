@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>OSAMA | SHORTEN URL</title>
+{% endblock %}
+
+
+{% block body %}
+    <h1 class="cover-heading">{{ title }}</h1>
+    <h2 class="cover-heading">{{ title2 }}</h2>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="col-sm-6 col-sm-offset-3">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {#            <input type="text" name="url" placeholder="Shorten URL">#}
+            <br>
+            <input type="submit" class="btn btn-primary" value="Shorten &#8811;">
+        </form>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>OSAMA | Already Exists</title>
+{% endblock %}
+
+{% block body %}
+    <h1>Already Exists!</h1>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <p>ORIGINAL URL : {{ object.url }}</p>
+{#    <p>{{ object.shortcode }}</p>#}
+{#    <p>{{ object.get_absolute_url }}</p>#}
+    <p>SHORTENER URL : <a href="{{ object.get_short_url }}" target="_blank">{{ object.get_short_url }}</a></p>
+    {% if object.clickevent %}
+    <p>Clicked : {{ object.clickevent.count }}</p>
+    {% endif %}
+    <br>
+    <a class="btn btn-default" href="/"> &#43; New </a>
+{% endblock %}
