@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{ title }} Detail
+{% endblock %}
+{% block body %}
+    <div class="col-sm-6 col-sm-offset-3">
+        <br>
+        <a href="{% url 'posts:list' %}" class="btn btn-primary">All Posts</a>
+        <br>
+        <br>
+{#        <h1>{{ title }} Detail!</h1>#}
+{#        <h1>{{ obj.id }}</h1>#}
+        {% if obj.image %}
+            <img src="{{ obj.image.url }}" class="img-responsive" alt="{{ obj.title }}" title="{{ obj.title }}">
+        {% endif %}
+        <h2>{{ obj.title }}
+            {% if obj.draft %}
+                <small><span style="color: red;">Draft</span> {{ obj.publish }}</small>
+            {% else %}
+                <small>{{ obj.added }}</small>
+            {% endif %}
+        </h2>
+        <p>Added on : {{ obj.added }}</p>
+        <p>Updated on : {{ obj.updated }}</p>
+        <p>Published on : {{ obj.publish }}</p>
+        <p>{{ obj.content | linebreaks }}</p>
+        <p>Author : {{ obj.user }}</p>
+        {% if obj.user.get_full_name %}
+            <p>Author : {{ obj.user.get_full_name }}</p>
+        {% endif %}
+{#        <p>{{ obj.added }}</p>#}
+{#        <p>{{ obj.updated }}</p>#}
+        <p>URL : {{ request.build_absolute_uri }}</p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
+            Facebook
+        </a>
+        <br>
+        <br>
+        <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+        <hr>
+        <br>
+        <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
+    </div>
+{% endblock %}
