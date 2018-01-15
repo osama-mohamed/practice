@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+    {{ title }} Detail
+{% endblock %}
+
+{% block post_title %}
+    <li><a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a></li>
+{% endblock %}
+
+{% block body %}
+    <div class="col-sm-6 col-sm-offset-3">
+        <br>
+        <a href="{% url 'posts:list' %}" class="btn btn-primary">All Posts</a>
+        <br>
+        <br>
+{#        <h1>{{ title }} Detail!</h1>#}
+{#        <h1>{{ obj.id }}</h1>#}
+        {% if obj.image %}
+            <img src="{{ obj.image.url }}" class="img-responsive" alt="{{ obj.title }}" title="{{ obj.title }}">
+        {% endif %}
+        <h2>{{ obj.title }}
+            {% if obj.draft %}
+                <small><span style="color: red;">Draft</span> {{ obj.publish | timesince }}</small>
+            {% else %}
+                <small>{{ obj.added | timesince}}</small>
+            {% endif %}
+        </h2>
+        <p>
+            Read Time :
+            {% if obj.read_time <= 1 %}
+                < 1 Minute
+            {% else %}
+                {{ obj.read_time }} Minutes
+            {% endif %}
+        </p>
+{#        <p>#}
+{#            Read Time : {{ obj.read_time | time:'i' }}#}
+{#            Read Time :#}
+{#            {% if obj.read_time|time:'i' <= '01' %}#}
+{#                < 1 Minute#}
+{#            {% else %}#}
+{#                {{ obj.read_time | time:'i' }} Minutes#}
+{#            {% endif %}#}
+{#        </p>#}
+        <p>Added on : {{ obj.added }}</p>
+        <p>Updated on : {{ obj.updated }}</p>
+        <p>Published on : {{ obj.publish }}</p>
+{#        <p class="content-markdown">{{ obj.content }}</p>#}
+        <div class="post-detail-item">{{ obj.get_markdown }}</div>
+        <p>Author : {{ obj.user }}</p>
+        {% if obj.user.get_full_name %}
+            <p>Author : {{ obj.user.get_full_name }}</p>
+        {% endif %}
+{#        <p>{{ obj.added }}</p>#}
+{#        <p>{{ obj.updated }}</p>#}
+        <p>URL : {{ request.build_absolute_uri }}</p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
+            Facebook
+        </a>
+        <br>
+        <br>
+        <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+        <hr>
+        <br>
+        <div>
+            <p class="lead text-center">Comments</p>
+            {% if request.user.is_authenticated %}
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    {{ comment_form | crispy }}
+                    <input type="submit" value="Post Comment" class="btn btn-primary">
+                </form>
+            {% else %}
+                <p>You must login to comment </p>
+            {% endif %}
+            {% for comment in comments %}
+                <hr>
+                <blockquote>
+                  <p>{{ comment.content }}</p>
+                  <footer>By : {{ comment.user }} &emsp;
+                          on : {{ comment.added | timesince }} ago
+                      {% if comment.children.count > 0 %} |
+                          {% if comment.children.count == 1 %}
+                              {{ comment.children.count }} Comment
+                          {% elif comment.children.count > 1 %}
+                              {{ comment.children.count }} Comments
+                          {% endif %}
+                      {% endif %}
+                      | <a href="#" class="comment_reply_button">Reply</a>
+                      | <a href="{{ comment.get_absolute_url }}">Thread</a>
+                      {% if request.user == comment.user %}
+                        | <a href="{{ comment.get_absolute_url_delete }}">Delete</a>
+                      {% endif %}
+                  </footer>
+                    <div class="comment_reply">
+                        {% for child_comment in comment.children %}
+                            <blockquote>
+                              <p>{{ child_comment.content }}</p>
+                              <footer>By : {{ child_comment.user }} &emsp; on : {{ child_comment.added | timesince }} ago</footer>
+                            </blockquote>
+                            <hr>
+                        {% endfor %}
+                        {% if request.user.is_authenticated %}
+                            <form method="POST" action="">
+                                {% csrf_token %}
+                                {{ comment_form | crispy }}
+                                <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                                <input type="submit" value="Reply" class="btn btn-primary">
+                            </form>
+                        {% else %}
+                            <p>You must login to reply </p>
+                        {% endif %}
+                    </div>
+                </blockquote>
+{#                {{ comment.content_object }}#}
+{#                {{ comment.content_object.get_markedown }}#}
+{#                <div class="">#}
+{#                    <h4>{{ comment.content }}</h4>#}
+{#                    <small>By : {{ comment.user }} on : {{ comment.added | timesince }} ago</small>#}
+{#                    <h5>By : {{ comment.user }}</h5>#}
+{#                    <h5>Added on : {{ comment.added }}</h5>#}
+{#                    <h5>Updated on : {{ comment.updated }}</h5>#}
+{#                </div>#}
+                <hr>
+            {% endfor %}
+        </div>
+        <br>
+        <br>
+        <br>
+{#        <div>#}
+{#            {{ obj.comment_set.all }}#}
+{#        </div>#}
+{#        <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>#}
+    </div>
+{% endblock %}
