@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Register | {{ block.super }}
+{% endblock %}
+
+{% block body %}
+<br>
+<br>
+
+<div class="col-sm-6 col-sm-offset-3">
+    <h1>Register Form</h1>
+    <form method="POST" action="{% url 'register' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Register" class="btn btn-primary">
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+    <br>
+    <p class="lead">
+        Did you need to
+            <a href="{% url 'login' %}">
+                Login
+            </a>?
+    </p>
+</div>
+
+{% endblock %}

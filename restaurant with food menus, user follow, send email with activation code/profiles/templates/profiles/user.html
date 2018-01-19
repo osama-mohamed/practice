@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{ user.username }} | {{ block.super }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ user.username }}</h1>
+    <br>
+    {% if user.profile in request.user.is_following.all %}
+{#    {% if user in request.user.profile.followers.all %}#}
+        {{ request.user.username }} is following
+    {% endif %}
+    <p>
+        {% include 'profiles/snippet/follow_form.html' with username=user.username is_following=is_following%}
+    </p>
+    <form method="get" class="form-group" action="">
+        <input type="text" name="search_locations" placeholder="search ..." value="{{ request.GET.search_locations }}">
+        <button type="submit" class="btn btn-info">Search</button>
+    </form>
+    <hr>
+{#    {% if user.item_set.all.exists %}#}
+    {% if locations %}
+{#        {% for rest in user.restaurantlocation_set.all %}#}
+        {% for rest in locations %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="thumbnail">
+                        <h4>{{ rest.title }}</h4>
+                        <p>
+                            <a href="{{ request.path }}?search_locations={{ rest.location }}">{{ rest.location }}</a>
+                            | <a href="{{ request.path }}?search_locations={{ rest.category }}">{{ rest.category }}</a>
+                        </p>
+                        <p class="lead">
+                            <ul>
+                                {% for item in rest.item_set.all %}
+                                    <li>
+                                        {{ item.name }}
+                                        <br>
+                                        Contents :
+                                        {% for ing in item.get_contents %}
+                                            <a href="{{ request.path }}?search_locations={{ ing }}">{{ ing }}</a> |
+{#                                            <span class="badge progress-bar-success">{{ ing }}</span>#}
+                                        {% endfor %}
+                                        <br>
+                                        <br>
+                                        Excludes :
+                                        {% for exc in item.get_excludes %}
+    {#                                        <span style="margin-right: 6px;">{{ exc }}</span>#}
+{#                                            <span class="badge progress-bar-danger">{{ exc }}</span>#}
+                                            <a href="{{ request.path }}?search_locations={{ exc }}">{{ exc }}</a> |
+                                        {% endfor %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="lead">No items found!</p>
+    {% endif %}
+{#    {% endif %}#}
+{% endblock %}

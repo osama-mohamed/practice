@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{ title }} | {{ block.super }}
+{% endblock %}
+
+{% block body %}
+    <br>
+    <br>
+    {% include 'snippets/form-snippet.html' %}
+{#    show errors above the form & above the field #}
+{#    {% if form.errors %}#}
+{#        {{ form.errors }}#}
+{#    {% endif %}#}
+
+{#    show errors above the field only #}
+{#    {% if form.errors.non_field_errors %}#}
+{#        {{ form.errors.non_field_errors }}#}
+{#    {% endif %}#}
+{#    <h1>{{ title }}</h1>#}
+{#    <form method="POST" action="">#}
+{#        {% csrf_token %}#}
+{#        {{ form.as_p }}#}
+{#        <input type="submit" value="{{ title }}" class="btn btn-primary">#}
+{#    </form>#}
+{##}
+{#    {% if form.instance %}#}
+{#        <h1>{{ form.instance.name }}</h1>#}
+{#    {% endif %}#}
+{% endblock %}

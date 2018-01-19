@@ -1,0 +1,22 @@
+<h1 class="text-center"><a href="{% url 'home' %}">OSAMA MOHAMED.COM</a></h1>
+{#        {{ block.super }}#}
+
+
+{% if request.user.is_authenticated %}
+{#    <a href="{{ obj.get_absolute_url }}">Profile</a>#}
+{#    <a href="{% url 'profiles:detail' %}">Profile</a>#}
+    <a href="{% url 'home' %}">Home</a>
+    | <a href="{% url 'profiles:detail' username=request.user.username %}">Profile</a>
+    | <a href="{% url 'restaurants:list' %}">Restaurants</a>
+{#    | <a href="{% url 'restaurants:create' %}">Create Restaurant</a>#}
+    | <a href="{% url 'menus:list' %}">Menus</a>
+{#    | <a href="{% url 'menus:create' %}">Create Item</a>#}
+    | <a href="{% url 'logout' %}">Logout</a>
+{% else %}
+    <a href="{% url 'home' %}">Home</a>
+    | <a href="{% url 'about' %}">About</a>
+    | <a href="{% url 'contact' %}">Contact</a>
+    | <a href="{% url 'register' %}">Register</a>
+    | <a href="{% url 'login' %}">Login</a>
+{% endif %}
+

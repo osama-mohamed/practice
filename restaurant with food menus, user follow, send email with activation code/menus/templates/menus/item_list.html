@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}
+    Menus | {{ block.super }}
+{% endblock %}
+
+{% block body %}
+    <h1>Menu List <small><a href="{% url 'menus:create' %}">Add</a></small></h1>
+    <h2>Count : {{ object_list | length }}</h2>
+    <ul>
+        {% for obj in object_list %}
+            <li>ID : {{ obj.id }}</li>
+            <li>name : <a href="{{ obj.get_absolute_url }}">{{ obj.name }}</a></li>
+            {% if obj.contents %}
+            Contents
+            <ul>
+                {% for item in obj.get_contents %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% if obj.excludes %}
+            Excludes
+            <ul>
+                {% for item in obj.get_excludes %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <hr>
+            {% empty %}
+            <li><a href="{% url 'menus:create' %}">Add Menu Item</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

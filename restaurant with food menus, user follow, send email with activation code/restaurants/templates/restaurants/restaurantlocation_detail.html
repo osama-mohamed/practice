@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}
+    Restaurants | {{ block.super }}
+{% endblock %}
+
+{% block body %}
+    <h1>Restaurants {{ object.name }} Detail</h1>
+    <h1>{{ object.title }} <small>{{ object.category }}</small></h1>
+    <p>Location : {{ object.location }}</p>
+    <p>User : {{ object.owner }}</p>
+    <p>{{ object.added }}, updated {{ object.updated | timesince }} ago</p>
+    <ul>
+            <li>name : {{ object.name }}</li>
+            <li>category : {{ object.category }}</li>
+            <li>location : {{ object.location }}</li>
+            <li>user : {{ object.owner }}</li>
+            <li>added : {{ object.added }}</li>
+            <li>updated : {{ object.updated }}</li>
+            <hr>
+    </ul>
+{% endblock %}

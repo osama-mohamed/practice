@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{ form.instance.title }} Restaurants | {{ block.super }}
+{% endblock %}
+
+{% block body %}
+    <h1>Restaurants {{ form.instance.name }} Detail</h1>
+    <h1>{{ form.instance.title }} <small>{{ form.instance.category }}</small></h1>
+    <p>Location : {{ form.instance.location }}</p>
+    <p>User : {{ form.instance.user }}</p>
+    <p>{{ form.instance.added }}, updated {{ form.instance.updated | timesince }} ago</p>
+
+    <hr>
+    <h3>Make Changes</h3>
+    {% include 'snippets/form-snippet.html' with form=form %}
+
+{% endblock %}

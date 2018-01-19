@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}
+    Home | {{ block.super }}
+{% endblock %}
+
+{% block body %}
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3 text-center">
+            <h1>User Following Feed</h1>
+                {% for obj in object_list %}
+                    <div class="thumbnail">
+                        <h4><a href="{% url 'profiles:detail' username=obj.user.username %}">{{ obj.user.username }}</a></h4>
+                        <h4>{{ obj.name }}</h4>
+                        <p>
+    {#                        <a href="{{ request.path }}?search_locations={{ obj.restaurant.title }}">{{ obj.restaurant.title }}</a>#}
+    {#                        | <a href="{{ request.path }}?search_locations={{ obj.restaurant.location }}">{{ obj.restaurant.location }}</a>#}
+    {#                        | <a href="{{ request.path }}?search_locations={{ obj.restaurant.category }}">{{ obj.restaurant.category }}</a>#}
+    {#                        {{ obj.restaurant.title }} | {{ obj.restaurant.location }} | {{ obj.restaurant.category }}#}
+                            <a href="{% url 'profiles:detail' username=obj.user.username %}?search_locations={{ obj.restaurant.title }}">{{ obj.restaurant.title }}</a>
+                            | <a href="{% url 'profiles:detail' username=obj.user.username %}?search_locations={{ obj.restaurant.location }}">{{ obj.restaurant.location }}</a>
+                            | <a href="{% url 'profiles:detail' username=obj.user.username %}?search_locations={{ obj.restaurant.category }}">{{ obj.restaurant.category }}</a>
+                        </p>
+                        <p>
+                            <b>
+                                {{ obj.name }} with :</b>
+                                {% for ing in obj.get_contents %}
+                                    <a href="{% url 'profiles:detail' username=obj.user.username %}?search_locations={{ ing }}">{{ ing }}</a> |
+                                {% endfor %}
+                        </p>
+{#                    <p class="lead">#}
+{#                        <ul>#}
+{#                            <li>#}
+{#                                {% for ing in obj.get_contents %}#}
+{#                                    <a href="{{ request.path }}?search_locations={{ ing }}">{{ ing }}</a> |#}
+{#                                    <a href="{% url 'profiles:detail' username=obj.user.username %}?search_locations={{ ing }}">{{ ing }}</a> |#}
+{#                                {% endfor %}#}
+{#                            </li>#}
+{#                            <hr>#}
+{#                            <li>#}
+{#                                {% for ing in obj.get_excludes %}#}
+{#                                    <a href="{{ request.path }}?search_locations={{ ing }}">{{ ing }}</a> |#}
+{#                                    <a href="{% url 'profiles:detail' username=obj.user.username %}?search_locations={{ ing }}">{{ ing }}</a> |#}
+{#                                {% endfor %}#}
+{#                            </li>#}
+{#                        </ul>#}
+{#                    </p>#}
+                </div>
+                {% endfor %}
+        </div>
+    </div>
+{% endblock %}
