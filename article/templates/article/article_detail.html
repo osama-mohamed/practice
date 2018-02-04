@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ article.title }}'s Detail | {{ block.super }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ article.title }}</h1>
+    <small>Written by : {{ article.author }} &emsp; in : {{ article.added | timesince}} &emsp; Category : {{article.category}}</small>
+    <br>
+    <small>This Article Contain : {{ article.body | wordcount }} words and {{ article.body | length }} letters</small>
+    <hr>
+    <br>
+    <a href="{{ article.image.url }}" target="_blank"><img src="{{ article.image.url }}" style="max-width: 25%; border-radius: 6px; margin: 0 auto 25px; display: block;"></a>
+    <div>
+        {{article.body | safe}}
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+{% endblock %}

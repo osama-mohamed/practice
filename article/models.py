@@ -1,5 +1,8 @@
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.db.models.signals import pre_save, post_save
+
+from .utils import create_slug
 
 
 class Category(models.Model):
@@ -10,6 +13,9 @@ class Category(models.Model):
 
     def __str__(self):
         return self.category
+
+    def get_absolute_categories_url(self):
+        return reverse('articles:category', kwargs={'category': self.category})
 
     class Meta:
         verbose_name_plural = 'Categories'
@@ -30,6 +36,24 @@ class Article(models.Model):
     def __str__(self):
         return self.title
 
-    # def get_absolute_url(self):
-    #     return reverse('products:detail', kwargs={'slug': self.slug})
+    def get_absolute_url(self):
+        return reverse('articles:detail', kwargs={'slug': self.slug})
 
+
+def pre_save_article_reciver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = create_slug(instance)
+
+
+def post_save_article_receiver(sender, instance, created, *args, **kwargs):
+    if created:
+        qs = Article.objects.filter(slug=instance)
+        if qs.exists() and qs.count() == 1:
+            article = qs.first()
+            category = Category.objects.get(category=article.category)
+            category.number_of_articles += 1
+            category.save()
+
+
+pre_save.connect(pre_save_article_reciver, sender=Article)
+post_save.connect(post_save_article_receiver, sender=Article)
