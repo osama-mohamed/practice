@@ -3,6 +3,7 @@ from django.views.generic import ListView, DetailView, View
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 
 from .models import Article, Category
@@ -33,6 +34,23 @@ class AllArticlesListView(ListView):
 
         context['categories'] = Category.objects.all()
         return context
+
+    def post(self, request):
+        search = self.request.POST.get('search')
+        if search == '':
+            return redirect('articles:list')
+        if search:
+            queryset = Article.objects.filter(
+                Q(title__icontains=search) |
+                Q(body__icontains=search) |
+                Q(category__category__icontains=search)
+            ).distinct().order_by('-id')
+
+            context = {
+                'object_list': queryset,
+                'categories': Category.objects.all(),
+            }
+            return render(request, 'article/all_articles.html', context)
 
 
 class ArticleDetailView(DetailView):
