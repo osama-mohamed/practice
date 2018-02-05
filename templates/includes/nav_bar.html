@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{% url 'articles:list' %}">
+      <a class="navbar-brand" href="{% url 'home' %}">
           OSAMA MOHAMED
 {#          <img alt="Brand" src="{% static 'brand.png' %}">#}
       </a>
@@ -26,7 +26,8 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="{% url 'articles:list' %}">Home</a></li>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'about_me' %}">About Me</a></li>
         <li><a href="{% url 'articles:list' %}">All Articles</a></li>
 {#        {% if request.user.is_authenticated %}#}
 {#        <li class="dropdown">#}
