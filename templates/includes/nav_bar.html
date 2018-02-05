@@ -46,8 +46,8 @@
           {% else %}
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Register/Login <span class="caret"></span></a>
           {% endif %}
-{#          <ul class="dropdown-menu">#}
-{#            {% if request.user.is_authenticated %}#}
+          <ul class="dropdown-menu">
+            {% if request.user.is_authenticated %}
 {#                <li><a href="{% url 'accounts:profile' %}">Profile</a></li>#}
 {#                <li><a href="{% url 'accounts:update' pk=user.account.id%}">Update Profile</a></li>#}
 {#                <li><a href="{% url 'accounts:change_password' %}">Change Password</a></li>#}
@@ -59,14 +59,14 @@
 {#                </li>#}
 {##}
 {#                <li role="separator" class="divider"></li>#}
-{#                <li><a href="{% url 'accounts:logout' %}">Logout</a></li>#}
-{#            {% else %}#}
-{#                <li><a href="{% url 'accounts:register' %}">Register</a></li>#}
-{#                <li><a href="{% url 'accounts:login' %}">Login</a></li>#}
+                <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'accounts:register' %}">Register</a></li>
+                <li><a href="{% url 'accounts:login' %}">Login</a></li>
 {#                <li role="separator" class="divider"></li>#}
 {#                <li><a href="{% url 'accounts:password_reset' %}">Reset Password</a></li>#}
-{#            {% endif %}#}
-{#          </ul>#}
+            {% endif %}
+          </ul>
         </li>
       </ul>
     </div>

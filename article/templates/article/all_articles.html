@@ -18,26 +18,81 @@
                         </li>
                     {% endfor %}
                 </ul>
+                <div class="pagination"> <!-- page_request == the name of page that i want like:page -->
+                    <span class="step-links"> <!-- objects == the number of pages -->
+                        {% if objects.has_previous %}
+                            <a href="?{{ page_request }}={{ objects.previous_page_number }}
+                                {% if request.GET.search_post %}
+                                    &search_post={{ request.GET.search_post }}
+                                {% endif %}">previous
+                            </a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ objects.number }} of {{ objects.paginator.num_pages }}.
+                        </span>
+
+                        {% if objects.has_next %}
+                            <a href="?{{ page_request }}={{ objects.next_page_number }}
+                                {% if request.GET.search_post %}
+                                    &search_post={{ request.GET.search_post }}
+                                {% endif %}">next
+                            </a>
+                        {% endif %}
+                    </span>
+                </div>
+
             </div>
             <div class="col-sm-4">
                 <h1>Articles by Category :</h1>
 {#                <a href="{{ category.get_absolute_categories_url }}">{{ category }} | {{ category.number_of_articles }}</a>#}
-{#                <form class="navbar-form navbar-left" action="" style="display: flex; margin-top: 29px;">#}
-{#                    {% csrf_token %}#}
-{#                    <select class="btn btn-default dropdown-toggle" name="categories" style="border-radius: 4px 0 0 4px; min-width: 260px;" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">#}
-                    <select class="btn btn-default dropdown-toggle" name="categories" style="min-width: 260px;" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-                        <option value="">Select Category</option>
-                        {% for category in categories %}
-{#                            <form class="navbar-form navbar-left" action="{{ category.get_absolute_categories_url }}" style="display: flex; margin-top: 29px;">#}
-                            <option {% if category.get_absolute_categories_url == request.path %} selected {% endif %} value="{{ category.get_absolute_categories_url }}">{{ category }} | {{ category.number_of_articles }}</option>
-{#                            </form>#}
-                        {% endfor %}
-                    </select>
-{#                    <span class="input-group-btn">#}
-{#                        <button type="submit" class="btn btn-default">Go!</button>#}
-{#                    </span>#}
-{#                </form>#}
+                <select class="btn btn-default dropdown-toggle"
+                        name="categories"
+                        style="margin-top: 29px; min-width: 260px;"
+                        onchange="{% include 'includes/js/change_category.js' %}">
+                    <option value="">Select Category</option>
+                    {% for category in categories %}
+                        <option
+                            {% if category.get_absolute_categories_url == request.path %}
+                                selected
+                            {% endif %}
+                            value="{{ category.get_absolute_categories_url }}">
+                            {{ category }} | {{ category.number_of_articles }}
+                        </option>
+                    {% endfor %}
+                </select>
             </div>
         </div>
     </div>
+
+
+{#    <div class="container">#}
+{#        <div class="row">#}
+{#            <div class="col-sm-8">#}
+{#                <div class="pagination"> <!-- page_request == the name of page that i want like:page -->#}
+{#                    <span class="step-links"> <!-- objects == the number of pages -->#}
+{#                        {% if objects.has_previous %}#}
+{#                            <a href="?{{ page_request }}={{ objects.previous_page_number }}#}
+{#                                {% if request.GET.search_post %}#}
+{#                                    &search_post={{ request.GET.search_post }}#}
+{#                                {% endif %}">previous#}
+{#                            </a>#}
+{#                        {% endif %}#}
+{##}
+{#                        <span class="current">#}
+{#                            Page {{ objects.number }} of {{ objects.paginator.num_pages }}.#}
+{#                        </span>#}
+{##}
+{#                        {% if objects.has_next %}#}
+{#                            <a href="?{{ page_request }}={{ objects.next_page_number }}#}
+{#                                {% if request.GET.search_post %}#}
+{#                                    &search_post={{ request.GET.search_post }}#}
+{#                                {% endif %}">next#}
+{#                            </a>#}
+{#                        {% endif %}#}
+{#                    </span>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
 {% endblock %}

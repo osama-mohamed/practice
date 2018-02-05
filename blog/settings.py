@@ -15,7 +15,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'article.apps.ArticleConfig',
+    'account.apps.AccountConfig',
+    'comment.apps.CommentConfig',
 ]
 
 MIDDLEWARE = [
@@ -95,3 +98,8 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static_cdn")
 MEDIA_ROOT = os.path.join(BASE_DIR, "media_cdn")
+
+SHORTCODE_MIN = 50
+
+LOGIN_REDIRECT_URL = '/articles/'
+LOGOUT_REDIRECT_URL = '/articles/'

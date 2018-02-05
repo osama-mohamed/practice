@@ -1,8 +1,10 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.db.models.signals import pre_save, post_save
+from django.contrib.contenttypes.models import ContentType
 
-from .utils import create_slug
+from .utils import create_slug, get_read_time
+from comment.models import Comment
 
 
 class Category(models.Model):
@@ -27,6 +29,7 @@ class Article(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField()
     number_of_views = models.PositiveIntegerField(default=0, blank=True, null=True)
+    read_time = models.IntegerField(default=0)
     image = models.ImageField()
     publish = models.BooleanField(default=True)
     block_comment = models.BooleanField(default=False)
@@ -39,10 +42,26 @@ class Article(models.Model):
     def get_absolute_url(self):
         return reverse('articles:detail', kwargs={'slug': self.slug})
 
+    @property
+    def comments(self):
+        queryset = self
+        comments = Comment.objects.filter_by_queryset(queryset)
+        return comments
+
+    @property
+    def get_content_type(self):
+        instance = self
+        content_type = ContentType.objects.get_for_model(instance.__class__)
+        return content_type
+
 
 def pre_save_article_reciver(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = create_slug(instance)
+    if instance.body:
+        html_string = instance.body
+        read_time_var = get_read_time(html_string)
+        instance.read_time = read_time_var
 
 
 def post_save_article_receiver(sender, instance, created, *args, **kwargs):
