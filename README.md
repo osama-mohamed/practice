@@ -12,5 +12,4 @@ This projects made by [Osama Mohamed](https://www.facebook.com/osama.mohamed.ms)
 
 ## License
 This projects is licensed under the [MIT License](https://opensource.org/licenses/MIT)
-=======
-This projects is licensed under the [MIT License](https://opensource.org/licenses/MIT)
+
