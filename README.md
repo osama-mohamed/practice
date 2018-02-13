@@ -11,8 +11,6 @@ For detailed explanation on how project work, read the [Django Docs](https://doc
 This projects made by [Osama Mohamed](https://www.facebook.com/osama.mohamed.ms)
 
 ## License
-<<<<<<< HEAD
 This projects is licensed under the [MIT License](https://opensource.org/licenses/MIT)
 =======
 This projects is licensed under the [MIT License](https://opensource.org/licenses/MIT)
->>>>>>> 630bb758ab6ff264512210faf9c797706d08c837
