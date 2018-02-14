@@ -52,37 +52,36 @@ Now the project is running at `http://localhost:8000` and your routes is:
 
 | Route                                                      | HTTP Method 	   | Description                           	      |
 |:-----------------------------------------------------------|:----------------|:---------------------------------------------|
-| {host}       	                                             | GET       	   | Home page                                    |
-| {host}/admin/  	                                         | GET      	   | Admin control panel                     	  |
-| {host}/accounts/register/                                  | POST      	   | User register           	                  |
-| {host}/accounts/activate/{code}/                           | GET      	   | Activate user account after register         |
-| {host}/accounts/login/                                     | POST      	   | User login           	                      |
-| {host}/accounts/logout/                                    | GET      	   | User logout           	                      |
-| {host}/accounts/change_password/                           | POST      	   | User change password           	          |
-| {host}/accounts/profile/                                   | GET      	   | User profile          	                      |
-| {host}/accounts/profile/update/{pk}/                       | PUT      	   | User update checkout information             |
-| {host}/accounts/profile/delete/                            | POST      	   | User delete account           	              |
-| {host}/accounts/reset_password/                            | POST      	   | User email           	                      |
-| {host}/accounts/reset_password/done/                       | POST      	   | Send reset password email           	      |
-| {host}/accounts/reset_password/confirm/{uidb64}/{token}/   | POST      	   | Enter new password           	              |
-| {host}/accounts/reset_password/complete/                   | POST      	   | Finish reset password           	          |
-| {host}/products/                                           | POST      	   | Products page          	                  |
-| {host}/products/category/{category}/                       | GET      	   | Search products by category          	      |
-| {host}/products/all/                                       | GET      	   | All products           	                  |
-| {host}/products/{slug}/                                    | GET      	   | Product detail           	                  |
-| {host}/orders/order/{id}/                                  | POST      	   | Order product           	                  |
-| {host}/orders/order/{pk}/update/                           | POST      	   | Update order quantity           	          |
-| {host}/orders/order/{id}/delete/                           | POST      	   | Delete order           	                  |
-| {host}/orders/cart/                                        | GET      	   | Cart page           	                      |
-| {host}/orders/pending/                                     | GET      	   | Pending orders           	                  |
-| {host}/orders/rejected/                                    | GET      	   | Rejected orders           	                  |
-| {host}/orders/accepted/                                    | GET      	   | Accepted orders           	                  |
-| {host}/orders/buy/                                         | POST      	   | Buy orders          	                      |
-| {host}/orders/thank_you/                                   | GET      	   | Thank you page          	                  |
-| {host}/reviews/add_review/{id}/                            | POST      	   | Add review           	                      |
-| {host}/reviews/update_review/{id}/                         | POST      	   | Update review           	                  |
-| {host}/reviews/delete_review/{id}/                         | POST      	   | Delete review           	                  |
-| {host}/contact_us/                                         | POST      	   | Contact us message           	              |
+| {host}       	                                             | GET       	     | Home page                                    |
+| {host}/contact_us                                          | POST     	     | Contact us message                           |
+| {host}/products_price_range                                | POST     	     | Search products by price range               |
+| {host}/products/{id}                                       | POST     	     | All products page                            |
+| {host}/user_forget_password                                | GET      	     | Forget password page                         |
+| {host}/user_forget_password_email                          | POST     	     | Send reset password e-mail                   |
+| {host}//user_reset_password/{id}/{random_for_reset}        | POST     	     | Enter new password                           |
+| {host}/user_register                                       | POST     	     | User register                                |
+| {host}/user_login                                          | POST     	     | User login                                   |
+| {host}/user_logout                                         | GET     	       | User logout                                  |
+| {host}/user_account                                        | GET     	       | User profile                                 |
+| {host}/user_profile_picture                                | POST     	     | Change user profile image                    |
+| {host}/user_change_password/                               | POST     	     | User change password                         |
+| {host}/delete_user_account                                 | POST    	       | Delete user account                          |
+| {host}/add_product_to_cart/{id}                            | POST     	     | Add order to cart                            |
+| {host}/add_product_to_cart_from_slider/{id}                | POST     	     | Add order to cart from slider                |
+| {host}/increase_cart_product_quantity/{id}                 | POST     	     | Increase order quantity                      |
+| {host}/edit_cart_product_quantity/{id}                     | POST     	     | Enter order quantity                         |
+| {host}/decrease_cart_product_quantity/{id}                 | POST     	     | Decrease order quantity                      |
+| {host}/delete_product_from_cart/{id}                       | POST     	     | Delete order                                 |
+| {host}/add_to_cart                                         | POST   	       | Cart                                         |
+| {host}/buy                                                 | POST     	     | Buy orders                                   |
+| {host}/product_review/{id}                                 | POST     	     | Add product review                           |
+| {host}/slider_product_review/{id}                          | POST     	     | Add slider product review                    |
+| {host}/preview_production/{id}                             | GET     	       | Product detail                               |
+| {host}/preview_production_slider/{id}                      | GET     	       | Slider Product detail                        |
+| {host}/categories/{category}                               | GET     	       | Search products by category                  |
+| {host}/user_search                                         | POST     	     | Search in products name                      |
+
+
 
 
 For detailed explanation on how project work, read the [Flask Docs](http://flask.pocoo.org/docs/0.12/) and [MySQLDB Docs](https://dev.mysql.com/doc/)
