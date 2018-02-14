@@ -140,11 +140,10 @@ Now the project is running at `http://localhost:5000` and your routes is:
 | {host}/admin/delete_all_seen_messages                               | POST       	     | Admin delete all seen messages     |
 | {host}/admin/delete_all_not_seen_messages                           | POST       	     | Admin delete all not seen messages |
 | {host}/admin/show_orders/{username}                                 | GET       	     | Admin show all orders by user table|
-
-
-
-
-| {host}/admin/message/{id}                                           | GET       	     | Admin preview contact us message   |
+| {host}/admin/accept_order_user/{username}/{id}                      | GET       	     | Admin accept order by user         |
+| {host}/admin/accept_all_orders_user/{username}                      | GET       	     | Admin accept all orders by user    |
+| {host}/admin/reject_order_user/{username}/{id}                      | GET       	     | Admin reject order by user         |
+| {host}/admin/reject_all_orders_user/{username}                      | GET       	     | Admin reject all orders by user    |
 
 
 
