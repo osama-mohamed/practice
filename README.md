@@ -102,14 +102,29 @@ Now the project is running at `http://localhost:5000` and your routes is:
 | {host}/admin/edit_product/{id}                                      | POST       	     | Admin edit product                 |
 | {host}/admin/delete_product/{id}                                    | POST       	     | Admin delete product               |
 | {host}/admin/delete_all_products                                    | POST       	     | Admin delete all products          |
+| {host}/admin/delete_review_products/{id}/{id2}                      | POST       	     | Admin delete product review        |
+| {host}/admin/delete_all_review_products                             | POST       	     | Admin delete all product reviews   |
+| {host}/admin/add_product_slider                                     | POST       	     | Admin add slider product           |
+| {host}/admin/edit_product_slider/{id}                               | POST       	     | Admin edit slider product          |
+| {host}/admin/delete_product_slider/{id}                             | POST       	     | Admin delete slider product        |
+| {host}/admin/delete_all_slider_products                             | POST       	     | Admin delete all slider products   |
+| {host}/admin/delete_review_slider_product/{id}/{id2}                | POST       	     | Admin delete slider product review |
+| {host}/admin/delete_all_slider_products_reviews                     | POST       	     | Admin delete all slider product reviews|
+| {host}/admin/add_user                                               | POST       	     | Admin create user account          |
+| {host}/admin/delete_user/{id}                                       | POST       	     | Admin delete user account          |
+| {host}/admin/add_category                                           | POST       	     | Admin add category                 |
+| {host}/admin/edit_category/{current_category}                       | POST       	     | Admin edit category                |
+| {host}/admin/delete_category/{category}                             | POST       	     | Admin delete category              |
+| {host}/admin/delete_all_categories                                  | POST       	     | Admin delete all catigories        |
+| {host}/admin/delete_all_users                                       | POST       	     | Admin delete all users accounts    |
+| {host}/admin/delete_all_accounts                                    | POST             | Admin delete all accounts          |
+| {host}/admin/accept_orders/{id}                                     | POST       	     | Admin accept order                 |
+| {host}/admin/accept_all_orders                                      | POST       	     | Admin accept all orders            |
+| {host}/admin/reject_orders/{id}                                     | POST       	     | Admin reject order                 |
+| {host}/admin/reject_all_orders                                      | POST       	     | Admin reject all orders            |
+| {host}/admin/search                                                 | POST       	     | Admin search in products name      |
 
 
-
-
-| {host}/admin/delete_all_products                                    | POST       	     | Admin delete all products          |
-| {host}/admin/delete_all_products                                    | POST       	     | Admin delete all products          |
-| {host}/admin/delete_all_products                                    | POST       	     | Admin delete all products          |
-| {host}/admin/delete_all_products                                    | POST       	     | Admin delete all products          |
 
 
 
