@@ -86,4 +86,5 @@ For detailed explanation on how project work, read the [Flask Docs](http://flask
 This project made by [Osama Mohamed](https://www.facebook.com/osama.mohamed.ms)
 
 ## License
-This project is licensed under the [MIT License](https://opensource.org/licenses/MIT)# Blog
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT)
+
