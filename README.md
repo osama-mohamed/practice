@@ -47,7 +47,7 @@ That's it.
 
 ## Done :
 
-Now the project is running at `http://localhost:8000` and your routes is:
+Now the project is running at `http://localhost:5000` and your routes is:
 
 
 | Route                                                      | HTTP Method 	   | Description                           	      |
@@ -80,6 +80,36 @@ Now the project is running at `http://localhost:8000` and your routes is:
 | {host}/preview_production_slider/{id}                      | GET     	       | Slider Product detail                        |
 | {host}/categories/{category}                               | GET     	       | Search products by category                  |
 | {host}/user_search                                         | POST     	     | Search in products name                      |
+
+
+
+
+
+
+| Admin Route                                                         | HTTP Method 	   | Description                 	      |
+|:--------------------------------------------------------------------|:-----------------|:-----------------------------------|
+| {host}/admin/admin_forget_password                                  | GET       	     | Reset password for admin           |
+| {host}/admin/admin_forget_password_email                            | POST       	     | Send reset password e-mail         |
+| {host}/admin/admin_reset_password/{id}/{random_for_reset}           | POST       	     | Enter new password                 |
+| {host}/admin/login                                                  | POST       	     | Admin login                        |
+| {host}/admin/logout                                                 | GET       	     | Admin logout                       |
+| {host}/admin/admin_change_password/                                 | POST       	     | Admin change password              |
+| {host}/admin/delete_admin_account                                   | POST       	     | Delete admin account               |
+| {host}/admin/                                                       | POST       	     | Admin Dashboard                    |
+| {host}/admin/upload_picture                                         | POST       	     | Admin change image                 |
+| {host}/admin/admin_profile_picture                                  | POST       	     | Admin change profile image         |
+| {host}/admin/add_product                                            | POST       	     | Admin add product                  |
+| {host}/admin/edit_product/{id}                                      | POST       	     | Admin edit product                 |
+| {host}/admin/delete_product/{id}                                    | POST       	     | Admin delete product               |
+| {host}/admin/delete_all_products                                    | POST       	     | Admin delete all products          |
+
+
+
+
+| {host}/admin/delete_all_products                                    | POST       	     | Admin delete all products          |
+| {host}/admin/delete_all_products                                    | POST       	     | Admin delete all products          |
+| {host}/admin/delete_all_products                                    | POST       	     | Admin delete all products          |
+| {host}/admin/delete_all_products                                    | POST       	     | Admin delete all products          |
 
 
 
