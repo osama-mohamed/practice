@@ -123,8 +123,28 @@ Now the project is running at `http://localhost:5000` and your routes is:
 | {host}/admin/reject_orders/{id}                                     | POST       	     | Admin reject order                 |
 | {host}/admin/reject_all_orders                                      | POST       	     | Admin reject all orders            |
 | {host}/admin/search                                                 | POST       	     | Admin search in products name      |
+| {host}/admin/slider_products_table                                  | GET       	     | Admin slider products table        |
+| {host}/admin/products_table                                         | GET       	     | Admin products table               |
+| {host}/admin/categories_table                                       | GET       	     | Admin categories table             |
+| {host}/admin/categories/{category}                                  | POST       	     | Admin search products by category  |
+| {host}/admin/users_table                                            | GET       	     | Admin users table                  |
+| {host}/admin/orders_table                                           | GET       	     | Admin orders table                 |
+| {host}/admin/review_products                                        | GET       	     | Admin products reviews table       |
+| {host}/admin/review_slider_products                                 | GET       	     | Admin slider products reviews table|
+| {host}/admin/product/{id}                                           | GET       	     | Admin preview product              |
+| {host}/admin/slider/{id}                                            | GET       	     | Admin preview slider product       |
+| {host}/admin/messages_table                                         | GET       	     | Admin contact us messages table    |
+| {host}/admin/message/{id}                                           | GET       	     | Admin preview contact us message   |
+| {host}/admin/delete_message/{id}                                    | POST       	     | Admin delete contact us message    |
+| {host}/admin/delete_all_messages                                    | POST       	     | Admin delete all contact us message|
+| {host}/admin/delete_all_seen_messages                               | POST       	     | Admin delete all seen messages     |
+| {host}/admin/delete_all_not_seen_messages                           | POST       	     | Admin delete all not seen messages |
+| {host}/admin/show_orders/{username}                                 | GET       	     | Admin show all orders by user table|
 
 
+
+
+| {host}/admin/message/{id}                                           | GET       	     | Admin preview contact us message   |
 
 
 
