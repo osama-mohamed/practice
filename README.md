@@ -25,7 +25,7 @@
 
 ``` python
 
-# change database connection information in settings.py DATABASES default values with your info then run 
+# run 
 
 1. export FLASK_APP=osama_blog.py
 
