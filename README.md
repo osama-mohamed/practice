@@ -49,7 +49,6 @@ Now the project is running at `http://localhost:5000` and your routes is:
 | Route                                                      | HTTP Method 	   | Description                           	      |
 |:-----------------------------------------------------------|:----------------|:---------------------------------------------|
 | {host}       	                                             | GET       	     | Home page                                    |
-
 | {host}/result       	                                     | POST       	   | show url shortener result                    |
 | {host}/redirect/{url_name}       	                         | POST       	   | Redirect to the original link                |
 | {host}/about 	                                             | GET       	     | About me page                                |
