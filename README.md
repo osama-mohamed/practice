@@ -1,7 +1,7 @@
-# shorten_url By Flask
+# Shorten URL By Flask
 
-[<img src="http://flask.pocoo.org/static/logo/flask.png" width="200" title="E-Commerce" >](https://www.facebook.com/osama.mohamed.ms)
-[<img src="https://www.mysql.com/common/logos/logo-mysql-170x115.png" width="150" title="E-Commerce" >](https://www.facebook.com/osama.mohamed.ms)
+[<img src="http://flask.pocoo.org/static/logo/flask.png" width="200" title="Shorten URL" >](https://www.facebook.com/osama.mohamed.ms)
+[<img src="https://www.mysql.com/common/logos/logo-mysql-170x115.png" width="150" title="Shorten URL" >](https://www.facebook.com/osama.mohamed.ms)
 
 
 ## Usage :
@@ -9,7 +9,7 @@
 
 ``` python
 
-# change database connection information in settings.py DATABASES default values with your info then run 
+# run 
 
 1. export FLASK_APP=url_short.py
 
