@@ -1,5 +1,5 @@
 $(function() {
-    $('button.save').on('click', function () {
+    $('.form button.save').on('click', function () {
 
         var newProduct = {
             name: $('input.product_name').val(),
@@ -48,17 +48,17 @@ $(function() {
                         '<button class="save" title="Save Edit" style="display: none;" data-id="' + response.id + '">Save</button>' +
                         '<button class="cancel" title="Cancel Edit" style="display: none;" data-id="' + response.id + '">Cancel</button>' +
                         '<div class="id">' + response.id + '</div>\n' +
-                        '<h1>Name: ' + response.name + '</h1>\n' +
-                        '<h5>Price: ' + response.price + '</h5>\n' +
-                        '<h5>Quantity: ' + response.quantity + '</h5>\n' +
+                        '<h1 class="product_name">Name: ' + response.name + '</h1>\n' +
+                        '<h5 class="price">Price: ' + response.price + '</h5>\n' +
+                        '<h5 class="quantity">Quantity: ' + response.quantity + '</h5>\n' +
                         '<h5>Number of views: ' + 0 + '</h5>\n' +
                         '<h5>Number of sales: ' + 0 + '</h5>\n' +
                         // '<h5>Files: ' + response.files + '</h5>\n' +
-                        '<h5>Discount: ' + response.discount + '</h5>\n' +
-                        '<h5 style="overflow: hidden;">Description: ' + response.description + '</h5>\n' +
+                        '<h5 class="discount">Discount: ' + response.discount + '</h5>\n' +
+                        '<h5 class="description" style="overflow: hidden;">Description: ' + response.description + '</h5>\n' +
                         '<h5>Create date: ' + response.added + '</h5>\n' +
                         '<h5>Update date: ' + response.updated + '</h5>\n' +
-                        '<h5>Category: ' + response.category + '</h5>\n' +
+                        '<h5 class="category">Category: ' + response.category + '</h5>\n' +
                         '</div>');
                     $('input.product_name').val('');
                     $('input.price').val('');
