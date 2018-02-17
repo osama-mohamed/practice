@@ -8,7 +8,7 @@
 > [Restful API](https://restful-ajax-osama-mohamed.herokuapp.com)
 
 
-## Restful API website containes:
+## Restful API website contains:
 * User register 
 * User login
 * User logout 
