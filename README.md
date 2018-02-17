@@ -36,7 +36,7 @@ Now the project is running at `http://localhost:5000` and your routes is:
 
 | Route                                                      | HTTP Method 	   | Description                           	      |
 |:-----------------------------------------------------------|:----------------|:---------------------------------------------|
-| {host}       	                                             | GET       	     | Home page                                    |
+| {host}       	                                             | POST      	     | Home page                                    |
 
 
 For detailed explanation on how project work, read the [Flask Docs](http://flask.pocoo.org/docs/0.12/) and [Bulma](https://bulma.io/documentation/overview/start/)
