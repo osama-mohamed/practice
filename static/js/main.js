@@ -10,4 +10,11 @@ $(function () {
         }, 1000);
         // window.console.log('#' + $(this).data('scroll'));
     });
+
+    // add active class to navbar link and remove from siblings
+    $('.navbar li a').click(function () {
+        // $('.navbar a').removeClass('active');
+        // $(this).addClass('active');
+        $(this).addClass('active').parent().siblings().find('a').removeClass('active');
+    });
 });

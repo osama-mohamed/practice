@@ -32,6 +32,10 @@ body{
     color: #eee;
     text-decoration: none;
 }
+
+.navbar li a.active{
+    color: #ffea00;
+}
 /* end header */
 
 /* start sections */
