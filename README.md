@@ -8,7 +8,7 @@
 > [Blog](https://blog-by-osama-mohamed.herokuapp.com)
 
 
-## Blog website containes:
+## Blog website contains:
 * User register 
 * User login
 * User logout 
