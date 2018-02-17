@@ -8,6 +8,17 @@
 body{
     font-family: Tahoma, Arial;
 }
+
+.scroll_to_top{
+    background-color: #333;
+    color: #fff;
+    display: inline-block;
+    padding: 0 5px 3px;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    display: none;
+}
 /* end global */
 
 /* start header */
