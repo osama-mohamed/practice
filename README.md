@@ -1,7 +1,11 @@
-# Shorten URL By Flask and Mongodb
+# [Shorten URL](https://url-osama-mohamed.herokuapp.com) By Flask and Mongodb
 
-[<img src="http://flask.pocoo.org/static/logo/flask.png" width="200" title="Shorten URL" >](https://www.facebook.com/osama.mohamed.ms)
-[<img src="https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg" width="250" title="Shorten URL" >](https://www.facebook.com/osama.mohamed.ms)
+[<img src="http://flask.pocoo.org/static/logo/flask.png" width="200" title="Shorten URL" >](https://url-osama-mohamed.herokuapp.com)
+[<img src="https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg" width="250" title="Shorten URL" >](https://url-osama-mohamed.herokuapp.com)
+
+
+## For live preview :
+> [Shorten UR](https://url-osama-mohamed.herokuapp.com)
 
 
 ## Usage :
