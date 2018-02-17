@@ -47,4 +47,33 @@ $(function () {
             scrollTop: 0
         }, 1000);
     });
+
+
+    // show popup
+    $('.show_popup').click(function () {
+        $('.' + $(this).data('popup') ).fadeIn();
+    });
+
+    // hide popup
+    // hide when click close button only
+    $('.close_popup').click(function (e) {
+        e.preventDefault();
+        // $('.popup').fadeOut();
+        $(this).parentsUntil('.popup').parent().fadeOut();
+    });
+    // hide when click on any place
+    $('.popup').click(function () {
+        $('.popup').fadeOut();
+    });
+    // do not hide when clicked on popup body
+    $('.popup .inner_popup').click(function (event) {
+        event.stopPropagation();
+    });
+    // hide with esc key in keyboard
+    $(document).keydown(function (e) {
+        // 27 is the keycode in javascript for esc key
+        if(e.keyCode == 27){
+            $('.popup').fadeOut();
+        }
+    });
 });
