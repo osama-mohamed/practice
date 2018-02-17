@@ -10,7 +10,7 @@
 > [Restful API with Ajax](https://restful-ajax-osama-mohamed-dj.herokuapp.com)
 
 
-## Restful API with Ajax website containes:
+## Restful API with Ajax website contains:
 ### 2 Apps :
     1. Accounts
     2. Products
