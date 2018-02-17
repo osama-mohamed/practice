@@ -5,7 +5,7 @@
 
 
 ## For live preview :
-> [Shorten UR](https://url-osama-mohamed.herokuapp.com)
+> [Shorten URL](https://url-osama-mohamed.herokuapp.com)
 
 
 ## Usage :
