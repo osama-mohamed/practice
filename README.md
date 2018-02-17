@@ -1,7 +1,11 @@
-# Shorten URL By Flask
+# [Shorten URL](https://url-osama-mohamed.herokuapp.com) By Flask
 
-[<img src="http://flask.pocoo.org/static/logo/flask.png" width="200" title="Shorten URL" >](https://www.facebook.com/osama.mohamed.ms)
-[<img src="https://www.mysql.com/common/logos/logo-mysql-170x115.png" width="150" title="Shorten URL" >](https://www.facebook.com/osama.mohamed.ms)
+[<img src="http://flask.pocoo.org/static/logo/flask.png" width="200" title="Shorten URL" >](https://url-osama-mohamed.herokuapp.com)
+[<img src="https://www.mysql.com/common/logos/logo-mysql-170x115.png" width="150" title="Shorten URL" >](https://url-osama-mohamed.herokuapp.com)
+
+
+## For live preview :
+> [URL Shortener](https://url-osama-mohamed.herokuapp.com)
 
 
 ## Usage :
