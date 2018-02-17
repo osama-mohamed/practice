@@ -8,7 +8,7 @@
 > [Restful API with AJax](https://restful-ajax-osama-mohamed.herokuapp.com)
 
 
-## Restful API with AJax website containes:
+## Restful API with AJax website contains:
 * User register 
 * User login
 * User logout 
