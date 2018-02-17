@@ -7,6 +7,9 @@
 ## Fortnite Comparison website contains:
 * 2 players Comparison in pc platform
 
+## Note:
+All Data comes from [https://fortnitetracker.com](https://fortnitetracker.com) using fortnitetracker.com API Services
+
 
 ## Usage :
 ### Run project by :
