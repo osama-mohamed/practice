@@ -124,3 +124,76 @@ body{
     color: #928440;
 }
 /* end popup */
+
+/* start buttons effects */
+.buttons_effect{
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    margin: 20px;
+    width: 140px;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    color: #fff;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.buttons_effect span:first-child{
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    z-index: 1;
+}
+
+.buttons_effect span:last-child{
+    position: relative;
+    z-index: 2;
+}
+
+.buttons_effect.from_left{
+    background-color: #d63031;
+}
+
+.buttons_effect.from_left span:first-child{
+    height: 100%;
+    width: 0;
+    background-color: #ff7675;
+}
+
+.buttons_effect.from_top{
+    background-color: #0984e3;
+}
+
+.buttons_effect.from_top span:first-child{
+    height: 0;
+    width: 100%;
+    background-color: #74b9ff;
+}
+
+.border_left, .border_top{
+    border-radius: 0;
+    background-color: #fff;
+    color: #0984e3;
+    overflow: visible;
+}
+
+.border_left span:first-child{
+    height: 4px;
+    width: 0;
+    background-color: #0984e3;
+    top: auto;
+    bottom: -3px;
+}
+
+.border_top span:first-child{
+    height: 0;
+    width: 4px;
+    background-color: #0984e3;
+    top: 0;
+    left: -3px;
+}
+/* end buttons effects */

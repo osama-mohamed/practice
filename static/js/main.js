@@ -76,4 +76,42 @@ $(function () {
             $('.popup').fadeOut();
         }
     });
+
+    // button effects if there are no span
+    // $('.buttons_effects button').each(function () {
+    //     $(this).prepend('<spana></spana>');
+    // });
+
+    // buttons effects from left
+    $('.from_left, .border_left').hover(function () {
+        $(this).find('span').eq(0).animate({
+            width: '100%'
+        }, 200);
+    }, function () {
+        $(this).find('span').eq(0).animate({
+            width: 0
+        }, 200);
+    });
+
+    // buttons effects from top
+    $('.from_top, .border_top').hover(function () {
+        $(this).find('span').eq(0).animate({
+            height: '100%'
+        }, 200);
+    }, function () {
+        $(this).find('span').eq(0).animate({
+            height: 0
+        }, 200);
+    });
+
+    // buttons effects from left borders bottom
+    // $('.border_left').hover(function () {
+    //     $(this).find('span').eq(0).animate({
+    //         width: '100%'
+    //     }, 200);
+    // }, function () {
+    //     $(this).find('span').eq(0).animate({
+    //         width: 0
+    //     }, 200);
+    // });
 });
