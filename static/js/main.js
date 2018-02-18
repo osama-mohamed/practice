@@ -114,4 +114,14 @@ $(function () {
     //         width: 0
     //     }, 200);
     // });
+
+
+    // animated progress bar
+    $('.animated_progress_bar span').each(function () {
+        $(this).animate({
+            width: $(this).attr('data-progress') + '%'
+        }, 1000, function () {
+            $(this).text($(this).attr('data-progress') + '%');
+        });
+    });
 });

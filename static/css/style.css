@@ -197,3 +197,41 @@ body{
     left: -3px;
 }
 /* end buttons effects */
+
+/* start animated_progress_bar */
+
+.animated_progress_bar{
+    width: 300px;
+    height: 30px;
+    border-radius: 5px;
+    margin: 20px 10px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    background-color: #f6f6f6;
+}
+
+.animated_progress_bar span{
+    height: 30px;
+    width: 0;
+    display: block;
+    color: #fff;
+    line-height: 30px;
+    text-indent: 0;
+}
+
+.progress_blue span{
+    background-color: #0984e3;
+}
+
+.progress_red span{
+    background-color: #d63031;
+}
+
+.progress_green span{
+    background-color: #00b894;
+}
+
+.progress_purple span{
+    background-color: #6c5ce7;
+}
+/* end animated_progress_bar */
