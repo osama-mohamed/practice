@@ -191,7 +191,14 @@ $(function () {
     });
 
     // toggle product description
-    $('.products .product i').on('click', function () {
+    $('.products .product i, .items .item i').on('click', function () {
         $(this).toggleClass('fa-plus fa-minus').next('.description').slideToggle();
+    });
+
+    // toggle grid/list view items
+    $('.view_options i').on('click', function () {
+        $(this).addClass('active').siblings().removeClass('active');
+        $('.items').removeClass('list_view grid_view').addClass( $(this).data('class') );
+        console.log($(this).data('class'));
     });
 });
