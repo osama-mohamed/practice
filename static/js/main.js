@@ -128,7 +128,7 @@ $(function () {
     // fixed menu
     $('.fixed_menu').css('left', - $('.fixed_menu').innerWidth());
     $('body').on('click', '.fixed_menu .fa-cog', function () {
-        console.log($(this).parent().width());
+        // console.log($(this).parent().width());
         $(this).parent('.fixed_menu').toggleClass('is_visible');
         if($(this).parent('.fixed_menu').hasClass('is_visible')){
             $(this).parent('.fixed_menu').animate({
@@ -152,5 +152,41 @@ $(function () {
     // change colors
     $('.change_colors li').on('click', function(){
         $('body').attr('data_default_color', $(this).data('color'));
+    });
+
+    // thumbnails gallery
+    var NumberOfThumbnails = $('.thumbnails').children().length,
+        MarginBetweenThumbnails = '.5',
+        TotalMarginBetweenThumbnails = (NumberOfThumbnails - 1) * MarginBetweenThumbnails,
+        ThumbnailWidth = (100 - TotalMarginBetweenThumbnails) / NumberOfThumbnails;
+
+    $('.thumbnails img').css({
+        'width': ThumbnailWidth + '%',
+        'margin-right': MarginBetweenThumbnails + '%'
+    });
+    $('.thumbnails img:last-child').css({
+        'margin-right': 0
+    });
+    $('.gallery .thumbnails img').on('click', function () {
+        $(this).addClass('selected').siblings().removeClass('selected');
+        $('.master-img img').hide().attr('src', $(this).attr('src')).fadeIn(500);
+        // console.log($(this).attr('src'));
+        // console.log($(this).parent('.thumbnails').prev('.master-img').find('img').attr('src'));
+    });
+    $('.master-img .fa-chevron-left').on('click', function () {
+        if($('.thumbnails .selected').is(':first-child')){
+            $('.thumbnails img:last').click();
+            // $('.thumbnails img').eq(-1).click();
+            // $('.thumbnails img').eq(4).click();
+        } else {
+            $('.thumbnails .selected').prev().click();
+        }
+    });
+    $('.master-img .fa-chevron-right').on('click', function () {
+        if($('.thumbnails .selected').is(':last-child')){
+            $('.thumbnails img').eq(0).click();
+        } else {
+            $('.thumbnails .selected').next().click();
+        }
     });
 });
