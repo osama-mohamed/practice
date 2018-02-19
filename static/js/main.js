@@ -124,4 +124,28 @@ $(function () {
             $(this).text($(this).attr('data-progress') + '%');
         });
     });
+
+    // fixed menu
+    $('.fixed_menu').css('left', - $('.fixed_menu').innerWidth());
+    $('body').on('click', '.fixed_menu .fa-cog', function () {
+        console.log($(this).parent().width());
+        $(this).parent('.fixed_menu').toggleClass('is_visible');
+        if($(this).parent('.fixed_menu').hasClass('is_visible')){
+            $(this).parent('.fixed_menu').animate({
+                left: 0
+            }, 500);
+            // if i want to push the body
+            $('body').animate({
+                paddingLeft: $('.fixed_menu').innerWidth()
+            }, 500);
+        } else {
+            $(this).parent('.fixed_menu').animate({
+                left: - $('.fixed_menu').innerWidth()
+            }, 500);
+            // if i want to push the body
+            $('body').animate({
+                paddingLeft: 0
+            }, 500);
+        }
+    });
 });
