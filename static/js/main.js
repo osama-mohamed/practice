@@ -148,4 +148,9 @@ $(function () {
             }, 500);
         }
     });
+
+    // change colors
+    $('.change_colors li').on('click', function(){
+        $('body').attr('data_default_color', $(this).data('color'));
+    });
 });

@@ -76,6 +76,31 @@ body{
     text-align: center;
     cursor: pointer;
 }
+
+.fixed_menu .change_colors li{
+    height: 25px;
+    width: 25px;
+    display: inline-block;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.fixed_menu .change_colors [data-color="blue"]{
+    background-color: #0984e3;
+}
+
+.fixed_menu .change_colors [data-color="red"]{
+    background-color: #d63031;
+}
+
+.fixed_menu .change_colors [data-color="green"]{
+    background-color: #00b894;
+}
+
+.fixed_menu .change_colors [data-color="purple"]{
+    background-color: #6c5ce7;
+}
 /* end fixed menu*/
 
 /* start sections */
@@ -264,3 +289,43 @@ body{
     background-color: #6c5ce7;
 }
 /* end animated_progress_bar */
+
+
+/* start website theme color */
+
+[data_default_color="blue"] .skin_color{
+    color: #0984e3;
+}
+
+[data_default_color="blue"] .skin_background{
+    background-color: #0984e3;
+    color: #fff;
+}
+
+[data_default_color="red"] .skin_color{
+    color: #d63031;
+}
+
+[data_default_color="red"] .skin_background{
+    background-color: #d63031;
+    color: #fff;
+}
+
+[data_default_color="green"] .skin_color{
+    color: #00b894;
+}
+
+[data_default_color="green"] .skin_background{
+    background-color: #00b894;
+    color: #fff;
+}
+
+[data_default_color="purple"] .skin_color{
+    color: #6c5ce7;
+}
+
+[data_default_color="purple"] .skin_background{
+    background-color: #6c5ce7;
+    color: #fff;
+}
+/* end website theme color */
