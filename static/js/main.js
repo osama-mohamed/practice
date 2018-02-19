@@ -189,4 +189,9 @@ $(function () {
             $('.thumbnails .selected').next().click();
         }
     });
+
+    // toggle product description
+    $('.products .product i').on('click', function () {
+        $(this).toggleClass('fa-plus fa-minus').next('.description').slideToggle();
+    });
 });
