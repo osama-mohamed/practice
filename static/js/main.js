@@ -258,6 +258,15 @@ $(function () {
     // detect unicode for keyboard keys
     $('.detect_unicode').on('keyup', function (event) {
         var keyboardKey = event.keyCode || event.which;
-        $('.unicode').html(keyboardKey);
+        $('.unicode').html('The Unicode for the key you pressed is : ' + keyboardKey);
+    });
+
+    // change input direction depend on language
+    $('.auto_direction').on('keyup', function () {
+        if ($(this).val().charCodeAt(0) < 200 ){ // which means that the language is English
+            $(this).css('direction', 'ltr');
+        } else {
+            $(this).css('direction', 'rtl');
+        }
     });
 });
