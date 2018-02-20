@@ -221,4 +221,11 @@ $(function () {
     }).blur(function () {
         $(this).attr('placeholder', placeAttr);
     });
+
+    // show message when field is empty
+    $('[required]').on('blur', function () {
+        if($(this).val() == ''){
+            $(this).next('.the_message').fadeIn().delay(2000).fadeOut();
+        }
+    });
 });

@@ -151,10 +151,22 @@
             <!-- start form -->
             <div class="our_form">
                 <form>
-                    <input type="text" placeholder="Your Name here">
-                    <input type="email" placeholder="Your e-mail here">
-                    <input type="password" placeholder="Your password here">
-                    <textarea placeholder="Your Message"></textarea>
+                    <div>
+                        <input type="text" required="required" placeholder="Your Name here">
+                        <span class="the_message">Please Fill This Field</span>
+                    </div>
+                    <div>
+                        <input type="email" required="required" placeholder="Your e-mail here">
+                        <span class="the_message">Please Fill This Field</span>
+                    </div>
+                    <div>
+                        <input type="password" required="required" placeholder="Your password here">
+                        <span class="the_message">Please Fill This Field</span>
+                    </div>
+                    <div>
+                        <textarea placeholder="Your Message"></textarea>
+                        <span class="the_message">Please Fill This Field</span>
+                    </div>
                     <input type="submit" value="Send">
                 </form>
             </div>

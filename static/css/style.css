@@ -523,16 +523,11 @@ body{
     margin: auto;
 }
 
-.our_form form{
-    width: 500px;
-    margin: auto;
-}
-
 .our_form form input,
 .our_form form textarea{
-    display: block;
     margin-bottom: 20px;
-    width: 100%;
+    width: 500px;
+    margin-right: 10px;
 }
 
 .our_form input[type="text"],
@@ -546,12 +541,13 @@ body{
     height: 180px;
 }
 
+.our_form .the_message{
+    display: none;
+}
+
 .our_form input[type="submit"]{
     padding: 15px;
     font-size: 15px;
-    background-color: #0984e3;
-    color: #fff;
-    border-radius: 6px;
 }
 
 /* end our form */
