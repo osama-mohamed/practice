@@ -219,6 +219,12 @@ $(function () {
         placeAttr = $(this).attr('placeholder');
         $(this).attr('placeholder', '');
     }).blur(function () {
+        if ($('.auto_direction').val().charCodeAt(0) < 200 ){ // which means that the language is English
+            $('.auto_direction').css('direction', 'ltr');
+        } else {
+            $('.auto_direction').css('direction', 'rtl');
+            $('.auto_direction').attr('placeholder', 'نتلاتلاتل');
+        }
         $(this).attr('placeholder', placeAttr);
     });
 
@@ -268,5 +274,20 @@ $(function () {
         } else {
             $(this).css('direction', 'rtl');
         }
+    });
+
+    // convert input value to tag
+    $('.add_tag').on('keyup', function (event) {
+        var keyboardKey = event.keyCode || event.which;
+        if(keyboardKey === 188){ // when comma pressed
+            var inputValue = $(this).val().slice(0, -1);
+            $('.tags').append('<span class="tag_span"><i class="fa fa-times"></i>' + inputValue + '</span>');
+            $(this).val('');
+        }
+    });
+
+    // remove tag on click
+    $('.tags').on('click', '.tag_span i', function () {
+        $(this).parent('.tag_span').fadeOut(800);
     });
 });

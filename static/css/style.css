@@ -576,6 +576,25 @@ body{
     display: none;
 }
 
+.our_form .tags span{
+    padding: 5px 10px;
+    background-color: #dedede;
+    display: inline-block;
+    margin: 10px 10px 10px 0;
+    border-radius: 8px;
+    color: #6f6f6f;
+}
+
+.our_form .tags span i{
+    margin-right: 5px;
+    color: #969696;
+    cursor: pointer;
+}
+
+.our_form .tags span i:hover{
+    color: #d63031;
+}
+
 .our_form input[type="submit"]{
     padding: 15px;
     font-size: 15px;
