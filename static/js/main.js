@@ -114,6 +114,15 @@ $(function () {
     //         width: 0
     //     }, 200);
     // });
+    
+    // bounce button
+    $('.bounce').on('click', function () {
+        $(this).animate({
+            marginTop: '-=20px'
+        }, 500).animate({
+            marginTop: '+=20px'
+        }, 500);
+    });
 
 
     // animated progress bar
