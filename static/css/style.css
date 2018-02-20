@@ -516,6 +516,46 @@ body{
 
 /* end items */
 
+/* start our form */
+
+.our_form{
+    width: 800px;
+    margin: auto;
+}
+
+.our_form form{
+    width: 500px;
+    margin: auto;
+}
+
+.our_form form input,
+.our_form form textarea{
+    display: block;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.our_form input[type="text"],
+.our_form input[type="email"],
+.our_form input[type="password"],
+.our_form textarea{
+    padding: 10px;
+}
+
+.our_form textarea{
+    height: 180px;
+}
+
+.our_form input[type="submit"]{
+    padding: 15px;
+    font-size: 15px;
+    background-color: #0984e3;
+    color: #fff;
+    border-radius: 6px;
+}
+
+/* end our form */
+
 /* start website theme color */
 
 [data_default_color="blue"] .skin_color{

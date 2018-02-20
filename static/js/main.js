@@ -210,4 +210,15 @@ $(function () {
             $(this).delay(3000).fadeOut();
         });
     });
+
+    // our form
+
+    // hide placeholder on focus and restore on blur
+    var placeAttr = '';
+    $('[placeholder]').focus(function () {
+        placeAttr = $(this).attr('placeholder');
+        $(this).attr('placeholder', '');
+    }).blur(function () {
+        $(this).attr('placeholder', placeAttr);
+    });
 });
