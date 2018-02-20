@@ -228,4 +228,18 @@ $(function () {
             $(this).next('.the_message').fadeIn().delay(2000).fadeOut();
         }
     });
+
+    // add asterisk to all required fields
+    $('<span class="asterisk">*</span>').insertBefore(':input[required]');
+    // customize the asterisk
+    $('.asterisk').parent('div').css('position', 'relative');
+    $('.asterisk').each(function () {
+        $(this).css({
+            'position': 'absolute',
+            'top': 13,
+            'left': $(this).parent('div').find('input[required]').innerWidth() - 20,
+            'color': '#d63031',
+            'font-weight': 'bold'
+        });
+    });
 });
