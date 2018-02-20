@@ -116,15 +116,28 @@ $(function () {
     // });
     
     // bounce button
+    // $('.bounce').on('click', function () {
+    //     $(this).animate({
+    //         marginTop: '-=20px'
+    //     }, 500).animate({
+    //         marginTop: '+=20px'
+    //     }, 500);
+    // });
+    function bounceElement(selector, times, distance, speed) {
+        for (var i = 0; i < times; i = i + 1) {
+            $(selector).animate({
+                top: '-=' + distance
+            }, speed).animate({
+                top: '+=' + distance
+            }, speed);
+        }
+    }
+
     $('.bounce').on('click', function () {
-        $(this).animate({
-            marginTop: '-=20px'
-        }, 500).animate({
-            marginTop: '+=20px'
-        }, 500);
+        bounceElement($(this), 2, 20, 400);
     });
 
-
+    
     // animated progress bar
     $('.animated_progress_bar span').each(function () {
         $(this).animate({

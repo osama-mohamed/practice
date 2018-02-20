@@ -276,6 +276,7 @@ body{
 .bounce{
     margin-top: 30px;
     background-color: #0984e3;
+    position: relative;
 }
 /* end buttons effects */
 
