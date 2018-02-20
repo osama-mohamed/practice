@@ -602,6 +602,21 @@ body{
 
 /* end our form */
 
+/* start trimmed text */
+
+.trimmed_text{
+    width: 800px;
+    margin: auto;
+}
+
+.trimmed_text p{
+    padding: 10px;
+    background-color: #ddd;
+    margin-bottom: 20px;
+}
+
+/* end trimmed text */
+
 /* start website theme color */
 
 [data_default_color="blue"] .skin_color{

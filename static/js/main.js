@@ -290,4 +290,22 @@ $(function () {
     $('.tags').on('click', '.tag_span i', function () {
         $(this).parent('.tag_span').fadeOut(800);
     });
+    
+    // trimmed text
+    // $('.trimmed_text p').each(function () {
+    //     if($(this).text().length > 100 ) {
+    //         var trimmedText = $(this).text().substr(0, 100);
+    //         $(this).text(trimmedText + ' ...');
+    //     }
+    // });
+    function trimText(selector, maxLength) {
+        $(selector).each(function () {
+            if($(this).text().length > maxLength ) {
+                var trimmedText = $(this).text().substr(0, maxLength);
+                $(this).text(trimmedText + ' ...');
+            }
+        });
+    }
+    trimText('.trimmed_text .p_one', 100);
+    trimText('.trimmed_text .p_two', 200);
 });
