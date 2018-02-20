@@ -201,4 +201,13 @@ $(function () {
         $('.items').removeClass('list_view grid_view').addClass( $(this).data('class') );
         console.log($(this).data('class'));
     });
+
+    // error message
+    $('.error_message').each(function () {
+        $(this).animate({
+            right: 0
+        }, 1000, function () {
+            $(this).delay(3000).fadeOut();
+        });
+    });
 });

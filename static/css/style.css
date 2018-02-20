@@ -184,6 +184,23 @@ body{
 }
 /* end popup */
 
+/* start error message */
+
+.error_message{
+    padding: 10px;
+    color: #fff;
+    background-color: #d63031;
+    font-size: 20px;
+    width: 600px;
+    text-align: center;
+    position: fixed;
+    top: 80px;
+    right: -100%;
+    z-index: 9999;
+}
+
+/* end error message */
+
 /* start buttons effects */
 .buttons_effect{
     cursor: pointer;
