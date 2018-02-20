@@ -254,4 +254,10 @@ $(function () {
         'height': $('.our_form input[type="text"]').innerHeight()
         // 'height': $('.our_form').find('input[type="text"]').innerHeight()
     });
+
+    // detect unicode for keyboard keys
+    $('.detect_unicode').on('keyup', function (event) {
+        var keyboardKey = event.keyCode || event.which;
+        $('.unicode').html(keyboardKey);
+    });
 });
