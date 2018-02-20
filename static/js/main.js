@@ -242,4 +242,16 @@ $(function () {
             'font-weight': 'bold'
         });
     });
+
+    // customize file input field
+    $('.our_form input[type="file"]').wrap('<div class="custom_file"></div>');
+    $('.our_form input[type="file"]').change(function () {
+        $(this).prev('span').text( $(this).val().slice(12) );
+    });
+    $('.custom_file').prepend('<span>Upload Your File</span>');
+    $('.custom_file').append('<i class="fa fa-upload fa-lg skin_color"></i>');
+    $('.our_form .custom_file').css({
+        'height': $('.our_form input[type="text"]').innerHeight()
+        // 'height': $('.our_form').find('input[type="text"]').innerHeight()
+    });
 });

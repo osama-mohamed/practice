@@ -524,7 +524,8 @@ body{
 }
 
 .our_form form input,
-.our_form form textarea{
+.our_form form textarea,
+.our_form .custom_file{
     margin-bottom: 20px;
     width: 500px;
     margin-right: 10px;
@@ -539,6 +540,36 @@ body{
 
 .our_form textarea{
     height: 180px;
+}
+
+.our_form .custom_file{
+    background-color: #fff;
+    border: 1px solid rgb(169, 169, 169);
+    position: relative;
+}
+
+.our_form .custom_file span{
+    display: inline-block;
+    padding: 8px 12px;
+    color: #757575;
+    font-size: 14px;
+}
+
+.our_form .custom_file input[type="file"]{
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.our_form .custom_file .fa-upload{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
 }
 
 .our_form .the_message{
