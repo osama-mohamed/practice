@@ -1,7 +1,11 @@
-# [Github Comparison with Bulma](https://www.facebook.com/osama.mohamed.ms) By Django
+# [Github Comparison with Bulma](https://github-compare-osama-mohamed.herokuapp.com) By Django
 
-[<img src="https://www.djangoproject.com/s/img/logos/django-logo-negative.png" width="200" title="Github Comparison" >](https://www.facebook.com/osama.mohamed.ms)
-[<img src="https://raw.githubusercontent.com/jgthms/bulma/master/docs/images/bulma-banner.png" width="200" title="Github Comparison" >](https://www.facebook.com/osama.mohamed.ms)
+[<img src="https://www.djangoproject.com/s/img/logos/django-logo-negative.png" width="200" title="Github Comparison" >](https://github-compare-osama-mohamed.herokuapp.com)
+[<img src="https://raw.githubusercontent.com/jgthms/bulma/master/docs/images/bulma-banner.png" width="200" title="Github Comparison" >](https://github-compare-osama-mohamed.herokuapp.com)
+
+
+## For live preview :
+> [Github Comparison](https://github-compare-osama-mohamed.herokuapp.com)
 
 
 ## Github Comparison website contains:
@@ -38,6 +42,7 @@ Now the project is running at `http://localhost:8000` and your routes is:
 | Route                                                      | HTTP Method 	   | Description                           	      |
 |:-----------------------------------------------------------|:----------------|:---------------------------------------------|
 | {host}       	                                             | POST      	     | Home page                                    |
+| {host}/api/  	                                             | POST      	     | Home page in API                             |
 
 
 For detailed explanation on how project work, read the [Django Docs](https://docs.djangoproject.com/en/1.11/) and [MySQLDB Docs](https://dev.mysql.com/doc/)
