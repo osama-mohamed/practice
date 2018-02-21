@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>GitHub Comparison</title>
+        <link rel="icon" href="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css" />
+        <style>
+            img{
+                display: block;
+                height: 150px;
+                position: relative;
+                left: 500px;
+                top: -30px;
+                max-width: 150px;
+                margin: 0;
+            }
+            .container ul.messages > li{
+                margin: 20px 450px;
+                color: #e74c3c;
+                border: 2px solid #e74c3c;
+                padding: 8px;
+                border-radius: 22px;
+            }
+{#            .hero .container .title,#}
+{#            .hero .container .subtitle,#}
+            .hero .subtitle > a{
+                color: #fff;
+            }
+            .compare{
+                padding: 0;
+                margin-top: 50px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <section class="hero is-dark">
+          <div class="hero-body">
+            <div class="container">
+                <img src="https://assets-cdn.github.com/images/modules/logos_page/Octocat.png" alt="GitHub">
+              <h1 class="title" style="margin-top: -150px;">
+                GitHub Comparison
+              </h1>
+              <h2 class="subtitle">
+                &emsp; Compare between two users.
+                <br>
+                &emsp; <a class="button is-text" href="https://api.github.com" target="_blank">All Data comes from github.com</a>
+              </h2>
+            </div>
+          </div>
+        </section>
+
+        <section class="section compare">
+        <div class="container">
+          {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %}{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+          {% endif %}
+          <form method="POST" action="/">
+              {% csrf_token %}
+          <div class="field is-grouped" style="width: 25%; margin-left: 430px; display: inline-block;">
+              {{ form.as_p }}
+{#              <input type="hidden" name="user_one_name" value="{% if user_one %}{{ user_one.login }}{% endif %}">#}
+{#              <input class="input" name="user_name" type="text" placeholder="GitHub User Name Here">#}
+{#              <button class="button is-dark" style="margin: -36px 292px;">Search</button>#}
+              <button class="button is-dark" style="margin: 15px 100px;">Search</button>
+          </div>
+          </form>
+        </div>
+        </section>
+
+        <section class="section">
+          <div class="container">
+            <div class="tile is-ancestor">
+              <div class="tile is-vertical is-12">
+                <div class="tile">
+                  {% if user_one %}
+                  <div class="tile is-parent is-vertical">
+                    <article class="tile is-child notification is-dark">
+                      <p class="title">{{ user_one.name }} </p>
+                      <br>
+                      <p class="subtitle">Repos : {{ user_one.public_repos }}</p>
+                      <p class="subtitle">Followers : {{ user_one.followers }}</p>
+                      <p class="subtitle">Following : {{ user_one.following }}</p>
+                      <p class="subtitle">User URL API : <a href="{{ user_one.url }}" target="_blank">{{ user_one.url }}</a></p>
+                      <p class="subtitle">Repos URL API : <a href="{{ user_one.repos_url }}" target="_blank">{{ user_one.repos_url }}</a></p>
+                      <p class="subtitle">User URL : <a href="{{ user_one.html_url }}" target="_blank">{{ user_one.html_url }}</a></p>
+                      <p class="subtitle">User Repos URL : <a href="https://github.com/{{ user_one.login }}?tab=repositories" target="_blank">{{ user_one.html_url }}</a></p>
+                      <p class="subtitle">User Name : {{ user_one.name }}</p>
+                      <p class="subtitle">User Login Name : {{ user_one.login }}</p>
+                      <p class="subtitle">ID : {{ user_one.id }}</p>
+                    </article>
+                  </div>
+                  {% endif %}
+                  {% if user_two %}
+                  <div class="tile is-parent">
+                    <article class="tile is-child notification is-light">
+                      <p class="title">{{ user_two.name }} </p>
+                      <br>
+                      <p class="subtitle">Repos : {{ user_two.public_repos }}</p>
+                      <p class="subtitle">Followers : {{ user_two.followers }}</p>
+                      <p class="subtitle">Following : {{ user_two.following }}</p>
+                      <p class="subtitle">User URL API : <a href="{{ user_two.url }}" target="_blank">{{ user_two.url }}</a></p>
+                      <p class="subtitle">Repos URL API : <a href="{{ user_two.repos_url }}" target="_blank">{{ user_two.repos_url }}</a></p>
+                      <p class="subtitle">User URL : <a href="{{ user_two.html_url }}" target="_blank">{{ user_two.html_url }}</a></p>
+                      <p class="subtitle">User Repos URL : <a href="https://github.com/{{ user_two.login }}?tab=repositories" target="_blank">{{ user_two.html_url }}</a></p>
+                      <p class="subtitle">User Name : {{ user_two.name }}</p>
+                      <p class="subtitle">User Login Name : {{ user_two.login }}</p>
+                      <p class="subtitle">ID : {{ user_two.id }}</p>
+                    </article>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script>
+            $('.container ul.messages > li').delay(3000).fadeOut();
+        </script>
+    </body>
+</html>
