@@ -20,11 +20,7 @@ class UserAPIView(APIView):
             try:
                 user_one_result = requests.get(URL.format(user_name_one)).json()
                 user_two_result = requests.get(URL.format(user_name_two)).json()
-                if user_one_result.get('message') == 'Not Found':
-                    print('88888888888')
-                    return Response({'message': 'We could not found these users!'})
-                if user_two_result.get('message') == 'Not Found':
-                    print('99999999999')
+                if user_one_result.get('message') == 'Not Found' or user_two_result.get('message') == 'Not Found':
                     return Response({'message': 'We could not found these users!'})
                 else:
                     return Response({'user_one_stats': user_one_result,
