@@ -1,6 +1,8 @@
 from django.shortcuts import render
 import requests
 
+from .forms import UserForm
+
 URL = 'https://api.github.com/users/{}'
 
 
@@ -19,23 +21,26 @@ def user_data(api_data):
 
 
 def home(request):
-    user_one = None
-    user_two = None
     user_one_stats = {}
     user_two_stats = {}
-    if request.method == 'POST':
-        user_one = request.POST.get('user_one_name')
-        if user_one:
-            user_two = request.POST.get('user_name')
-        else:
-            user_one = request.POST.get('user_name')
+    form = UserForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        user_one = form.cleaned_data.get('user_name_one')
+        user_two = form.cleaned_data.get('user_name_two')
         user_one_result = requests.get(URL.format(user_one)).json()
         user_one_stats = user_data(user_one_result)
-        if user_two:
-            user_two_result = requests.get(URL.format(user_two)).json()
-            user_two_stats = user_data(user_two_result)
+        user_two_result = requests.get(URL.format(user_two)).json()
+        user_two_stats = user_data(user_two_result)
     context = {
         'user_one': user_one_stats,
         'user_two': user_two_stats,
+        'form': form,
     }
     return render(request, 'index.html', context)
+
+
+
+
+# form = CommentForm(request.POST or None, initial=initial_data)
+# if form.is_valid() and request.user.is_authenticated():
+#    obj_id = form.cleaned_data.get('object_id')

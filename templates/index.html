@@ -37,7 +37,7 @@
               <h2 class="subtitle">
                 &emsp; Compare between two users.
                 <br>
-                &emsp; <a class="button is-text" href="https://api.github.com/" target="_blank">All Data comes from github.com</a>
+                &emsp; <a class="button is-text" href="https://api.github.com" target="_blank">All Data comes from github.com</a>
               </h2>
             </div>
           </div>
@@ -48,8 +48,9 @@
           <form method="POST" action="/">
               {% csrf_token %}
           <div class="field is-grouped" style="width: 25%; margin-left: 430px; display: inline-block;">
-              <input type="hidden" name="user_one_name" value="{% if user_one %}{{ user_one.login }}{% endif %}">
-              <input class="input" name="user_name" type="text" placeholder="GitHub User Name Here">
+              {{ form.as_p }}
+{#              <input type="hidden" name="user_one_name" value="{% if user_one %}{{ user_one.login }}{% endif %}">#}
+{#              <input class="input" name="user_name" type="text" placeholder="GitHub User Name Here">#}
               <button class="button is-dark" style="margin: -36px 292px;">Search</button>
           </div>
           </form>
