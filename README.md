@@ -24,10 +24,6 @@ All Data comes from [https://api.github.com](https://api.github.com) using githu
 
 1. python manage.py runserver
 
-# if you want to manage to project just create super user account by :
-
-2. python manage.py createsuperuser
-
 ```
 
 That's it.
