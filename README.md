@@ -20,15 +20,13 @@ All Data comes from [https://api.github.com](https://api.github.com) using githu
 
 ``` python
 
-# change database connection information in settings.py DATABASES default values with your info then run 
+# run 
 
-1. python manage.py migrate
-
-2. python manage.py runserver
+1. python manage.py runserver
 
 # if you want to manage to project just create super user account by :
 
-3. python manage.py createsuperuser
+2. python manage.py createsuperuser
 
 ```
 
