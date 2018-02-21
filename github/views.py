@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 import requests
 
 from .forms import UserForm
@@ -27,20 +28,17 @@ def home(request):
     if request.method == 'POST' and form.is_valid():
         user_one = form.cleaned_data.get('user_name_one')
         user_two = form.cleaned_data.get('user_name_two')
-        user_one_result = requests.get(URL.format(user_one)).json()
-        user_one_stats = user_data(user_one_result)
-        user_two_result = requests.get(URL.format(user_two)).json()
-        user_two_stats = user_data(user_two_result)
+        try:
+            user_one_result = requests.get(URL.format(user_one)).json()
+            user_one_stats = user_data(user_one_result)
+            user_two_result = requests.get(URL.format(user_two)).json()
+            user_two_stats = user_data(user_two_result)
+        except:
+            messages.success(request, 'We could not found these users!')
+            return redirect('github_detail:home')
     context = {
         'user_one': user_one_stats,
         'user_two': user_two_stats,
         'form': form,
     }
     return render(request, 'index.html', context)
-
-
-
-
-# form = CommentForm(request.POST or None, initial=initial_data)
-# if form.is_valid() and request.user.is_authenticated():
-#    obj_id = form.cleaned_data.get('object_id')
