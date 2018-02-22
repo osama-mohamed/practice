@@ -356,12 +356,11 @@ $(function () {
         }, 500);
     });
     
-    // warning
+    // warning call function by it self
     blinkWarning();
     function blinkWarning() {
         $('.blink-warning').fadeOut(1000, function () {
-            $(this).fadeIn(1000);
-            blinkWarning();
+            $(this).fadeIn(1000, blinkWarning());
         });
     }
 });
