@@ -640,6 +640,58 @@ body{
 
 /* end same div height */
 
+/* start shuffling cards */
+
+.cards{
+    position: relative;
+    margin-top: 50px;
+    min-height: 300px;
+    z-index: 1;
+}
+
+.cards .card{
+    width: 150px;
+    height: 150px;
+    border: 3px solid #333;
+    position: absolute;
+    left: 50%;
+    margin-left: -75px;
+    cursor: pointer;
+}
+
+.cards .card-one{
+    background-color: #e74c3c;
+}
+
+.cards .card-two{
+    background-color: #c0392b;
+}
+
+.cards .card-three{
+    background-color: #3498db;
+}
+
+.cards .card-four{
+    background-color: #2980b9;
+}
+
+.cards .card-five{
+    background-color: #1abc9c;
+}
+
+.cards .card-six{
+    background-color: #16a085;
+}
+
+.cards .card-seven{
+    background-color: #2ecc71;
+}
+
+.cards .card-eight{
+    background-color: #8e44ad;
+}
+/* end shuffling cards */
+
 /* start website theme color */
 
 [data_default_color="blue"] .skin_color{

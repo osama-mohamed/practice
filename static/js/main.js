@@ -336,9 +336,23 @@ $(function () {
     $('.same_height div').each(function () {
         if($(this).height() > theMaxHeight) {
             theMaxHeight = $(this).height();
-            console.log(theMaxHeight);
         }
     });
-
     $('.same_height div').height(theMaxHeight);
+
+    // shuffling cards
+    var zIndexValue = 0;
+    $('.cards .card').on('click', function () {
+        $(this).animate({
+            left: '20%',
+            marginTop: 30
+        }, 500, function () {
+            zIndexValue--;
+            $(this).css('z-index', zIndexValue);
+        }).animate({
+            // left: '50%',
+            left: $(this).css('left'),
+            marginTop: 0
+        }, 500);
+    });
 });
