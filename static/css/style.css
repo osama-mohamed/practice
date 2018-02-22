@@ -623,6 +623,23 @@ body{
 
 /* end trimmed text */
 
+
+/* start same div height */
+
+.same_height{
+    overflow: hidden;
+}
+
+.same_height div{
+    width: 30%;
+    margin-right: 1%;
+    float: left;
+    background-color: #ddd;
+    padding: 10px;
+}
+
+/* end same div height */
+
 /* start website theme color */
 
 [data_default_color="blue"] .skin_color{

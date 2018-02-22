@@ -137,7 +137,7 @@ $(function () {
         bounceElement($(this), 2, 20, 400);
     });
 
-    
+
     // animated progress bar
     $('.animated_progress_bar span').each(function () {
         $(this).animate({
@@ -330,4 +330,15 @@ $(function () {
     }
     trimText('.trimmed_text .p_one', 100);
     trimText('.trimmed_text .p_two', 200);
+
+    // adjust elements to by the same height
+    var theMaxHeight = 0;
+    $('.same_height div').each(function () {
+        if($(this).height() > theMaxHeight) {
+            theMaxHeight = $(this).height();
+            console.log(theMaxHeight);
+        }
+    });
+
+    $('.same_height div').height(theMaxHeight);
 });
