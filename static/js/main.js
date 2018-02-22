@@ -355,4 +355,13 @@ $(function () {
             marginTop: 0
         }, 500);
     });
+    
+    // warning
+    blinkWarning();
+    function blinkWarning() {
+        $('.blink-warning').fadeOut(1000, function () {
+            $(this).fadeIn(1000);
+            blinkWarning();
+        });
+    }
 });

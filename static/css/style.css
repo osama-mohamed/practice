@@ -692,6 +692,21 @@ body{
 }
 /* end shuffling cards */
 
+/* start warning */
+
+.blink-warning{
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px auto;
+    width: 210px;
+    border-radius: 12px;
+    text-align: center;
+    color: #c0392b;
+    border: 2px solid #c0392b;
+}
+
+/* end warning */
+
 /* start website theme color */
 
 [data_default_color="blue"] .skin_color{
