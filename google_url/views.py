@@ -14,10 +14,9 @@ def home(request):
         url = form.cleaned_data.get('url')
         long_url = {'longUrl': url}
         headers = {'content-type': 'application/json'}
-        response = requests.post(URL, data=json.dumps(long_url), headers=headers)
-        # print(response.text)
+        response = requests.post(URL, data=json.dumps(long_url), headers=headers).json()
         context = {
-            'url': response.json(),
+            'url': response,
             'form': form,
         }
         return render(request, 'index.html', context)
