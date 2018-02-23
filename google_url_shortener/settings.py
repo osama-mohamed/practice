@@ -49,12 +49,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'google_url_shortener.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+DATABASES = {}
 
 AUTH_PASSWORD_VALIDATORS = [
     {

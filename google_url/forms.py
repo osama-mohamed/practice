@@ -8,3 +8,12 @@ class UrlForm(forms.Form):
             'class': 'input',
         }
     ))
+
+    def clean_url(self):
+        url = self.cleaned_data.get('url')
+        if '.' not in url:
+            raise forms.ValidationError('There is not dot here!')
+        if len(url) < 6:
+            raise forms.ValidationError('This is not a valid url!')
+        return url
+
