@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Google URL Shortener</title>
+        <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css" />
+        <style>
+            img{
+                display: block;
+                height: 100px;
+                position: relative;
+                left: 540px;
+                top: -30px;
+                max-width: 150px;
+                margin: 0;
+            }
+            .container ul.messages > li{
+                margin: 20px 450px;
+                color: #e74c3c;
+                border: 2px solid #e74c3c;
+                padding: 8px;
+                border-radius: 22px;
+            }
+            .hero .subtitle > a{
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <section class="hero">
+          <div class="hero-body">
+            <div class="container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" alt="Google Shortener">
+              <h1 class="title" style="margin-top: -130px;">
+                Google URL Shortener
+              </h1>
+              <h2 class="subtitle">
+                <br>
+                <a class="button" style="color: black;" href="https://developers.google.com/url-shortener/v1/getting_started" target="_blank">All Data comes from developers.google.com</a>
+              </h2>
+            </div>
+          </div>
+        </section>
+
+        <section style="margin-top: 50px;">
+        <div class="container">
+          {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %}{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+          {% endif %}
+          <form method="POST" action="/">
+              {% csrf_token %}
+          <div class="field is-grouped" style="width: 25%; margin-left: 430px; display: inline-block;">
+              {{ form.as_p }}
+              <button class="button is-info" style="margin: 15px 100px;">Shorten</button>
+          </div>
+          </form>
+        </div>
+        </section>
+
+        <section style="margin-top: 50px;">
+          <div class="container">
+            <div class="tile is-ancestor">
+              <div class="tile is-vertical is-12">
+                <div class="tile">
+                  {% if url %}
+                  <div class="tile is-parent is-vertical">
+                    <article class="tile is-child">
+                      <p class="subtitle">Short URL : <a href="{{ url.id }}" target="_blank">{{ url.id }}</a></p>
+                      <p class="subtitle">Long URL : <a href="{{ url.longUrl }}" target="_blank">{{ url.longUrl }}</a></p>
+                    </article>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+    </body>
+</html>
