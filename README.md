@@ -39,7 +39,7 @@ Now the project is running at `http://localhost:8000` and your routes is:
 | {host}/api/  	                                             | POST      	     | Home page in API                             |
 
 
-For detailed explanation on how project work, read the [Django Docs](https://docs.djangoproject.com/en/1.11/) and [MySQLDB Docs](https://dev.mysql.com/doc/)
+For detailed explanation on how project work, read the [Django Docs](https://docs.djangoproject.com/en/1.11/)
 
 ## Developer
 This project made by [Osama Mohamed](https://www.facebook.com/osama.mohamed.ms)
