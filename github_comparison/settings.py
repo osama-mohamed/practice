@@ -51,7 +51,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'github_comparison.wsgi.application'
 
 DATABASES = {
-    'default': {}
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'short',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'USER': 'OSAMA',
+        'PASSWORD': 'OSAMA',
+    }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
