@@ -13,7 +13,6 @@ class TestCalls(TestCase):
         self.assertEqual(len(response.context['user_one']), 9)
         self.assertEqual(len(response.context['user_one']['login']), 16)
         self.assertEqual(response.context['user_one']['login'], 'OSAMAMOHAMED1234')
-        # print(response.content)
 
     def test_users_api(self):
         response = self.client.post(reverse('github_detail_api:home_api'), {
