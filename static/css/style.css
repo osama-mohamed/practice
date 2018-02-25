@@ -707,6 +707,40 @@ body{
 
 /* end warning */
 
+/* start to do list */
+
+.todo-list{
+    width: 400px;
+    margin: 20px auto;
+    background-color: #fff;
+    border: 2px solid #fff;
+}
+
+.todo-list h3{
+    margin: 0;
+    padding: 15px;
+    border-bottom: 2px solid #969696;
+    background-color: #efefef;
+}
+
+.todo-list .tasks{
+    list-style: none;
+}
+
+.todo-list .tasks li{
+    padding: 15px 20px;
+    border-bottom: 1px dashed #484848;
+    color: #484848;
+    cursor: pointer;
+}
+
+.todo-list .add-task .task-input{
+    padding: 15px 20px;
+    border: none;
+    width: 100%;
+}
+/* end to do list */
+
 /* start website theme color */
 
 [data_default_color="blue"] .skin_color{
