@@ -5,19 +5,15 @@ from django.core.urlresolvers import reverse
 class TestCalls(TestCase):
 
     def test_users(self):
-        response = self.client.post(reverse('github_detail:home'),
-                                    user_name_one='OSAMAMOHAMED1234',
-                                    user_name_two='octocat'
+        response = self.client.post(reverse('github_detail:home'), {
+                                    'user_name_one': 'OSAMAMOHAMED1234',
+                                    'user_name_two': 'octocat'}
                                     )
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.context['user_one']), 9)
+        self.assertEqual(len(response.context['user_one']['login']), 16)
+        self.assertEqual(response.context['user_one']['login'], 'OSAMAMOHAMED1234')
         # print(response.content)
-        # print('***************')
-        # print(response.context['login'])
-        # print('------------------------')
-        # print(response.data)
-        # print(response.context['user_one'])
-        # print(response.context)
-
 
     def test_users_api(self):
         response = self.client.post(reverse('github_detail_api:home_api'), {
