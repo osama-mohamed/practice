@@ -1,8 +1,6 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 
-# data = urlencode({"something": "something"})
-# response = self.client.post("/my/form/", data, content_type="application/x-www-form-urlencoded")
 
 class TestCalls(TestCase):
 
@@ -17,12 +15,12 @@ class TestCalls(TestCase):
         # print(response.context['login'])
         # print('------------------------')
         # print(response.data)
-        print(response.context['user_one'])
-        print(response.context)
+        # print(response.context['user_one'])
+        # print(response.context)
 
 
     def test_users_api(self):
-        response = self.client.post('/api/', {
+        response = self.client.post(reverse('github_detail_api:home_api'), {
                                     'user_name_one': 'OSAMAMOHAMED1234',
                                     'user_name_two': 'octocat'}
                                     )
