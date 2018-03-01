@@ -399,4 +399,22 @@ $(function () {
         theSummary += parseInt($(this).text());  // parseInt to return integer rather than string
     });
     $('.total-price').text(theSummary);
+
+    // auto changing notes
+    (function autoChange() {  // auto run function & infinite loop
+        $('.ticker-list .active').each(function () {
+            if (! $(this).is(':last-child')) {  // if this not last child
+                $(this).delay(1000).fadeOut(1000, function () {
+                    $(this).removeClass('active').next().addClass('active').fadeIn();
+                    autoChange();
+                });
+            } else {
+                $(this).delay(1000).fadeOut(1000, function () {
+                    $(this).removeClass('active');
+                    $('.ticker-list li').eq(0).addClass('active').fadeIn();
+                    autoChange();
+                });
+            }
+        });
+    }());
 });

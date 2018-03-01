@@ -773,6 +773,35 @@ body{
 }
 /* end calculate total price */
 
+/* start auto changing notes */
+
+.text-ticker{
+    width: 400px;
+    margin: 20px auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+.text-ticker h3{
+    padding: 15px;
+    margin: 0;
+    background-color: #eee;
+}
+
+.text-ticker .ticker-list{
+    list-style: none;
+}
+
+.text-ticker .ticker-list li{
+    padding: 15px;
+}
+
+.text-ticker .ticker-list li:not(.active){
+    display: none;
+}
+
+/* end auto changing notes */
+
 /* start website theme color */
 
 [data_default_color="blue"] .skin_color{
