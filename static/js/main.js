@@ -392,5 +392,11 @@ $(function () {
                 clearInterval(theTyper);
             }
         }, 100);
-    console.log(theText);
+
+    // calculate total price
+    var theSummary = 0;
+    $('.price').each(function () {
+        theSummary += parseInt($(this).text());  // parseInt to return integer rather than string
+    });
+    $('.total-price').text(theSummary);
 });

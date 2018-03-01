@@ -741,6 +741,38 @@ body{
 }
 /* end to do list */
 
+/* start typing effect */
+
+.typing{
+    padding: 10px;
+    background-color: #fff;
+}
+
+/* end typing effect */
+
+/* start calculate total price */
+
+.summary{
+    width: 100%;
+    margin: 400px auto;
+}
+
+.summary td{
+    background-color: #fff;
+    padding: 10px;
+    vertical-align: middle;
+}
+
+.summary tr:first-child td{
+    background-color: #444;
+    color: #fff;
+}
+
+.summary tr:last-child td:first-child{
+    text-align: end;
+}
+/* end calculate total price */
+
 /* start website theme color */
 
 [data_default_color="blue"] .skin_color{
