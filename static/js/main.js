@@ -378,4 +378,19 @@ $(function () {
             $(this).remove();
         });
     });
+
+    // type write effect
+    var theText = $('.typing').data('text'),
+        theTextLength = theText.length,
+        num = 0,
+        theTyper = setInterval(function () {
+            $('.typing').each(function () {
+                $(this).html($(this).html() + theText[num]);
+            });
+            num += 1;
+            if (num >= theTextLength) {
+                clearInterval(theTyper);
+            }
+        }, 100);
+    console.log(theText);
 });
