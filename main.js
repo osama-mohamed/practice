@@ -1,10 +1,9 @@
 
-var myName = 'osama';
+// + add
+// - sub
+// / div
+// * mul
+// % module 
+// ++ increment by 1
+// -- decrement by 1
 
-alert(myName);
-
-document.write(myName); // for test reason only
-
-document.getElementById('test').innerHTML = myName;
-
-console.log(myName);
