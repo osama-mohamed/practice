@@ -1,9 +1,10 @@
 
-var myName = 'osama',
-    myAge = 23,
-    myCountry = 'Egypt'; // 'osama' + 5 + 3
+var myName = 'osama';
 
-document.getElementById('test').innerHTML =
-    'My name is : <span style=\"color: red;\">' + myName + '</span><br>' +
-    'My name is : ' + myAge + '<br>' +
-    'My name is : ' + myCountry;
+alert(myName);
+
+document.write(myName); // for test reason only
+
+document.getElementById('test').innerHTML = myName;
+
+console.log(myName);
