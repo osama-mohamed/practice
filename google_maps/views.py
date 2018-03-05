@@ -1,13 +1,6 @@
 from django.shortcuts import render
-import json
-import requests
 
 from .forms import LocationForm
-
-URL = 'https://www.google.com/maps/embed/v1/directions?' \
-      'key=AIzaSyDyahJ9vyi0ptBQCc8ZQXwo-PvUvEtJcR8' \
-      '&origin=Oslo+Norway' \
-      '&destination=Telemark+Norway'
 
 
 def home(request):
