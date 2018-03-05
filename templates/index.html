@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Google Maps</title>
+        <link rel="icon" href="https://www.google.com/images/branding/product/1x/maps_64dp.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css" />
+    </head>
+    <body>
+        <div class="container">
+            <img src="https://www.google.com/images/branding/product/1x/maps_64dp.png" alt="Google Maps" style="margin: 26px auto 0; display: block;">
+          <h1 class="title">
+            Google Maps
+          </h1>
+          <h2>
+            <br>
+            <a class="button" style="color: black; margin-top: -30px;" href="https://www.google.com/maps/embed/v1/directions" target="_blank">All Data comes from google.com</a>
+          </h2>
+        </div>
+        <section style="margin-top: 0;">
+        <div class="container">
+          <form method="POST" action="/">
+              {% csrf_token %}
+          <div class="field is-grouped" style="width: 25%; margin-left: 430px; display: inline-block;">
+              {{ form.as_p }}
+              <button class="button is-info" style="margin: 15px 100px;">Search</button>
+          </div>
+          </form>
+        </div>
+        {% if first_location and second_location %}
+            <iframe
+              width="600"
+              height="450"
+              frameborder="0" style="border:0;margin: 20px auto 0;display: block;"
+              src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDyahJ9vyi0ptBQCc8ZQXwo-PvUvEtJcR8
+                &origin={{ first_location }}&destination={{ second_location }}" allowfullscreen>
+            </iframe>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+        {% endif %}
+        </section>
+    </body>
+</html>
