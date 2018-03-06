@@ -1,7 +1,8 @@
 
-function myAgeInHours() {
-    var myAge = 23;
+function myAgeInHours(myAge) {
     return myAge * 365 * 24;
 }
 
-document.getElementById('test').innerHTML = 'My Age in Hours = ' + myAgeInHours() + ' Hours';
+var askForAge = prompt('what is your age ? ');
+
+document.getElementById('test').innerHTML = 'My Age in Hours = ' + myAgeInHours(askForAge) + ' Hours';
