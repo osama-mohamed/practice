@@ -1,16 +1,19 @@
 
 var x = 1;
 
-function xto2() {
-    x = 2;
+function xParent() {
+    var x = 2;
+    var cal = x + 2;
+    function xTest() {
+        var x = 5,
+            cal = x + 2;
+        console.log(cal);
+    }
+    return xTest();
 }
 
-function xto3() {
-    x = 3;
-}
+console.log(x);
+xParent();
+console.log(x);
 
-console.log(x);
-xto2();
-console.log(x);
-xto3();
-console.log(x);
+
