@@ -1,17 +1,16 @@
-var season = prompt('what is your favourite season ?');
 
-switch (season) {
-    case 'winter':
-        alert('winter is very cold!');
-        break;
-    case 'summer':
-        alert('summer is very hot!');
-        break;
-    case 'spring':
-    case 'autumn':
-        alert('This season is amazing!');
-        break;
-    default:
-        alert('You did not write a valid season name!');
-        break;
+var x = 1;
+
+function xto2() {
+    x = 2;
 }
+
+function xto3() {
+    x = 3;
+}
+
+console.log(x);
+xto2();
+console.log(x);
+xto3();
+console.log(x);
