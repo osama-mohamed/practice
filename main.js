@@ -1,11 +1,7 @@
 
-function sayHi() {
-    var myName = 'OSAMA';
-    if (myName === 'OSAMA') {
-        alert('Hello ' + myName + ' you are welcome!');
-    } else {
-        alert('Hello ' + myName)
-    }
+function myAgeInHours() {
+    var myAge = 23;
+    return myAge * 365 * 24;
 }
 
-// sayHi();
+document.getElementById('test').innerHTML = 'My Age in Hours = ' + myAgeInHours() + ' Hours';
