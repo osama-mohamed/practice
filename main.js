@@ -1,6 +1,7 @@
 
 var friends = [
     'Eslam',
+    'Osama',
     'Mohamed',
     'Mahmoud'
 ];
@@ -8,27 +9,14 @@ var friends = [
 console.log(friends);
 console.log(friends.length);
 
-
-friends[3] = 'Osama';
+friends.splice(3, 1);              // (start on index, number of how many to delete)
 console.log(friends);
 console.log(friends.length);
 
-friends[friends.length] = 'Sara';   // insert Sara at the last
+friends.pop();                    // delete the last index
 console.log(friends);
 console.log(friends.length);
 
-friends.push('Nariman');            // insert Nariman at the last
-console.log(friends);
-console.log(friends.length);
-
-friends.unshift('Mai');             // insert Mai at the first
-console.log(friends);
-console.log(friends.length);
-
-friends.splice(5, 1);              // (start on index, number of how many to delete)
-console.log(friends);
-console.log(friends.length);
-
-friends.splice(5, 0, 'Ahmed', 'Ali', 'Mona'); // (start on index, don't delete, add something)
+friends.shift();                  // delete the first index
 console.log(friends);
 console.log(friends.length);
