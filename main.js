@@ -1,30 +1,21 @@
 
-var friends = new Array ( // const way
-    'Eslam',
-    'Mohamed',
-    'Mahmoud'
-);
-
-console.log(friends);
-
-
-var friendsTow = []; // literal way
-
-friendsTow[0] = 'Eslam';
-friendsTow[1] = 'Mohamed';
-friendsTow[2] = 'Mahmoud';
-
-console.log(friendsTow);
-
-var friendsThree = ['Eslam', 'Mohamed', 'Mahmoud']; // literal way
-
-console.log(friendsThree);
-
-var friendsFour = [ // literal way
+var friends = [ // literal way
     'Eslam',
     'Mohamed',
     'Mahmoud'
 ];
 
-console.log(friendsFour);
-console.log(friendsFour[0]);
+console.log(friends);
+
+if (Array.isArray(friends)) {         // first check if this is an array
+    console.log('yes it is array');
+} else {
+    console.log('no it is not array');
+}
+
+
+if (friends.constructor === Array) {  // second check if this is an array
+    console.log('yes it is array');
+} else {
+    console.log('no it is not array');
+}
