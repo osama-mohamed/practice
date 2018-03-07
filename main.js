@@ -3,20 +3,20 @@ var friends = [
     'Eslam',
     'Osama',
     'Mohamed',
-    'Mahmoud'
+    'Mahmoud',
+    'Ahmed',
+    1,
+    2,
+    10,
+    20,
+    11,
+    21
 ];
 
 console.log(friends);
-console.log(friends.length);
 
-friends.splice(3, 1);              // (start on index, number of how many to delete)
+friends.sort();
 console.log(friends);
-console.log(friends.length);
 
-friends.pop();                    // delete the last index
+friends.reverse();
 console.log(friends);
-console.log(friends.length);
-
-friends.shift();                  // delete the first index
-console.log(friends);
-console.log(friends.length);
