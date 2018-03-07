@@ -4,35 +4,23 @@ var friends = [
     'Osama',
     'Mohamed',
     'Mahmoud',
-    'Ahmed',
-    1,
-    2,
-    10,
-    20,
-    11,
-    21
+    'Ahmed'
 ];
 
 console.log(friends);
 
-var sliced= friends.slice(2, 4);    // (start, stop) from first
-console.log(sliced);
+var specialFriends = friends.indexOf('Ahmed', 4);    // search by string and return the index
+                                                     // ('item', start search point)
+console.log(specialFriends);
+console.log(friends[specialFriends]);
 
-var slicedFromEnd= friends.slice(-10, -6);    // (start, stop) from last
-console.log(slicedFromEnd);
 
-var newFriends = [
-    'Ebram',
-    'Mikel',
-    'Mina'
-];
 
-var workFriends = [
-    'Mariem',
-    'Basma',
-    'norhan'
-];
+var specialFriend = friends.lastIndexOf('Osama', 1);    // search by string and return the index
+                                                        // ('item', start search point)
+console.log(specialFriend);
+console.log(friends[specialFriend]);
 
-// concatenation newFriends and workFriends to friends
-var allFriends = friends.concat(newFriends, workFriends);
-console.log(allFriends);
+
+document.getElementById('all').innerHTML = 'My Friends : ' + friends;
+document.getElementById('special').innerHTML = 'My special Friends : ' + friends[specialFriends];
