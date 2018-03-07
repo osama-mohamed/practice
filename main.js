@@ -1,21 +1,30 @@
 
-var myInput = document.getElementById('test-input'),
-    myDiv = document.getElementById('test'),
-    myCurrency = document.getElementById('currency');
+var friends = new Array ( // const way
+    'Eslam',
+    'Mohamed',
+    'Mahmoud'
+);
+
+console.log(friends);
 
 
-// myDiv.onmouseover = function () {
-//     myDiv.innerHTML = 'You hovered me';
-// };
-//
-// myDiv.onmouseout = function () {
-//     myDiv.innerHTML = 'You moved out of me';
-// };
-//
-// myInput.onkeyup = function () {
-//     myDiv.innerHTML = myInput.value * 20;
-// };
+var friendsTow = []; // literal way
 
-myCurrency.onchange = function () {
-    myDiv.innerHTML = myInput.value * myCurrency.value;
-};
+friendsTow[0] = 'Eslam';
+friendsTow[1] = 'Mohamed';
+friendsTow[2] = 'Mahmoud';
+
+console.log(friendsTow);
+
+var friendsThree = ['Eslam', 'Mohamed', 'Mahmoud']; // literal way
+
+console.log(friendsThree);
+
+var friendsFour = [ // literal way
+    'Eslam',
+    'Mohamed',
+    'Mahmoud'
+];
+
+console.log(friendsFour);
+console.log(friendsFour[0]);
