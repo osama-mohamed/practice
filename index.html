@@ -4,9 +4,21 @@
         <meta charset="UTF-8">
         <title>JavaScript</title>
         <link rel="stylesheet" href="style.css">
+        <script>
+            window.onload = function () {
+                document.getElementById('test').innerHTML = 'This is text created by javascript'
+            };
+            function oneClick() {
+                document.getElementById('test').innerHTML = 'You clicked the button'
+            }
+            function doubleClick() {
+                document.getElementById('test').innerHTML = 'You double clicked the button'
+            }
+        </script>
     </head>
     <body>
-        <div id="test"></div>
+        <button onclick="oneClick()" ondblclick="doubleClick()">Click To Change</button>
+        <div id="test">This is test text</div>
         <script src="main.js"></script>
     </body>
 </html>
