@@ -7,15 +7,8 @@ var friends = [ // literal way
 
 console.log(friends);
 
-if (Array.isArray(friends)) {         // first check if this is an array
-    console.log('yes it is array');
-} else {
-    console.log('no it is not array');
-}
+console.log(friends.length);
 
+friends.length = 2;     // set maximum length to 2
 
-if (friends.constructor === Array) {  // second check if this is an array
-    console.log('yes it is array');
-} else {
-    console.log('no it is not array');
-}
+console.log(friends);
