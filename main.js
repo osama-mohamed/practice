@@ -1,26 +1,25 @@
 
-var friends = [
-    'Eslam',
-    'Osama',
-    'Mohamed',
-    'Mahmoud',
-    'Ahmed'
-];
+var myString = 'This is a string';
 
-console.log(friends);
-
-var specialFriends = friends.indexOf('Ahmed', 4);    // search by string and return the index
-                                                     // ('item', start search point)
-console.log(specialFriends);
-console.log(friends[specialFriends]);
+console.log(myString);
+console.log(myString.length);
+console.log(typeof (myString));
 
 
+var myNumber = 66;
 
-var specialFriend = friends.lastIndexOf('Osama', 1);    // search by string and return the index
-                                                        // ('item', start search point)
-console.log(specialFriend);
-console.log(friends[specialFriend]);
+console.log(myNumber);
+console.log(typeof (myNumber));
+
+var myStringNumber = myNumber.toString();   // recommended
+
+console.log(myStringNumber);
+console.log(myStringNumber.length);
+console.log(typeof (myStringNumber));
 
 
-document.getElementById('all').innerHTML = 'My Friends : ' + friends;
-document.getElementById('special').innerHTML = 'My special Friends : ' + friends[specialFriends];
+var myStringNumberTwo = String(myNumber);   // not recommended
+
+console.log(myStringNumberTwo);
+console.log(myStringNumberTwo.length);
+console.log(typeof (myStringNumberTwo));
