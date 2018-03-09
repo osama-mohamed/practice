@@ -1,14 +1,30 @@
+/*
+    split(separator, limit)
+    slice(start, end)
+    substr(start, length)
+    substring(start, end)
+*/
 
 var myString = 'This is a string',
-    myIndex = myString.indexOf('a', 3);
+    mySplittedString = myString.split(' ', 2),
+    mySlicedString = myString.slice(8, 16),    // slice(-5)  the last 5 char in string
+    mySubStr = myString.substr(8, 8),
+    mySubString = myString.substring(8, 16);
 
 console.log(myString);
-console.log(myIndex);
+console.log(typeof (myString));
 
+console.log(mySplittedString);
+console.log(typeof (mySplittedString));
 
-var myLastIndex = myString.lastIndexOf('a');
-console.log(myLastIndex);
+console.log('************');
+console.log(mySlicedString);
+console.log(typeof (mySlicedString));
 
+console.log('------');
+console.log(mySubStr);
+console.log(typeof (mySubStr));
 
-var mySearch = myString.search('a');
-console.log(mySearch);
+console.log('+++++++++');
+console.log(mySubString);
+console.log(typeof (mySubString));
