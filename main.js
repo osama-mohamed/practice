@@ -1,30 +1,15 @@
 /*
-    split(separator, limit)
-    slice(start, end)
-    substr(start, length)
-    substring(start, end)
+    charAt(index)    | charAt(varName.length - 1) last Char in variable
+    charCodeAt(index)
+    replace('value', 'new value')
 */
 
 var myString = 'This is a string',
-    mySplittedString = myString.split(' ', 2),
-    mySlicedString = myString.slice(8, 16),    // slice(-5)  the last 5 char in string
-    mySubStr = myString.substr(8, 8),
-    mySubString = myString.substring(8, 16);
+    myChar = myString.charAt(8),
+    myCharCode = myString.charCodeAt(8),
+    myReplaced = myString.replace('a', 'a new');
 
 console.log(myString);
-console.log(typeof (myString));
-
-console.log(mySplittedString);
-console.log(typeof (mySplittedString));
-
-console.log('************');
-console.log(mySlicedString);
-console.log(typeof (mySlicedString));
-
-console.log('------');
-console.log(mySubStr);
-console.log(typeof (mySubStr));
-
-console.log('+++++++++');
-console.log(mySubString);
-console.log(typeof (mySubString));
+console.log(myChar);
+console.log(myCharCode);
+console.log(myReplaced);
