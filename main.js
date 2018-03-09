@@ -1,14 +1,12 @@
 
-var i;
-for (i = 0; i <= 10; i++) {
-    console.log(i);
+function generateYears(Start, End) {
+    document.write('<select>');
+        var year;
+        for (year = Start; year <= End; year += 1) {
+            document.write("<option value=\"" + year + "\">" + year + "</option>");
+            // document.write("<option value=" + year + ">" + year + "</option>");
+        }
+    document.write('</select>');
 }
 
-
-
-var x = 0;
-for (;;) {
-    if (x > 10) break;
-    console.log(x);
-    x += 1
-}
+generateYears(1900, 2020);
