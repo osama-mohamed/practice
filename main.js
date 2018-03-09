@@ -1,16 +1,18 @@
 /*
-    toLowerCase()
-    toUpperCase()
+    trim()
+    link()
 */
 
-var myString = 'This is a string',
-    myLowerString = myString.toLowerCase(),
-    myUpperString = myString.toUpperCase();
+var myString = '           This is a string          ',
+    myTrimmedString = myString.trim();
 
 console.log(myString);
-console.log(myLowerString);
-console.log(myUpperString);
+console.log(myTrimmedString);
 
 
-console.log("THIS IS A STRING".toLowerCase());
-console.log("this is a string".toUpperCase());
+
+var myOtherString = 'Google',
+    myLinkedString = myOtherString.link('https://www.google.com.eg');
+
+console.log(myOtherString);
+console.log(myLinkedString);
