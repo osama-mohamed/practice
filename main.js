@@ -1,17 +1,20 @@
 
-var myNumber = 660,
-    myString = myNumber.toString(),
-    myNewNumber = myString.replace(0, 6),
-    mySplitted = myNewNumber.split('');
+/*
+    for (starting; condition; expression;) {
+        code here
+    }
+*/
 
 
-console.log(myNumber);
-console.log(myString);
-console.log(myNewNumber);
-console.log(mySplitted);
+var i;
+
+for (i = 1; i <= 10; i++) {
+    console.log(i);
+}
 
 
-var myNumberTwo = 660,
-    chainNumber = myNumberTwo.toString().replace(0, 6).split('');
-
-console.log(chainNumber);
+var friends = ['Osama', 'Mohamed', 'mahmoud'],
+    f;
+for (f = 0; f < friends.length; f += 1) {
+    console.log(friends[f]);
+}
