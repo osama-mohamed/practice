@@ -1,4 +1,5 @@
 
+
 function generateYears(Start, End) {
     document.write('<select>');
         var year;
@@ -10,3 +11,10 @@ function generateYears(Start, End) {
 }
 
 generateYears(1900, 2020);
+
+
+function oneClick() {
+    var startYear = document.getElementById('year-start').value;
+    var endYear = document.getElementById('year-end').value;
+    generateYears(parseInt(startYear), parseInt(endYear));
+}
