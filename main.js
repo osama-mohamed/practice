@@ -1,13 +1,14 @@
 
-var newCar = {
-    color: 'black',
-    type: 'sedan',
-    model: 2018
-},
-    prop;
+var i;
+for (i = 0; i <= 10; i++) {
+    console.log(i);
+}
 
-for (prop in newCar) {
-    if (newCar.hasOwnProperty(prop)) {
-        console.log(prop + " : " + newCar[prop])
-    }
+
+
+var x = 0;
+for (;;) {
+    if (x > 10) break;
+    console.log(x);
+    x += 1
 }
