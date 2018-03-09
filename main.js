@@ -1,20 +1,17 @@
 
-/*
-    for (starting; condition; expression;) {
-        code here
+var x,y;
+for (x=1; x<=12; x+=1) {
+    for (y=1; y<=12; y+=1) {
+        console.log(x, y);
     }
-*/
-
-
-var i;
-
-for (i = 1; i <= 10; i++) {
-    console.log(i);
+    console.log('*********')
 }
 
 
-var friends = ['Osama', 'Mohamed', 'mahmoud'],
-    f;
-for (f = 0; f < friends.length; f += 1) {
-    console.log(friends[f]);
+var c,v;
+for (c=12; c>=1; c-=1) {
+    for (v=12; v>=1; v-=1) {
+        console.log(c, v);
+    }
+    console.log('=======')
 }
