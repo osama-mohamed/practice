@@ -1,25 +1,14 @@
 
-var myString = 'This is a string';
+var myString = 'This is a string',
+    myIndex = myString.indexOf('a', 3);
 
 console.log(myString);
-console.log(myString.length);
-console.log(typeof (myString));
+console.log(myIndex);
 
 
-var myNumber = 66;
-
-console.log(myNumber);
-console.log(typeof (myNumber));
-
-var myStringNumber = myNumber.toString();   // recommended
-
-console.log(myStringNumber);
-console.log(myStringNumber.length);
-console.log(typeof (myStringNumber));
+var myLastIndex = myString.lastIndexOf('a');
+console.log(myLastIndex);
 
 
-var myStringNumberTwo = String(myNumber);   // not recommended
-
-console.log(myStringNumberTwo);
-console.log(myStringNumberTwo.length);
-console.log(typeof (myStringNumberTwo));
+var mySearch = myString.search('a');
+console.log(mySearch);
