@@ -1,15 +1,17 @@
 /*
-    charAt(index)    | charAt(varName.length - 1) last Char in variable
-    charCodeAt(index)
-    replace('value', 'new value')
+    String.fromCharCode(num1, num2, num3, num4, ...........)
+    concat(string, string, ....)
 */
 
-var myString = 'This is a string',
-    myChar = myString.charAt(8),
-    myCharCode = myString.charCodeAt(8),
-    myReplaced = myString.replace('a', 'a new');
+var myName = String.fromCharCode(79, 115, 97, 109, 97),
+    myNameCap = String.fromCharCode(79, 83, 65, 77, 65),
+    myString = 'This is a string',
+    myStringTwo = 'This is a second string',
+    concatString = myString.concat(' ', myStringTwo),
+    concatStringTwo = 'This is a string'.concat(' ', 'This is a second string');
 
-console.log(myString);
-console.log(myChar);
-console.log(myCharCode);
-console.log(myReplaced);
+console.log(myName);
+console.log(myNameCap);
+
+console.log(concatString);
+console.log(concatStringTwo);
