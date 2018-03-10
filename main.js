@@ -1,22 +1,30 @@
 
 /*
-    setDate(day[Req]) = day of the month from 1 to 31
-    setFullYear(year[Req], month[Opt](0-11 index), day[Opt])
-    setHours(hour[Req], minutes[Opt], seconds[Opt], milliseconds[Opt])
-    setMinutes(minutes[Req], seconds[Opt], milliseconds[Opt])
-    setSeconds(seconds[Req], milliseconds[Opt])
-    setMilliseconds(milliseconds[Req])
-    setMonth(month[Req](0-11 index), day[opt])
+    now()       // to present
+    parse()     // to specific date
+    toISOString()
+    toDateString()
+    toTimeString()
 */
 
 
-var currentDate  = new Date();
-// currentDate.setDate(1);
-// currentDate.setFullYear(2016, 9, 1);
-// currentDate.setHours(16, 45,45);
-// currentDate.setMinutes(44, 46);
-// currentDate.setSeconds(42);
-// currentDate.setMilliseconds(600000); // 10 minutes
-// currentDate.setMonth(3);
+var currentDate  = new Date(),
+    now = Date.now(),
+    parse = Date.parse('1 Oct 1994'),
+    min = 1000 * 60,
+    hour = min * 60,
+    day = hour * 24,
+    month = day * 30,
+    year = day * 365,
+    iso = currentDate.toISOString(),
+    date = currentDate.toDateString(),
+    time = currentDate.toTimeString();
+
 
 console.log(currentDate);
+console.log(Math.round(now / year));
+console.log(Math.round(parse / year));
+
+console.log(iso);
+console.log(date);
+console.log(time);
