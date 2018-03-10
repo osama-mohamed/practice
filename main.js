@@ -1,14 +1,10 @@
 
 /*
-    Math.min()
-    Math.max()
+    Math.random()
 */
 
 
-var num = Math.min(10, 1000, 20, 600, -10.10, -400.4, -600);
+var myEndPoint = 10,
+    myRandomNumber = Math.floor((Math.random() * myEndPoint ) + 1);   // numbers in range(0, myEndPoint)
 
-console.log(num);
-
-var num2 = Math.max(10, 1000, 20, 600, -10.10, -400.4, -600);
-
-console.log(num2);
+console.log(myRandomNumber);
