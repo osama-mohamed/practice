@@ -1,10 +1,16 @@
 
 /*
-    Math.random()
+    regular expression syntax
+    /pattern/attributes
+
+    Attributes List :
+    i   => case insensitive
+    g   => global
+    m   => multi line search
 */
 
 
-var myEndPoint = 10,
-    myRandomNumber = Math.floor((Math.random() * myEndPoint ) + 1);   // numbers in range(0, myEndPoint)
+var myString = 'This is a string',
+    result = myString.replace(/i/gi, '@');
 
-console.log(myRandomNumber);
+console.log(result);
