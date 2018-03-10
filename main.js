@@ -1,30 +1,14 @@
 
 /*
-    now()       // to present
-    parse()     // to specific date
-    toISOString()
-    toDateString()
-    toTimeString()
+    toString()
+    toExponential() // 1000 === 10 ^ 3
+    toFixed()       // round number depend on number in ()
+    parseInt()      // number should be at first
 */
 
 
-var currentDate  = new Date(),
-    now = Date.now(),
-    parse = Date.parse('1 Oct 1994'),
-    min = 1000 * 60,
-    hour = min * 60,
-    day = hour * 24,
-    month = day * 30,
-    year = day * 365,
-    iso = currentDate.toISOString(),
-    date = currentDate.toDateString(),
-    time = currentDate.toTimeString();
-
-
-console.log(currentDate);
-console.log(Math.round(now / year));
-console.log(Math.round(parse / year));
-
-console.log(iso);
-console.log(date);
-console.log(time);
+console.log((200).toString());
+console.log((200).toExponential());
+console.log((9.56).toFixed(0));
+console.log((9.56).toFixed(1));
+console.log(parseInt('600px'));
