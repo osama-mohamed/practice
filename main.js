@@ -1,18 +1,35 @@
 
 /*
-    full format = new Date("october 01 1994 01:01:01")
-    long format = new Date("october 01 1994 01:01:01")
-    short format = new Date("10/1/1994 01:01:01")
-    iso format = new Date("1994-10-01 01:01:01+02:00")
+    getDate = day of the month from 1 to 31
+    getDay = day of the week from 0 to 6 >> sun == 0 & sat == 6
+    getFullYear
+    getHours
+    getMinutes
+    getSeconds
+    getMilliseconds
+    getTime = milliseconds from 1 jan 1970 until now
+    getTimezoneOffset = difference between utc and local time in minutes
 */
 
 
-var full  = new Date('october 01 1994 01:01:01'),
-    long = new Date('october 01 1994 01:01:01'),
-    short = new Date('10/1/1994 01:01:01'),
-    iso = new Date('1994-10-01 01:01:01+02:00');
+var currentDate  = new Date(),
+    day = currentDate.getDate(),
+    dayOfWeek = currentDate.getDay(),
+    fullYear = currentDate.getFullYear(),
+    hours = currentDate.getHours(),
+    minutes = currentDate.getMinutes(),
+    seconds = currentDate.getSeconds(),
+    milliSeconds = currentDate.getMilliseconds(),
+    milliSecondsFrom1970 = currentDate.getTime(),
+    timeZoneOffset = currentDate.getTimezoneOffset();
 
-console.log(full);
-console.log(long);
-console.log(short);
-console.log(iso);
+console.log(currentDate);
+console.log(day);
+console.log(dayOfWeek);
+console.log(fullYear);
+console.log(hours);
+console.log(minutes);
+console.log(seconds);
+console.log(milliSeconds);
+console.log(milliSecondsFrom1970);
+console.log(timeZoneOffset);
