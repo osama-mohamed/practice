@@ -1,34 +1,36 @@
 
 
 var i = 0;
-while (i <= 10) {
+for (; i <= 10; i += 1) {
+    if (i === 4) {
+        break;
+    }
     console.log(i);
-    i += 1;
 }
 
-var n = 0;
-do {
-    console.log(n);
-    n += 1;
-} while (n <= 10);
 
-
-function generateYears(Start, End) {
-    document.write('<select>');
-        var year = Start;
-        do {
-            document.write("<option value=\"" + year + "\">" + year + "</option>");
-            // document.write("<option value=" + year + ">" + year + "</option>");
-            year += 1
-        } while (year <= End);
-    document.write('</select>');
+var a = 0;
+for (; a <= 10; a += 1) {
+    if (a === 4) {
+        continue;
+    }
+    console.log(a);
 }
 
-generateYears(1900, 2020);
 
+var x,y;
 
-function oneClick() {
-    var startYear = document.getElementById('year-start').value;
-    var endYear = document.getElementById('year-end').value;
-    generateYears(parseInt(startYear), parseInt(endYear));
+MainLoop:
+for (x = 1; x <= 12; x += 1) {
+    ChildLoop:
+    for (y = 1; y <= 12; y += 1) {
+        if (y === 6) {
+            // break ChildLoop;
+            // break MainLoop;
+            // continue ChildLoop;
+            // continue MainLoop;
+        }
+        console.log(x, y);
+    }
+    console.log('*********')
 }
