@@ -1,17 +1,17 @@
 
 /*
-    Math.floor()
+    Math.round()
 */
 
 
-var num = Math.floor(4.00001);
+var num = Math.round(4.00001);
 
 console.log(num);
 
-var num2 = Math.floor(-4.9);
+var num2 = Math.round(-4.9);
 
 console.log(num2);
 
-var num3 = Math.floor(14 - 1.5);
+var num3 = Math.round(14 - 1.5);
 
 console.log(num3);
