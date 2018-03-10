@@ -1,18 +1,17 @@
 
-var newCar = {
-    color: 'black',
-    type: 'sedan',
-    model: 2018
-},
-    prop;
-
-console.log(newCar);
-console.log(newCar.model);
-console.log(newCar['model']);
+/*
+    Math.ceil()
+*/
 
 
-for (prop in newCar) {
-    if (newCar.hasOwnProperty(prop)) {
-        console.log(prop + " : " + newCar[prop])
-    }
-}
+var num = Math.ceil(4.00001);
+
+console.log(num);
+
+var num2 = Math.ceil(-4.9);
+
+console.log(num2);
+
+var num3 = Math.ceil(14 - 1.5);
+
+console.log(num3);
