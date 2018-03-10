@@ -1,18 +1,18 @@
 
 /*
-    new Date()                  => current date and time
-    new Date(10000)             => 10000 milliseconds == 10 seconds
-    new Date("dateString")      => date as a string
-    new Date(year, month, day, hour, minute, second, millisecond)      => date as a string
+    full format = new Date("october 01 1994 01:01:01")
+    long format = new Date("october 01 1994 01:01:01")
+    short format = new Date("10/1/1994 01:01:01")
+    iso format = new Date("1994-10-01 01:01:01+02:00")
 */
 
 
-var currentDate = new Date(),
-    milliseconds = new Date(1000),
-    dateString  = new Date('october 01 1994 00:00:00'),
-    numberedDate = new Date(1994, 9, 1, 0, 0, 0, 0);
+var full  = new Date('october 01 1994 01:01:01'),
+    long = new Date('october 01 1994 01:01:01'),
+    short = new Date('10/1/1994 01:01:01'),
+    iso = new Date('1994-10-01 01:01:01+02:00');
 
-console.log(currentDate);
-console.log(milliseconds);
-console.log(dateString);
-console.log(numberedDate);
+console.log(full);
+console.log(long);
+console.log(short);
+console.log(iso);
