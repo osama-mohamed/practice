@@ -1,17 +1,14 @@
 
 /*
-    Math.round()
+    Math.min()
+    Math.max()
 */
 
 
-var num = Math.round(4.00001);
+var num = Math.min(10, 1000, 20, 600, -10.10, -400.4, -600);
 
 console.log(num);
 
-var num2 = Math.round(-4.9);
+var num2 = Math.max(10, 1000, 20, 600, -10.10, -400.4, -600);
 
 console.log(num2);
-
-var num3 = Math.round(14 - 1.5);
-
-console.log(num3);
