@@ -1,13 +1,14 @@
 
 
-var myInput = document.getElementById('my-input');
-
-myInput.onfocus = function () {
-    this.setAttribute('data-place', this.getAttribute('placeholder'));
-    this.setAttribute('placeholder', '');
-};
-
-myInput.onblur = function () {
-    this.setAttribute('placeholder', this.getAttribute('data-place'));
-    this.setAttribute('data-place', '');
-};
+function generateSerial() {
+    var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
+        serialLength = 20,
+        randomSerial = '',
+        randomNumber,
+        i = 0;
+    for (; i < serialLength; i += 1) {
+        randomNumber = Math.floor(Math.random() * chars.length);
+        randomSerial += chars.substring(randomNumber, randomNumber + 1);
+    }
+    document.getElementById('serial').innerHTML = randomSerial;
+}
