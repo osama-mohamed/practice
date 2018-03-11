@@ -1,31 +1,6 @@
-.class-one h2{
-    color: #00f;
-}
-
-.class-one p{
-    color: #00f;
-}
-
-.class-two h2{
-    color: #f00;
-}
-
-.class-two p{
-    color: #f00;
-}
-
-.class-three h2{
-    color: #0f0;
-}
-
-.class-three p{
-    color: #0f0;
-}
-
-.class-four h2{
-    color: #ff0;
-}
-
-.class-four p{
-    color: #ff0;
+button{
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    display: none;
 }
