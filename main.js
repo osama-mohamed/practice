@@ -1,21 +1,22 @@
 
-// first method
-if (window.location.hash) {
-    if (window.location.hash.indexOf('osama') === 1) {
-        window.location = 'https://www.fb.com/osama.mohamed.ms';
-    }
-} else {
-    console.log('no hash is found here');
-}
+var myElement = document.getElementById('myImg'),
+    myImgs = [
+        'img/js.png',
+        'img/python2.png',
+        'img/mysql.png',
+        'img/mariadb.png',
+        'img/5.png',
+        'img/CSS33.png'
+    ];
 
 
-// second method
-if (window.location.hash) {
-    var hash = window.location.hash.substring(1);
-    console.log(hash);
-    if (hash === 'osama') {
-        window.location = 'https://www.fb.com/osama.mohamed.ms';
-    }
-} else {
-    console.log('no hash is found here too');
+function changeImg(myElement, myImgs) {
+    setInterval(function () {
+        var myRandomNumber = Math.floor(Math.random() * myImgs.length)
+        myElement.src = myImgs[myRandomNumber];
+        console.log(myRandomNumber);
+        console.log(myImgs[myRandomNumber]);
+    }, 1000);
 }
+changeImg(myElement, myImgs);
+
