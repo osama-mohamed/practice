@@ -1,18 +1,23 @@
 
-var myTextarea = document.getElementById('myarea'),
-    mySpan = document.getElementById('myspan');
+function showTime() {
+    var time = new Date(),
+    hour = time.getHours(),
+    minute = time.getMinutes(),
+    second = time.getSeconds();
+    if (hour < 10) {
+        hour = '0' + hour;
+    }
+    if (minute < 10) {
+        minute = '0' + minute;
+    }
+    if (second < 10) {
+        second = '0' + second;
+    }
+    document.getElementById('clock').innerHTML = hour + ' : ' +
+                                                 minute + ' : ' +
+                                                 second;
+}
 
-
-myTextarea.onkeyup = function () {
-    mySpan.textContent = 70 - this.value.length;
-
-    // if condition in short code
-    mySpan.textContent < 0 ? mySpan.style.color = '#f00' : mySpan.style.color = '#0f0';
-
-    // // if condition in long code
-    // if (mySpan.textContent < 0) {
-    //         mySpan.style.color = '#f00';
-    // } else if (mySpan.textContent >= 0) {
-    //         mySpan.style.color = '#0f0';
-    // }
+window.onload = function () {
+    setInterval(showTime, 500);
 };
