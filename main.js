@@ -4,10 +4,11 @@ var myTitle = document.getElementById('title'),
     myLiveTitle = document.getElementById('title-live'),
     myLiveContent = document.getElementById('content-live');
 
-myTitle.onkeyup = function () {
-    myLiveTitle.textContent = this.value;
-};
+function livePreview(i1, i2) {
+    i1.onkeyup = function () {
+        i2.textContent = this.value;
+    };
+}
 
-myContent.onkeyup = function () {
-    myLiveContent.textContent = this.value;
-};
+livePreview(myTitle, myLiveTitle);
+livePreview(myContent, myLiveContent);
