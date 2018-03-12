@@ -1,18 +1,25 @@
+/*
+    setTimeout(function, milliseconds, param1, para2, param3, ......)
+    clearTimeout(id or number of setTimeout function)
+*/
 
-// window.alert('Hello \nOSAMA MOHAMED \nPython Developer');
-alert('Hello \nOSAMA MOHAMED \nPython Developer \nFull stack developer');
+
+setTimeout(function () {
+    console.log('Hello osama mohamed after 3 seconds!')
+}, 3000);
 
 
-// var ask = window.confirm('Are you sure you want to open Google ?');
-var ask = confirm('Are you sure you want to open \nGoogle ?');
-if (ask === true) {
-    window.location.href = 'https://www.google.com.eg';
-} else {
-    console.log('sorry you choosed not to open Google');
-    // window.console.log('sorry you choosed not to open Google');
+function writeHello() {
+    console.log('Hello osama mohamed after 5 seconds!')
 }
 
+var myButton = document.getElementById('click'),
+    myMessage = setTimeout(writeHello, 5000);
 
-// var name = window.prompt('enter Your name', 'Example: Osama');  // return strings
-var name = prompt('enter Your name', 'Example: Osama');      // return strings
-console.log(name);
+console.log(myMessage);
+
+myButton.onclick = function () {
+    clearTimeout(myMessage);
+    clearTimeout(2);
+    console.log(myMessage);
+};
