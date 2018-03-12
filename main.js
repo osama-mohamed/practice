@@ -1,12 +1,15 @@
 /*
-	window.history.length    > number of visited websites
-	window.history.forward() > go to next url
-	window.history.back()    > go back to previous url
-	window.history.go(2)     > (2) go to next two urls, (-2) go back to two previous urls
+	
 */
 
 
-window.console.log(window.history.length);
-window.history.forward();
-window.history.back();
-window.history.go(-2);
+window.console.log(window.navigator.appName);
+window.console.log(window.navigator.appCodeName);
+window.console.log(window.navigator.appVersion);
+window.console.log(window.navigator.platform);
+window.console.log(window.navigator.cookieEnabled);
+window.console.log(window.navigator.language);
+window.console.log(window.navigator.onLine);
+window.console.log(window.navigator.product);
+window.console.log(window.navigator.plugins);
+
