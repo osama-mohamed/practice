@@ -1,11 +1,8 @@
 /*
-	window.location.href;
-	accept :
-			1 - full url
-			2 - page in current website
-			3 - hash id (#osama)
-			4 - protocol (ftp, mail, file)
+	window.location.host;
+	window.location.hash;
 */
 
 
-window.console.log(window.location.href);
+window.console.log(window.location.host);
+window.console.log(window.location.hash);
