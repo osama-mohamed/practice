@@ -1,25 +1,42 @@
 /*
-    setTimeout(function, milliseconds, param1, para2, param3, ......)
-    clearTimeout(id or number of setTimeout function)
+    setInterval(function, milliseconds, param1, para2, param3, ......)
+    clearInterval(id or number of setInterval function)
 */
 
 
-setTimeout(function () {
-    console.log('Hello osama mohamed after 3 seconds!')
+setInterval(function () {
+    console.log('Hello osama mohamed every 3 seconds!')
 }, 3000);
 
 
 function writeHello() {
-    console.log('Hello osama mohamed after 5 seconds!')
+    console.log('Hello osama mohamed every 5 seconds!')
 }
 
 var myButton = document.getElementById('click'),
-    myMessage = setTimeout(writeHello, 5000);
+    myMessage = setInterval(writeHello, 5000),
+    myDiv = document.getElementById('count'),
+    myCountDown = setInterval(countDown, 1000);
 
 console.log(myMessage);
 
 myButton.onclick = function () {
-    clearTimeout(myMessage);
-    clearTimeout(2);
+    clearInterval(myMessage);
+    // clearInterval(2);
     console.log(myMessage);
 };
+
+
+
+
+function countDown() {
+    if (myDiv.textContent <= 1) {
+        myDiv.textContent = 'Done';
+        clearInterval(myCountDown);
+    } else {
+        myDiv.textContent -= 1;
+        if (myDiv.textContent < 10) {
+            myDiv.textContent = '0' + myDiv.textContent;
+        }
+    }
+}
