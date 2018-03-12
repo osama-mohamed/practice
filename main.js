@@ -1,12 +1,12 @@
 /*
-	innerHeight;
-	outerHeight;
-	innerWidth;
-	outerWidth;
+	pageXOffset;
+	pageYOffset;
+	scrollX;
+	scrollY;
 */
 
 
-window.console.log('inner height is : ' + innerHeight);
-window.console.log('outer height is : ' + outerHeight);
-window.console.log('inner width is : ' + innerWidth);
-window.console.log('outer width is : ' + outerWidth);
+window.console.log('left scroll is : ' + pageXOffset);
+window.console.log('top scroll is : ' + pageYOffset);
+window.console.log('left scroll is : ' + scrollX);
+window.console.log('top scroll is : ' + scrollY);
