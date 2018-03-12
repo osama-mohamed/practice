@@ -1,16 +1,10 @@
 /*
-	window.screen.width
-	window.screen.height
-	window.screen.availWidth
-	window.screen.availHeight
-	window.screen.colorDepth  || window.screen.pixelDepth
+	window.document.cookie > read cookies
+	window.document.cookie('name=value; expires=Dtae; path=') set cookie
 */
 
 
-window.console.log(window.screen);
-window.console.log(window.screen.width);
-window.console.log(window.screen.height);
-window.console.log(window.screen.colorDepth);
-window.console.log(window.screen.pixelDepth);
-window.console.log(window.screen.availWidth);
-window.console.log(window.screen.availHeight);
+window.console.log(window.document.cookie);
+window.console.log(window.document.cookie = 'name=OSAMA');
+window.console.log(window.document.cookie);
+
