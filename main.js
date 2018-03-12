@@ -1,18 +1,20 @@
 /*
-	window.open(
-	url,
-	tab-name or target-attribute(_blank[default], _self, ..),
-	specification,
-	history replace (true or false)
-	)
+	scrollBy(x, y)	> (100, 400) (x)positive number to right or down, (y)negative number to left or up
+	// increased scroll
+
+
+	scrollTo(x, y)	> (100, 400) (x)positive number to right or down, (y)negative number to left or up
+	// scroll to position and stop permanently
 */
 
+document.getElementById('scroll-by').onclick = function () {
+	window.scrollBy(200, 150);				// window.scrollBy(-200, -150);
+	window.console.log('window scrolled from left ' + window.scrollX + ' px.');
+	window.console.log('window scrolled from top ' + window.scrollY + ' px.');
+};
 
-document.getElementById('click').onclick = function () {
-	window.open(
-		'https://www.google.com.eg',
-		'OSAMA MOHAMED',
-		'width=600, height=400, left=500, top=100, menubar=yes, status=no',
-		'true'
-	);
+document.getElementById('scroll-to').onclick = function () {
+	window.scrollTo(200, 150);
+	window.console.log('window scrolled from left ' + window.scrollX + ' px.');
+	window.console.log('window scrolled from top ' + window.scrollY + ' px.');
 };
