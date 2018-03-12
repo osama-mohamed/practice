@@ -1,12 +1,11 @@
 /*
-	pageXOffset;
-	pageYOffset;
-	scrollX;
-	scrollY;
+	window.location.href;
+	accept :
+			1 - full url
+			2 - page in current website
+			3 - hash id (#osama)
+			4 - protocol (ftp, mail, file)
 */
 
 
-window.console.log('left scroll is : ' + pageXOffset);
-window.console.log('top scroll is : ' + pageYOffset);
-window.console.log('left scroll is : ' + scrollX);
-window.console.log('top scroll is : ' + scrollY);
+window.console.log(window.location.href);
