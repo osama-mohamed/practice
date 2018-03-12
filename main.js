@@ -1,20 +1,19 @@
 /*
-	scrollBy(x, y)	> (100, 400) (x)positive number to right or down, (y)negative number to left or up
-	// increased scroll
-
-
-	scrollTo(x, y)	> (100, 400) (x)positive number to right or down, (y)negative number to left or up
-	// scroll to position and stop permanently
+	stop()	> stop loading the website
+	close() > close pages that has been opened by javascript
+	focus() > focus on pages opened by javascript
 */
 
-document.getElementById('scroll-by').onclick = function () {
-	window.scrollBy(200, 150);				// window.scrollBy(-200, -150);
-	window.console.log('window scrolled from left ' + window.scrollX + ' px.');
-	window.console.log('window scrolled from top ' + window.scrollY + ' px.');
+document.getElementById('stop').onclick = function () {
+	window.stop();
 };
 
-document.getElementById('scroll-to').onclick = function () {
-	window.scrollTo(200, 150);
-	window.console.log('window scrolled from left ' + window.scrollX + ' px.');
-	window.console.log('window scrolled from top ' + window.scrollY + ' px.');
+
+var popupWindow = window.open('https://www.google.com.eg', 'Google', 'height=100, width=100');
+document.getElementById('close').onclick = function () {
+	popupWindow.close();
+};
+
+document.getElementById('focus').onclick = function () {
+	popupWindow.focus();
 };
