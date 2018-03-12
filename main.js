@@ -1,32 +1,37 @@
 
-var myPassword = document.getElementById('my-password'),
-    myButton = document.getElementById('show-password');
+var myElement = document.getElementById('type'),
+    myButton = document.getElementById('start-button'),
+    myText = 'This is a test text from JavaScript!';
 
 /*
 myButton.onclick = function () {
-    if (this.textContent === 'Show Password') {
-    // if (myPassword.getAttribute('type') === 'password') {
-        myPassword.setAttribute('type', 'text');
-        this.textContent = 'Hide Password';
-    } else {
-        myPassword.setAttribute('type', 'password');
-        this.textContent = 'Show Password';
-    }
+    var i = 0,
+    typeWriter = setInterval(function () {
+        myElement.textContent += myText[i];
+        i += 1;
+        if (i === myText.length) {
+        // if (i >= myText.length) {
+        // if (i > myText.length -1) {
+            clearInterval(typeWriter);
+        }
+    }, 200);
 };
 */
 
 
-function showHidePassword(element, button) {
+function typeTextWriter(element, button, text) {
+    var i = 0;
     button.onclick = function () {
-        // if (this.textContent === 'Show Password') {
-        if (element.getAttribute('type') === 'password') {
-            element.setAttribute('type', 'text');
-            this.textContent = 'Hide Password';
-        } else {
-            element.setAttribute('type', 'password');
-            this.textContent = 'Show Password';
-        }
+        var typeWriter = setInterval(function () {
+            element.textContent += text[i];
+            i += 1;
+            if (i === text.length) {
+            // if (i >= text.length) {
+            // if (i > text.length -1) {
+                clearInterval(typeWriter);
+            }
+        }, 200);
     };
 }
 
-showHidePassword(myPassword, myButton);
+typeTextWriter(myElement, myButton, myText);
