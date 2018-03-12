@@ -1,15 +1,32 @@
 
+var myPassword = document.getElementById('my-password'),
+    myButton = document.getElementById('show-password');
 
-var myButton = document.getElementById('top');
-
-window.onscroll = function () {
-    if (window.pageYOffset >= 600){
-        myButton.style.display = 'block';
+/*
+myButton.onclick = function () {
+    if (this.textContent === 'Show Password') {
+    // if (myPassword.getAttribute('type') === 'password') {
+        myPassword.setAttribute('type', 'text');
+        this.textContent = 'Hide Password';
     } else {
-        myButton.style.display = 'none';
+        myPassword.setAttribute('type', 'password');
+        this.textContent = 'Show Password';
     }
 };
+*/
 
-myButton.onclick = function () {
-    window.scrollTo(0, 0);
-};
+
+function showHidePassword(element, button) {
+    button.onclick = function () {
+        // if (this.textContent === 'Show Password') {
+        if (element.getAttribute('type') === 'password') {
+            element.setAttribute('type', 'text');
+            this.textContent = 'Hide Password';
+        } else {
+            element.setAttribute('type', 'password');
+            this.textContent = 'Show Password';
+        }
+    };
+}
+
+showHidePassword(myPassword, myButton);
