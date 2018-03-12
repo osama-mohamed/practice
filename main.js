@@ -1,15 +1,16 @@
 /*
-	
+	window.screen.width
+	window.screen.height
+	window.screen.availWidth
+	window.screen.availHeight
+	window.screen.colorDepth  || window.screen.pixelDepth
 */
 
 
-window.console.log(window.navigator.appName);
-window.console.log(window.navigator.appCodeName);
-window.console.log(window.navigator.appVersion);
-window.console.log(window.navigator.platform);
-window.console.log(window.navigator.cookieEnabled);
-window.console.log(window.navigator.language);
-window.console.log(window.navigator.onLine);
-window.console.log(window.navigator.product);
-window.console.log(window.navigator.plugins);
-
+window.console.log(window.screen);
+window.console.log(window.screen.width);
+window.console.log(window.screen.height);
+window.console.log(window.screen.colorDepth);
+window.console.log(window.screen.pixelDepth);
+window.console.log(window.screen.availWidth);
+window.console.log(window.screen.availHeight);
