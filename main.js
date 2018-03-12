@@ -1,19 +1,12 @@
 /*
-	stop()	> stop loading the website
-	close() > close pages that has been opened by javascript
-	focus() > focus on pages opened by javascript
+	innerHeight;
+	outerHeight;
+	innerWidth;
+	outerWidth;
 */
 
-document.getElementById('stop').onclick = function () {
-	window.stop();
-};
 
-
-var popupWindow = window.open('https://www.google.com.eg', 'Google', 'height=100, width=100');
-document.getElementById('close').onclick = function () {
-	popupWindow.close();
-};
-
-document.getElementById('focus').onclick = function () {
-	popupWindow.focus();
-};
+window.console.log('inner height is : ' + innerHeight);
+window.console.log('outer height is : ' + outerHeight);
+window.console.log('inner width is : ' + innerWidth);
+window.console.log('outer width is : ' + outerWidth);
