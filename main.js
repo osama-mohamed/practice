@@ -1,11 +1,14 @@
 /*
-	document.getElementById('div-1')        > ('element id')
-	document.getElementsByTagName('div')    > ('element tag name')
-	document.getElementsByClassName('test') > ('class name')
-	document.querySelectorAll('div.test')   > ('element tag name + .class name OR #id')
+	document.title
+	document.images
+	document.forms
 */
 
-document.getElementById('div-1').innerHTML = 'OSAMA MOHAMED';
-console.log(document.getElementsByTagName('div'));
-console.log(document.getElementsByClassName('test'));
-console.log(document.querySelectorAll('div.test'));
+document.getElementById('test').innerHTML = document.title;
+document.getElementById('test-2').innerHTML = document.images[0].src;
+document.getElementById('test-3').innerText = document.forms[0].i2.value; // type
+
+
+for (var i = 0; i < document.images.length; i += 1) {
+	document.write('<br>' + document.images[i].src);
+}
