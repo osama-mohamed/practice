@@ -1,14 +1,19 @@
 /*
-	getAttribute('attribute');                     > get
-	setAttribute('attribute', 'new value') = '';   > set
+	hasAttribute('id');             > check (true, false)
+	removeAttribute('attribute');   > remove
 */
 
 
 var myDiv = document.querySelector('div');
 
-console.log(myDiv.getAttribute('id'));
-console.log(myDiv.getAttribute('class'));
+console.log(myDiv.hasAttribute('id'));
+console.log(myDiv.hasAttribute('data-name'));
 
-myDiv.setAttribute('id', 'OSAMA');
-myDiv.setAttribute('class', 'OSAMA');
+myDiv.removeAttribute('class');
+
+if (myDiv.hasAttribute('id')) {
+	console.log('yes');
+} else {
+	console.log('no');
+}
 
