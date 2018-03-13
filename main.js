@@ -1,18 +1,24 @@
 /*
-	classList;                  > get array of element classes
-	classList.value;            > get classes as a string
-	classList.contains('osama') > check if class is exists ('class name)
-	classList.item(3)           > get class name of index as a string
+	classList.add('js', 'css', 'html')    > add class on element ('class name', 'other class name')
+	classList.remove('js', 'css', 'html') > remove class on element ('class name', 'other class name')
+	classList.toggle('microsoft')         > toggle class on element ('class name')
 */
 
 
-var myDiv = document.querySelector('div');
+var myDiv = document.querySelector('div'),
+	myButton = document.querySelector('button'),
+	myRemoveButton = document.getElementById('remove'),
+	myToggleButton = document.getElementById('toggle');
 
-console.log(myDiv.classList);
-console.log(myDiv.classList.value);
-console.log(myDiv.classList.length);
-console.log(myDiv.classList.item(3));
+myButton.onclick = function () {
+	// myDiv.className += ' js';
+	myDiv.classList.add('js', 'css', 'html');
+};
 
-if (myDiv.classList.contains('osama')) {
-	console.log('Hello osama');
-}
+myRemoveButton.onclick = function () {
+	myDiv.classList.remove('js', 'css', 'html');
+};
+
+myToggleButton.onclick = function () {
+	myDiv.classList.toggle('microsoft');
+};
