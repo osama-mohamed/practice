@@ -1,14 +1,13 @@
 /*
-	document.title
-	document.images
-	document.forms
+	document.body
+	document.anchors  > a tag with name
+	document.links    > a tag with href
 */
 
-document.getElementById('test').innerHTML = document.title;
-document.getElementById('test-2').innerHTML = document.images[0].src;
-document.getElementById('test-3').innerText = document.forms[0].i2.value; // type
 
+document.getElementById('test').innerText = document.body.innerText;
+document.getElementById('test-2').innerText = document.anchors.length;
 
-for (var i = 0; i < document.images.length; i += 1) {
-	document.write('<br>' + document.images[i].src);
+if (document.body.innerText.indexOf('Di') > -1) {
+	console.log('i found it!');
 }
