@@ -1,24 +1,20 @@
 /*
-	classList.add('js', 'css', 'html')    > add class on element ('class name', 'other class name')
-	classList.remove('js', 'css', 'html') > remove class on element ('class name', 'other class name')
-	classList.toggle('microsoft')         > toggle class on element ('class name')
+	childElementCount > get number of children of element (elements only)
+	children.length   > get number of children of element (elements only)
+	childNodes.length > get number of children of element (elements, text, comments, newlines)
 */
 
 
-var myDiv = document.querySelector('div'),
-	myButton = document.querySelector('button'),
-	myRemoveButton = document.getElementById('remove'),
-	myToggleButton = document.getElementById('toggle');
+var myDiv = document.querySelector('div');
 
-myButton.onclick = function () {
-	// myDiv.className += ' js';
-	myDiv.classList.add('js', 'css', 'html');
-};
+console.log(myDiv.childElementCount);
+console.log(myDiv.children.length);
 
-myRemoveButton.onclick = function () {
-	myDiv.classList.remove('js', 'css', 'html');
-};
 
-myToggleButton.onclick = function () {
-	myDiv.classList.toggle('microsoft');
-};
+console.log(myDiv.children);
+console.log(myDiv.children[0]);
+console.log(myDiv.children[0].textContent);
+
+
+console.log(myDiv.childNodes);
+console.log(myDiv.childNodes.length);
