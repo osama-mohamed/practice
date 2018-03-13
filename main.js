@@ -1,16 +1,14 @@
 /*
-	element.attribute       > get
-	element.attribute = ''; > set
-
-	element.id
-	element.className
-	element.src
-	element.title
-	element.alt
+	getAttribute('attribute');                     > get
+	setAttribute('attribute', 'new value') = '';   > set
 */
 
 
 var myDiv = document.querySelector('div');
-console.log(myDiv.id = 'OSAMA');
-console.log(myDiv.className = 'STYLE');
+
+console.log(myDiv.getAttribute('id'));
+console.log(myDiv.getAttribute('class'));
+
+myDiv.setAttribute('id', 'OSAMA');
+myDiv.setAttribute('class', 'OSAMA');
 
