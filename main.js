@@ -1,14 +1,16 @@
 /*
-	innerText  > not standard
-	outerText  > not standard
-	innerHTML
-	outerHTML
-	textContent
+	element.attribute       > get
+	element.attribute = ''; > set
 
+	element.id
+	element.className
+	element.src
+	element.title
+	element.alt
 */
 
 
-var myDiv = document.getElementById('test');
-console.log(myDiv.innerHTML);
-console.log(myDiv.textContent);
+var myDiv = document.querySelector('div');
+console.log(myDiv.id = 'OSAMA');
+console.log(myDiv.className = 'STYLE');
 
