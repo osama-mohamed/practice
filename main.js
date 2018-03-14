@@ -1,11 +1,16 @@
 /*
-	contains(element)  > search for element (true, false)
+	clientHeight
+	clientWidth
+		include :
+			- padding
+		exclude :
+			- border
+			- margin
+			- scroll
 */
 
 
-var myDiv = document.getElementById('main'),
-	mySpan = document.getElementById('test-span');
+var myDiv = document.getElementById('main');
 
-if (myDiv.contains(mySpan)) {
-	mySpan.textContent = 'Span changed from JavaScript';
-}
+console.log(myDiv.clientHeight);
+console.log(myDiv.clientWidth);
