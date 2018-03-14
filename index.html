@@ -5,27 +5,26 @@
         <title>JavaScript</title>
         <link rel="stylesheet" href="style.css">
         <style>
+            body{
+                height: 3000px;
+                width: 3000px;
+            }
             div{
                 height: 300px;
                 width: 300px;
-                padding: 20px;
-                background-color: #efe;
-                border: 5px solid #000;
-                margin: 40px;
-                overflow: scroll;
-            }
-            div > div{
-                height: 800px;
-                width: 800px;
-                background-color: #000;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                background-color: #ccc;
                 color: #fff;
+            }
+            .active{
+                background-color: #00f;
             }
         </style>
     </head>
     <body>
-        <div id="main">
-            <div>Child Div</div>
-        </div>
+        <div id="main">Main Div</div>
         <script src="main.js"></script>
     </body>
 </html>
