@@ -1,13 +1,23 @@
 /*
-	cloneNode()        > copy node and node attributes only
-	cloneNode(false)   > copy node and node attributes only
-	cloneNode(true)    > copy node and node attributes and text content and his child nodes
+	parentNode      > get the parent of node, element
+	parentElement   > get the parent of element only   (recommended to use)
 */
 
 
 var myDiv = document.getElementById('test'),
-	myNewDiv = document.getElementById('new'),
-	myCopy = myDiv.firstElementChild.cloneNode(true);
+	myButton = myDiv.lastElementChild;
 
-myNewDiv.append(myCopy);
-console.log(myCopy);
+
+console.log(myButton.parentNode);
+console.log(myButton.parentElement);
+
+console.log(myDiv.parentElement.tagName);
+
+myButton.onclick = function () {
+	this.parentElement.style.display = 'None';
+};
+
+
+if (myDiv.parentElement.tagName === 'BODY') {
+	console.log('Yes, this parent is body!');
+}
