@@ -1,17 +1,12 @@
 /*
-	createElement('tag type : div, p')
-	createTextNode('text here')
-	createComment('comment here')
+	createAttribute('attribute type : class, id, placeholder')
+	setAttributeNode(attribute name)
 */
 
-var myMainDiv = document.createElement('div'),
-	myText = document.createTextNode('This text created by JavaScript!'),
-	myComment = document.createComment('This comment created by JavaScript!');
+var myDiv = document.getElementById('test'),
+	myAttr = document.createAttribute('class');
 
 
-document.body.appendChild(myMainDiv);
+myAttr.value = 'osama';
 
-
-myMainDiv.appendChild(myComment);
-myMainDiv.appendChild(myText);
-
+myDiv.setAttributeNode(myAttr);
