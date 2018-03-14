@@ -1,22 +1,13 @@
 /*
-	tagName     > get name of element tags only
-	nodeName    > get name of tags, text, comment
-	nodeValue   > get value of tags, text, comment
-	nodeType    > get type of tags, text, comment
-	nodeType :
-		1 = tag
-		2 = attribute
-		3 = text
-		8 = comment
+	cloneNode()        > copy node and node attributes only
+	cloneNode(false)   > copy node and node attributes only
+	cloneNode(true)    > copy node and node attributes and text content and his child nodes
 */
 
 
-var myDiv = document.getElementById('test');
+var myDiv = document.getElementById('test'),
+	myNewDiv = document.getElementById('new'),
+	myCopy = myDiv.firstElementChild.cloneNode(true);
 
-console.log(myDiv.childNodes[0].nodeName);
-console.log(myDiv.childNodes[1].tagName);
-
-console.log(myDiv.childNodes[0].nodeValue);
-console.log(myDiv.childNodes[1].childNodes[0].nodeValue);
-
-console.log(myDiv.childNodes[0].nodeType);
+myNewDiv.append(myCopy);
+console.log(myCopy);
