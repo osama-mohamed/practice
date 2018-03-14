@@ -1,8 +1,9 @@
 /*
-	clientHeight
-	clientWidth
+	scrollHeight
+	scrollWidth
 		include :
 			- padding
+			- invisible area
 		exclude :
 			- border
 			- margin
@@ -12,5 +13,5 @@
 
 var myDiv = document.getElementById('main');
 
-console.log(myDiv.clientHeight);
-console.log(myDiv.clientWidth);
+console.log(myDiv.scrollHeight);
+console.log(myDiv.scrollWidth);

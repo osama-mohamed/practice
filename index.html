@@ -6,16 +6,26 @@
         <link rel="stylesheet" href="style.css">
         <style>
             div{
+                height: 300px;
+                width: 300px;
                 padding: 20px;
-                background: #efe;
+                background-color: #efe;
                 border: 5px solid #000;
                 margin: 40px;
                 overflow: scroll;
             }
+            div > div{
+                height: 800px;
+                width: 800px;
+                background-color: #000;
+                color: #fff;
+            }
         </style>
     </head>
     <body>
-        <div id="main">This is Div</div>
+        <div id="main">
+            <div>Child Div</div>
+        </div>
         <script src="main.js"></script>
     </body>
 </html>
