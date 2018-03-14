@@ -1,13 +1,17 @@
 /*
-	document.inputEncoding
-	document.lastModified
-	document.URL
+	createElement('tag type : div, p')
+	createTextNode('text here')
+	createComment('comment here')
 */
 
-var myDiv = document.getElementById('main');
+var myMainDiv = document.createElement('div'),
+	myText = document.createTextNode('This text created by JavaScript!'),
+	myComment = document.createComment('This comment created by JavaScript!');
 
 
-console.log(document.inputEncoding);
-console.log(document.lastModified);
-console.log(document.URL);
+document.body.appendChild(myMainDiv);
+
+
+myMainDiv.appendChild(myComment);
+myMainDiv.appendChild(myText);
 
