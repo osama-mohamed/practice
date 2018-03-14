@@ -1,20 +1,11 @@
 /*
-	addEventListener('event', function)     > add event listener on the element
-	removeEventListener('event', function)  > remove event listener from the element
+	contains(element)  > search for element (true, false)
 */
 
 
-var myMainButton = document.getElementById('main'),
-	myPowerButton = document.getElementById('power');
+var myDiv = document.getElementById('main'),
+	mySpan = document.getElementById('test-span');
 
-
-myMainButton.onclick = function () {
-	document.getElementById('monster-1').style.display = 'none';
-};
-
-
-myPowerButton.onclick = function () {
-	myMainButton.addEventListener('click', function () {
-		document.getElementById('monster-2').style.display = 'none';
-	});
-};
+if (myDiv.contains(mySpan)) {
+	mySpan.textContent = 'Span changed from JavaScript';
+}
