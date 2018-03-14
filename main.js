@@ -1,17 +1,18 @@
 /*
-	scrollHeight
-	scrollWidth
+	offsetHeight
+	offsetWidth
 		include :
 			- padding
-			- invisible area
-		exclude :
+			- visible area
 			- border
-			- margin
 			- scroll
+		exclude :
+			- margin
 */
 
 
 var myDiv = document.getElementById('main');
 
-console.log(myDiv.scrollHeight);
-console.log(myDiv.scrollWidth);
+
+console.log(myDiv.offsetHeight);
+console.log(myDiv.offsetWidth);
