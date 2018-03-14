@@ -1,10 +1,14 @@
 /*
-	clientTop    > get border in pixels
-	clientLeft   > get border and scroll in pixels
+	element.style.property = value;
 */
 
 var myDiv = document.getElementById('main');
 
 
-console.log(myDiv.clientTop);
-console.log(myDiv.clientLeft);
+myDiv.style.backgroundColor = '#000';
+myDiv.style.color = '#fff';
+myDiv.style.padding = '20px';
+myDiv.style.fontSize = '20px';
+myDiv.style.fontWeight = '900';
+myDiv.style.maxWidth = '100px';
+myDiv.style.border = '10px solid #00f';
