@@ -1,18 +1,18 @@
 /*
-	focus()  > focus on the element
-	blur()   > blur from the element
+	click()  > click on the element
 */
 
 
-var myForm = document.getElementById('test'),
-	myInput = document.getElementById('my-input'),
-	myButton = document.querySelector('button');
+var myDiv = document.getElementById('test'),
+	myButton = myDiv.firstElementChild;
+
+
+myButton.onclick = function () {
+	this.parentElement.style.display = 'none';
+};
 
 
 window.onload = function () {
-	myInput.focus();
+	myButton.click();
 };
 
-myButton.onclick = function () {
-	myInput.blur();
-};
