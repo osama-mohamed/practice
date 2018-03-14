@@ -1,23 +1,20 @@
 /*
-	parentNode      > get the parent of node, element
-	parentElement   > get the parent of element only   (recommended to use)
+	nextElementSibling       > get the next sibling of element only      (recommended to use)
+	previousElementSibling   > get the previous sibling of element only  (recommended to use)
+
+	nextSibling       > get the next sibling of node, element
+	previousSibling   > get the previous sibling of node, element
 */
 
 
-var myDiv = document.getElementById('test'),
-	myButton = myDiv.lastElementChild;
+var myDiv = document.getElementById('test');
 
 
-console.log(myButton.parentNode);
-console.log(myButton.parentElement);
+console.log(myDiv.childNodes[1].nextElementSibling);
+console.log(myDiv.childNodes[3].previousElementSibling);
 
-console.log(myDiv.parentElement.tagName);
-
-myButton.onclick = function () {
-	this.parentElement.style.display = 'None';
-};
+console.log(myDiv.childNodes[1].nextSibling);
+console.log(myDiv.childNodes[1].previousSibling);
 
 
-if (myDiv.parentElement.tagName === 'BODY') {
-	console.log('Yes, this parent is body!');
-}
+myDiv.childNodes[3].previousElementSibling.textContent += ' changed by js';
