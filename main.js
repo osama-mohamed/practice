@@ -1,18 +1,20 @@
 /*
-	click()  > click on the element
+	addEventListener('event', function)     > add event listener on the element
+	removeEventListener('event', function)  > remove event listener from the element
 */
 
 
-var myDiv = document.getElementById('test'),
-	myButton = myDiv.firstElementChild;
+var myMainButton = document.getElementById('main'),
+	myPowerButton = document.getElementById('power');
 
 
-myButton.onclick = function () {
-	this.parentElement.style.display = 'none';
+myMainButton.onclick = function () {
+	document.getElementById('monster-1').style.display = 'none';
 };
 
 
-window.onload = function () {
-	myButton.click();
+myPowerButton.onclick = function () {
+	myMainButton.addEventListener('click', function () {
+		document.getElementById('monster-2').style.display = 'none';
+	});
 };
-
