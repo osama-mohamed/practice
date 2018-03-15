@@ -1,12 +1,13 @@
 /*
-	createAttribute('attribute type : class, id, placeholder')
-	setAttributeNode(attribute name)
+
 */
 
 var myDiv = document.getElementById('test'),
-	myAttr = document.createAttribute('class');
+	myButton = document.querySelector('button');
 
 
-myAttr.value = 'osama';
+function changeColor() {
+	myDiv.style.color = 'blue';
+}
 
-myDiv.setAttributeNode(myAttr);
+myButton.onclick = changeColor;
