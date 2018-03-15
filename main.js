@@ -1,18 +1,25 @@
 /*
-	onload
-	onscroll
-	onresize
+	onfocus
+	onblur
+	onsubmit
 */
 
+var myForm = document.getElementById('test'),
+	myNote = document.getElementById('note'),
+	myInput = document.forms[0].i1;
 
-window.onload = function () {
-	console.log('DOM is Ready Now');
+myInput.onfocus = function () {
+	myNote.textContent = 'write your name';
 };
 
-window.onscroll = function () {
-	console.log('You scrolling now');
+myInput.onblur = function () {
+	myNote.textContent = '';
+	if (myInput.value.length < 10) {
+		myNote.textContent = 'sorry your name must be at least  10 letters';
+	}
 };
 
-window.onresize = function () {
-	console.log('Window is resized');
+myForm.onsubmit = function (e) {
+	e.preventDefault();
 };
+
