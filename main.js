@@ -1,13 +1,18 @@
 /*
-
+	onload
+	onscroll
+	onresize
 */
 
-var myDiv = document.getElementById('test'),
-	myButton = document.querySelector('button');
 
+window.onload = function () {
+	console.log('DOM is Ready Now');
+};
 
-function changeColor() {
-	myDiv.style.color = 'blue';
-}
+window.onscroll = function () {
+	console.log('You scrolling now');
+};
 
-myButton.onclick = changeColor;
+window.onresize = function () {
+	console.log('Window is resized');
+};
