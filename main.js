@@ -1,25 +1,32 @@
 /*
-	onfocus
-	onblur
-	onsubmit
+	onclick
+	ondblclick
+	oncontextmenu
+	onmouseenter
+	onmouseleave
 */
 
-var myForm = document.getElementById('test'),
-	myNote = document.getElementById('note'),
-	myInput = document.forms[0].i1;
+var myDiv = document.getElementById('test'),
+	myNote = document.getElementById('note');
 
-myInput.onfocus = function () {
-	myNote.textContent = 'write your name';
+myDiv.onclick = function () {
+	myNote.textContent = 'you clicked on me';
 };
 
-myInput.onblur = function () {
-	myNote.textContent = '';
-	if (myInput.value.length < 10) {
-		myNote.textContent = 'sorry your name must be at least  10 letters';
-	}
+myDiv.ondblclick = function () {
+	myNote.textContent = 'you double clicked on me';
 };
 
-myForm.onsubmit = function (e) {
+myDiv.oncontextmenu = function (e) {
 	e.preventDefault();
+	myNote.textContent = 'you can not right click here';
+};
+
+myDiv.onmouseenter = function () {
+	myNote.textContent = 'welcome';
+};
+
+myDiv.onmouseleave = function () {
+	myNote.textContent = 'good bye';
 };
 
