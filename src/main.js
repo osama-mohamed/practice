@@ -1,79 +1,47 @@
+/*
+function Prefixer(prefix) {
+	this.prefix = prefix;
+}
 
-let myArray = [2, 4, 6, 8, 10],
-	mySet = new Set(myArray);
-
-mySet.add('12');
-mySet.add(20);
-mySet.add({a: 1, b: 'OSAMA'});
-mySet.delete(8);
-mySet.clear();
-
-console.log(mySet);
-console.log(mySet.size);
-
-mySet.forEach(function (val) {
-	console.log(val);
-});
-
-
-// -----------------------------------------------
-
-
-let myMap = new Map([['a', 'ahmed'], ['b', 'basma']]);
-
-myMap.set('s', 'salma');
-myMap.delete('a');
-
-console.log(myMap);
-console.log(myMap.size);
-
-
-// -----------------------------------------------
-
-
-let carWeakSet = new WeakSet();
-
-let car1 = {
-	name: 'honda',
-	model: 'civic'
+Prefixer.prototype.prefixArray = function (arr) {
+	let that = this;
+	return arr.map(function (x) {
+		console.log(that.prefix + x);
+	});
 };
 
-let car2 = {
-	name: 'bmw',
-	model: 'f5'
+let pre = new Prefixer('Hello ');
+pre.prefixArray(['OSAMA', 'ESLAM']);
+*/
+
+function Prefixer(prefix) {
+	this.prefix = prefix;
+}
+
+Prefixer.prototype.prefixArray = function (arr) {
+	return arr.map((x) => {
+		console.log(this.prefix + x);
+	});
 };
 
-carWeakSet.add(car1);
-carWeakSet.add(car2);
-carWeakSet.delete(car1);
+let pre = new Prefixer('Hello ');
+pre.prefixArray(['OSAMA', 'ESLAM']);
 
-console.log(carWeakSet);
 
-// -----------------------------------------------
-
-let carWeakMap = new WeakMap();
-
-let key1 = {
-	id: 1
+/*
+let add = function (a, b) {
+	let sum = a + b;
+	console.log(sum);
+	return false;
 };
+add(4, 6);
+*/
 
-let c1 = {
-	name: 'honda',
-	model: 'civic'
+
+
+let add = (a, b) => {
+	let sum = a + b;
+	console.log(sum);
+	return false;
 };
-
-let key2 = {
-	id: 2
-};
-
-let c2 = {
-	name: 'bmw',
-	model: 'f5'
-};
-
-carWeakMap.set(key1, c1);
-carWeakMap.set(key2, c2);
-
-carWeakMap.delete(key1);
-
-console.log(carWeakMap);
+add(4, 6);
