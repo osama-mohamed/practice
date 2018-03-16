@@ -1,45 +1,23 @@
-var v = `osama`;
-console.log(v);
+const colors = [];
+
+colors.push('red');
+colors.push('green');
+
+console.log(colors);
+
+colors = 'blue';
+
+console.log(colors);
 
 
-let o = `osama`;
-console.log(o);
 
+let colors2 = [];
 
-function testVar() {
-	var a = 66;
-	if (true) {
-		var a = 44;
-		console.log(a);
-	}
-	console.log(a);
-}
-testVar();
+colors2.push('red');
+colors2.push('green');
 
-console.log('**********');
+console.log(colors2);
 
+colors2 = 'blue';
 
-function testLet() {
-	let a = 66;
-	if (true) {
-		let a = 44;
-		console.log(a);
-	}
-	console.log(a);
-}
-testLet();
-
-
-for (var i = 0; i < 10; i += 1) {
-	console.log(i);
-}
-console.log('end of for loop with var');
-console.log(i);
-
-console.log('*******');
-
-for (let l = 0; l < 10; l += 1) {
-	console.log(l);
-}
-console.log('end of for loop with let');
-console.log(l);
+console.log(colors2);
