@@ -28,3 +28,18 @@ function testLet() {
 	console.log(a);
 }
 testLet();
+
+
+for (var i = 0; i < 10; i += 1) {
+	console.log(i);
+}
+console.log('end of for loop with var');
+console.log(i);
+
+console.log('*******');
+
+for (let l = 0; l < 10; l += 1) {
+	console.log(l);
+}
+console.log('end of for loop with let');
+console.log(l);
