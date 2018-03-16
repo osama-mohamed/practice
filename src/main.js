@@ -1,23 +1,37 @@
-const colors = [];
 
-colors.push('red');
-colors.push('green');
+class User{
+	constructor(username, email, password) {
+		this.username = username;
+		this.email = email;
+		this.password = password;
+	}
+	static countUsers() {
+		console.log('there are 2 users');
+	}
+	register() {
+		console.log(this.username + ' is now registered!');
+	}
+}
 
-console.log(colors);
+let os = new User('OSAMA', 'osama@email.com', 'password here');
 
-colors = 'blue';
-
-console.log(colors);
-
+os.register();
+User.countUsers();
 
 
-let colors2 = [];
+// inherit from User class in Member class
+class Member extends User {
+	constructor(username, email, password, memberPackage) {
+		super(username, email, password);
+		this.package = memberPackage;
+	}
 
-colors2.push('red');
-colors2.push('green');
+	getPackage() {
+		console.log(this.username + ' is uses ' + this.package + ' package')
+	}
+}
 
-console.log(colors2);
+let OSAMA = new Member('OSAMA MOHAMED', 'osama2@email.com', 'password here too', 'Standard');
 
-colors2 = 'blue';
-
-console.log(colors2);
+OSAMA.getPackage();
+OSAMA.register();
