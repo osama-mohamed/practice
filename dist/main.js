@@ -1,26 +1,87 @@
 'use strict';
 
-var checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
+var player = document.querySelector('.player');
+var video = player.querySelector('.viewer');
+var progress = player.querySelector('.progress');
+var progressBar = player.querySelector('.progress__filled');
+var toggle = player.querySelector('.toggle');
+var skipButtons = player.querySelectorAll('[data-skip]');
+var ranges = player.querySelectorAll('.player__slider');
+var full = player.querySelector('.full-screen');
 
-var lastChecked = void 0;
-
-function handleCheck(e) {
-  var _this = this;
-
-  var inBetween = false;
-  if (e.shiftKey && this.checked) {
-    checkboxes.forEach(function (checkbox) {
-      if (checkbox === _this || checkbox === lastChecked) {
-        inBetween = !inBetween;
-      }
-      if (inBetween) {
-        checkbox.checked = true;
-      }
-    });
-  }
-  lastChecked = this;
+function togglePlay() {
+  var method = video.paused ? 'play' : 'pause';
+  video[method]();
 }
 
-checkboxes.forEach(function (checkbox) {
-  return checkbox.addEventListener('click', handleCheck);
+function updateButton() {
+  var icon = this.paused ? '►' : '❚ ❚';
+  toggle.textContent = icon;
+}
+
+function skip() {
+  video.currentTime += parseFloat(this.dataset.skip);
+}
+
+function handleRangeUpdate() {
+  video[this.name] = this.value;
+}
+
+function handleProgress() {
+  var percent = video.currentTime / video.duration * 100;
+  progressBar.style.flexBasis = percent + '%';
+}
+
+function scrub(e) {
+  var scrubTime = e.offsetX / progress.offsetWidth * video.duration;
+  video.currentTime = scrubTime;
+}
+
+function fullScreen() {
+  if (video.requestFullscreen) {
+    video.requestFullscreen();
+  } else if (video.mozRequestFullScreen) {
+    video.mozRequestFullScreen();
+  } else if (video.webkitRequestFullscreen) {
+    video.webkitRequestFullscreen();
+  }
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  }
+}
+
+video.addEventListener('click', togglePlay);
+video.addEventListener('play', updateButton);
+video.addEventListener('pause', updateButton);
+video.addEventListener('timeupdate', handleProgress);
+
+toggle.addEventListener('click', togglePlay);
+skipButtons.forEach(function (button) {
+  return button.addEventListener('click', skip);
 });
+ranges.forEach(function (range) {
+  return range.addEventListener('change', handleRangeUpdate);
+});
+ranges.forEach(function (range) {
+  return range.addEventListener('mousemove', handleRangeUpdate);
+});
+
+var mousedown = false;
+progress.addEventListener('click', scrub);
+progress.addEventListener('mousemove', function (e) {
+  return mousedown && scrub(e);
+});
+progress.addEventListener('mousedown', function () {
+  return mousedown = true;
+});
+progress.addEventListener('mouseup', function () {
+  return mousedown = false;
+});
+full.addEventListener('click', fullScreen);
+video.addEventListener('dblclick', fullScreen);
