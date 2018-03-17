@@ -1,74 +1,32 @@
-html {
-  background:#018DED url(http://unsplash.it/1500/1000?image=881&blur=50);
-  background-size:cover;
-  font-family:'helvetica neue';
-  text-align: center;
-  font-size: 10px;
+:root {
+  --base: #ffc600;
+  --spacing: 10px;
+  --blur: 10px;
+}
+
+img {
+  padding: var(--spacing);
+  background: var(--base);
+  filter: blur(var(--blur));
+}
+
+.hl {
+  color: var(--base);
 }
 
 body {
-  margin: 0;
-  font-size: 2rem;
-  display:flex;
-  flex:1;
-  min-height: 100vh;
-  align-items: center;
+  text-align: center;
+  background: #193549;
+  color: white;
+  font-family: 'helvetica neue', sans-serif;
+  font-weight: 100;
+  font-size: 50px;
 }
 
-.clock {
-  width: 30rem;
-  height: 30rem;
-  border:20px solid white;
-  border-radius:50%;
-  margin:50px auto;
-  position: relative;
-  padding:2rem;
-  box-shadow:
-    0 0 0 4px rgba(0,0,0,0.1),
-    inset 0 0 0 3px #EFEFEF,
-    inset 0 0 10px black,
-    0 0 10px rgba(0,0,0,0.2);
+.controls {
+  margin-bottom: 50px;
 }
 
-.clock-face {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform: translateY(-3px);
-}
-
-.hand {
-  width:50%;
-  height:6px;
-  background:black;
-  position: absolute;
-  top:50%;
-  transform-origin: 100%;
-  transform: rotate(90deg);
-  transition: all 0.05s;
-  transition-timing-function: ease-in-out;
-  /*transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);*/
-  border-radius: 10px 0 0 10px;
-}
-
-div.hour-hand{
-  background-color: #00f;
-}
-
-div.min-hand{
-  background-color: #0f0;
-}
-
-div.second-hand{
-  background-color: #fff;
-}
-
-div.cir{
-    background-color: #fff;
-    position: absolute;
-    top: 146px;
-    left: 142px;
-    border-radius: 50%;
-    width: 12px;
-    height: 14px;
+input {
+  width:100px;
 }
