@@ -1,75 +1,26 @@
 'use strict';
 
-var dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+var checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
 
-function makeGreen() {
-  var p = document.querySelector('p');
-  p.style.color = '#BADA55';
-  p.style.fontSize = '50px';
+var lastChecked = void 0;
+
+function handleCheck(e) {
+  var _this = this;
+
+  var inBetween = false;
+  if (e.shiftKey && this.checked) {
+    checkboxes.forEach(function (checkbox) {
+      if (checkbox === _this || checkbox === lastChecked) {
+        inBetween = !inBetween;
+      }
+      if (inBetween) {
+        checkbox.checked = true;
+      }
+    });
+  }
+  lastChecked = this;
 }
 
-// Regular
-console.log('hello');
-
-// Interpolated
-console.log('Hello I am a %s string!', 'formatted');
-
-// Styled
-console.log('%c I am some great text', 'font-size:50px; background:red; text-shadow: 10px 10px 0 blue');
-
-// warning!
-console.warn('OH NOOO');
-
-// Error :|
-console.error('Shit!');
-
-// Info
-console.info('Crocodiles eat 3-4 people per year');
-
-// Testing
-var p = document.querySelector('p');
-
-console.assert(p.classList.contains('ouch'), 'That is wrong!');
-
-// clearing
-// console.clear();
-
-// Viewing DOM Elements
-console.log(p);
-console.dir(p);
-
-// Grouping together
-dogs.forEach(function (dog) {
-  console.groupCollapsed('' + dog.name);
-  // console.group(`${dog.name}`);
-  console.log('This is ' + dog.name);
-  console.log(dog.name + ' is ' + dog.age + ' years old');
-  console.log(dog.name + ' is ' + dog.age * 7 + ' dog years old');
-  console.groupEnd('' + dog.name);
+checkboxes.forEach(function (checkbox) {
+  return checkbox.addEventListener('click', handleCheck);
 });
-
-// counting
-console.count('Wes');
-
-console.count('Wes');
-console.count('Steve');
-console.count('Steve');
-console.count('Wes');
-console.count('Steve');
-console.count('Steve');
-console.count('Steve');
-console.count('Steve');
-console.count('Wes');
-console.count('Steve');
-console.count('Steve');
-
-// timing
-console.time('fetching data');
-fetch('https://api.github.com/users').then(function (data) {
-  return data.json();
-}).then(function (data) {
-  console.timeEnd('fetching data');
-  console.log(data);
-});
-
-console.table(dogs);
