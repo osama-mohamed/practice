@@ -1,87 +1,12 @@
 'use strict';
 
-var player = document.querySelector('.player');
-var video = player.querySelector('.viewer');
-var progress = player.querySelector('.progress');
-var progressBar = player.querySelector('.progress__filled');
-var toggle = player.querySelector('.toggle');
-var skipButtons = player.querySelectorAll('[data-skip]');
-var ranges = player.querySelectorAll('.player__slider');
-var full = player.querySelector('.full-screen');
+var pressed = [];
+var secretCode = 'osama';
 
-function togglePlay() {
-  var method = video.paused ? 'play' : 'pause';
-  video[method]();
-}
-
-function updateButton() {
-  var icon = this.paused ? '►' : '❚ ❚';
-  toggle.textContent = icon;
-}
-
-function skip() {
-  video.currentTime += parseFloat(this.dataset.skip);
-}
-
-function handleRangeUpdate() {
-  video[this.name] = this.value;
-}
-
-function handleProgress() {
-  var percent = video.currentTime / video.duration * 100;
-  progressBar.style.flexBasis = percent + '%';
-}
-
-function scrub(e) {
-  var scrubTime = e.offsetX / progress.offsetWidth * video.duration;
-  video.currentTime = scrubTime;
-}
-
-function fullScreen() {
-  if (video.requestFullscreen) {
-    video.requestFullscreen();
-  } else if (video.mozRequestFullScreen) {
-    video.mozRequestFullScreen();
-  } else if (video.webkitRequestFullscreen) {
-    video.webkitRequestFullscreen();
+window.addEventListener('keyup', function (e) {
+  pressed.push(e.key);
+  pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
+  if (pressed.join('').includes(secretCode)) {
+    cornify_add();
   }
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.webkitExitFullscreen) {
-    document.webkitExitFullscreen();
-  } else if (document.mozCancelFullScreen) {
-    document.mozCancelFullScreen();
-  } else if (document.msExitFullscreen) {
-    document.msExitFullscreen();
-  }
-}
-
-video.addEventListener('click', togglePlay);
-video.addEventListener('play', updateButton);
-video.addEventListener('pause', updateButton);
-video.addEventListener('timeupdate', handleProgress);
-
-toggle.addEventListener('click', togglePlay);
-skipButtons.forEach(function (button) {
-  return button.addEventListener('click', skip);
 });
-ranges.forEach(function (range) {
-  return range.addEventListener('change', handleRangeUpdate);
-});
-ranges.forEach(function (range) {
-  return range.addEventListener('mousemove', handleRangeUpdate);
-});
-
-var mousedown = false;
-progress.addEventListener('click', scrub);
-progress.addEventListener('mousemove', function (e) {
-  return mousedown && scrub(e);
-});
-progress.addEventListener('mousedown', function () {
-  return mousedown = true;
-});
-progress.addEventListener('mouseup', function () {
-  return mousedown = false;
-});
-full.addEventListener('click', fullScreen);
-video.addEventListener('dblclick', fullScreen);
