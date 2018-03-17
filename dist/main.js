@@ -1,38 +1,60 @@
 'use strict';
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+var canvas = document.querySelector('#draw');
+var ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+ctx.strokeStyle = '#BADA55';
+ctx.lineJoin = 'round';
+ctx.lineCap = 'round';
+ctx.lineWidth = 100;
+// ctx.globalCompositeOperation = 'multiply';
 
-var people = [{ name: 'Wes', year: 1988 }, { name: 'Kait', year: 1986 }, { name: 'Irv', year: 1970 }, { name: 'Lux', year: 2015 }];
+var isDrawing = false;
+var lastX = 0;
+var lastY = 0;
+var hue = 0;
+var direction = true;
 
-var comments = [{ text: 'Love this!', id: 523423 }, { text: 'Super good', id: 823423 }, { text: 'You are the best', id: 2039842 }, { text: 'Ramen is my fav food ever', id: 123523 }, { text: 'Nice Nice Nice!', id: 542328 }];
+function draw(e) {
+  if (!isDrawing) return;
+  console.log(e);
+  ctx.strokeStyle = 'hsl(' + hue + ', 100%, 50%)';
+  ctx.beginPath();
+  ctx.moveTo(lastX, lastY);
+  ctx.lineTo(e.offsetX, e.offsetY);
+  ctx.stroke();
+  var _ref = [e.offsetX, e.offsetY];
+  lastX = _ref[0];
+  lastY = _ref[1];
 
-// const isAdult = people.some(function(person) {
-//   const currentYear = (new Date()).getFullYear();
-//   if(currentYear - person.year >= 19) {
-//     return true;
-//   }
-// });
 
-var isAdult = people.some(function (person) {
-  return new Date().getFullYear() - person.year >= 19;
+  hue++;
+  if (hue >= 360) {
+    hue = 0;
+  }
+  if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+    direction = !direction;
+  }
+
+  if (direction) {
+    ctx.lineWidth++;
+  } else {
+    ctx.lineWidth--;
+  }
+}
+
+canvas.addEventListener('mousedown', function (e) {
+  isDrawing = true;
+  var _ref2 = [e.offsetX, e.offsetY];
+  lastX = _ref2[0];
+  lastY = _ref2[1];
 });
-console.log({ isAdult: isAdult });
 
-var allAdults = people.every(function (person) {
-  return new Date().getFullYear() - person.year >= 19;
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', function () {
+  return isDrawing = false;
 });
-console.log({ allAdults: allAdults });
-
-var comment = comments.find(function (comment) {
-  return comment.id === 823423;
+canvas.addEventListener('mouseout', function () {
+  return isDrawing = false;
 });
-console.log(comment);
-
-var index = comments.findIndex(function (comment) {
-  return comment.id === 823423;
-});
-console.log(index);
-
-// comments.splice(index, 1);
-
-var newComments = [].concat(_toConsumableArray(comments.slice(0, index)), _toConsumableArray(comments.slice(index + 1)));

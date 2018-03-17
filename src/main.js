@@ -1,44 +1,50 @@
+const canvas = document.querySelector('#draw');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+ctx.strokeStyle = '#BADA55';
+ctx.lineJoin = 'round';
+ctx.lineCap = 'round';
+ctx.lineWidth = 100;
+// ctx.globalCompositeOperation = 'multiply';
 
-const people = [
-  { name: 'Wes', year: 1988 },
-  { name: 'Kait', year: 1986 },
-  { name: 'Irv', year: 1970 },
-  { name: 'Lux', year: 2015 },
-];
+let isDrawing = false;
+let lastX = 0;
+let lastY = 0;
+let hue = 0;
+let direction = true;
 
-const comments = [
-  { text: 'Love this!', id: 523423 },
-  { text: 'Super good', id: 823423 },
-  { text: 'You are the best', id: 2039842 },
-  { text: 'Ramen is my fav food ever', id: 123523 },
-  { text: 'Nice Nice Nice!', id: 542328 }
-];
+function draw(e) {
+  if (!isDrawing) return;
+  ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+  ctx.beginPath();
+  ctx.moveTo(lastX, lastY);
+  ctx.lineTo(e.offsetX, e.offsetY);
+  ctx.stroke();
+  [lastX, lastY] = [e.offsetX, e.offsetY];
+
+  hue++;
+  if (hue >= 360) {
+    hue = 0;
+  }
+  if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+    direction = !direction;
+  }
+
+  if(direction) {
+    ctx.lineWidth++;
+  } else {
+    ctx.lineWidth--;
+  }
+
+}
+
+canvas.addEventListener('mousedown', (e) => {
+  isDrawing = true;
+  [lastX, lastY] = [e.offsetX, e.offsetY];
+});
 
 
-// const isAdult = people.some(function(person) {
-//   const currentYear = (new Date()).getFullYear();
-//   if(currentYear - person.year >= 19) {
-//     return true;
-//   }
-// });
-
-const isAdult = people.some(person => ((new Date()).getFullYear()) - person.year >= 19);
-console.log({isAdult});
-
-const allAdults = people.every(person => ((new Date()).getFullYear()) - person.year >= 19);
-console.log({allAdults});
-
-
-const comment = comments.find(comment => comment.id === 823423);
-console.log(comment);
-
-
-const index = comments.findIndex(comment => comment.id === 823423);
-console.log(index);
-
-// comments.splice(index, 1);
-
-const newComments = [
-  ...comments.slice(0, index),
-  ...comments.slice(index + 1)
-];
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', () => isDrawing = false);
+canvas.addEventListener('mouseout', () => isDrawing = false);
