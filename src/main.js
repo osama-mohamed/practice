@@ -1,18 +1,23 @@
-function removeTransition(e) {
-    if (e.propertyName !== 'transform') return;
-		e.target.classList.remove('playing');
-	}
+const secondHand = document.querySelector('.second-hand');
+const minHand = document.querySelector('.min-hand');
+const hourHand = document.querySelector('.hour-hand');
 
-function playSound(e) {
-	const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-	const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
-	if (!audio) return;
+function setDate() {
+const now = new Date();
 
-	key.classList.add('playing');
-	audio.currentTime = 0;
-	audio.play();
+const seconds = now.getSeconds();
+const secondsDegrees = ((seconds / 60) * 360) + 90;
+secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+
+const mins = now.getMinutes();
+const minsDegrees = ((mins / 60) * 360) + ((seconds/60)*6) + 90;
+minHand.style.transform = `rotate(${minsDegrees}deg)`;
+
+const hour = now.getHours();
+const hourDegrees = ((hour / 12) * 360) + ((mins/60)*30) + 90;
+hourHand.style.transform = `rotate(${hourDegrees}deg)`;
 }
 
-const keys = Array.from(document.querySelectorAll('.key'));
-keys.forEach(key => key.addEventListener('transitionend', removeTransition));
-window.addEventListener('keydown', playSound);
+setInterval(setDate, 1000);
+
+setDate();
