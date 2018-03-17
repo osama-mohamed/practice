@@ -1,20 +1,42 @@
 'use strict';
 
-var panels = document.querySelectorAll('.panel');
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-function toggleOpen() {
-  this.classList.toggle('open');
+var endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+
+var cities = [];
+fetch(endpoint).then(function (blob) {
+  return blob.json();
+}).then(function (data) {
+  return cities.push.apply(cities, _toConsumableArray(data));
+});
+
+function findMatches(wordToMatch, cities) {
+  return cities.filter(function (place) {
+    var regex = new RegExp(wordToMatch, 'gi');
+    return place.city.match(regex) || place.state.match(regex);
+  });
 }
 
-function toggleActive(e) {
-  if (e.propertyName.includes('flex')) {
-    this.classList.toggle('open-active');
-  }
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
-panels.forEach(function (panel) {
-  return panel.addEventListener('click', toggleOpen);
-});
-panels.forEach(function (panel) {
-  return panel.addEventListener('transitionend', toggleActive);
-});
+function displayMatches() {
+  var _this = this;
+
+  var matchArray = findMatches(this.value, cities);
+  var html = matchArray.map(function (place) {
+    var regex = new RegExp(_this.value, 'gi');
+    var cityName = place.city.replace(regex, '<span class="hl">' + _this.value + '</span>');
+    var stateName = place.state.replace(regex, '<span class="hl">' + _this.value + '</span>');
+    return '\n      <li>\n        <span class="name">' + cityName + ', ' + stateName + '</span>\n        <span class="population">' + numberWithCommas(place.population) + '</span>\n      </li>\n    ';
+  }).join('');
+  suggestions.innerHTML = html;
+}
+
+var searchInput = document.querySelector('.search');
+var suggestions = document.querySelector('.suggestions');
+
+searchInput.addEventListener('change', displayMatches);
+searchInput.addEventListener('keyup', displayMatches);
