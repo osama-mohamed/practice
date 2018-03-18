@@ -1,51 +1,73 @@
-
-let age = 20;
-let age2 = age;
-console.log(age, age2);
-age = 25;
-console.log(age, age2);
-
-let name = 'Os';
-let name2 = name;
-console.log(name, name2);
-name = 'Osama';
-console.log(name, name2);
-
-const players = ['Osama', 'Eslam', 'Ahmed', 'Sara'];
-const team = players;
-console.log(players, team);
+const addItems = document.querySelector('.add-items');
+const itemsList = document.querySelector('.plates');
+let items = JSON.parse(localStorage.getItem('items')) || [];
+const checkAll = document.querySelector('.check-all');
+const uncheckAll = document.querySelector('.uncheck-all');
+const deleteAll = document.querySelector('.delete-all');
 
 
-const team2 = players.slice();
-const team3 = [].concat(players);
-const team4 = [...players];
-team4[2] = 'Salma';
-console.log(team4);
+function addItem(e) {
+	e.preventDefault();
+	const text = (this.querySelector('[name=item]')).value;
+	const item = {
+		text,
+		done: false
+	};
+	items.push(item);
+	populateList(items, itemsList);
+	localStorage.setItem('items', JSON.stringify(items));
+	this.reset();
+}
+
+function populateList(plates = [], platesList) {
+	platesList.innerHTML = plates.map((plate, i) => {
+		return `
+			<li>
+			  <input type="checkbox" data-index=${i} id="item${i}" ${plate.done ? 'checked' : ''} />
+			  <label for="item${i}">${plate.text}</label>
+			</li>
+		`;
+	}).join('');
+}
+
+function toggleDone(e) {
+	if (!e.target.matches('input')) return;
+	const el = e.target;
+	const index = el.dataset.index;
+	items[index].done = !items[index].done;
+	localStorage.setItem('items', JSON.stringify(items));
+	populateList(items, itemsList);
+}
+
+function checkAllInputs() {
+	let i = 0;
+	for (; i < items.length; i += 1) {
+		items[i].done = true;
+	}
+	localStorage.setItem('items', JSON.stringify(items));
+	populateList(items, itemsList);
+}
+
+function uncheckAllInputs() {
+	let i = 0;
+	for (; i < items.length; i += 1) {
+		items[i].done = false;
+	}
+	localStorage.setItem('items', JSON.stringify(items));
+	populateList(items, itemsList);
+}
+
+function deleteAllInputs() {
+	localStorage.removeItem('items');
+	itemsList.innerHTML = '';
+	items = [];
+}
 
 
-const team5 = Array.from(players);
+addItems.addEventListener('submit', addItem);
+itemsList.addEventListener('click', toggleDone);
+checkAll.addEventListener('click', checkAllInputs);
+uncheckAll.addEventListener('click', uncheckAllInputs);
+deleteAll.addEventListener('click', deleteAllInputs);
 
-
-const person = {
-  name: 'Osama Mohamed',
-  age: 22
-};
-const cap2 = Object.assign({}, person, { number: 99, age: 12 });
-console.log(cap2);
-const cap3 = {...person};
-console.log(cap3);
-
-
-const osama = {
-  name: 'Osama',
-  age: 20,
-  social: {
-	github: 'OSAMAMOHAMED1234',
-	facebook: 'osama.mohamed.ms'
-  }
-};
-console.log(osama);
-const dev = Object.assign({}, osama);
-console.log(dev.social.github);
-const dev2 = JSON.parse(JSON.stringify(osama));
-console.log(dev2.social.github);
+populateList(items, itemsList);

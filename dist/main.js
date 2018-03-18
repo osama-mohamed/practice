@@ -1,49 +1,71 @@
 'use strict';
 
-var age = 20;
-var age2 = age;
-console.log(age, age2);
-age = 25;
-console.log(age, age2);
+var addItems = document.querySelector('.add-items');
+var itemsList = document.querySelector('.plates');
+var items = JSON.parse(localStorage.getItem('items')) || [];
+var checkAll = document.querySelector('.check-all');
+var uncheckAll = document.querySelector('.uncheck-all');
+var deleteAll = document.querySelector('.delete-all');
 
-var name = 'Os';
-var name2 = name;
-console.log(name, name2);
-name = 'Osama';
-console.log(name, name2);
+function addItem(e) {
+	e.preventDefault();
+	var text = this.querySelector('[name=item]').value;
+	var item = {
+		text: text,
+		done: false
+	};
+	items.push(item);
+	populateList(items, itemsList);
+	localStorage.setItem('items', JSON.stringify(items));
+	this.reset();
+}
 
-var players = ['Osama', 'Eslam', 'Ahmed', 'Sara'];
-var team = players;
-console.log(players, team);
+function populateList() {
+	var plates = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	var platesList = arguments[1];
 
-var team2 = players.slice();
-var team3 = [].concat(players);
-var team4 = [].concat(players);
-team4[2] = 'Salma';
-console.log(team4);
+	platesList.innerHTML = plates.map(function (plate, i) {
+		return '\n\t\t\t<li>\n\t\t\t  <input type="checkbox" data-index=' + i + ' id="item' + i + '" ' + (plate.done ? 'checked' : '') + ' />\n\t\t\t  <label for="item' + i + '">' + plate.text + '</label>\n\t\t\t</li>\n\t\t';
+	}).join('');
+}
 
-var team5 = Array.from(players);
+function toggleDone(e) {
+	if (!e.target.matches('input')) return;
+	var el = e.target;
+	var index = el.dataset.index;
+	items[index].done = !items[index].done;
+	localStorage.setItem('items', JSON.stringify(items));
+	populateList(items, itemsList);
+}
 
-var person = {
-  name: 'Osama Mohamed',
-  age: 22
-};
-var cap2 = Object.assign({}, person, { number: 99, age: 12 });
-console.log(cap2);
-const cap3 = {...person};
-console.log(cap3);
+function checkAllInputs() {
+	var i = 0;
+	for (; i < items.length; i += 1) {
+		items[i].done = true;
+	}
+	localStorage.setItem('items', JSON.stringify(items));
+	populateList(items, itemsList);
+}
 
+function uncheckAllInputs() {
+	var i = 0;
+	for (; i < items.length; i += 1) {
+		items[i].done = false;
+	}
+	localStorage.setItem('items', JSON.stringify(items));
+	populateList(items, itemsList);
+}
 
-var osama = {
-  name: 'Osama',
-  age: 20,
-  social: {
-    github: 'OSAMAMOHAMED1234',
-    facebook: 'osama.mohamed.ms'
-  }
-};
-console.log(osama);
-var dev = Object.assign({}, osama);
-console.log(dev.social.github);
-var dev2 = JSON.parse(JSON.stringify(osama));
-console.log(dev2.social.github);
+function deleteAllInputs() {
+	localStorage.removeItem('items');
+	itemsList.innerHTML = '';
+	items = [];
+}
+
+addItems.addEventListener('submit', addItem);
+itemsList.addEventListener('click', toggleDone);
+checkAll.addEventListener('click', checkAllInputs);
+uncheckAll.addEventListener('click', uncheckAllInputs);
+deleteAll.addEventListener('click', deleteAllInputs);
+
+populateList(items, itemsList);
