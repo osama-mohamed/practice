@@ -1,10 +1,33 @@
-const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+const timeNodes = Array.from(document.querySelectorAll('[data-time]'));
 
-function strip(bandName) {
-  return bandName.replace(/^(a |the |an )/i, '').trim();
+const seconds = timeNodes
+	.map(node => node.dataset.time)
+	.map(timeCode => {
+	  const [mins, secs] = timeCode.split(':').map(parseFloat);
+	  return (mins * 60) + secs;
+	})
+	.reduce((total, vidSeconds) => total + vidSeconds);
+
+let secondsLeft = seconds;
+const hours = Math.floor(secondsLeft / 3600);
+secondsLeft = secondsLeft % 3600;
+
+const mins = Math.floor(secondsLeft / 60);
+secondsLeft = secondsLeft % 60;
+
+console.log(hours, mins, secondsLeft);
+
+
+
+let items = document.querySelectorAll('ul.videos > li');
+
+for (let i =0; i < items.length; i += 1) {
+	items[i].innerText += ' => ' + items[i].dataset.time;
 }
 
-const sortedBands = bands.sort((a, b) => strip(a) > strip(b) ? 1 : -1);
+items.forEach(function (i) {
+	i.innerText += ' => ' + i.dataset.time
+});
 
-document.querySelector('#bands').innerHTML =
-  sortedBands.map(band => `<li>${band}</li>`).join('');
+items.forEach((i) => i.innerText += ' => ' + i.dataset.time);
+items.forEach(i => i.textContent += ' => ' + i.dataset.time);
