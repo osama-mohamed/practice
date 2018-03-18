@@ -1,38 +1,49 @@
 'use strict';
 
-function debounce(func) {
-		var wait = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 20;
-		var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+var age = 20;
+var age2 = age;
+console.log(age, age2);
+age = 25;
+console.log(age, age2);
 
-		var timeout;
-		return function () {
-				var context = this,
-				    args = arguments;
-				var later = function later() {
-						timeout = null;
-						if (!immediate) func.apply(context, args);
-				};
-				var callNow = immediate && !timeout;
-				clearTimeout(timeout);
-				timeout = setTimeout(later, wait);
-				if (callNow) func.apply(context, args);
-		};
-}
+var name = 'Os';
+var name2 = name;
+console.log(name, name2);
+name = 'Osama';
+console.log(name, name2);
 
-var sliderImages = document.querySelectorAll('.slide-in');
+var players = ['Osama', 'Eslam', 'Ahmed', 'Sara'];
+var team = players;
+console.log(players, team);
 
-function checkSlide() {
-		sliderImages.forEach(function (sliderImage) {
-				var slideInAt = window.scrollY + window.innerHeight - sliderImage.height / 2;
-				var imageBottom = sliderImage.offsetTop + sliderImage.height;
-				var isHalfShown = slideInAt > sliderImage.offsetTop;
-				var isNotScrolledPast = window.scrollY < imageBottom;
-				if (isHalfShown && isNotScrolledPast) {
-						sliderImage.classList.add('active');
-				} else {
-						sliderImage.classList.remove('active');
-				}
-		});
-}
+var team2 = players.slice();
+var team3 = [].concat(players);
+var team4 = [].concat(players);
+team4[2] = 'Salma';
+console.log(team4);
 
-window.addEventListener('scroll', debounce(checkSlide));
+var team5 = Array.from(players);
+
+var person = {
+  name: 'Osama Mohamed',
+  age: 22
+};
+var cap2 = Object.assign({}, person, { number: 99, age: 12 });
+console.log(cap2);
+const cap3 = {...person};
+console.log(cap3);
+
+
+var osama = {
+  name: 'Osama',
+  age: 20,
+  social: {
+    github: 'OSAMAMOHAMED1234',
+    facebook: 'osama.mohamed.ms'
+  }
+};
+console.log(osama);
+var dev = Object.assign({}, osama);
+console.log(dev.social.github);
+var dev2 = JSON.parse(JSON.stringify(osama));
+console.log(dev2.social.github);
