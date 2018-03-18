@@ -1,71 +1,22 @@
 'use strict';
 
-var addItems = document.querySelector('.add-items');
-var itemsList = document.querySelector('.plates');
-var items = JSON.parse(localStorage.getItem('items')) || [];
-var checkAll = document.querySelector('.check-all');
-var uncheckAll = document.querySelector('.uncheck-all');
-var deleteAll = document.querySelector('.delete-all');
+var hero = document.querySelector('.hero');
+var text = hero.querySelector('h1');
+var walk = 500;
 
-function addItem(e) {
-	e.preventDefault();
-	var text = this.querySelector('[name=item]').value;
-	var item = {
-		text: text,
-		done: false
-	};
-	items.push(item);
-	populateList(items, itemsList);
-	localStorage.setItem('items', JSON.stringify(items));
-	this.reset();
-}
+function shadow(e) {
+	var width = hero.offsetWidth,
+	    height = hero.offsetHeight;
+	var x = e.offsetX,
+	    y = e.offsetY;
 
-function populateList() {
-	var plates = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-	var platesList = arguments[1];
-
-	platesList.innerHTML = plates.map(function (plate, i) {
-		return '\n\t\t\t<li>\n\t\t\t  <input type="checkbox" data-index=' + i + ' id="item' + i + '" ' + (plate.done ? 'checked' : '') + ' />\n\t\t\t  <label for="item' + i + '">' + plate.text + '</label>\n\t\t\t</li>\n\t\t';
-	}).join('');
-}
-
-function toggleDone(e) {
-	if (!e.target.matches('input')) return;
-	var el = e.target;
-	var index = el.dataset.index;
-	items[index].done = !items[index].done;
-	localStorage.setItem('items', JSON.stringify(items));
-	populateList(items, itemsList);
-}
-
-function checkAllInputs() {
-	var i = 0;
-	for (; i < items.length; i += 1) {
-		items[i].done = true;
+	if (this !== e.target) {
+		x = x + e.target.offsetLeft;
+		y = y + e.target.offsetTop;
 	}
-	localStorage.setItem('items', JSON.stringify(items));
-	populateList(items, itemsList);
+	var xWalk = Math.round(x / width * walk - walk / 2);
+	var yWalk = Math.round(y / height * walk - walk / 2);
+	text.style.textShadow = '\n\t  ' + xWalk + 'px ' + yWalk + 'px 0 rgba(255,0,255,0.7),\n\t  ' + xWalk * -1 + 'px ' + yWalk + 'px 0 rgba(0,255,255,0.7),\n\t  ' + yWalk + 'px ' + xWalk * -1 + 'px 0 rgba(0,255,0,0.7),\n\t  ' + yWalk * -1 + 'px ' + xWalk + 'px 0 rgba(0,0,255,0.7)\n\t';
 }
 
-function uncheckAllInputs() {
-	var i = 0;
-	for (; i < items.length; i += 1) {
-		items[i].done = false;
-	}
-	localStorage.setItem('items', JSON.stringify(items));
-	populateList(items, itemsList);
-}
-
-function deleteAllInputs() {
-	localStorage.removeItem('items');
-	itemsList.innerHTML = '';
-	items = [];
-}
-
-addItems.addEventListener('submit', addItem);
-itemsList.addEventListener('click', toggleDone);
-checkAll.addEventListener('click', checkAllInputs);
-uncheckAll.addEventListener('click', uncheckAllInputs);
-deleteAll.addEventListener('click', deleteAllInputs);
-
-populateList(items, itemsList);
+hero.addEventListener('mousemove', shadow);
