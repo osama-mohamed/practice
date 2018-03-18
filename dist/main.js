@@ -1,22 +1,15 @@
 'use strict';
 
-var hero = document.querySelector('.hero');
-var text = hero.querySelector('h1');
-var walk = 500;
+var bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
 
-function shadow(e) {
-	var width = hero.offsetWidth,
-	    height = hero.offsetHeight;
-	var x = e.offsetX,
-	    y = e.offsetY;
-
-	if (this !== e.target) {
-		x = x + e.target.offsetLeft;
-		y = y + e.target.offsetTop;
-	}
-	var xWalk = Math.round(x / width * walk - walk / 2);
-	var yWalk = Math.round(y / height * walk - walk / 2);
-	text.style.textShadow = '\n\t  ' + xWalk + 'px ' + yWalk + 'px 0 rgba(255,0,255,0.7),\n\t  ' + xWalk * -1 + 'px ' + yWalk + 'px 0 rgba(0,255,255,0.7),\n\t  ' + yWalk + 'px ' + xWalk * -1 + 'px 0 rgba(0,255,0,0.7),\n\t  ' + yWalk * -1 + 'px ' + xWalk + 'px 0 rgba(0,0,255,0.7)\n\t';
+function strip(bandName) {
+  return bandName.replace(/^(a |the |an )/i, '').trim();
 }
 
-hero.addEventListener('mousemove', shadow);
+var sortedBands = bands.sort(function (a, b) {
+  return strip(a) > strip(b) ? 1 : -1;
+});
+
+document.querySelector('#bands').innerHTML = sortedBands.map(function (band) {
+  return '<li>' + band + '</li>';
+}).join('');
