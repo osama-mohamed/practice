@@ -1,53 +1,53 @@
 'use strict';
 
-var countdown = void 0;
-var timerDisplay = document.querySelector('.display__time-left');
-var endTime = document.querySelector('.display__end-time');
-var buttons = document.querySelectorAll('[data-time]');
+var holes = document.querySelectorAll('.hole');
+var scoreBoard = document.querySelector('.score');
+var moles = document.querySelectorAll('.mole');
+var lastHole = void 0;
+var timeUp = false;
+var score = 0;
 
-function timer(seconds) {
-  clearInterval(countdown);
-  var now = Date.now();
-  var then = now + seconds * 1000;
-  displayTimeLeft(seconds);
-  displayEndTime(then);
-  countdown = setInterval(function () {
-    var secondsLeft = Math.round((then - Date.now()) / 1000);
-    if (secondsLeft < 0) {
-      clearInterval(countdown);
-      return;
-    }
-    displayTimeLeft(secondsLeft);
-  }, 1000);
+function randomTime(min, max) {
+  return Math.round(Math.random() * (max - min) + min);
 }
 
-function displayTimeLeft(seconds) {
-  var minutes = Math.floor(seconds / 60);
-  var remainderSeconds = seconds % 60;
-  var display = '' + (minutes < 10 ? '0' : '') + minutes + ':' + (remainderSeconds < 10 ? '0' : '') + remainderSeconds;
-  document.title = display;
-  timerDisplay.textContent = display;
+function randomHole(holes) {
+  var idx = Math.floor(Math.random() * holes.length);
+  var hole = holes[idx];
+  if (hole === lastHole) {
+    return randomHole(holes);
+  }
+  lastHole = hole;
+  return hole;
 }
 
-function displayEndTime(timestamp) {
-  var end = new Date(timestamp);
-  var hour = end.getHours();
-  var adjustedHour = hour > 12 ? hour - 12 : hour;
-  var minutes = end.getMinutes();
-  endTime.textContent = 'Be Back At ' + adjustedHour + ':' + (minutes < 10 ? '0' : '') + minutes;
+function peep() {
+  var time = randomTime(200, 1000);
+  var hole = randomHole(holes);
+  hole.classList.add('up');
+  setTimeout(function () {
+    hole.classList.remove('up');
+    if (!timeUp) peep();
+  }, time);
 }
 
-function startTimer() {
-  var seconds = parseInt(this.dataset.time);
-  timer(seconds);
+function startGame() {
+  scoreBoard.textContent = 0;
+  timeUp = false;
+  score = 0;
+  peep();
+  setTimeout(function () {
+    return timeUp = true;
+  }, 10000);
 }
 
-buttons.forEach(function (button) {
-  return button.addEventListener('click', startTimer);
-});
-document.customForm.addEventListener('submit', function (e) {
-  e.preventDefault();
-  var mins = this.minutes.value;
-  timer(mins * 60);
-  this.reset();
+function bonk(e) {
+  if (!e.isTrusted) return;
+  score++;
+  this.parentNode.classList.remove('up');
+  scoreBoard.textContent = score;
+}
+
+moles.forEach(function (mole) {
+  return mole.addEventListener('click', bonk);
 });
