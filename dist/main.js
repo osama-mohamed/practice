@@ -1,42 +1,31 @@
 'use strict';
 
-var triggers = document.querySelectorAll('.cool > li');
-var background = document.querySelector('.dropdownBackground');
-var nav = document.querySelector('.top');
+var slider = document.querySelector('.items');
+var isDown = false;
+var startX = void 0;
+var scrollLeft = void 0;
 
-function handleEnter() {
-  var _this = this;
-
-  this.classList.add('trigger-enter');
-  setTimeout(function () {
-    return _this.classList.contains('trigger-enter') && _this.classList.add('trigger-enter-active');
-  }, 150);
-  background.classList.add('open');
-
-  var dropdown = this.querySelector('.dropdown');
-  var dropdownCoords = dropdown.getBoundingClientRect();
-  var navCoords = nav.getBoundingClientRect();
-
-  var coords = {
-    height: dropdownCoords.height,
-    width: dropdownCoords.width,
-    top: dropdownCoords.top - navCoords.top,
-    left: dropdownCoords.left - navCoords.left
-  };
-
-  background.style.setProperty('width', coords.width + 'px');
-  background.style.setProperty('height', coords.height + 'px');
-  background.style.setProperty('transform', 'translate(' + coords.left + 'px, ' + coords.top + 'px)');
-}
-
-function handleLeave() {
-  this.classList.remove('trigger-enter', 'trigger-enter-active');
-  background.classList.remove('open');
-}
-
-triggers.forEach(function (trigger) {
-  return trigger.addEventListener('mouseenter', handleEnter);
+slider.addEventListener('mousedown', function (e) {
+  isDown = true;
+  slider.classList.add('active');
+  startX = e.pageX - slider.offsetLeft;
+  scrollLeft = slider.scrollLeft;
 });
-triggers.forEach(function (trigger) {
-  return trigger.addEventListener('mouseleave', handleLeave);
+
+slider.addEventListener('mouseleave', function () {
+  isDown = false;
+  slider.classList.remove('active');
+});
+
+slider.addEventListener('mouseup', function () {
+  isDown = false;
+  slider.classList.remove('active');
+});
+
+slider.addEventListener('mousemove', function (e) {
+  if (!isDown) return;
+  e.preventDefault();
+  var x = e.pageX - slider.offsetLeft;
+  var walk = (x - startX) * 3;
+  slider.scrollLeft = scrollLeft - walk;
 });
