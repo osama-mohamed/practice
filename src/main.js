@@ -1,15 +1,19 @@
+const divs = document.querySelectorAll('div');
+const button = document.querySelector('button');
 
-const nav = document.querySelector('#main');
-let topOfNav = nav.offsetTop;
-
-function fixNav() {
-  if (window.scrollY >= topOfNav) {
-    document.body.style.paddingTop = nav.offsetHeight + 'px';
-    document.body.classList.add('fixed-nav');
-  } else {
-    document.body.classList.remove('fixed-nav');
-    document.body.style.paddingTop = 0;
-  }
+function logText(e) {
+  console.log(this.classList.value);
+  // e.stopPropagation(); // stop bubbling!
 }
 
-window.addEventListener('scroll', fixNav);
+divs.forEach(div => div.addEventListener('click', logText, {
+  // capture: true, // from root to top
+  capture: false,   // from top to root
+  once: true        // run only one time, don not repeat
+}));
+
+button.addEventListener('click', () => {
+  console.log('you click the button');
+}, {
+  once: true
+});
