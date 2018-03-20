@@ -1,52 +1,16 @@
 'use strict';
 
-var msg = new SpeechSynthesisUtterance();
-var voices = [];
-var voicesDropdown = document.querySelector('[name="voice"]');
-var options = document.querySelectorAll('[type="range"], [name="text"]');
-var speakButton = document.querySelector('#speak');
-var stopButton = document.querySelector('#stop');
-msg.text = document.querySelector('[name="text"]').value;
+var nav = document.querySelector('#main');
+var topOfNav = nav.offsetTop;
 
-function populateVoices() {
-  voices = this.getVoices();
-  voicesDropdown.innerHTML = voices.filter(function (voice) {
-    return voice.lang.includes('en');
-  }).map(function (voice) {
-    return '<option value="' + voice.name + '">' + voice.name + ' (' + voice.lang + ')</option>';
-  }).join('');
-}
-
-function setVoice() {
-  var _this = this;
-
-  msg.voice = voices.find(function (voice) {
-    return voice.name === _this.value;
-  });
-  toggle();
-}
-
-function toggle() {
-  var startOver = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-
-  speechSynthesis.cancel();
-  if (startOver) {
-    speechSynthesis.speak(msg);
+function fixNav() {
+  if (window.scrollY >= topOfNav) {
+    document.body.style.paddingTop = nav.offsetHeight + 'px';
+    document.body.classList.add('fixed-nav');
+  } else {
+    document.body.classList.remove('fixed-nav');
+    document.body.style.paddingTop = 0;
   }
 }
 
-function setOption() {
-  msg[this.name] = this.value;
-  toggle();
-}
-
-speechSynthesis.addEventListener('voiceschanged', populateVoices);
-voicesDropdown.addEventListener('change', setVoice);
-options.forEach(function (option) {
-  return option.addEventListener('change', setOption);
-});
-speakButton.addEventListener('click', toggle);
-stopButton.addEventListener('click', function () {
-  return toggle(false);
-});
-// stopButton.addEventListener('click', toggle.bind(null, false));
+window.addEventListener('scroll', fixNav);
