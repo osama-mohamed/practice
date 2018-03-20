@@ -1,32 +1,12 @@
 'use strict';
 
-window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+var arrow = document.querySelector('.arrow');
+var speed = document.querySelector('.speed-value');
 
-var recognition = new SpeechRecognition();
-recognition.interimResults = true;
-recognition.lang = 'en-US';
-
-var p = document.createElement('p');
-var words = document.querySelector('.words');
-words.appendChild(p);
-
-recognition.addEventListener('result', function (e) {
-  var transcript = Array.from(e.results).map(function (result) {
-    return result[0];
-  }).map(function (result) {
-    return result.transcript;
-  }).join('');
-
-  // const poopScript = transcript.replace(/poop|poo|shit|dump/gi, '💩');
-  // p.textContent = poopScript;
-  p.textContent = transcript;
-
-  if (e.results[0].isFinal) {
-    p = document.createElement('p');
-    words.appendChild(p);
-  }
+navigator.geolocation.watchPosition(function (data) {
+  console.log(data);
+  speed.textContent = data.coords.speed;
+  arrow.style.transform = 'rotate(' + data.coords.heading + 'deg)';
+}, function (err) {
+  console.error(err);
 });
-
-recognition.addEventListener('end', recognition.start);
-
-recognition.start();
