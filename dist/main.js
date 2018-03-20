@@ -1,22 +1,52 @@
 'use strict';
 
-var triggers = document.querySelectorAll('a');
-var highlight = document.createElement('span');
-highlight.classList.add('highlight');
-document.body.appendChild(highlight);
+var msg = new SpeechSynthesisUtterance();
+var voices = [];
+var voicesDropdown = document.querySelector('[name="voice"]');
+var options = document.querySelectorAll('[type="range"], [name="text"]');
+var speakButton = document.querySelector('#speak');
+var stopButton = document.querySelector('#stop');
+msg.text = document.querySelector('[name="text"]').value;
 
-function highlightLink() {
-  var linkCoords = this.getBoundingClientRect();
-  var coords = {
-    width: linkCoords.width,
-    height: linkCoords.height,
-    top: linkCoords.top + window.scrollY,
-    left: linkCoords.left + window.scrollX
-  };
-  highlight.style.width = coords.width + 'px';
-  highlight.style.height = coords.height + 'px';
-  highlight.style.transform = 'translate(' + coords.left + 'px, ' + coords.top + 'px)';
+function populateVoices() {
+  voices = this.getVoices();
+  voicesDropdown.innerHTML = voices.filter(function (voice) {
+    return voice.lang.includes('en');
+  }).map(function (voice) {
+    return '<option value="' + voice.name + '">' + voice.name + ' (' + voice.lang + ')</option>';
+  }).join('');
 }
-triggers.forEach(function (a) {
-  return a.addEventListener('mouseenter', highlightLink);
+
+function setVoice() {
+  var _this = this;
+
+  msg.voice = voices.find(function (voice) {
+    return voice.name === _this.value;
+  });
+  toggle();
+}
+
+function toggle() {
+  var startOver = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+
+  speechSynthesis.cancel();
+  if (startOver) {
+    speechSynthesis.speak(msg);
+  }
+}
+
+function setOption() {
+  msg[this.name] = this.value;
+  toggle();
+}
+
+speechSynthesis.addEventListener('voiceschanged', populateVoices);
+voicesDropdown.addEventListener('change', setVoice);
+options.forEach(function (option) {
+  return option.addEventListener('change', setOption);
 });
+speakButton.addEventListener('click', toggle);
+stopButton.addEventListener('click', function () {
+  return toggle(false);
+});
+// stopButton.addEventListener('click', toggle.bind(null, false));
