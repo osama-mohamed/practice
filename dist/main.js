@@ -1,31 +1,19 @@
 'use strict';
 
-var slider = document.querySelector('.items');
-var isDown = false;
-var startX = void 0;
-var scrollLeft = void 0;
+var speed = document.querySelector('.speed');
+var bar = speed.querySelector('.speed-bar');
+var video = document.querySelector('.flex');
 
-slider.addEventListener('mousedown', function (e) {
-  isDown = true;
-  slider.classList.add('active');
-  startX = e.pageX - slider.offsetLeft;
-  scrollLeft = slider.scrollLeft;
-});
+function handleMove(e) {
+    var y = e.pageY - this.offsetTop;
+    var percent = y / this.offsetHeight;
+    var min = 0.4;
+    var max = 4;
+    var height = Math.round(percent * 100) + '%';
+    var playbackRate = percent * (max - min) + min;
+    bar.style.height = height;
+    bar.textContent = playbackRate.toFixed(2) + '×';
+    video.playbackRate = playbackRate;
+}
 
-slider.addEventListener('mouseleave', function () {
-  isDown = false;
-  slider.classList.remove('active');
-});
-
-slider.addEventListener('mouseup', function () {
-  isDown = false;
-  slider.classList.remove('active');
-});
-
-slider.addEventListener('mousemove', function (e) {
-  if (!isDown) return;
-  e.preventDefault();
-  var x = e.pageX - slider.offsetLeft;
-  var walk = (x - startX) * 3;
-  slider.scrollLeft = scrollLeft - walk;
-});
+speed.addEventListener('mousemove', handleMove);
