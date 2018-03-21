@@ -429,4 +429,28 @@ $(function () {
     $('.switch-tabs').on('click', function () {
         $(this).next('.dynamic-tabs').toggleClass('left-tabs');
 	});
+
+    // email suggest box
+    var emailProviders = ['gmail.com', 'outlook.com', 'yahoo.com', 'hotmail.com'],
+        finalText = '';
+    $('.email-suggest').on('keyup', function () {
+        finalText = '';
+        if (!$(this).next().is('.suggest-box')) {
+            $('<ul class="suggest-box"></ul>').insertAfter($(this));
+        }
+        for (var i = 0; i < emailProviders.length; i += 1) {
+            if ($(this).val().indexOf('@') !== -1) {
+                finalText += '<li>' + $(this).val() + '</li>';
+                $('.suggest-box').hide().remove();
+            } else {
+                finalText += '<li>' + $(this).val() + '@' + emailProviders[i] + '</li>';
+            }
+        }
+        $('.suggest-box').html(finalText);
+	});
+    // email suggest box select
+    $('body').on('click', '.suggest-box li', function () {
+        $('.email-suggest').val($(this).text());
+        $(this).parent().fadeOut(200).remove();
+	})
 });
