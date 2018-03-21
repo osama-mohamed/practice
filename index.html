@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Speaker | OSAMA MOHAMED</title>
+        <link rel="icon" href="https://png.icons8.com/color/2x/foreign-language-sound.png">
+        <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="voiceinator">
+          <h1>The Speaker</h1>
+          <h2>Developed By : &emsp; &emsp;<a href="https://www.facebook.com/osama.mohamed.ms">OSAMA MOHAMED</a></h2>
+
+          <select name="voice" id="voices">
+            <option value="">Select A Voice</option>
+          </select>
+
+          <label for="rate">Rate:</label>
+          <input name="rate" id="rate" type="range" min="0" max="2" value="1" step="0.1">
+
+          <label for="pitch">Pitch:</label>
+          <input name="pitch" id="pitch" type="range" min="0" max="2" step="0.1">
+
+          <textarea name="text">Hello! I love JavaScript</textarea>
+
+          <button id="stop">Stop!</button>
+          <button id="speak">Speak</button>
+        </div>
+
+        <script src="main.js"></script>
+    </body>
+</html>
