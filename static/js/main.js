@@ -417,4 +417,16 @@ $(function () {
             }
         });
     }());
+
+    // dynamic tabs
+    $('.tabs-list li').on('click', function () {
+        $(this).addClass('active').siblings().removeClass('active');
+        $('.' + $(this).data('content')).fadeIn(200).siblings().hide();
+        // $('.content-list > div').hide();
+        // $('.' + $(this).data('content')).fadeIn(200);
+	});
+    // switch-tabs on dynamic tabs
+    $('.switch-tabs').on('click', function () {
+        $(this).next('.dynamic-tabs').toggleClass('left-tabs');
+	});
 });
