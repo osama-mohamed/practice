@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Countdown Timer</title>
+        <link rel="icon" href="https://image.flaticon.com/icons/png/128/148/148938.png">
+        <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+      <div class="timer">
+        <div class="timer__controls">
+          <button data-time="20" class="timer__button">20 Secs</button>
+          <button data-time="300" class="timer__button">5 Minutes</button>
+          <button data-time="900" class="timer__button">15 Minutes</button>
+          <button data-time="1800" class="timer__button">30 Minutes</button>
+          <button data-time="3600" class="timer__button">One Hour</button>
+          <form name="customForm" id="custom">
+            <input type="number" name="minutes" placeholder="Enter Minutes">
+          </form>
+        </div>
+        <h1>Developed By : <a href="https://www.facebook.com/osama.mohamed.ms">OSAMA MOHAMED</a></h1>
+        <div class="display">
+          <h1 class="display__time-left"></h1>
+          <h1 id="hold-text">
+              Select Time
+              <br>
+              <br>
+              OR
+              <br>
+              <br>
+              Write Time In Minutes</h1>
+          <p class="display__end-time"></p>
+        </div>
+        <audio src="notify.mp3"></audio>
+      </div>
+
+        <script src="main.js"></script>
+    </body>
+</html>
