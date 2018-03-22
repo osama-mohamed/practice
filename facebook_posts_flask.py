@@ -3,47 +3,60 @@ from flask import Flask, jsonify
 import requests
 import MySQLdb
 
+dbhost = 'localhost'
+dbusername = 'root'
+dbpassword = ''
+dbname = 'facebook_api'
+
+
 app = Flask(__name__)
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_DB'] = 'facebook_api'
+app.config['MYSQL_HOST'] = dbhost
+app.config['MYSQL_USER'] = dbusername
+app.config['MYSQL_PASSWORD'] = dbpassword
+app.config['MYSQL_DB'] = dbname
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 mysql = MySQL(app)
 
 
-database = MySQLdb.connect("localhost", "OSAMA", "OSAMA")
+database = MySQLdb.connect(dbhost, dbusername, dbpassword)
 cursor = database.cursor()
 # cursor.execute("DROP DATABASE IF EXISTS facebook_api;")
-cursor.execute("CREATE DATABASE IF NOT EXISTS facebook_api DEFAULT CHARSET UTF8")
-database.select_db('facebook_api')
+cursor.execute("CREATE DATABASE IF NOT EXISTS {} DEFAULT CHARSET UTF8".format(dbname))
+database.select_db('{}'.format(dbname))
 cursor.execute("CREATE TABLE IF NOT EXISTS users(\
                 id INT(11) AUTO_INCREMENT PRIMARY KEY,\
                 user_id TEXT NOT NULL,\
                 posts_id TEXT NOT NULL,\
                 story TEXT NOT NULL,\
+                message TEXT NOT NULL,\
                 created_time VARCHAR(100) NOT NULL,\
                 update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP );")
 database.close()
 
 
-@app.route('/<int:id>')
-@app.route('/<int:id>/<local>')
+@app.route('/users/<int:id>/posts')
+@app.route('/users/<int:id>/posts/<local>')
 def users(id, local=None):
-    url = "https://graph.facebook.com/v2.12/{}/posts?access_token=EAACEdEose0cBAFXuepVNHkSY0avpWECwPX5ZBBcGlZCzHi6YRlfred2rseY6Egk5m5X66JMC4ZCo4AhCADYmhKbKXQ0ZA7nHWybsivcDx4aDyl2QZCCPO0rtBD3PmWLqOzgDqmDDRiR1bj1awT3vA4YXUoHLKPlHVbk2ZCwZAk67S94jkgRdZAE6ZB0FmqsOZAvvcZD".format(id)
+    token = 'EAACEdEose0cBAItHTDg4ZAnNqLUKrSUWMV5FY3wgToRMHqHxIZBtsoyDVJJCv3D1UivTAk9w0WsjkTzKN1jIJ0Mld0rJUh1wkMMQNjIF0qmA8dZClXG22sMrnNEbEQMdv2Q1Fka6FCUS0ueert2MJaYLx1jR1MkchrXSpPmSTYrXpefJsEeignysvQypN0EcwWTzWvyOepLeaZAYStYC'
+    url = "https://graph.facebook.com/v2.12/{}/posts?limit=25&access_token={}".format(id, token)
     result = requests.get(url).json()
+    print(result)
     if not local:
         cur = mysql.connection.cursor()
+        cur.execute("DELETE FROM users WHERE user_id = {}".format(id))
+        mysql.connection.commit()
         for res in result['data']:
             try:
-                cur.execute("INSERT INTO users(user_id, posts_id, story, created_time) VALUES(%s, %s, %s, %s)",
-                            (id, res['id'], res['story'], res['created_time']))
+                cur.execute("INSERT INTO users(user_id, posts_id, story, message, created_time) VALUES(%s, %s, %s, %s, %s)",
+                            (id, res['id'], res['story'], '', res['created_time']))
             except:
-                pass
+                cur.execute("INSERT INTO users(user_id, posts_id, story, message, created_time) VALUES(%s, %s, %s, %s, %s)",
+                            (id, res['id'], '', res['message'], res['created_time']))
         mysql.connection.commit()
         cur.close()
     if local:
         cur = mysql.connection.cursor()
-        cur.execute("SELECT posts_id, story, created_time FROM users WHERE user_id = {};".format(id))
+        cur.execute("SELECT posts_id, story, message, created_time FROM users WHERE user_id = {};".format(id))
         allresult = cur.fetchall()
         cur.close()
         output = []
