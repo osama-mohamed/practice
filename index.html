@@ -11,6 +11,13 @@
             <h1>{{greet(name)}}</h1>
             <h1>Name : {{name}}</h1>
             <h2>job : {{job}}</h2>
+
+            
+            <a v-bind:href="facebook">OSAMA MOHAMED</a><br>
+            <a :href="facebook">OSAMA MOHAMED</a>
+            <input type="text" v-bind:value="name">
+            <input type="text" :value="name">
+            <p v-html="facebookTag"></p>
         </div>
 
         <script src="main.js"></script>
