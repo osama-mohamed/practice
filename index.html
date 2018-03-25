@@ -8,16 +8,13 @@
     </head>
     <body>
         <div id="vue-app">
-            <h1>{{greet(name)}}</h1>
-            <h1>Name : {{name}}</h1>
-            <h2>job : {{job}}</h2>
+            <button v-on:click="age++">Add year</button>
+            <button @click="age--">Sub year</button>
 
-            
-            <a v-bind:href="facebook">OSAMA MOHAMED</a><br>
-            <a :href="facebook">OSAMA MOHAMED</a>
-            <input type="text" v-bind:value="name">
-            <input type="text" :value="name">
-            <p v-html="facebookTag"></p>
+            <button v-on:click="add">Add year with function</button>
+            <button @click="sub">Sub year with function</button>
+            <h1>my age is : {{age}}</h1>
+            <div id="test" v-on:mousemove="updateXY">{{x}}, {{y}}</div>
         </div>
 
         <script src="main.js"></script>
