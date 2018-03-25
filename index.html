@@ -7,11 +7,11 @@
         <script src="https://unpkg.com/vue"></script>
     </head>
     <body>
-        <div id="vue-app-one">
-            <greeting></greeting>
-        </div>
-        <div id="vue-app-two">
-            <greeting></greeting>
+        <div id="vue-app">
+            <input type="text" ref="inputRef">
+            <button v-on:click="readRefs">Submit</button>
+            <p>You have entered : {{output}}</p>
+            <div ref="test">This is div</div>
         </div>
 
         <script src="main.js"></script>
