@@ -8,25 +8,17 @@
     </head>
     <body>
         <div id="vue-app">
-            <ul>
-                <li>Loop throw users array</li>
-                <li v-for="(user, index) in users">{{index}}. {{user}}</li>
-            </ul>
 
-            <ul>
-                <li>Loop throw groups array</li>
-                <li v-for="(group, index) in groups">{{index}}. {{group.name}} : {{group.age}}</li>
-            </ul>
-            <template v-for="(group, index) in groups">
-                <h3>{{index}}. {{group.name}}</h3>
-                <p>{{group.age}}</p>
-            </template>
+            <div id="bag" v-bind:class="{burst: ended}"></div>
 
-            <template v-for="group in groups">
-                <div v-for="(val, key) in group">
-                    <h3>{{key}} - {{val}}</h3>
-                </div>
-            </template>
+            <div id="bag-health">
+                <div v-bind:style="{width: health + '%'}"></div>
+            </div>
+
+            <div id="controls">
+                <button v-on:click="punch" v-show="!ended">Punch</button>
+                <button v-on:click="restart">Restart</button>
+            </div>
         </div>
 
         <script src="main.js"></script>

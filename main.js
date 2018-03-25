@@ -1,15 +1,20 @@
 new Vue({
 	el: '#vue-app',
 	data: {
-		users: ['OSAMA', 'MOHAMED', 'MAHMOUD', 'ESLAM'],
-		groups: [
-			{name: 'OSAMA', age:23},
-			{name: 'MOHAMED', age:22},
-			{name: 'MAHMOUD', age:21}
-		]
+		health: 100,
+        ended: false
 	},
 	methods: {
-
+		punch: function(){
+            this.health -= 10;
+            if(this.health <= 0){
+                this.ended = true;
+            }
+        },
+        restart: function(){
+            this.health = 100;
+            this.ended = false;
+        }
 	},
 	computed: {
 
