@@ -1,7 +1,10 @@
 <template>
-  <ul>
-    <li v-for="user in users">{{user}}</li>
-  </ul>
+  <div>
+    <h1>Users</h1>
+    <ul>
+      <li v-for="user in users">{{user}}</li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -14,6 +17,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+h1{
+  color: blue;
+}
 </style>
