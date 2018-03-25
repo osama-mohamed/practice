@@ -18,7 +18,8 @@ export default {
   },
   methods: {
     changeTitle: function () {
-      this.title = 'This is another title'
+//      this.title = 'This is another title'   // change locally only
+      this.$emit('changeTitle', 'This is another title')
     }
   }
 }

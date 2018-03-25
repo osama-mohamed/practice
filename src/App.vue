@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vue-header v-bind:title="title"></vue-header>
+    <vue-header v-bind:title="title" v-on:changeTitle="updateTitleGlobally($event)"></vue-header>
     <users v-bind:users="usersInfo"></users>
     <vue-footer v-bind:title="title"></vue-footer>
   </div>
@@ -28,6 +28,11 @@ export default {
         {name: 'Nasser', speciality: 'Data Diggin', show: false}
       ],
       title: 'vue app new title'
+    }
+  },
+  methods: {
+    updateTitleGlobally: function (updatedTitle) {
+      this.title = updatedTitle;
     }
   }
 }
