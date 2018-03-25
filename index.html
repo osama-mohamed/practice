@@ -8,14 +8,12 @@
     </head>
     <body>
         <div id="vue-app">
-            <button v-on:click.once="age++">Add year</button>
-            <button @click.once="age--">Sub year</button>
-
-            <button v-on:click.once="add">Add year with function</button>
-            <button @click.once="sub">Sub year with function</button>
-            <h1>my age is : {{age}}</h1>
-            <div id="test" v-on:mousemove="updateXY">{{x}}, {{y}}</div>
-            <a v-on:click.prevent="aClick" href="https://www.fb.com/osama.mohamed.ms">OSAMA MOHAMED</a>
+            <label for="name">Name : </label>
+            <input type="text" id="name" v-on:keyup.enter="showName">
+            <br>
+            <br>
+            <label for="age">Age : </label>
+            <input type="text" id="age" v-on:keyup.enter="showAge">
         </div>
 
         <script src="main.js"></script>

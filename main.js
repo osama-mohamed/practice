@@ -1,23 +1,14 @@
 new Vue({
 	el: '#vue-app',
 	data: {
-		age: 23,
-		x: 0,
-		y: 0
+
 	},
 	methods: {
-		add: function () {
-			this.age += 1
+		showName: function (e) {
+			console.log(e.target.value)
 		},
-		sub: function () {
-			this.age -= 1
-		},
-		updateXY: function (e) {
-			this.x = e.offsetX,
-			this.y = e.offsetY
-		},
-		aClick: function () {
-			alert('this link has been prevented')
+		showAge: function (e) {
+			console.log(e.target.value)
 		}
-	}
+	},
 });
