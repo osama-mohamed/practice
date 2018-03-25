@@ -8,16 +8,19 @@
     </head>
     <body>
         <div id="vue-app">
-            <button v-on:click="a++">Add to A</button>
-            <button v-on:click="b++">Add to b</button>
-            <p>Age = {{age}}</p>
             <!--
-            <p>Age + A : {{age}} + {{a}} = {{addToA()}}</p>
-            <p>Age + B : {{age}} + {{b}} = {{addToB()}}</p>
+            <div v-bind:class="{a: true, b: false, c: true}"></div>
+            <div v-on:click="available = !available" v-bind:class="{os: os, available: available}">
+                <span>OSAMA</span>
+            </div>
             -->
 
-            <p>Age + A : {{age}} + {{a}} = {{addToA}}</p>
-            <p>Age + B : {{age}} + {{b}} = {{addToB}}</p>
+
+            <button v-on:click="available = !available">Toggle available</button>
+            <button v-on:click="nearby = !nearby">Toggle nearby</button>
+            <div v-bind:class="compClasses">
+                <span>OSAMA</span>
+            </div>
         </div>
 
         <script src="main.js"></script>
