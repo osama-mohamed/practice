@@ -1,27 +1,30 @@
 <template>
-  <div id="app">
-    <h1>{{title}}</h1>
-    <users></users>     <!-- globally & locally -->
+  <div>
+    <vue-header></vue-header>
+    <users></users>
+    <vue-footer></vue-footer>
   </div>
 </template>
 
 <script>
-import Users from './Users.vue'    // locally
+import Header from './components/Header.vue'
+import Users from './components/Users.vue'
+import Footer from './components/Footer.vue'
 
 export default {
-  components: {          // locally
-    'users': Users       // locally
-  },                     // locally
+  components: {
+    'vue-header': Header,
+    'users': Users,
+    'vue-footer': Footer
+  },
   data () {
     return {
-      title: 'This is title'
+
     }
   }
 }
 </script>
 
 <style scoped>
-  h1{
-    color: purple;
-  }
+
 </style>
