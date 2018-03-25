@@ -15,6 +15,9 @@ new Vue({
 		updateXY: function (e) {
 			this.x = e.offsetX,
 			this.y = e.offsetY
+		},
+		aClick: function () {
+			alert('this link has been prevented')
 		}
 	}
 });
