@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import {bus} from '../main'
+
 export default {
   props: {
     title: {
@@ -13,13 +15,12 @@ export default {
   },
   data () {
     return {
-      title: 'Vue header'
     }
   },
   methods: {
     changeTitle: function () {
-//      this.title = 'This is another title'   // change locally only
-      this.$emit('changeTitle', 'This is another title')
+      this.title = 'This is another title';
+      bus.$emit('updateTitle', 'This is another title');
     }
   }
 }
