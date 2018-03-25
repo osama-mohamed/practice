@@ -9,11 +9,12 @@
     <body>
         <div id="vue-app">
             <label for="name">Name : </label>
-            <input type="text" id="name" v-on:keyup.enter="showName">
+            <input type="text" id="name" v-on:keyup.enter="showName" v-model="name">
             <br>
             <br>
             <label for="age">Age : </label>
-            <input type="text" id="age" v-on:keyup.enter="showAge">
+            <input type="text" id="age" v-on:keyup.enter="showAge" v-model="age">
+            <h1>Your Name is : {{name}} And Your Age is : {{age}}</h1>
         </div>
 
         <script src="main.js"></script>
