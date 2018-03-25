@@ -8,13 +8,16 @@
     </head>
     <body>
         <div id="vue-app">
-            <label for="name">Name : </label>
-            <input type="text" id="name" v-on:keyup.enter="showName" v-model="name">
-            <br>
-            <br>
-            <label for="age">Age : </label>
-            <input type="text" id="age" v-on:keyup.enter="showAge" v-model="age">
-            <h1>Your Name is : {{name}} And Your Age is : {{age}}</h1>
+            <button v-on:click="a++">Add to A</button>
+            <button v-on:click="b++">Add to b</button>
+            <p>Age = {{age}}</p>
+            <!--
+            <p>Age + A : {{age}} + {{a}} = {{addToA()}}</p>
+            <p>Age + B : {{age}} + {{b}} = {{addToB()}}</p>
+            -->
+
+            <p>Age + A : {{age}} + {{a}} = {{addToA}}</p>
+            <p>Age + B : {{age}} + {{b}} = {{addToB}}</p>
         </div>
 
         <script src="main.js"></script>
