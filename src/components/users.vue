@@ -27,6 +27,24 @@ export default {
     deleteUser: function () {
       this.users.pop();         // delete from source (ref) delete in every where
     }
+  },
+  beforeCreate() {
+    alert('before create')
+  },
+  created() {
+    alert('created')
+  },
+  beforeMount() {
+    alert('before mounte')
+  },
+  mounted() {
+    alert('mounted')
+  },
+  beforeUpdate() {
+    alert('before update')
+  },
+  updated() {
+    alert('updated')
   }
 }
 </script>
