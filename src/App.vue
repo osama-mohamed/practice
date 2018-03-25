@@ -1,8 +1,8 @@
 <template>
   <div>
-    <vue-header></vue-header>
+    <vue-header v-bind:title="title"></vue-header>
     <users v-bind:users="usersInfo"></users>
-    <vue-footer></vue-footer>
+    <vue-footer v-bind:title="title"></vue-footer>
   </div>
 </template>
 
@@ -26,7 +26,8 @@ export default {
         {name: 'Ahmed', speciality: 'Conditionals', show: false},
         {name: 'Eslam', speciality: 'Webpack', show: false},
         {name: 'Nasser', speciality: 'Data Diggin', show: false}
-      ]
+      ],
+      title: 'vue app new title'
     }
   }
 }
