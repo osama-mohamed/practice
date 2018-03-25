@@ -8,15 +8,25 @@
     </head>
     <body>
         <div id="vue-app">
-            <button v-on:click="success = !success">Toggle Success</button>
-            <button v-on:click="error = !error">Toggle Error</button>
-            <!--
-            <p v-if="success">Done successfully</p>
-            <p v-else-if="error">There was an error</p>
-            -->
+            <ul>
+                <li>Loop throw users array</li>
+                <li v-for="(user, index) in users">{{index}}. {{user}}</li>
+            </ul>
 
-            <p v-show="success">Done successfully showed</p>
-            <p v-show="error">There was an error showed</p>
+            <ul>
+                <li>Loop throw groups array</li>
+                <li v-for="(group, index) in groups">{{index}}. {{group.name}} : {{group.age}}</li>
+            </ul>
+            <template v-for="(group, index) in groups">
+                <h3>{{index}}. {{group.name}}</h3>
+                <p>{{group.age}}</p>
+            </template>
+
+            <template v-for="group in groups">
+                <div v-for="(val, key) in group">
+                    <h3>{{key}} - {{val}}</h3>
+                </div>
+            </template>
         </div>
 
         <script src="main.js"></script>
