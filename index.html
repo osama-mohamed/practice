@@ -8,19 +8,15 @@
     </head>
     <body>
         <div id="vue-app">
+            <button v-on:click="success = !success">Toggle Success</button>
+            <button v-on:click="error = !error">Toggle Error</button>
             <!--
-            <div v-bind:class="{a: true, b: false, c: true}"></div>
-            <div v-on:click="available = !available" v-bind:class="{os: os, available: available}">
-                <span>OSAMA</span>
-            </div>
+            <p v-if="success">Done successfully</p>
+            <p v-else-if="error">There was an error</p>
             -->
 
-
-            <button v-on:click="available = !available">Toggle available</button>
-            <button v-on:click="nearby = !nearby">Toggle nearby</button>
-            <div v-bind:class="compClasses">
-                <span>OSAMA</span>
-            </div>
+            <p v-show="success">Done successfully showed</p>
+            <p v-show="error">There was an error showed</p>
         </div>
 
         <script src="main.js"></script>
