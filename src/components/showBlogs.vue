@@ -1,11 +1,10 @@
 <template>
-   <div id="show-blogs">
+   <div id="show-blogs" v-theme:column.blue="'wide'">
      <h1>All Articles</h1>
-     <input type="text" v-model="search" placeholder="Search Articles">
-     <!--<div v-for="blog in blogs" class="single-article">-->
-     <div v-for="blog in filteredBlogs" class="single-article">
-        <h2>{{ blog.title }}</h2>
-        <article>{{ blog.body }}</article>
+     <div v-for="blog in blogs" class="single-article">
+        <h2 v-randomColor>{{ blog.title | to-uppercase}}</h2>
+        <!--<h2>{{ blog.title | toUppercase}}</h2>-->
+        <article>{{ blog.body | snippet}}</article>
      </div>
    </div>
 </template>
@@ -15,7 +14,6 @@ export default {
   data () {
     return {
       blogs: [],
-      search: ''
     }
   },
   methods: {
@@ -25,13 +23,40 @@ export default {
       this.blogs = data.body.slice(0, 12)
     })
   },
-  computed: {
-    filteredBlogs: function () {
-      return this.blogs.filter((blog) => {
-        return blog.title.match(this.search);
-      })
+  filters: {      // Local Custom filter
+    'to-uppercase': function (value) {
+      return value.toUpperCase();
+    },
+    toUppercase(value) {
+      return value.toUpperCase();
+    },
+    'snippet': function (value) {
+      return value.slice(0, 100) + ' ...';
     }
-}
+  },
+  directives: {    // Local Custom directive
+    randomColor: {
+      bind(el, binding, vnode) {
+        el.style.color = '#' + Math.random().toString().slice(2, 8)
+      }
+    },
+    theme: {
+      bind(el, binding, vnode) {
+        if(binding.value == 'wide') {
+          el.style.maxWidth = '1200px';
+        } else if(binding.value == 'narrow') {
+          el.style.maxWidth = '800px';
+        }
+        if(binding.arg == 'column') {
+          el.style.background = '#ddd';
+          el.style.padding = '20px';
+        }
+        if(binding.modifiers.blue === true) {
+          el.style.backgroundColor = '#3467db';
+        }
+      }
+    }
+  }
 }
 </script>
 
