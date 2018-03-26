@@ -1,10 +1,9 @@
 <template>
    <div id="show-blogs">
-     <h1>All Articles</h1>
-     <input type="text" v-model="search" placeholder="Search Articles">
+     <h1>All Articles Titles</h1>
+     <input type="text" v-model="search" placeholder="Search Articles Titles">
      <div v-for="blog in filteredBlogs" class="single-article">
         <h2>{{ blog.title}}</h2>
-        <article>{{ blog.body }}</article>
      </div>
    </div>
 </template>
