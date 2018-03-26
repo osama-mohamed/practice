@@ -1,39 +1,35 @@
 <template>
-  <div>
-    <vue-header v-bind:title="title" v-on:changeTitle="updateTitleGlobally($event)"></vue-header>
-    <users v-bind:users="usersInfo"></users>
-    <vue-footer v-bind:title="title"></vue-footer>
-  </div>
+   <div>
+        <form-helper>
+            <div slot="form-header">
+                <h3>This is the title of a form</h3>
+                <p>This is some info about the form</p>
+            </div>
+            <div slot="form-fields">
+                <input type="text" placeholder="name" required />
+                <input type="password" placeholder="password" required />
+            </div>
+            <div slot="form-controls">
+                <button v-on:click="">Submit</button>
+            </div>
+        </form-helper>
+    </div>
 </template>
 
 <script>
-import Header from './components/Header.vue'
-import Users from './components/Users.vue'
-import Footer from './components/Footer.vue'
+import formHelper from './components/formHelper.vue'
+
 
 export default {
   components: {
-    'vue-header': Header,
-    'users': Users,
-    'vue-footer': Footer
+    'form-helper': formHelper,
   },
   data () {
     return {
-      usersInfo:[
-        {name: 'Osama', speciality: 'Vue Components', show: false},
-        {name: 'Mohamed', speciality: 'HTML Wizardry', show: false},
-        {name: 'Mahmoud', speciality: 'Click Events', show: false},
-        {name: 'Ahmed', speciality: 'Conditionals', show: false},
-        {name: 'Eslam', speciality: 'Webpack', show: false},
-        {name: 'Nasser', speciality: 'Data Diggin', show: false}
-      ],
-      title: 'vue app new title'
+      title: 'This is dynamic header from slot'
     }
   },
   methods: {
-    updateTitleGlobally: function (updatedTitle) {
-      this.title = updatedTitle;
-    }
   }
 }
 </script>
