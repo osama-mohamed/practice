@@ -1,5 +1,6 @@
 <template>
-   <div id="add-blog">
+  <div>
+   <div id="add-blog"  v-if="!submitted">
         <h2>Add a New Blog Post</h2>
         <form>
             <label>Blog Title:</label>
@@ -21,6 +22,7 @@
             <select name="" id="" v-model="blog.author">
               <option v-for="author in authors" v-bind:value="author">{{ author.toUpperCase() }}</option>
             </select>
+          <button v-on:click.prevent="submitData">Add Blog</button>
         </form>
         <div id="preview">
             <h3>Preview blog</h3>
@@ -34,6 +36,11 @@
             <p>Author: {{ blog.author.toUpperCase() }}</p>
         </div>
     </div>
+    <div v-if="submitted" class="message">
+      <h3>Thanks for adding your new post</h3>
+    </div>
+  </div>
+
 </template>
 
 <script>
@@ -51,10 +58,20 @@ export default {
         categories: [],
         author: '',
       },
-      authors: ['osama', 'mohamed', 'mahmoud', 'ahmed']
+      authors: ['osama', 'mohamed', 'mahmoud', 'ahmed'],
+      submitted: false
     }
   },
   methods: {
+    submitData: function () {
+      this.$http.post('https://jsonplaceholder.typicode.com/posts', {
+        title: this.blog.title,
+        body: this.blog.content,
+        userId: 1,
+      }).then(function(data) {
+        this.submitted = true;
+      });
+    }
   }
 }
 </script>
@@ -97,5 +114,20 @@ h3{
 
 #checkboxes label{
     display: inline-block;
+}
+
+.message{
+    background-color: #3f89e6;
+    border-radius: 35px;
+    width: 75%;
+    margin: 200px auto;
+}
+
+.message > h3{
+    text-align: center;
+    padding: 20px 0;
+    color: #fff;
+    font-size: 25px;
+    font-weight: 100;
 }
 </style>
