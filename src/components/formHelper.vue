@@ -1,5 +1,5 @@
 <template>
-  <div>
+    <div>
     <h1>Fill out this form</h1>
         <form>
             <div id="form-header">
@@ -25,14 +25,17 @@
 
 <script>
 export default {
-  components: {
-  },
-  data () {
-    return {
+    components: {
+
+    },
+    data () {
+        return {
+
+        }
+    },
+    methods: {
+
     }
-  },
-  methods: {
-  }
 }
 </script>
 
