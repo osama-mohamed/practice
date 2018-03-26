@@ -17,6 +17,10 @@
                 <label for="network">Network</label>
                 <input type="checkbox" id='network' value="network" v-model="blog.categories"/>
             </div>
+            <label for="">Author : </label>
+            <select name="" id="" v-model="blog.author">
+              <option v-for="author in authors" v-bind:value="author">{{ author.toUpperCase() }}</option>
+            </select>
         </form>
         <div id="preview">
             <h3>Preview blog</h3>
@@ -27,6 +31,7 @@
             <ul>
                 <li v-for="category in blog.categories">{{ category }}</li>
             </ul>
+            <p>Author: {{ blog.author.toUpperCase() }}</p>
         </div>
     </div>
 </template>
@@ -44,7 +49,9 @@ export default {
         title: '',
         content: '',
         categories: [],
-      }
+        author: '',
+      },
+      authors: ['osama', 'mohamed', 'mahmoud', 'ahmed']
     }
   },
   methods: {
