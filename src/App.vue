@@ -1,15 +1,18 @@
 <template>
    <div>
-      <addBlog></addBlog>
+      <!--<addBlog></addBlog>-->
+      <showBlogs></showBlogs>
    </div>
 </template>
 
 <script>
 import addBlog from './components/addBlog'
+import showBlogs from './components/showBlogs'
 
 export default {
   components: {
-    'addBlog': addBlog
+    'addBlog': addBlog,
+    'showBlogs': showBlogs,
   },
   data () {
     return {
