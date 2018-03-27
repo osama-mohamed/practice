@@ -10,7 +10,9 @@ Vue.use(VueRouter);
 
 
 const routerComponents = new VueRouter({
-  routes: Routes
+  routes: Routes,
+  // mode: 'hash'    // default
+  mode: 'history'
 });
 
 new Vue({
