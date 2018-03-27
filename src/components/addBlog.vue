@@ -63,12 +63,19 @@ export default {
     }
   },
   methods: {
+    /*
     submitData: function () {
       this.$http.post('https://jsonplaceholder.typicode.com/posts', {
         title: this.blog.title,
         body: this.blog.content,
         userId: 1,
       }).then(function(data) {
+        this.submitted = true;
+      });
+    }
+    */
+    submitData: function () {
+      this.$http.post('https://vue-app-osama.firebaseio.com/blog-posts.json', this.blog).then(function(data) {
         this.submitted = true;
       });
     }
