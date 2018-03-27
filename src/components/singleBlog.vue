@@ -2,6 +2,10 @@
   <div id="single-blog">
     <template v-if="!loading">
       <h1>{{blog.title}}</h1>
+      <p>{{blog.author}}</p>
+      <ul>
+        <li v-for="category in blog.categories">{{category}}</li>
+      </ul>
       <article>{{blog.body}}</article>
     </template>
     <p v-else>loading...</p>
