@@ -6,13 +6,9 @@
       <ul>
         <li v-for="category in blog.categories">{{category}}</li>
       </ul>
-      <article>{{blog.body}}</article>
+      <article>{{blog.content}}</article>
     </template>
     <p v-else>loading...</p>
-    <br>
-    <br>
-    <button v-on:click="prev()" v-if="id > 1">Previous</button>
-    <button v-on:click="next()" v-if="id < 100">Next</button>
   </div>
 </template>
 
@@ -20,7 +16,7 @@
 export default {
   data() {
     return {
-      id: parseInt(this.$route.params.id),
+      id: this.$route.params.id,
       blog: {},
       loading: false
     };
@@ -29,31 +25,16 @@ export default {
     this.getData();
   },
   methods: {
-    next: function() {
-      if (this.id <= 100) {
-        this.id += 1;
-      }
-      this.$router.push(`/blog/${this.id}`);
-      this.getData();
-    },
-    prev: function() {
-      if (this.id > 1) {
-        this.id -= 1;
-      }
-      this.$router.push(`/blog/${this.id}`);
-      this.getData();
-    },
     getData: function() {
       this.loading = true;
       this.$http
-        .get(`https://jsonplaceholder.typicode.com/posts/${this.id}`)
+        .get(`https://vue-app-osama.firebaseio.com/blog-posts/${this.id}.json`)
         .then(data => {
-          this.blog = data.body;
-          this.loading = false;
+          return data.json();
         })
-        .catch(err => {
+        .then(data => {
+          this.blog = data;
           this.loading = false;
-          console.log(err);
         });
     }
   }
