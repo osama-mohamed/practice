@@ -1,5 +1,3 @@
-# translator_vue
-
 # [Translator](https://osamamohamed1234.github.io/translator_vue) By Vue.js
 * Translator by Vue.js
 
