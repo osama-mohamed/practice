@@ -4,6 +4,15 @@
 [<img src="https://www.mysql.com/common/logos/logo-mysql-170x115.png" width="150" title="Chat App" >](https://www.facebook.com/osama.mohamed.ms)
 [<img src="https://d2cy1obokpvee9.cloudfront.net/manifest/favicon-128.png" width="100" title="Chat App" >](https://www.facebook.com/osama.mohamed.ms)
 
+
+
+## Chat app contains:
+* Send messages
+* Recive messages
+* Group chat
+* Save chat history into mysql database
+
+
 ## Usage :
 ### Run project by :
 
