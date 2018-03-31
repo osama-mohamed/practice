@@ -1,46 +1,43 @@
 <template>
-  <div id="app">
-     <nav>
-      <router-link to="/">Home</router-link>
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+  <div id="app" class="text-center container">
+    <h1>Translator</h1>
+    <br>
+    <TranslateForm v-on:formSubmitText="translateText"></TranslateForm>
+    <TranslateOutput v-text="translatedText"></TranslateOutput>
   </div>
 </template>
 
+
 <script>
+import TranslateForm from './components/TranslateForm'
+import TranslateOutput from './components/TranslateOutput'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    'TranslateForm': TranslateForm,
+    'TranslateOutput': TranslateOutput,
+  },
+  data: function () {
+    return {
+      translatedText: ''
+    }
+  },
+  methods: {
+    translateText: function(text, language) {
+      this.$http.get('https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20180331T172247Z.b7ffa34588fc5e7c.4ca270580fce69c8f33da718b689d8f02ed0c0bd&lang='
+                      + language + '&text=' + text)
+      .then((response) => {
+        this.translatedText = response.body.text[0];
+      })
+    }
+  }
 }
 </script>
 
+
 <style>
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
-body {
-  background-color: #EEEEEE;
-  font-family: 'Montserrat', sans-serif;
-  display: grid;
-  grid-template-rows: auto;
-  justify-items: center;
-  padding-top: 50px;
-}
-body, html {
-  margin: 0;
-  height: 100%;
-}
-#app {
-    width: 50%;
-}
-nav {
-  padding: 20px 20px 20px 0;
-}
-nav a {
-  padding: 10px;
-  text-decoration: none;
-  background: #fff;
-  border-radius: 3px;
-  color: rgb(0, 110, 255);
-  font-weight: bold;
-  margin-right: 15px;
+body{
+  background-color: #fefefe;
 }
 </style>
