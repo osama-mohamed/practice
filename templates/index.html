@@ -23,7 +23,7 @@
                     <div class="content">
                         <p>
                             <strong>{{ message.name }}</strong>
-                            <br> {{ message.message }}
+                            <br> {{ message.message }} <span style="font-size: 12px; margin-left: 20px; color: #3479db;"> in {{ message.posted }}</span>
                         </p>
                     </div>
                 </div>
@@ -85,12 +85,14 @@
 
               let channel = pusher.subscribe('chat-channel');
               channel.bind('new-message', function(data) {
+              const date = new Date();
+              let now = date.getFullYear() + '-' + ((date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
               let message_template = `<article class="media">
                                         <div class="media-content">
                                           <div class="content">
                                             <p>
                                               <strong>${data.username}</strong>
-                                              <br> ${data.message}
+                                              <br> ${data.message} <span style="font-size: 12px; margin-left: 20px; color: #3479db;"> in ${now}</span>
                                             </p>
                                           </div>
                                         </div>

@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 import pusher
 
 
@@ -21,6 +22,7 @@ class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250))
     message = db.Column(db.TEXT())
+    posted = db.Column(db.DateTime, default=datetime.now())
 
 
 @app.route('/')
