@@ -7,7 +7,7 @@
       <li class="collection-item">Department: {{department}}</li>
       <li class="collection-item">Position: {{position}}</li>
     </ul>
-    <router-link to="/" class="btn ">Back</router-link>
+    <router-link v-bind:to="{name: 'dashboard'}" class="btn ">Back</router-link>
     <button @click="deleteEmployee" class="btn red">Delete</button>
 
     <div class="fixed-action-btn">
@@ -65,7 +65,7 @@ export default {
           .then(querySnapshot => {
           querySnapshot.forEach(doc => {
             doc.ref.delete()
-            this.$router.push('/')
+            this.$router.push({name: 'dashboard'})
           })
         })
       }

@@ -12,7 +12,7 @@
       </li>
     </ul>
     <div class="fixed-action-btn">
-      <router-link to="/new" class="btn-floating btn-large blue">
+      <router-link v-bind:to="{name: 'new-employee'}" class="btn-floating btn-large blue">
         <i class="fa fa-plus"></i>
       </router-link>
     </div>

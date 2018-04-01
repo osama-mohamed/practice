@@ -24,7 +24,7 @@
           </div>
         </div>
         <button type="submit" class="btn blue">Edit Employee</button>
-        <router-link to="/" class="btn">Cancel</router-link>
+        <router-link v-bind:to="{name: 'dashboard'}" class="btn">Cancel</router-link>
       </form>
     </div>
   </div>

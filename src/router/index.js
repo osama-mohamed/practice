@@ -13,22 +13,22 @@ export default new Router({
   base: __dirname,
   routes: [
     {
-      path: '/',
+      path: '/employee_manager_vue/',
       name: 'dashboard',
       component: Dashboard
     },
     {
-      path: '/new',
+      path: '/employee_manager_vue/new',
       name: 'new-employee',
       component: NewEmployee
     },
     {
-      path: '/edit/:employee_id',
+      path: '/employee_manager_vue/edit/:employee_id',
       name: 'edit-employee',
       component: EditEmployee
     },
     {
-      path: '/:employee_id',
+      path: '/employee_manager_vue/:employee_id',
       name: 'view-employee',
       component: ViewEmployee
     },

@@ -28,7 +28,7 @@
           </div>
         </div>
         <button type="submit" class="btn blue">Add New Employee</button>
-        <router-link to="/" class="btn">Cancel</router-link>
+        <router-link v-bind:to="{name: 'dashboard'}" class="btn">Cancel</router-link>
       </form>
     </div>
   </div>
@@ -55,7 +55,7 @@ export default {
         department: this.department,
         position: this.position
       })
-        .then(docRef => this.$router.push('/'))
+        .then(docRef => this.$router.push({name: 'dashboard'}))
         .catch(error => alert(error))
     }
   }
