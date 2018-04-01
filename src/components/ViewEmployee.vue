@@ -1,17 +1,17 @@
 <template>
   <div id="view-employee">
-    <h3>View Employee</h3>
+    <h3 class="center-align">View Employee</h3>
     <ul class="collection with-header">
-      <li class="collection-header"><h4>{{name}}</h4></li>
+      <li class="collection-header"><h4 class="center-align"><i class="fa fa-user"></i> {{name}}</h4></li>
       <li class="collection-item">Employee ID#: {{employee_id}}</li>
       <li class="collection-item">Department: {{department}}</li>
       <li class="collection-item">Position: {{position}}</li>
     </ul>
-    <router-link to="/" class="btn blue">Back</router-link>
+    <router-link to="/" class="btn ">Back</router-link>
     <button @click="deleteEmployee" class="btn red">Delete</button>
 
     <div class="fixed-action-btn">
-      <router-link v-bind:to="{name: 'edit-employee', params: {employee_id: employee_id}}" class="btn-floating btn-large red">
+      <router-link v-bind:to="{name: 'edit-employee', params: {employee_id: employee_id}}" class="btn-floating btn-large blue">
         <i class="fa fa-edit"></i>
       </router-link>
     </div>

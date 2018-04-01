@@ -27,8 +27,8 @@
             <label>Position</label>
           </div>
         </div>
-        <button type="submit" class="btn">Add New Employee</button>
-        <router-link to="/" class="btn blue">Cancel</router-link>
+        <button type="submit" class="btn blue">Add New Employee</button>
+        <router-link to="/" class="btn">Cancel</router-link>
       </form>
     </div>
   </div>

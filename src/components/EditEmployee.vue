@@ -23,8 +23,8 @@
             <input type="text" v-model="position" required>
           </div>
         </div>
-        <button type="submit" class="btn">Edit Employee</button>
-        <router-link to="/" class="btn blue">Cancel</router-link>
+        <button type="submit" class="btn blue">Edit Employee</button>
+        <router-link to="/" class="btn">Cancel</router-link>
       </form>
     </div>
   </div>
