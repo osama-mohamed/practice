@@ -1,6 +1,6 @@
 <template>
   <div id="edit-employee">
-    <h3>Edit Employee</h3>
+    <h3 class="center-align">Edit Employee : {{name}}</h3>
     <div class="row">
       <form @submit.prevent="updateEmployee" class="col s12">
         <div class="row">

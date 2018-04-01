@@ -13,7 +13,7 @@ export default new Router({
   base: __dirname,
   routes: [
     {
-      path: '/employee_manager_vue/',
+      path: '/employee_manager_vue',
       name: 'dashboard',
       component: Dashboard
     },
