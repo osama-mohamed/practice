@@ -8,6 +8,17 @@
 > [Employee Manager](https://osamamohamed1234.github.io/employee_manager_vue)
 
 
+## Employee Manager app contains:
+* User register 
+* User login
+* User logout 
+* Show all employees
+* Show employee profile
+* Add new employee
+* Edit employee
+* Delete employee
+
+
 ## Usage :
 ### Run project by :
 
