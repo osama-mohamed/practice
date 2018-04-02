@@ -92,5 +92,9 @@ export default {
 </script>
 
 <style scoped>
-
+input:focus{
+  border-bottom: 1px solid #2196F3!important;
+  -webkit-box-shadow: 0 1px 0 0 #2196F3!important;
+  box-shadow: 0 1px 0 0 #2196F3!important;
+}
 </style>
