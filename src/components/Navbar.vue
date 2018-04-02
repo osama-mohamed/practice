@@ -28,22 +28,6 @@ export default {
   },
   created () {
     this.changeNavbar()
-
-//    firebase.auth().onAuthStateChanged(function(user) {
-//      if (user) {
-//        this.isLoggedIn = true
-//        this.currentUser = firebase.auth().currentUser.email
-//        // User is signed in.
-//        console.log('logged')
-//      }
-//      else {
-//        this.isLoggedIn = false
-//        this.currentUser = false
-//        // No user is signed in.
-//        console.log('out')
-//      }
-//    });
-
   },
   watch: {
     '$route': 'changeNavbar'
@@ -63,7 +47,6 @@ export default {
         .then(() => {
           this.$router.push({name: 'login'})
           this.changeNavbar()
-//          this.$router.go({path: this.$router.path})
         })
     }
 

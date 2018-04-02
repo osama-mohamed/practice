@@ -42,7 +42,6 @@ export default {
         .then(user => {
           alert(`Account created for ${user.email}`)
           this.$router.push({name: 'dashboard'})
-//          this.$router.go({path: this.$router.path})
         },
         error => {
           alert(error.message)
