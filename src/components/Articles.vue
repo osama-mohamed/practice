@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h2>Articles</h2>
+    <h2 v-if="!update">Add Article</h2>
+    <h2 v-if="update">{{update}} Article {{article.title}}</h2>
     <form @submit.prevent="addArticle" class="mb-4">
       <div class="form-group">
         <input type="text" class="form-control" v-model="article.title" placeholder="Title">
@@ -8,8 +9,11 @@
       <div class="form-group">
         <textarea class="form-control" v-model="article.body" placeholder="Body"></textarea>
       </div>
-      <button type="submit" class="btn btn-success btn-block">Save</button>
+      <button type="submit" class="btn btn-success btn-block" v-if="!update">Add</button>
+      <button type="submit" class="btn btn-success btn-block update" v-if="update">{{update}}</button>
     </form>
+    <button v-if="update" @click="changeToAdd" class="btn btn-info btn-block mb-4">Click to change to add mode</button>
+    <h2 class="text-center mb-4">Articles</h2>
     <nav aria-label="Page navigation example">
       <ul class="pagination">
         <li v-bind:class="[{disabled: !pagination.previous_page_url}]" class="page-item">
@@ -21,12 +25,12 @@
         </li>
         <li class="page-item disabled" v-if="pagination.current_page">
           <a class="page-link text-dark" href="#">
-            Page {{pagination.current_page.substring(pagination.current_page.indexOf('=') +1) -1}} of {{Math.round(pagination.last_page /5)}}</a>
+            Page {{pagination.current_page.substring(pagination.current_page.indexOf('=') +1) -1}} of {{Math.round(pagination.last_page /pagePagination)}}</a>
             <!--Page {{pagination.current_page.substring(44 + 1) -1}} of {{Math.round(pagination.last_page /5)}}</a>-->
         </li>
         <li class="page-item disabled" v-else>
           <a class="page-link text-dark" href="#">
-            Page {{Math.round(pagination.last_page /5)}} of {{Math.round(pagination.last_page /5)}}</a>
+            Page {{Math.round(pagination.last_page /pagePagination)}} of {{Math.round(pagination.last_page /pagePagination)}}</a>
         </li>
 
         <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
@@ -35,7 +39,7 @@
 
 
         <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
-          <a class="page-link" href="#" @click.prevent="fetchArticles(pagination.next_page_url.substring(0, pagination.next_page_url.indexOf('=')) + '=' + Math.round(pagination.last_page/5))">Last Page</a>
+          <a class="page-link" href="#" @click.prevent="fetchArticles(pagination.next_page_url.substring(0, pagination.next_page_url.indexOf('=')) + '=' + Math.round(pagination.last_page/pagePagination))">Last Page</a>
         </li>
       </ul>
     </nav>
@@ -62,7 +66,9 @@ export default {
       },
       article_id: '',
       pagination: {},
-      edit: false
+      pagePagination: 5,
+      edit: false,
+      update: ''
     }
   },
   created () {
@@ -90,17 +96,34 @@ export default {
       this.pagination = paginate
     },
     deleteArticle (id) {
+      this.articles.forEach(article => {
+        if (article.id === id) {
+          if (confirm(`Are you sure that you want to delete article ${article.title} ?`)){
+            fetch(`http://localhost:8000/articles-api/delete/${id}/`, {
+              method: 'delete'
+            })
+              .then(response => response)
+              .then(res => {
+                alert('Article removed');
+                this.fetchArticles();
+              })
+              .catch(error => console.log(error))
+          }
+        }
+      })
+      /*console.log(id)
       if (confirm('Are you sure ?')){
         fetch(`http://localhost:8000/articles-api/delete/${id}/`, {
           method: 'delete'
         })
           .then(response => response)
           .then(res => {
+            console.log(res)
             alert('Article removed');
             this.fetchArticles();
           })
           .catch(error => console.log(error))
-      }
+      }*/
     },
     addArticle () {
       if (this.edit === false) {
@@ -113,9 +136,9 @@ export default {
         })
           .then(response => response.json())
           .then(data => {
+            alert(`Article ${this.article.title} Added`)
             this.article.title = ''
             this.article.body = ''
-            alert('Article Added')
             this.fetchArticles()
           })
           .catch(error => console.log(error))
@@ -129,10 +152,11 @@ export default {
         })
           .then(response => response.json())
           .then(data => {
+            alert(`Article ${this.article.title} Updated`)
             this.article.title = ''
             this.article.body = ''
             this.edit = false
-            alert('Article Updated')
+            this.update = ''
             this.fetchArticles()
           })
           .catch(error => console.log(error))
@@ -144,6 +168,14 @@ export default {
       this.article.article_id = article.id
       this.article.title = article.title
       this.article.body = article.body
+      this.update = 'Update'
+    },
+    changeToAdd () {
+      this.article.title = ''
+      this.article.body = ''
+      this.edit = false
+      this.update = ''
+      this.fetchArticles()
     }
   }
 }
