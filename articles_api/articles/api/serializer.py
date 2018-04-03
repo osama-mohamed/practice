@@ -9,6 +9,7 @@ class ArticleSerializer(ModelSerializer):
     class Meta:
         model = Articles
         fields = [
+            'id',
             'title',
             'body',
         ]
