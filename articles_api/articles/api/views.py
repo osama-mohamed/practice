@@ -6,7 +6,7 @@ from .pagination import ArticlesPageNumberPagination
 
 
 class AllArticles(ListAPIView):
-    queryset = Articles.objects.all()
+    queryset = Articles.objects.all().order_by('-pk')
     serializer_class = ArticleSerializer
     pagination_class = ArticlesPageNumberPagination
 
