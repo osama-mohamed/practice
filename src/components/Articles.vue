@@ -13,6 +13,10 @@
     <nav aria-label="Page navigation example">
       <ul class="pagination">
         <li v-bind:class="[{disabled: !pagination.previous_page_url}]" class="page-item">
+          <a class="page-link" href="#" @click.prevent="fetchArticles(pagination.previous_page_url.substring(0, pagination.previous_page_url.indexOf('l/')) + 'l/')">First Page</a>
+        </li>
+
+        <li v-bind:class="[{disabled: !pagination.previous_page_url}]" class="page-item">
           <a class="page-link" href="#" @click.prevent="fetchArticles(pagination.previous_page_url)">Previous</a>
         </li>
         <li class="page-item disabled" v-if="pagination.current_page">
@@ -27,6 +31,11 @@
 
         <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
           <a class="page-link" href="#" @click.prevent="fetchArticles(pagination.next_page_url)">Next</a>
+        </li>
+
+
+        <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
+          <a class="page-link" href="#" @click.prevent="fetchArticles(pagination.next_page_url.substring(0, pagination.next_page_url.indexOf('=')) + '=' + Math.round(pagination.last_page/5))">Last Page</a>
         </li>
       </ul>
     </nav>
@@ -110,7 +119,7 @@ export default {
             this.fetchArticles()
           })
           .catch(error => console.log(error))
-      } else {
+      } else if (this.edit === true) {
         fetch(`http://localhost:8000/articles-api/update/${this.article.id}/`, {
           method: 'put',
           body: JSON.stringify(this.article),
@@ -122,6 +131,7 @@ export default {
           .then(data => {
             this.article.title = ''
             this.article.body = ''
+            this.edit = false
             alert('Article Updated')
             this.fetchArticles()
           })
