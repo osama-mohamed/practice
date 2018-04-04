@@ -5,7 +5,7 @@
     <!--<AddEdit v-on:newArticle="addArticle($event)" v-bind:art="articleToUpdate"></AddEdit>-->
 
 
-    <Pagination v-bind:articleList="all" v-on:fetchAll="fetchAll($event)"></Pagination>
+    <Pagination v-bind:articleList="pag" v-on:paginationPages="page($event)"></Pagination>
 
 
     <div v-for="article in articles" v-bind:key="article.id" class="card card-body mb-2">
@@ -34,8 +34,8 @@ export default {
     return {
       articles: [],
       articleToDelete: '',
-      all: '',
-      articleToUpdate: ''
+      articleToUpdate: '',
+      pag: []
     }
   },
   created () {
@@ -60,17 +60,13 @@ export default {
         .then(response => response.json())
         .then(res => {
           this.articles = res.results
-          this.all = res
+          this.pag = res
         })
         .catch(err => console.log(err))
     },
-
-    fetchAll (e) {
-      console.log('jjjjjjjjjj')
-      console.log(e)
-//      this.fetchArticles()
-    },
-
+    page (e) {
+      this.fetchArticles(e)
+    }
   }
 }
 </script>

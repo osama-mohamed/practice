@@ -56,14 +56,14 @@
 export default {
   name: 'pagination',
   props: ['articleList'],
+  watch: {
+    'articleList': 'makePagination'
+  },
   data () {
     return {
       pagination: {},
       pagePagination: 5,
     }
-  },
-  created () {
-    this.makePagination()
   },
   methods: {
     makePagination () {
@@ -75,12 +75,9 @@ export default {
       }
       this.pagination = paginate
     },
-    fetchArticles () {
-      console.log('999999999999')
-      console.log()
-//      this.$emit('fetchAll', e)
-      this.$parent.fetchArticles()
-    },
+    fetchArticles (e) {
+      this.$emit('paginationPages', e)
+    }
   }
 }
 </script>
