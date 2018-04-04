@@ -20,6 +20,10 @@
 <script>
 export default {
   name: 'addedit',
+  props: ['art'],
+  watch: {
+    'art': 'editArticle'
+  },
   data() {
     return {
       article: {
@@ -27,6 +31,7 @@ export default {
         title: '',
         body: ''
       },
+      article_id: '',
       edit: false,
       update: ''
     }
@@ -47,7 +52,7 @@ export default {
             .then(response => response.json())
             .then(data => {
               alert(`Article ${this.article.title} Added`)
-              this.$emit('newArticle', this.article)
+//              this.$emit('newArticle', this.article)
               this.article.title = ''
               this.article.body = ''
               this.$parent.fetchArticles()
@@ -64,7 +69,6 @@ export default {
             .then(response => response.json())
             .then(data => {
               alert(`Article ${this.article.title} Updated`)
-              this.$emit('newArticle', this.article)
               this.article.title = ''
               this.article.body = ''
               this.edit = false
@@ -75,11 +79,20 @@ export default {
         }
       }
     },
+    editArticle () {
+      this.edit = true
+      this.article.id = this.art.id
+      this.article.article_id = this.art.id
+      this.article.title = this.art.title
+      this.article.body = this.art.body
+      this.update = 'Update'
+    },
     changeToAdd () {
       this.article.title = ''
       this.article.body = ''
       this.edit = false
       this.update = ''
+      this.$parent.fetchArticles()
     }
   }
 }

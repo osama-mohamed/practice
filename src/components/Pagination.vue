@@ -51,3 +51,40 @@
     </nav>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'pagination',
+  props: ['articleList'],
+  data () {
+    return {
+      pagination: {},
+      pagePagination: 5,
+    }
+  },
+  created () {
+    this.makePagination()
+  },
+  methods: {
+    makePagination () {
+      let paginate = {
+        current_page: this.articleList.next,
+        last_page: this.articleList.count,
+        next_page_url: this.articleList.next,
+        previous_page_url: this.articleList.previous
+      }
+      this.pagination = paginate
+    },
+    fetchArticles () {
+      console.log('999999999999')
+      console.log()
+//      this.$emit('fetchAll', e)
+      this.$parent.fetchArticles()
+    },
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

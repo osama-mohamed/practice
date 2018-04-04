@@ -1,9 +1,13 @@
 <template>
   <div>
-    <AddEdit v-on:newArticle="addArticle($event)"></AddEdit>
-
-
+    <AddEdit v-bind:art="articleToUpdate"></AddEdit>
     <Delete v-bind:deleteArticleId="articleToDelete"  v-bind:articlesArray="articles"></Delete>
+    <!--<AddEdit v-on:newArticle="addArticle($event)" v-bind:art="articleToUpdate"></AddEdit>-->
+
+
+    <Pagination v-bind:articleList="all" v-on:fetchAll="fetchAll($event)"></Pagination>
+
+
     <div v-for="article in articles" v-bind:key="article.id" class="card card-body mb-2">
       <h3>{{article.title}}</h3>
       <p>{{article.body}}</p>
@@ -16,44 +20,39 @@
 
 <script>
 import AddEdit from './AddEdit.vue'
-//import Pagination from './Pagination.vue'
+import Pagination from './Pagination.vue'
 import Delete from './Delete.vue'
 
 export default {
   name: 'articles',
   components: {
     AddEdit,
-//    Pagination,
+    Pagination,
     Delete
   },
   data () {
     return {
       articles: [],
-      article: {
-        id: '',
-        title: '',
-        body: ''
-      },
-      article_id: '',
-      pagination: {},
-      pagePagination: 5,
-      edit: false,
-      update: '',
-      articleToDelete: ''
+      articleToDelete: '',
+      all: '',
+      articleToUpdate: ''
     }
   },
   created () {
     this.fetchArticles()
   },
   methods: {
+    /*
     addArticle (article) {
       this.articles.push(article)
     },
+    */
     deleteArticleId(id) {
       this.articleToDelete = id
     },
-
-
+    editArticle(article) {
+      this.articleToUpdate = article
+    },
     fetchArticles (page_url) {
       let vm = this
       page_url = page_url || 'http://localhost:8000/articles-api/all/'
@@ -61,34 +60,17 @@ export default {
         .then(response => response.json())
         .then(res => {
           this.articles = res.results
-          vm.makePagination(res, res.next)
+          this.all = res
         })
         .catch(err => console.log(err))
     },
-    makePagination (res, resh) {
-      let paginate = {
-        current_page: res.next,
-        last_page: res.count,
-        next_page_url: res.next,
-        previous_page_url: res.previous
-      }
-      this.pagination = paginate
+
+    fetchAll (e) {
+      console.log('jjjjjjjjjj')
+      console.log(e)
+//      this.fetchArticles()
     },
-    editArticle (article) {
-      this.edit = true
-      this.article.id = article.id
-      this.article.article_id = article.id
-      this.article.title = article.title
-      this.article.body = article.body
-      this.update = 'Update'
-    },
-    changeToAdd () {
-      this.article.title = ''
-      this.article.body = ''
-      this.edit = false
-      this.update = ''
-      this.fetchArticles()
-    }
+
   }
 }
 </script>
