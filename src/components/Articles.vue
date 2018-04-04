@@ -1,89 +1,31 @@
 <template>
   <div>
-    <h2 v-if="!update">Add Article</h2>
-    <h2 v-if="update">{{update}} Article {{article.title}}</h2>
-    <form @submit.prevent="addArticle" class="mb-4">
-      <div class="form-group">
-        <input type="text" class="form-control" v-model="article.title" placeholder="Title">
-      </div>
-      <div class="form-group">
-        <textarea class="form-control" v-model="article.body" placeholder="Body"></textarea>
-      </div>
-      <button type="submit" class="btn btn-success btn-block" v-if="!update">Add</button>
-      <button type="submit" class="btn btn-success btn-block" v-if="update">{{update}}</button>
-      <button type="button" v-if="update" @click="changeToAdd" class="btn btn-info btn-block mb-4">Click to change to add mode</button>
-    </form>
-    <h2 class="text-center mb-4">Articles</h2>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li v-bind:class="[{disabled: !pagination.previous_page_url}]" class="page-item">
-          <a class="page-link" href="#" @click.prevent="fetchArticles(pagination.previous_page_url.substring(0, pagination.previous_page_url.indexOf('l/')) + 'l/')">First Page</a>
-        </li>
-
-        <li v-bind:class="[{disabled: !pagination.previous_page_url}]" class="page-item">
-          <a class="page-link" href="#" @click.prevent="fetchArticles(pagination.previous_page_url)">Previous</a>
-        </li>
-       <!--<li class="page-item disabled" v-if="pagination.current_page">
-          <a class="page-link text-dark" href="#">
-            Page {{pagination.current_page.substring(pagination.current_page.indexOf('=') +1) -1}} of {{Math.round(pagination.last_page /pagePagination)}}</a>
-            &lt;!&ndash;Page {{pagination.current_page.substring(44 + 1) -1}} of {{Math.round(pagination.last_page /5)}}</a>&ndash;&gt;
-        </li>
-        <li class="page-item disabled" v-else>
-          <a class="page-link text-dark" href="#">
-            Page {{Math.round(pagination.last_page /pagePagination+1)}} of {{Math.round(pagination.last_page /pagePagination+1)}}</a>
-        </li>-->
-
-        <li class="page-item disabled" v-if="pagination.current_page && Number.isInteger(pagination.last_page/pagePagination)">
-          <a class="page-link text-dark" href="#">
-            Page {{pagination.current_page.substring(pagination.current_page.indexOf('=') +1) -1}}
-            of {{Math.round(pagination.last_page /pagePagination)}}
-          </a>
-        </li>
-        <li class="page-item disabled" v-else-if="!pagination.current_page && Number.isInteger(pagination.last_page/pagePagination)">
-          <a class="page-link text-dark" href="#">
-            Page {{Math.round(pagination.last_page /pagePagination)}}
-            of {{Math.round(pagination.last_page /pagePagination)}}</a>
-        </li>
+    <AddEdit v-on:newArticle="addArticle($event)"></AddEdit>
 
 
-        <li class="page-item disabled" v-else-if="pagination.current_page && pagination.last_page">
-          <a class="page-link text-dark" href="#">
-            Page {{Math.round(pagination.current_page.substring(pagination.current_page.indexOf('=') +1) -1)}}
-            of {{Math.floor(pagination.last_page /pagePagination)+1}}
-          </a>
-        </li>
-        <li class="page-item disabled" v-else-if="!pagination.current_page && pagination.last_page">
-          <a class="page-link text-dark" href="#">
-            Page {{Math.floor(pagination.last_page /pagePagination)+1}}
-            of {{Math.floor(pagination.last_page /pagePagination)+1}}</a>
-        </li>
-
-        <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item">
-          <a class="page-link" href="#" @click.prevent="fetchArticles(pagination.next_page_url)">Next</a>
-        </li>
-
-
-        <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item" v-if="Number.isInteger(pagination.last_page/pagePagination)">
-          <a class="page-link" href="#" @click.prevent="fetchArticles(pagination.next_page_url.substring(0, pagination.next_page_url.indexOf('=')) + '=' + Math.round(pagination.last_page/pagePagination))">Last Page</a>
-        </li>
-        <li v-bind:class="[{disabled: !pagination.next_page_url}]" class="page-item" v-else-if="pagination.last_page">
-          <a class="page-link" href="#" @click.prevent="fetchArticles(pagination.next_page_url.substring(0, pagination.next_page_url.indexOf('=')) + '=' + Math.floor(pagination.last_page/pagePagination+1))">Last Page</a>
-        </li>
-      </ul>
-    </nav>
+    <Delete v-bind:deleteArticleId="articleToDelete"  v-bind:articlesArray="articles"></Delete>
     <div v-for="article in articles" v-bind:key="article.id" class="card card-body mb-2">
       <h3>{{article.title}}</h3>
       <p>{{article.body}}</p>
       <hr>
       <button @click="editArticle(article)" class="btn btn-primary mb-2">Edit</button>
-      <button @click="deleteArticle(article.id)" class="btn btn-danger">Delete</button>
+      <button @click="deleteArticleId(article.id)" class="btn btn-danger">Delete</button>
     </div>
   </div>
 </template>
 
 <script>
+import AddEdit from './AddEdit.vue'
+//import Pagination from './Pagination.vue'
+import Delete from './Delete.vue'
+
 export default {
   name: 'articles',
+  components: {
+    AddEdit,
+//    Pagination,
+    Delete
+  },
   data () {
     return {
       articles: [],
@@ -96,13 +38,22 @@ export default {
       pagination: {},
       pagePagination: 5,
       edit: false,
-      update: ''
+      update: '',
+      articleToDelete: ''
     }
   },
   created () {
     this.fetchArticles()
   },
   methods: {
+    addArticle (article) {
+      this.articles.push(article)
+    },
+    deleteArticleId(id) {
+      this.articleToDelete = id
+    },
+
+
     fetchArticles (page_url) {
       let vm = this
       page_url = page_url || 'http://localhost:8000/articles-api/all/'
@@ -122,77 +73,6 @@ export default {
         previous_page_url: res.previous
       }
       this.pagination = paginate
-    },
-    deleteArticle (id) {
-      this.articles.forEach(article => {
-        if (article.id === id) {
-          if (confirm(`Are you sure that you want to delete article ${article.title} ?`)){
-            fetch(`http://localhost:8000/articles-api/delete/${id}/`, {
-              method: 'delete'
-            })
-              .then(response => response)
-              .then(res => {
-                alert('Article removed');
-                this.fetchArticles();
-              })
-              .catch(error => console.log(error))
-          }
-        }
-      })
-      /*console.log(id)
-      if (confirm('Are you sure ?')){
-        fetch(`http://localhost:8000/articles-api/delete/${id}/`, {
-          method: 'delete'
-        })
-          .then(response => response)
-          .then(res => {
-            console.log(res)
-            alert('Article removed');
-            this.fetchArticles();
-          })
-          .catch(error => console.log(error))
-      }*/
-    },
-    addArticle () {
-      if (this.article.title == '') {
-        alert('Title and body must be filled')
-      } else {
-        if (this.edit === false) {
-          fetch('http://localhost:8000/articles-api/new/', {
-            method: 'post',
-            body: JSON.stringify(this.article),
-            headers: {
-              'content-type': 'application/json'
-            }
-          })
-            .then(response => response.json())
-            .then(data => {
-              alert(`Article ${this.article.title} Added`)
-              this.article.title = ''
-              this.article.body = ''
-              this.fetchArticles()
-            })
-            .catch(error => console.log(error))
-        } else if (this.edit === true) {
-          fetch(`http://localhost:8000/articles-api/update/${this.article.id}/`, {
-            method: 'put',
-            body: JSON.stringify(this.article),
-            headers: {
-              'content-type': 'application/json'
-            }
-          })
-            .then(response => response.json())
-            .then(data => {
-              alert(`Article ${this.article.title} Updated`)
-              this.article.title = ''
-              this.article.body = ''
-              this.edit = false
-              this.update = ''
-              this.fetchArticles()
-            })
-            .catch(error => console.log(error))
-        }
-      }
     },
     editArticle (article) {
       this.edit = true
