@@ -54,8 +54,21 @@
 </template>
 
 <script>
+import fetchArticles from '../mixins/fetchArticles'
+import addArticle from '../mixins/addArticle'
+import editArticle from '../mixins/editArticle'
+import deleteArticle from '../mixins/deleteArticle'
+import pagination from '../mixins/pagination'
+
 export default {
   name: 'articles',
+  mixins: [
+    fetchArticles,
+    addArticle,
+    editArticle,
+    deleteArticle,
+    pagination,
+  ],
   data () {
     return {
       articles: [],
@@ -75,112 +88,7 @@ export default {
     this.fetchArticles()
   },
   methods: {
-    fetchArticles (page_url) {
-      let vm = this
-      page_url = page_url || 'http://localhost:8000/articles-api/all/'
-      fetch(page_url)
-        .then(response => response.json())
-        .then(res => {
-          this.articles = res.results
-          vm.makePagination(res, res.next)
-        })
-        .catch(err => console.log(err))
-    },
-    makePagination (res, resh) {
-      let paginate = {
-        current_page: res.next,
-        last_page: res.count,
-        next_page_url: res.next,
-        previous_page_url: res.previous
-      }
-      this.pagination = paginate
-    },
-    deleteArticle (id) {
-      this.articles.forEach(article => {
-        if (article.id === id) {
-          if (confirm(`Are you sure that you want to delete article ${article.title} ?`)){
-            fetch(`http://localhost:8000/articles-api/delete/${id}/`, {
-              method: 'delete'
-            })
-              .then(response => response)
-              .then(res => {
-                alert('Article removed');
-                this.fetchArticles();
-              })
-              .catch(error => console.log(error))
-          }
-        }
-      })
-      /*console.log(id)
-      if (confirm('Are you sure ?')){
-        fetch(`http://localhost:8000/articles-api/delete/${id}/`, {
-          method: 'delete'
-        })
-          .then(response => response)
-          .then(res => {
-            console.log(res)
-            alert('Article removed');
-            this.fetchArticles();
-          })
-          .catch(error => console.log(error))
-      }*/
-    },
-    addArticle () {
-      if (this.article.title == '') {
-        alert('Title and body must be filled')
-      } else {
-        if (this.edit === false) {
-          fetch('http://localhost:8000/articles-api/new/', {
-            method: 'post',
-            body: JSON.stringify(this.article),
-            headers: {
-              'content-type': 'application/json'
-            }
-          })
-            .then(response => response.json())
-            .then(data => {
-              alert(`Article ${this.article.title} Added`)
-              this.article.title = ''
-              this.article.body = ''
-              this.fetchArticles()
-            })
-            .catch(error => console.log(error))
-        } else if (this.edit === true) {
-          fetch(`http://localhost:8000/articles-api/update/${this.article.id}/`, {
-            method: 'put',
-            body: JSON.stringify(this.article),
-            headers: {
-              'content-type': 'application/json'
-            }
-          })
-            .then(response => response.json())
-            .then(data => {
-              alert(`Article ${this.article.title} Updated`)
-              this.article.title = ''
-              this.article.body = ''
-              this.edit = false
-              this.update = ''
-              this.fetchArticles()
-            })
-            .catch(error => console.log(error))
-        }
-      }
-    },
-    editArticle (article) {
-      this.edit = true
-      this.article.id = article.id
-      this.article.article_id = article.id
-      this.article.title = article.title
-      this.article.body = article.body
-      this.update = 'Update'
-    },
-    changeToAdd () {
-      this.article.title = ''
-      this.article.body = ''
-      this.edit = false
-      this.update = ''
-      this.fetchArticles()
-    }
+
   }
 }
 </script>
