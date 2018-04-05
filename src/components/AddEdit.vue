@@ -52,7 +52,6 @@ export default {
             .then(response => response.json())
             .then(data => {
               alert(`Article ${this.article.title} Added`)
-//              this.$emit('newArticle', this.article)
               this.article.title = ''
               this.article.body = ''
               this.$parent.fetchArticles()

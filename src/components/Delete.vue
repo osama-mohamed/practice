@@ -21,7 +21,6 @@
                 .then(res => {
                   alert('Article removed');
                   this.$parent.fetchArticles()
-//                  this.$parent.$options.methods.fetchArticles()
                 })
                 .catch(error => console.log(error))
             }

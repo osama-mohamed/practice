@@ -2,11 +2,7 @@
   <div>
     <AddEdit v-bind:art="articleToUpdate"></AddEdit>
     <Delete v-bind:deleteArticleId="articleToDelete"  v-bind:articlesArray="articles"></Delete>
-    <!--<AddEdit v-on:newArticle="addArticle($event)" v-bind:art="articleToUpdate"></AddEdit>-->
-
-
     <Pagination v-bind:articleList="pag" v-on:paginationPages="page($event)"></Pagination>
-
 
     <div v-for="article in articles" v-bind:key="article.id" class="card card-body mb-2">
       <h3>{{article.title}}</h3>
@@ -42,11 +38,6 @@ export default {
     this.fetchArticles()
   },
   methods: {
-    /*
-    addArticle (article) {
-      this.articles.push(article)
-    },
-    */
     deleteArticleId(id) {
       this.articleToDelete = id
     },
