@@ -9,6 +9,9 @@
       <div class="form-group">
         <textarea class="form-control" v-model="article.body" placeholder="Body"></textarea>
       </div>
+      <div class="form-group">
+        <input type="file" class="form-control" v-on:change="onFileChange" ref="fileupload">
+      </div>
       <button type="submit" class="btn btn-success btn-block" v-if="!update">Add</button>
       <button type="submit" class="btn btn-success btn-block" v-if="update">{{update}}</button>
       <button type="button" v-if="update" @click="changeToAdd" class="btn btn-info btn-block mb-4">Click to change to add mode</button>
@@ -29,14 +32,20 @@ export default {
       article: {
         id: '',
         title: '',
-        body: ''
+        body: '',
+        img: ''
       },
       article_id: '',
       edit: false,
-      update: ''
+      update: '',
+      fileSource: ''
     }
   },
   methods: {
+    onFileChange(e) {
+      this.fileSource = e.target.files[0].name || e.dataTransfer.files;
+      this.article.img = this.fileSource;
+    },
     addArticle () {
       if (this.article.title == '') {
         alert('Title and body must be filled')
@@ -54,6 +63,8 @@ export default {
               alert(`Article ${this.article.title} Added`)
               this.article.title = ''
               this.article.body = ''
+              this.$refs.fileupload.type = 'text'
+              this.$refs.fileupload.type = 'file'
               this.$parent.fetchArticles()
             })
             .catch(error => console.log(error))
@@ -70,6 +81,8 @@ export default {
               alert(`Article ${this.article.title} Updated`)
               this.article.title = ''
               this.article.body = ''
+              this.$refs.fileupload.type = 'text'
+              this.$refs.fileupload.type = 'file'
               this.edit = false
               this.update = ''
               this.$parent.fetchArticles()
@@ -89,6 +102,8 @@ export default {
     changeToAdd () {
       this.article.title = ''
       this.article.body = ''
+      this.$refs.fileupload.type = 'text'
+      this.$refs.fileupload.type = 'file'
       this.edit = false
       this.update = ''
       this.$parent.fetchArticles()
