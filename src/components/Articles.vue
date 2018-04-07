@@ -8,6 +8,7 @@
       <h3>{{article.title}}</h3>
       <p>{{article.body}}</p>
       <p v-if="article.img">{{article.img}}</p>
+      <img v-bind:src="article.img">
       <hr>
       <button @click="editArticle(article)" class="btn btn-primary mb-2">Edit</button>
       <button @click="deleteArticleId(article.id)" class="btn btn-danger">Delete</button>

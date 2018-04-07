@@ -10,7 +10,7 @@
         <textarea class="form-control" v-model="article.body" placeholder="Body"></textarea>
       </div>
       <div class="form-group">
-        <input type="file" class="form-control" v-on:change="onFileChange" ref="fileupload">
+        <input type="file" class="form-control" v-on:change="onFileChange" name="file" ref="fileupload">
       </div>
       <button type="submit" class="btn btn-success btn-block" v-if="!update">Add</button>
       <button type="submit" class="btn btn-success btn-block" v-if="update">{{update}}</button>
@@ -63,6 +63,8 @@ export default {
               alert(`Article ${this.article.title} Added`)
               this.article.title = ''
               this.article.body = ''
+              this.article.img = ''
+              this.fileSource = ''
               this.$refs.fileupload.type = 'text'
               this.$refs.fileupload.type = 'file'
               this.$parent.fetchArticles()
@@ -81,6 +83,8 @@ export default {
               alert(`Article ${this.article.title} Updated`)
               this.article.title = ''
               this.article.body = ''
+              this.article.img = ''
+              this.fileSource = ''
               this.$refs.fileupload.type = 'text'
               this.$refs.fileupload.type = 'file'
               this.edit = false
@@ -102,6 +106,8 @@ export default {
     changeToAdd () {
       this.article.title = ''
       this.article.body = ''
+      this.article.img = ''
+      this.fileSource = ''
       this.$refs.fileupload.type = 'text'
       this.$refs.fileupload.type = 'file'
       this.edit = false

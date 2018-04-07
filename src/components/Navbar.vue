@@ -4,6 +4,7 @@
       <a href="" class="navbar-brand">Articles</a>
       <router-link v-bind:to="{name: 'articles'}" class="text-light">Articles</router-link>
       <router-link v-bind:to="{name: 'about'}" class="text-light">About</router-link>
+      <router-link v-bind:to="{name: 'picture'}" class="text-light">Picture</router-link>
     </div>
   </nav>
 </template>
