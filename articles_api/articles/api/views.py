@@ -6,13 +6,6 @@ from .serializer import ArticleSerializer
 from articles.models import Articles
 from .pagination import ArticlesPageNumberPagination
 
-from django.conf import settings
-import base64
-import importlib
-import os
-from werkzeug.utils import secure_filename
-
-
 from rest_framework.parsers import (
     FileUploadParser, FormParser, JSONParser, MultiPartParser
 )
