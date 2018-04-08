@@ -82,5 +82,12 @@ export default {
 </script>
 
 <style scoped>
+ul {
+  display: table;
+  margin: 20px auto;
+}
+ul li {
+  display: table-cell;
+}
 
 </style>

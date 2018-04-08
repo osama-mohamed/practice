@@ -6,8 +6,7 @@
 
     <div v-for="article in articles" v-bind:key="article.id" class="card card-body mb-2">
       <h3>{{article.title}}</h3>
-      <p>{{article.body}}</p>
-      <p v-if="article.img">{{article.img}}</p>
+      <p>Body : {{article.body}}</p>
       <img v-bind:src="article.img">
       <hr>
       <button @click="editArticle(article)" class="btn btn-primary mb-2">Edit</button>
@@ -65,5 +64,8 @@ export default {
 </script>
 
 <style scoped>
-
+img{
+  max-width: 85%;
+  margin: 0 auto;
+}
 </style>

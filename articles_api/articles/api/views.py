@@ -35,11 +35,8 @@ class UpdateArticle(RetrieveUpdateAPIView):
 
 
 class NewArticle(APIView):
-    # parser_classes = (FileUploadParser, )
 
     def post(self, request):
-        print(request)
-        print(request.data)
         img = request.data['file']
         title = request.data['title']
         body = request.data['body']
