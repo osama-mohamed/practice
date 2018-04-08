@@ -40,14 +40,9 @@ class NewArticle(APIView):
     def post(self, request):
         print(request)
         print(request.data)
-        try:
-          img = request.data['img']
-        except:
-          img = request.data['file']
-
+        img = request.data['file']
         title = request.data['title']
         body = request.data['body']
-
         article = Articles(
           title=title,
           body=body,
