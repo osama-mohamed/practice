@@ -11,22 +11,12 @@
       <div class="form-group">
         <textarea class="form-control" v-model="dropzoneOptions.params.body" placeholder="Body" ref="body"></textarea>
       </div>
-      <div v-if="!update">
         <vueDropzone
           ref="myVueDropzoneref"
           id="myVueDropzone"
           :options="dropzoneOptions"
           @vdropzone-queue-complete="resetDropzone"
         ></vueDropzone>
-      </div>
-      <div v-if="update">
-        <vueDropzone
-          ref="myVueDropzoneref2"
-          id="myVueDropzone"
-          :options="dropzoneOptions2"
-          @vdropzone-queue-complete="resetDropzone"
-        ></vueDropzone>
-      </div>
       <button type="submit" class="btn btn-success btn-block" v-if="!update">Add</button>
       <button type="submit" class="btn btn-success btn-block" v-if="update">{{update}}</button>
       <button type="button" v-if="update" @click="changeToAdd" class="btn btn-info btn-block mb-4">Click to change to add mode</button>
@@ -64,28 +54,22 @@ export default {
           body: ''
         },
       },
-      dropzoneOptions2: {
-        url: url,
-        dictDefaultMessage: "Update",
-        thumbnailWidth: 150,
-        maxFilesize: 0.5,
-        maxFiles: 1,
-        addRemoveLinks: true,
-        autoProcessQueue: false,
-        params: {
-          title: '',
-          body: ''
-        },
-      },
       article_id: '',
       edit: false,
       update: '',
+      article: {
+        title: '',
+        body: '',
+        file: ''
+      }
     }
   },
   methods: {
     resetDropzone(){
       setTimeout(() => {
-        alert(`Article ${this.dropzoneOptions.params.title} Added`)
+        if(this.edit === false && this.update === '' && this.dropzoneOptions.params.title){
+          alert(`Article ${this.dropzoneOptions.params.title} Added`)
+        }
         this.$refs.myVueDropzoneref.removeAllFiles(true)
         this.dropzoneOptions.params.title = ''
         this.dropzoneOptions.params.body = ''
@@ -106,20 +90,30 @@ export default {
         if (this.edit === false) {
           this.$refs.myVueDropzoneref.processQueue()
         } else if (this.edit === true) {
+          this.article.title = this.dropzoneOptions.params.title
+          this.article.body = this.dropzoneOptions.params.body
+          this.article.file = this.$refs.myVueDropzoneref.$el.dropzone.files[0]
+          console.log(this.article)
+          console.log(this.$refs.myVueDropzoneref.$el.dropzone.files[0])
           fetch(`http://localhost:8000/articles-api/update/${this.article_id}/`, {
             method: 'put',
-            body: JSON.stringify(this.dropzoneOptions2.params),
+            body: JSON.stringify(this.article),
             headers: {
               'content-type': 'application/json'
             }
           })
-            .then(response => response.json())
+            .then(response => response)
             .then(data => {
-              this.$refs.myVueDropzoneref2.processQueue()
+//              if (this.$refs.myVueDropzoneref.$el.dropzone.files[0] !== undefined) {
+//              }
+//              url = `http://localhost:8000/articles-api/update/${this.article_id}/`
+//              this.dropzoneOptions.url = url
+//              this.$refs.myVueDropzoneref.processQueue()
+
               alert(`Article ${this.dropzoneOptions.params.title} Updated`)
               this.dropzoneOptions.params.title = ''
               this.dropzoneOptions.params.body = ''
-              this.$refs.myVueDropzoneref2.removeAllFiles(true)
+              this.$refs.myVueDropzoneref.removeAllFiles(true)
               this.edit = false
               this.update = ''
               this.$parent.fetchArticles()

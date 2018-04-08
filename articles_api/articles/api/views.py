@@ -29,17 +29,28 @@ class AllArticles(ListAPIView):
 #     queryset = ''
 
 
-class UpdateArticle(RetrieveUpdateAPIView):
-    serializer_class = ArticleSerializer
-    queryset = Articles.objects.all()
+# class UpdateArticle(RetrieveUpdateAPIView):
+#     serializer_class = ArticleSerializer
+#     queryset = Articles.objects.all()
+
+
+class UpdateArticle(APIView):
+
+    def put(self, request, pk):
+        qs = Articles.objects.filter(pk=pk).first()
+        qs.title = request.data['title']
+        qs.body = request.data['body']
+        qs.img = request.data['file']
+        qs.save()
+        return Response(status=204)
 
 
 class NewArticle(APIView):
 
     def post(self, request):
-        img = request.data['file']
         title = request.data['title']
         body = request.data['body']
+        img = request.data['file']
         article = Articles(
           title=title,
           body=body,
