@@ -1,12 +1,13 @@
 <template>
     <div>
       <br>
-      <form enctype="multipart/form-data" method="post">
+      <!--<form enctype="multipart/form-data" method="post">-->
         <input type="text" name="title" v-model="title">
         <input type="text" name="body" v-model="body">
         <input type="file" name="file" v-on:change="fileChange($event.target.files)" ref="fileInput"/>
-        <button type="submit" v-on:click.prevent="upload()">Upload</button>
-      </form>
+        <button type="button" v-on:click.prevent="upload()">Upload</button>
+        <!--<button type="submit" v-on:click.prevent="upload()">Upload</button>-->
+      <!--</form>-->
     </div>
 </template>
 
