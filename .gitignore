@@ -2,6 +2,7 @@
 __pycache__/
 .idea/
 media_cdn/
+uploads/
 *.py[cod]
 *$py.class
 
