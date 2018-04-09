@@ -1,61 +1,3 @@
-<!--<template>
-    <div>
-      <br>
-      <form enctype="multipart/form-data">
-        <input type="text" name="title" v-model="title">
-        <input type="text" name="body" v-model="body">
-        <input type="file" name="file" v-on:change="fileChange($event.target.files)" />
-        <button type="submit" v-on:click.prevent="upload()">Upload</button>
-      </form>
-    </div>
-</template>
-
-<script>
-export default {
-  name: 'apps',
-  data() {
-    return {
-      title: '',
-      body: '',
-      files: new FormData()
-    }
-  },
-  methods: {
-    fileChange(fileList) {
-      this.files.append("file", fileList[0], fileList[0].name);
-    },
-    upload() {
-      let url = 'http://localhost:8000/articles-api/new/'
-      let data = {
-        img: this.files,
-        title: this.title,
-        body: this.body
-      }
-
-      this.axios.post(url, data, {
-        headers: {
-          'accept': 'application/json',
-          'Accept-Language': 'en-US,en;q=0.8',
-          'Content-Type': `multipart/form-data; boundary=${this.files._boundary}`,
-        }
-      }).then(res => {
-        console.log(data)
-        console.log(res)
-      }).catch(err => {
-        console.log(err)
-      })
-
-    }
-  }
-}
-</script>
-
-<style scoped>
-
-</style>-->
-
-
-
 <template>
   <div>
     <input type="text" v-model="dropzoneOptions.params.title" placeholder="title">
@@ -109,17 +51,19 @@ export default {
     upload() {
       console.log("uploading ...");
       this.$refs.myVueDropzoneref.processQueue(); // this will start the upload
-      this.dropzoneOptions.params.title = ''
-      this.dropzoneOptions.params.body = ''
     },
     resetDropzone(){
       setTimeout(() => {
+        this.dropzoneOptions.params.title = ''
+        this.dropzoneOptions.params.body = ''
         this.$refs.myVueDropzoneref.removeAllFiles(true);
         this.$refs.compelete.textContent = 'Uploaded Successfully'
-        this.$parent.fetchArticles()
       }, 5000)
     }
   }
 };
 </script>
 
+<style scoped>
+
+</style>

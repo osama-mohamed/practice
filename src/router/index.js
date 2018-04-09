@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Articles from '@/components/Articles'
 import About from '@/components/About'
 import Picture from '@/components/Picture'
+import PictureTwo from '@/components/PictureTwo'
+import PictureThree from '@/components/PictureThree'
 
 Vue.use(Router)
 
@@ -24,6 +26,16 @@ export default new Router({
       path: '/picture',
       name: 'picture',
       component: Picture
+    },
+    {
+      path: '/pictureTwo',
+      name: 'pictureTwo',
+      component: PictureTwo
+    },
+    {
+      path: '/pictureThree',
+      name: 'pictureThree',
+      component: PictureThree
     }
   ]
 })
