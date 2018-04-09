@@ -13,7 +13,7 @@ uploads/
 .Python
 env/
 develop-eggs/
-dist/
+
 downloads/
 eggs/
 .eggs/
