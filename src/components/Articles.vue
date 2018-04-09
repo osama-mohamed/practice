@@ -2,7 +2,10 @@
   <div>
     <AddEdit v-bind:art="articleToUpdate"></AddEdit>
     <Delete v-bind:deleteArticleId="articleToDelete"  v-bind:articlesArray="articles"></Delete>
-    <Pagination v-bind:articleList="pag" v-on:paginationPages="page($event)"></Pagination>
+    <h2 class="text-center mb-4"  v-if="pag.count > 0">Articles</h2>
+    <h4 class="text-center mb-4" v-if="pag.count > 0">Number Of Articles is : {{pag.count}}</h4>
+    <Pagination v-show="pag.count > 5" v-bind:articleList="pag" v-on:paginationPages="page($event)"></Pagination>
+
 
     <div v-for="article in articles" v-bind:key="article.id" class="card card-body mb-2">
       <h3>{{article.title}}</h3>

@@ -1,7 +1,5 @@
 <template>
   <div>
-    <h2 class="text-center mb-4">Articles</h2>
-    <h4 class="text-center mb-4">Number Of Articles is : {{pagination.last_page}}</h4>
     <nav aria-label="Page navigation example">
       <ul class="pagination">
         <li v-bind:class="[{disabled: !pagination.previous_page_url}]" class="page-item">
