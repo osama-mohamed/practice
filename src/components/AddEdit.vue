@@ -7,6 +7,7 @@
     <form @submit.prevent="addArticle" class="mb-4">
       <div class="form-group">
         <input type="text" class="form-control" v-model="dropzoneOptions.params.title" placeholder="Title">
+        <input type="hidden" v-bind:value="dropzoneOptions.params.id">
       </div>
       <div class="form-group">
         <textarea class="form-control" v-model="dropzoneOptions.params.body" placeholder="Body"></textarea>
@@ -29,8 +30,6 @@
 import vue2Dropzone from "vue2-dropzone";
 import "vue2-dropzone/dist/vue2Dropzone.css";
 
-let url = "http://localhost:8000/articles-api/new/",
-    method = 'post';
 
 export default {
   name: 'addedit',
@@ -44,8 +43,8 @@ export default {
   data() {
     return {
       dropzoneOptions: {
-        url: url,
-        method: method,
+        url: 'http://localhost:8000/articles-api/new/',
+        method: 'post',
         thumbnailWidth: 150,
         maxFilesize: 0.5,
         maxFiles: 1,
@@ -67,10 +66,7 @@ export default {
         if(this.edit === false && this.update === '' && this.dropzoneOptions.params.title){
           alert(`Article ${this.dropzoneOptions.params.title} Added`)
         }
-        this.$refs.myVueDropzoneref.removeAllFiles(true)
-        this.dropzoneOptions.params.title = ''
-        this.dropzoneOptions.params.body = ''
-        this.$parent.fetchArticles()
+        this.changeToAdd()
       }, 3000)
     },
     addArticle () {
@@ -96,14 +92,10 @@ export default {
 
 //    edit article
         } else if (this.edit === true) {
-
-          /*url = `http://localhost:8000/articles-api/update/${this.article_id}/`
-          this.dropzoneOptions.url = url
-          this.dropzoneOptions.method = 'put'*/
+          this.$refs.myVueDropzoneref.setOption('url', `http://localhost:8000/articles-api/update/${this.art.id}/`);
+          this.$refs.myVueDropzoneref.setOption('method', `put`);
           this.$refs.myVueDropzoneref.processQueue()
           alert(`Article ${this.dropzoneOptions.params.title} Updated`)
-          this.edit = false
-          this.update = ''
         }
       }
     },
@@ -111,15 +103,11 @@ export default {
 
 //  method to fill form with current values from database
     editArticle () {
-      console.log(this.dropzoneOptions)
-      console.log(this.art)
       this.edit = true
       this.update = 'Update'
       this.article_id = this.art.id
       this.dropzoneOptions.params.title = this.art.title
       this.dropzoneOptions.params.body = this.art.body
-      this.dropzoneOptions.url = `http://localhost:8000/articles-api/update/${this.art.id}/`
-      this.dropzoneOptions.method = 'put'
     },
 
 
@@ -127,8 +115,8 @@ export default {
     changeToAdd () {
       this.dropzoneOptions.params.title = ''
       this.dropzoneOptions.params.body = ''
-      this.dropzoneOptions.url = 'http://localhost:8000/articles-api/new/'
-      this.dropzoneOptions.method = 'post'
+      this.$refs.myVueDropzoneref.setOption('url', `http://localhost:8000/articles-api/new/`);
+      this.$refs.myVueDropzoneref.setOption('method', `post`);
       this.$refs.myVueDropzoneref.removeAllFiles(true)
       this.edit = false
       this.update = ''
