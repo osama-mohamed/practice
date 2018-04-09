@@ -32,7 +32,8 @@ export default {
       articles: [],
       articleToDelete: '',
       articleToUpdate: '',
-      pag: []
+      pag: [],
+      numberOfArticles: ''
     }
   },
   created () {
@@ -53,6 +54,7 @@ export default {
         .then(res => {
           this.articles = res.results
           this.pag = res
+          this.numberOfArticles = res.count
         })
         .catch(err => console.log(err))
     },

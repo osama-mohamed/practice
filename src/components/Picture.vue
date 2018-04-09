@@ -58,8 +58,8 @@ export default {
 
 <template>
   <div>
-    <input type="text" v-model="dropzoneOptions.params.title">
-    <input type="text" v-model="dropzoneOptions.params.body">
+    <input type="text" v-model="dropzoneOptions.params.title" placeholder="title">
+    <input type="text" v-model="dropzoneOptions.params.body" placeholder="body">
 
     <vueDropzone
       ref="myVueDropzoneref"
@@ -116,6 +116,7 @@ export default {
       setTimeout(() => {
         this.$refs.myVueDropzoneref.removeAllFiles(true);
         this.$refs.compelete.textContent = 'Uploaded Successfully'
+        this.$parent.fetchArticles()
       }, 5000)
     }
   }

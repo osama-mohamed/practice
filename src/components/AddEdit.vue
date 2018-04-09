@@ -66,6 +66,9 @@ export default {
         if(this.edit === false && this.update === '' && this.dropzoneOptions.params.title){
           alert(`Article ${this.dropzoneOptions.params.title} Added`)
         }
+        if(this.edit === true && this.update === 'Update' && this.dropzoneOptions.params.title){
+          alert(`Article ${this.dropzoneOptions.params.title} Updated`)
+        }
         this.changeToAdd()
       }, 3000)
     },
@@ -95,7 +98,6 @@ export default {
           this.$refs.myVueDropzoneref.setOption('url', `http://localhost:8000/articles-api/update/${this.art.id}/`);
           this.$refs.myVueDropzoneref.setOption('method', `put`);
           this.$refs.myVueDropzoneref.processQueue()
-          alert(`Article ${this.dropzoneOptions.params.title} Updated`)
         }
       }
     },
