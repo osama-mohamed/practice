@@ -1,8 +1,8 @@
 # Chat App By Flask
 
-[<img src="http://flask.pocoo.org/static/logo/flask.png" width="200" title="Chat App" >](https://www.facebook.com/osama.mohamed.ms)
-[<img src="https://www.mysql.com/common/logos/logo-mysql-170x115.png" width="150" title="Chat App" >](https://www.facebook.com/osama.mohamed.ms)
-[<img src="https://d2cy1obokpvee9.cloudfront.net/manifest/favicon-128.png" width="100" title="Chat App" >](https://www.facebook.com/osama.mohamed.ms)
+[<img src="http://flask.pocoo.org/static/logo/flask.png" width="200" title="Chat App" >](https://github.com/osama-mohamed)
+[<img src="https://www.mysql.com/common/logos/logo-mysql-170x115.png" width="150" title="Chat App" >](https://github.com/osama-mohamed)
+[<img src="https://d2cy1obokpvee9.cloudfront.net/manifest/favicon-128.png" width="100" title="Chat App" >](https://github.com/osama-mohamed)
 
 
 
