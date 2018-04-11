@@ -1,7 +1,8 @@
 # [Fortnite Comparison with Bulma](https://www.facebook.com/osama.mohamed.ms) By Flask
 
-[<img src="http://flask.pocoo.org/static/logo/flask.png" width="200" title="Fortnite Comparison" >](https://www.facebook.com/osama.mohamed.ms)
-[<img src="https://raw.githubusercontent.com/jgthms/bulma/master/docs/images/bulma-banner.png" width="200" title="Fortnite Comparison" >](https://www.facebook.com/osama.mohamed.ms)
+[<img src="http://flask.pocoo.org/static/logo/flask.png" width="200" title="Fortnite Comparison" >](https://github.com/osama-mohamed
+)
+[<img src="https://raw.githubusercontent.com/jgthms/bulma/master/docs/images/bulma-banner.png" width="200" title="Fortnite Comparison" >](https://github.com/osama-mohamed)
 
 
 ## Fortnite Comparison website contains:
