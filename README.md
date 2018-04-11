@@ -1,11 +1,11 @@
-# [Translator](https://osamamohamed1234.github.io/translator_vue) By Vue.js
+# [Translator](https://osama-mohamed.github.io/translator_vue) By Vue.js
 * Translator by Vue.js
 
-[<img src="https://vuejs.org/images/logo.png" width="300" title="Translator" >](https://github.com/OSAMAMOHAMED1234)
+[<img src="https://vuejs.org/images/logo.png" width="300" title="Translator" >](https://github.com/osama-mohamed)
 
 
 ## For live preview :
-> [Translator](https://osamamohamed1234.github.io/translator_vue)
+> [Translator](https://osama-mohamed.github.io/translator_vue)
 
 
 
