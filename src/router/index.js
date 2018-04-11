@@ -4,6 +4,7 @@ import 'vuetify/dist/vuetify.min.css'
 import Home from '@/components/Home'
 import CreateMeetup from '@/components/Meetup/CreateMeetup'
 import Meetups from '@/components/Meetup/Meetups'
+import Meetup from '@/components/Meetup/Meetup'
 import Signup from '@/components/User/Signup'
 import Signin from '@/components/User/Signin'
 import Profile from '@/components/User/Profile'
@@ -27,6 +28,11 @@ export default new Router({
       path: '/meetups',
       name: 'meetups',
       component: Meetups
+    },
+    {
+      path: '/meetups/:id',
+      name: 'meetup',
+      component: Meetup
     },
     {
       path: '/signup',
