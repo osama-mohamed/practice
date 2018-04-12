@@ -6,9 +6,12 @@ import router from './router'
 import Vuetify from 'vuetify'
 import colors from 'vuetify/es5/util/colors'
 import {store} from './store'
+import DateTimeFilter from './filters/date'
 
 Vue.config.productionTip = false
 Vue.use(Vuetify)
+
+Vue.filter('DateTime', DateTimeFilter)
 
 /* eslint-disable no-new */
 new Vue({
