@@ -31,12 +31,8 @@ new Vue({
       projectId: 'vue-meetups-app',
       storageBucket: '',
       messagingSenderId: '209520977841'
-      // apiKey: 'AIzaSyCa9N5ha0wSBKDBdEwyndU5q_jxq5vsIUQ',
-      // authDomain: 'meetups-vue.firebaseapp.com',
-      // databaseURL: 'https://meetups-vue.firebaseio.com',
-      // projectId: 'meetups-vue',
-      // storageBucket: ''
     })
+    this.$store.dispatch('loadMeetups')
   }
 })
 

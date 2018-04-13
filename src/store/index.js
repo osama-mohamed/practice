@@ -15,6 +15,9 @@ export const store = new Vuex.Store({
     error: null
   },
   mutations: {
+    setLoadedMeetups (state, payload) {
+      state.loadedMeetups = payload
+    },
     createMeetup (state, payload) {
       state.loadedMeetups.push(payload)
     },
@@ -32,6 +35,30 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
+    loadMeetups ({commit}) {
+      // firebase.database().ref('meetups').on('value')  // live update from firebase database
+      commit('setLoading', true)
+      firebase.database().ref('meetups').once('value')
+        .then((data) => {
+          const meetups = []
+          const obj = data.val()
+          for (let key in obj) {
+            meetups.push({
+              id: key,
+              title: obj[key].title,
+              describtion: obj[key].describtion,
+              imageUrl: obj[key].imageUrl,
+              date: obj[key].date
+            })
+          }
+          commit('setLoading', false)
+          commit('setLoadedMeetups', meetups)
+        })
+        .catch((error) => {
+          console.log(error)
+          commit('setLoading', false)
+        })
+    },
     createMeetup ({commit}, payload) {
       const meetup = {
         title: payload.title,
@@ -42,7 +69,11 @@ export const store = new Vuex.Store({
       }
       firebase.database().ref('meetups').push(meetup)
         .then((data) => {
-          commit('createMeetup', meetup)
+          const key = data.key
+          commit('createMeetup', {
+            ...meetup,
+            id: key
+          })
         })
         .catch((error) => {
           console.log(error)
