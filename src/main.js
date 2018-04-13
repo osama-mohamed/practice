@@ -25,11 +25,17 @@ new Vue({
   template: '<App/>',
   created () {
     firebase.initializeApp({
-      apiKey: 'AIzaSyCa9N5ha0wSBKDBdEwyndU5q_jxq5vsIUQ',
-      authDomain: 'meetups-vue.firebaseapp.com',
-      databaseURL: 'https://meetups-vue.firebaseio.com',
-      projectId: 'meetups-vue',
-      storageBucket: ''
+      apiKey: 'AIzaSyDEuq2RgRCh2YT6V6ZarWA9VpPDcr8ytBw',
+      authDomain: 'vue-meetups-app.firebaseapp.com',
+      databaseURL: 'https://vue-meetups-app.firebaseio.com',
+      projectId: 'vue-meetups-app',
+      storageBucket: '',
+      messagingSenderId: '209520977841'
+      // apiKey: 'AIzaSyCa9N5ha0wSBKDBdEwyndU5q_jxq5vsIUQ',
+      // authDomain: 'meetups-vue.firebaseapp.com',
+      // databaseURL: 'https://meetups-vue.firebaseio.com',
+      // projectId: 'meetups-vue',
+      // storageBucket: ''
     })
   }
 })
