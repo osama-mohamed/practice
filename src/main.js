@@ -8,11 +8,13 @@ import Vuetify from 'vuetify'
 import colors from 'vuetify/es5/util/colors'
 import {store} from './store'
 import DateTimeFilter from './filters/date'
+import Alert from './components/Shared/Alert'
 
 Vue.config.productionTip = false
 Vue.use(Vuetify)
 
 Vue.filter('DateTime', DateTimeFilter)
+Vue.component('app-alert', Alert)
 
 /* eslint-disable no-new */
 new Vue({
