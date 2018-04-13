@@ -2,6 +2,7 @@
 * Employee manager By Vue
 
 [<img src="https://vuejs.org/images/logo.png" width="300" title="Employee Manager" >](https://github.com/osama-mohamed)
+[<img src="https://firebase.google.com/images/brand-guidelines/logo-standard.png" width="550" title="Employee Manager">](https://github.com/osama-mohamed)
 
 
 ## For live preview :
