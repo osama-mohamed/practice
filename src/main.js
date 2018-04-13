@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import * as firebase from 'firebase'
 import Vuetify from 'vuetify'
 import colors from 'vuetify/es5/util/colors'
 import {store} from './store'
@@ -19,7 +20,16 @@ new Vue({
   router,
   store,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  created () {
+    firebase.initializeApp({
+      apiKey: 'AIzaSyCa9N5ha0wSBKDBdEwyndU5q_jxq5vsIUQ',
+      authDomain: 'meetups-vue.firebaseapp.com',
+      databaseURL: 'https://meetups-vue.firebaseio.com',
+      projectId: 'meetups-vue',
+      storageBucket: ''
+    })
+  }
 })
 
 Vue.use(Vuetify, {
