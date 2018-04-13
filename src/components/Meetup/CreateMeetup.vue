@@ -65,24 +65,24 @@
         </form>
       </v-flex>
     </v-layout>
-    <v-layout row>
+    <v-layout row justify-center>
       <v-flex xs12 sm6 offset-sm-3>
         <h4>Choose Date & Time</h4>
       </v-flex>
     </v-layout>
-    <v-layout row class="mb-2">
+    <v-layout row justify-center class="mb-2">
       <v-flex xs12 sm6 offset-sm-3>
         <v-date-picker v-model="date"></v-date-picker>
         <p>{{date}}</p>
       </v-flex>
     </v-layout>
-    <v-layout row>
+    <v-layout row justify-center>
       <v-flex xs12 sm6 offset-sm-3>
         <v-time-picker v-model="time" format="24hr"></v-time-picker>
         <p>{{time}}</p>
       </v-flex>
     </v-layout>
-    <v-layout row>
+    <v-layout row justify-center>
       <v-flex xs12 sm6 offset-sm-3>
         <v-btn type="submit" class="primary" :disabled="!formIsValid">Create Meetup</v-btn>
         {{submittableDateTime}}

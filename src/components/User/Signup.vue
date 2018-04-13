@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-layout row>
+    <v-layout row justify-center>
       <v-flex xs12 sm6 offset-sm-6>
         <v-card>
           <v-card-text>
