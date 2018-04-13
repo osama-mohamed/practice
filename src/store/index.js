@@ -50,14 +50,14 @@ export const store = new Vuex.Store({
         )
     },
     UserSignIn ({commit}, payload) {
-      firebase.auth().signInWithEmailandPassword(payload.email, payload.password)
+      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
         .then(
           user => {
-            const newUser = {
+            const currentUser = {
               id: user.uid,
               registeredMeetups: []
             }
-            commit('setUser', newUser)
+            commit('setUser', currentUser)
           }
         )
         .catch(
