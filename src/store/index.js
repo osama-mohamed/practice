@@ -18,6 +18,20 @@ export const store = new Vuex.Store({
     createMeetup (state, payload) {
       state.loadedMeetups.push(payload)
     },
+    updateMeetup (state, payload) {
+      const meetup = state.loadedMeetups.find(meetup => {
+        return meetup.id === payload.id
+      })
+      if (payload.title) {
+        meetup.title = payload.title
+      }
+      if (payload.description) {
+        meetup.description = payload.description
+      }
+      if (payload.date) {
+        meetup.date = payload.date
+      }
+    },
     setUser (state, payload) {
       state.user = payload
     },
@@ -43,7 +57,8 @@ export const store = new Vuex.Store({
             meetups.push({
               id: key,
               title: obj[key].title,
-              describtion: obj[key].describtion,
+              description: obj[key].description,
+              location: obj[key].location,
               imageUrl: obj[key].imageUrl,
               date: obj[key].date,
               creatorId: obj[key].creatorId
@@ -95,6 +110,28 @@ export const store = new Vuex.Store({
           console.log(error)
         })
     },
+    updateMeetupData ({commit}, payload) {
+      commit('setLoading', true)
+      const updateobj = {}
+      if (payload.title) {
+        updateobj.title = payload.title
+      }
+      if (payload.description) {
+        updateobj.description = payload.description
+      }
+      if (payload.date) {
+        updateobj.date = payload.date
+      }
+      firebase.database().ref('meetups').child(payload.id).update(updateobj)
+        .then(() => {
+          commit('setLoading', false)
+          commit('updateMeetup', payload)
+        })
+        .catch(error => {
+          commit('setLoading', false)
+          console.log(error)
+        })
+    },
     UserSignUp ({commit}, payload) {
       commit('setLoading', true)
       commit('clearError')
@@ -140,7 +177,7 @@ export const store = new Vuex.Store({
         )
     },
     autoSignIn ({commit}, payload) {
-      commit('setUser', {id: payload.id, registeredMeetups: []})
+      commit('setUser', {id: payload.uid, registeredMeetups: []})
     },
     logout ({commit}) {
       firebase.auth().signOut()

@@ -9,12 +9,14 @@ import colors from 'vuetify/es5/util/colors'
 import {store} from './store'
 import DateTimeFilter from './filters/date'
 import Alert from './components/Shared/Alert'
+import EditMeetup from './components/Meetup/Edit/EditMeetup'
 
 Vue.config.productionTip = false
 Vue.use(Vuetify)
 
 Vue.filter('DateTime', DateTimeFilter)
 Vue.component('app-alert', Alert)
+Vue.component('app-edit-meetup', EditMeetup)
 
 /* eslint-disable no-new */
 new Vue({
