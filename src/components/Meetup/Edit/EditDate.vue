@@ -13,7 +13,15 @@
         <v-divider></v-divider>
         <v-layout row wrap>
           <v-flex xs12>
-            <v-date-picker v-model="editDate" style="width: 100%" actions>
+            <v-date-picker
+              v-model="editDate"
+              style="width: 100%"
+              actions
+              scrollable
+              :first-day-of-week="6"
+              full-width
+              :show-current="editDate"
+            >
               <!-- <template scope="{save, cancel}"> -->
               <template>
                 <v-btn flat class="primary--text" @click="onSaveChanges">Save</v-btn>
@@ -33,12 +41,13 @@ export default {
   data () {
     return {
       editDialog: false,
-      editDate: null
+      editDate: null,
+      currentDate: new Date(this.meetup.date)
     }
   },
-  // created () {
-  //   this.editDate = new Date(this.meetup.date)
-  // },
+  created () {
+    this.editDate = (this.currentDate).toJSON().slice(0, 10)
+  },
   methods: {
     closeDialog () {
       this.editDialog = false
