@@ -29,11 +29,11 @@
                 <v-card-title primary-title>
                   <div>
                     <h5 class="white--text mb-0">{{meetup.title}}</h5>
-                    <div>{{meetup.date | DateTime}}</div>
+                    <div class="white--text">{{meetup.date | DateTime}}</div>
                   </div>
                 </v-card-title>
                 <v-card-actions>
-                  <v-btn flat :to="{name: 'meetup', params: {id: meetup.id}}">
+                  <v-btn flat :to="{name: 'meetup', params: {id: meetup.id}}" class="white--text">
                     <v-icon left light>arrow_forward</v-icon>
                     View Meetup
                   </v-btn>
