@@ -44,7 +44,10 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <!-- <v-btn class="primary">Register</v-btn> -->
-            <app-register :meetupId="meetup.id"></app-register>
+            <app-register
+              :meetupId="meetup.id"
+              v-if="userIsAuthenticated && !userIsCreator"
+            ></app-register>
           </v-card-actions>
         </v-card>
       </v-flex>
