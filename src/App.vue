@@ -27,7 +27,7 @@
         <v-toolbar-side-icon
           @click.stop="sideNav= !sideNav"
           class="hidden-sm-and-up"></v-toolbar-side-icon>
-        <v-toolbar-title><router-link to="/" tag="span" style="cursor: pointer">Meetup</router-link></v-toolbar-title>
+        <v-toolbar-title><router-link :to="{name: 'home'}" tag="span" style="cursor: pointer">Meetup</router-link></v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-xs-only">
           <v-btn flat v-for="item in menuItems" :key="item.title" :to="item.link">
@@ -61,14 +61,14 @@ export default {
   computed: {
     menuItems () {
       let menuItems = [
-        {icon: 'face', title: 'Sign Up', link: '/signup'},
-        {icon: 'lock_open', title: 'Sign In', link: '/signin'}
+        {icon: 'face', title: 'Sign Up', link: '/meet_up_vue/signup'},
+        {icon: 'lock_open', title: 'Sign In', link: '/meet_up_vue/signin'}
       ]
       if (this.userIsAuthenticated) {
         menuItems = [
-          {icon: 'supervisor_account', title: 'View Meetups', link: '/meetups'},
-          {icon: 'room', title: 'Organize Meetup', link: '/meetup/new'},
-          {icon: 'person', title: 'Profile', link: '/profile'}
+          {icon: 'supervisor_account', title: 'View Meetups', link: '/meet_up_vue/meetups'},
+          {icon: 'room', title: 'Organize Meetup', link: '/meet_up_vue/meetup/new'},
+          {icon: 'person', title: 'Profile', link: '/meet_up_vue/profile'}
         ]
       }
       return menuItems
