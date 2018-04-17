@@ -31,7 +31,8 @@
                       label="Password"
                       v-model="password"
                       type="password"
-                      required>
+                      required
+                    >
                     </v-text-field>
                   </v-flex>
                 </v-layout>
@@ -43,8 +44,9 @@
                       label="Confirm Password"
                       v-model="confirmPassword"
                       type="password"
+                      required
                       :rules="[comparePasswords]"
-                      >
+                    >
                     </v-text-field>
                   </v-flex>
                 </v-layout>
@@ -99,7 +101,9 @@ export default {
   },
   methods: {
     onSignup () {
-      this.$store.dispatch('UserSignUp', {email: this.email, password: this.password})
+      if (!this.comparePasswords) {
+        this.$store.dispatch('UserSignUp', {email: this.email, password: this.password})
+      }
     },
     onDismissed () {
       this.$store.dispatch('clearError')
