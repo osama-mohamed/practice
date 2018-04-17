@@ -54,6 +54,7 @@ export default {
         })
     },
     createMeetup ({commit, getters}, payload) {
+      commit('setLoading', true)
       const meetup = {
         title: payload.title,
         location: payload.location,
@@ -86,9 +87,11 @@ export default {
             id: key,
             imageUrl: imageUrl
           })
+          commit('setLoading', false)
         })
         .catch((error) => {
           console.log(error)
+          commit('setLoading', false)
         })
     },
     updateMeetupData ({commit}, payload) {
@@ -111,6 +114,27 @@ export default {
         .catch(error => {
           commit('setLoading', false)
           console.log(error)
+        })
+    },
+    deleteMeetup ({commit}, payload) {
+      commit('setLoading', true)
+      if (!payload.id) {
+        return
+      }
+      firebase.database().ref('meetups').child(payload.id).remove()
+        .then(() => {
+          firebase.storage().refFromURL(payload.imageUrl).delete()
+            .then(() => {
+              commit('setLoading', false)
+            })
+            .catch((error) => {
+              console.log(error)
+            })
+          commit('setLoading', false)
+        })
+        .catch((error) => {
+          console.log(error)
+          commit('setLoading', false)
         })
     }
   },

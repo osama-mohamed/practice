@@ -48,6 +48,10 @@
               :meetupId="meetup.id"
               v-if="userIsAuthenticated && !userIsCreator"
             ></app-register>
+            <app-delete
+              :meetup="meetup"
+              v-if="userIsCreator"
+            ></app-delete>
           </v-card-actions>
         </v-card>
       </v-flex>

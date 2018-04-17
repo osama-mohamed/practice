@@ -13,6 +13,7 @@ import EditMeetup from './components/Meetup/Edit/EditMeetup'
 import EditMeetupDate from './components/Meetup/Edit/EditDate'
 import EditMeetupTime from './components/Meetup/Edit/EditTime'
 import Registration from './components/Meetup/Registration/Register'
+import Delete from './components/Meetup/Delete/Delete'
 
 Vue.config.productionTip = false
 Vue.use(Vuetify)
@@ -23,6 +24,7 @@ Vue.component('app-edit-meetup', EditMeetup)
 Vue.component('app-edit-meetup-date', EditMeetupDate)
 Vue.component('app-edit-meetup-time', EditMeetupTime)
 Vue.component('app-register', Registration)
+Vue.component('app-delete', Delete)
 
 /* eslint-disable no-new */
 new Vue({
