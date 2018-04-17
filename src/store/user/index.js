@@ -101,6 +101,7 @@ export default {
     autoSignIn ({commit}, payload) {
       commit('setUser', {
         id: payload.uid,
+        email: payload.email,
         registeredMeetups: [],
         fbkeys: {}
       })
@@ -118,6 +119,7 @@ export default {
           }
           const updatedUser = {
             id: getters.user.id,
+            email: getters.user.email,
             registeredMeetups: registeredMeetups,
             fbkeys: reversed
           }

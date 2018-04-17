@@ -42,6 +42,8 @@
         </v-toolbar-items>
       </v-toolbar>
       <main>
+        <h1 class="text-xs-center">Developed By : <a href="https://www.facebook.com/osama.mohamed.ms">OSAMA MOHAMED</a></h1>
+        <hr style="width: 70%; margin: 0 auto;">
         <router-view/>
       </main>
     </v-app>
@@ -78,6 +80,7 @@ export default {
   methods: {
     onLogout () {
       this.$store.dispatch('logout')
+      this.$router.push({name: 'home'})
     }
   }
 }
