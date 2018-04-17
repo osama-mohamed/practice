@@ -17,39 +17,39 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/meet_up_vue/',
       name: 'home',
       component: Home
     },
     {
-      path: '/meetup/new',
+      path: '/meet_up_vue/meetup/new',
       name: 'createmeetup',
       component: CreateMeetup,
       beforeEnter: authGuard
     },
     {
-      path: '/meetups',
+      path: '/meet_up_vue/meetups',
       name: 'meetups',
       component: Meetups
     },
     {
-      path: '/meetups/:id',
+      path: '/meet_up_vue/meetups/:id',
       props: true,
       name: 'meetup',
       component: Meetup
     },
     {
-      path: '/signup',
+      path: '/meet_up_vue/signup',
       name: 'signup',
       component: Signup
     },
     {
-      path: '/signin',
+      path: '/meet_up_vue/signin',
       name: 'signin',
       component: Signin
     },
     {
-      path: '/profile',
+      path: '/meet_up_vue/profile',
       name: 'profile',
       component: Profile,
       beforeEnter: authGuard
