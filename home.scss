@@ -1,8 +1,9 @@
 
-$map: (h1: 60px, h2: 50px, h3: 40px, h4: 30px, h5:20px, h6: 16px);
+$grid: 12;
 
-@each $key, $val in $map {
-  #{$key} {
-    font-size: $val;
+@while $grid > 0 {
+  .col-#{$grid} {
+    width: (100% / (12 / $grid));
   }
+  $grid: $grid - 1;
 }
