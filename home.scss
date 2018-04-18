@@ -1,17 +1,22 @@
-// $prop: font;
+$gridNum: 12;
 
-// .test1 {
-//   #{$prop}-size: 26px;
-// }
+%grid {
+  float: left;
+  padding: 10px;
+  background-color: #eee;
+  border: 1px solid #aaa;
+  text-align: center;
+  font-weight: bold;
+  font-family: Tahoma;
+}
 
-
-
-
-
-// @for $i from 1 to 4 {        // from start to end - 1
-@for $i from 1 through 4 {      // from start to end
-  .test#{$i}{
-    color: blue;
-    font-size: 16px + $i;
+@for $i from 1 through $gridNum {
+  .col-#{$i} {
+    width: (100% / ($gridNum / $i));
+    @extend %grid
   }
+}
+
+*{
+  box-sizing: border-box;
 }
