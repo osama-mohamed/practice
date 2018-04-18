@@ -1,22 +1,25 @@
-$size: 50px;
+
+.main{
+  padding: 10px;
+  margin: 10px;
+}
 
 .test1 {
-  font-size: $size;
+  @extend .main;
+  color: green;
 }
 
 .test2 {
-  font-size: $size + 14;
+  @extend .main;
+  color: red;
 }
 
 .test3 {
-  font-size: $size * 2;
+  @extend .main;
+  color: blue;
 }
 
 .test4 {
-  font-size: $size - 6;
+  @extend .main;
+  color: yellow;
 }
-
-.test5 {
-  font-size: $size / 2;
-}
-
