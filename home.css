@@ -1,15 +1,11 @@
-.test1 {
-  color: #00f;
-  background-color: #f00;
-  font-family: "Droid Arabic Kufi";
-  margin: 10px; }
-
-.test2 {
-  border: 4px solid #00f;
-  margin: 10px; }
-
-.test3 {
-  color: #f00;
-  margin: 10px; }
+.parent {
+  width: 600px;
+  height: 400px;
+  background-color: #00f; }
+  .parent .test1 {
+    background-color: #f00;
+    margin: 10px; }
+    .parent .test1 p {
+      color: #00f; }
 
 /*# sourceMappingURL=home.css.map */
