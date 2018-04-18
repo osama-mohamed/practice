@@ -1,0 +1,22 @@
+$mainColor: #00f;
+$childcolor: #f00;
+$mainMargin: 10px;
+$enFont: "Tahoma, Arial";
+$arFont: "Droid Arabic Kufi";
+
+.test1 {
+  color: $mainColor;
+  background-color: $childcolor;
+  font-family: $arFont;
+  margin: $mainMargin;
+}
+
+.test2 {
+  border: 4px solid $mainColor;
+  margin: $mainMargin;
+}
+
+.test3 {
+  color: $childcolor;
+  margin: $mainMargin;
+}
