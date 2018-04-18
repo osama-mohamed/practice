@@ -1,20 +1,22 @@
-$mainColor: #00f;
-$childColor: #f00;
-$mainMargin: 10px;
-$width: 600px;
-$height: 400px;
+$size: 50px;
 
-.parent{
-  width: $width;
-  height: $height;
-  background-color: $mainColor;
-  .test1 {
-    background-color: $childColor;
-    margin: $mainMargin;
-    p{
-      color: $mainColor;
-    }
-  }
+.test1 {
+  font-size: $size;
 }
 
+.test2 {
+  font-size: $size + 14;
+}
+
+.test3 {
+  font-size: $size * 2;
+}
+
+.test4 {
+  font-size: $size - 6;
+}
+
+.test5 {
+  font-size: $size / 2;
+}
 

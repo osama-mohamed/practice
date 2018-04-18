@@ -1,11 +1,16 @@
-.parent {
-  width: 600px;
-  height: 400px;
-  background-color: #00f; }
-  .parent .test1 {
-    background-color: #f00;
-    margin: 10px; }
-    .parent .test1 p {
-      color: #00f; }
+.test1 {
+  font-size: 50px; }
+
+.test2 {
+  font-size: 64px; }
+
+.test3 {
+  font-size: 100px; }
+
+.test4 {
+  font-size: 44px; }
+
+.test5 {
+  font-size: 25px; }
 
 /*# sourceMappingURL=home.css.map */
