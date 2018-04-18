@@ -1,25 +1,25 @@
 
-.main{
+%main{             // does not render in the browser
   padding: 10px;
   margin: 10px;
 }
 
 .test1 {
-  @extend .main;
+  @extend %main;
   color: green;
 }
 
 .test2 {
-  @extend .main;
+  @extend %main;
   color: red;
 }
 
 .test3 {
-  @extend .main;
+  @extend %main;
   color: blue;
 }
 
 .test4 {
-  @extend .main;
+  @extend %main;
   color: yellow;
 }
