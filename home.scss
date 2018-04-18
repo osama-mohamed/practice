@@ -1,13 +1,17 @@
+// $prop: font;
 
-$size: 20px;
-$color: green;
+// .test1 {
+//   #{$prop}-size: 26px;
+// }
 
-@if $size == 20px {
-  $color: blue;
-} @else {
-  $color: red;
-}
 
-.test1 {
-  color: $color;
+
+
+
+// @for $i from 1 to 4 {        // from start to end - 1
+@for $i from 1 through 4 {      // from start to end
+  .test#{$i}{
+    color: blue;
+    font-size: 16px + $i;
+  }
 }

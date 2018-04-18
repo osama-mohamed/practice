@@ -1,4 +1,17 @@
 .test1 {
-  color: blue; }
+  color: blue;
+  font-size: 17px; }
+
+.test2 {
+  color: blue;
+  font-size: 18px; }
+
+.test3 {
+  color: blue;
+  font-size: 19px; }
+
+.test4 {
+  color: blue;
+  font-size: 20px; }
 
 /*# sourceMappingURL=home.css.map */
