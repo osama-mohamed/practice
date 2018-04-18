@@ -1,43 +1,19 @@
-.github {
-  background: url("images/github.png");
-  color: black;
-  border: 1px solid black; }
-  .github:hover {
-    background-color: white; }
+h1 {
+  font-size: 60px; }
 
-.bitbucket {
-  background: url("images/bitbucket.png");
-  color: blue;
-  border: 1px solid blue; }
-  .bitbucket:hover {
-    background-color: green; }
+h2 {
+  font-size: 50px; }
 
-.codepen {
-  background: url("images/codepen.png");
-  color: grey;
-  border: 1px solid grey; }
-  .codepen:hover {
-    background-color: pink; }
+h3 {
+  font-size: 40px; }
 
-.facebook {
-  background: url("images/facebook.png");
-  color: green;
-  border: 1px solid green; }
-  .facebook:hover {
-    background-color: blue; }
+h4 {
+  font-size: 30px; }
 
-.youtube {
-  background: url("images/youtube.png");
-  color: red;
-  border: 1px solid red; }
-  .youtube:hover {
-    background-color: orange; }
+h5 {
+  font-size: 20px; }
 
-.google {
-  background: url("images/google.png");
-  color: white;
-  border: 1px solid white; }
-  .google:hover {
-    background-color: black; }
+h6 {
+  font-size: 16px; }
 
 /*# sourceMappingURL=home.css.map */

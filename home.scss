@@ -1,17 +1,8 @@
 
-@each $social, $color, $hover in 
-  (github, black, white), 
-  (bitbucket, blue, green),
-  (codepen, grey, pink),
-  (facebook, green, blue),
-  (youtube, red, orange),
-  (google, white, black) {
-  .#{$social} {
-    background: url('images/#{$social}.png');
-    color: $color;
-    border: 1px solid $color;
-    &:hover {
-      background-color: $hover;
-    }
+$map: (h1: 60px, h2: 50px, h3: 40px, h4: 30px, h5:20px, h6: 16px);
+
+@each $key, $val in $map {
+  #{$key} {
+    font-size: $val;
   }
 }
