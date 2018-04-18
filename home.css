@@ -1,17 +1,4 @@
-.test1, .test2, .test3, .test4 {
-  padding: 10px;
-  margin: 10px; }
-
-.test1 {
-  color: green; }
-
-.test2 {
-  color: red; }
-
-.test3 {
-  color: blue; }
-
-.test4 {
-  color: yellow; }
+body {
+  font-size: 50px; }
 
 /*# sourceMappingURL=home.css.map */
