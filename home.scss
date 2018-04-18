@@ -1,3 +1,11 @@
+$socialList: github bitbucket codepen facebook twitter google;
+
+@each $social in $socialList {
+  .#{$social} {
+    background: url('images/#{$social}.png')
+  }
+}
+
 $gridNum: 12;
 
 %grid {
@@ -20,3 +28,17 @@ $gridNum: 12;
 *{
   box-sizing: border-box;
 }
+// .test1 {
+// }
+
+// .test2 {
+
+// }
+
+// .test3 {
+
+// }
+
+// .test4 {
+
+// }

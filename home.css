@@ -1,3 +1,21 @@
+.github {
+  background: url("images/github.png"); }
+
+.bitbucket {
+  background: url("images/bitbucket.png"); }
+
+.codepen {
+  background: url("images/codepen.png"); }
+
+.facebook {
+  background: url("images/facebook.png"); }
+
+.twitter {
+  background: url("images/twitter.png"); }
+
+.google {
+  background: url("images/google.png"); }
+
 .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
   float: left;
   padding: 10px;
