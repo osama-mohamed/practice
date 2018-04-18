@@ -1,4 +1,35 @@
-body {
-  font-size: 50px; }
+div {
+  padding: 10px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  margin-bottom: 10px; }
+
+.test1 {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -o-border-radius: 10px;
+  -ms-border-radius: 10px;
+  border-radius: 10px; }
+
+.test2 {
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -o-border-radius: 15px;
+  -ms-border-radius: 15px;
+  border-radius: 15px; }
+
+.test3 {
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -o-border-radius: 20px;
+  -ms-border-radius: 20px;
+  border-radius: 20px; }
+
+.test4 {
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  -o-border-radius: 25px;
+  -ms-border-radius: 25px;
+  border-radius: 25px; }
 
 /*# sourceMappingURL=home.css.map */

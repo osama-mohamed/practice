@@ -1,1 +1,31 @@
-@import 'osama';
+
+div{
+  padding: 10px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+@mixin borderRadius($p) {
+  -webkit-border-radius: $p;
+  -moz-border-radius: $p;
+  -o-border-radius: $p;
+  -ms-border-radius: $p;
+  border-radius: $p;
+}
+
+.test1 {
+  @include borderRadius(10px);
+}
+
+.test2 {
+  @include borderRadius(15px);
+}
+
+.test3 {
+  @include borderRadius(20px);
+}
+
+.test4 {
+  @include borderRadius(25px);
+}
