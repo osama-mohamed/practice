@@ -1,5 +1,10 @@
-.test1 .myImportedClass {
-  font-weight: bold;
-  font-size: 50px; }
+.test1 {
+  font-size: 30px; }
+
+.test2 {
+  font-size: 20px; }
+
+.test3 {
+  font-size: 100px; }
 
 /*# sourceMappingURL=home.css.map */
