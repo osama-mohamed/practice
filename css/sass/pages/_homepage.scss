@@ -21,6 +21,7 @@ p {
   width: 300px;
   height: 150px;
   position: relative;
+  @include prefixer(box-shadow, 10px 10px 10px #ccc, webkit moz o ms);
   .overlay {
     @include overlay;
     background-color: rgba($mainColor, .1);
