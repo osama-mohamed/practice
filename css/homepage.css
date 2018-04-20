@@ -1,3 +1,25 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 1200px;
+  margin: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.header .logo {
+  width: 30%;
+  float: left;
+}
+.header .navbar {
+  width: 70%;
+  float: left;
+}
+
 @media (min-width: 768px) {
   p {
     color: blue;
