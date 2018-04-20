@@ -82,3 +82,36 @@
 }
 
 /* end slider */
+
+/* start services */
+
+.services {
+  .service-box {
+    float: $floatLeft;
+    width: (100% / 3);
+    &:not(:last-of-type) {
+      padding-right: 20px;
+    }
+    // padding-right: 10px;
+    // &:last-child {
+    //   padding-right: 0; 
+    // }
+    .service-title {
+      color: #666;
+      i {
+        font-size: 35px;
+        position: relative;
+        top: 4px;
+      }
+    }
+    p {
+      color: #777;
+      line-height: 1.5;
+    }
+    .service-link {
+      color: $mainColor;
+    }
+  }
+}
+
+/* end services */

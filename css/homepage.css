@@ -115,5 +115,30 @@ ul, ol {
 }
 
 /* end slider */
+/* start services */
+.services .service-box {
+  float: left;
+  width: 33.3333333333%;
+}
+.services .service-box:not(:last-of-type) {
+  padding-right: 20px;
+}
+.services .service-box .service-title {
+  color: #666;
+}
+.services .service-box .service-title i {
+  font-size: 35px;
+  position: relative;
+  top: 4px;
+}
+.services .service-box p {
+  color: #777;
+  line-height: 1.5;
+}
+.services .service-box .service-link {
+  color: #e2494c;
+}
+
+/* end services */
 
 /*# sourceMappingURL=homepage.css.map */
