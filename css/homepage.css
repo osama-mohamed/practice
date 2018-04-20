@@ -17,13 +17,44 @@ body {
   font-size: 16px;
 }
 
+ul, ol {
+  list-style: none;
+  padding: 0;
+}
+
+.header {
+  padding: 20px 0;
+  overflow: hidden;
+  border-bottom: 1px solid #9c9c9c;
+}
 .header .logo {
   width: 30%;
   float: left;
 }
+.header .logo h1 {
+  margin-bottom: 0;
+  margin-top: 10px;
+}
 .header .navbar {
   width: 70%;
   float: left;
+  background-color: #e2494c;
+  border-radius: 15px;
+}
+.header .navbar li {
+  width: 20%;
+  float: left;
+  font-size: 18px;
+  text-align: center;
+}
+.header .navbar li a {
+  display: block;
+  padding: 20px 10px;
+  color: #fff;
+  text-decoration: none;
+}
+.header .navbar li a:hover {
+  color: #ddd;
 }
 
 @media (min-width: 768px) {
