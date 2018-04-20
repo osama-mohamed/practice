@@ -202,7 +202,50 @@ ul, ol {
 
 /* start footer */
 .footer {
-  background-color: #d9d9d9;
+  background-color: #e2e2e2;
+  overflow: hidden;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin-top: 50px;
+}
+.footer .gallery, .footer .info, .footer .contact {
+  float: left;
+}
+.footer .gallery {
+  width: 50%;
+}
+.footer .gallery .img-box {
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.footer .gallery .img-box img {
+  float: left;
+  width: 150px;
+  height: 150px;
+}
+.footer .gallery .img-box .text {
+  float: left;
+  margin-left: 15px;
+  margin-right: 15px;
+  width: calc(100% - 180px);
+}
+.footer .gallery .img-box .text h4 {
+  color: #e2494c;
+  margin: 5px 0 0 0;
+}
+.footer .gallery .img-box .text p {
+  color: #444;
+  line-height: 1.5;
+}
+.footer .info {
+  width: 25%;
+}
+.footer .contact {
+  width: 25%;
+}
+.footer .section-title {
+  color: #444;
+  font-weight: normal;
 }
 
 /* end footer */
