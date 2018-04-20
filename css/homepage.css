@@ -12,6 +12,10 @@
   position: relative;
 }
 
+.clearFix {
+  clear: both;
+}
+
 body {
   background-color: #f6f6f6;
   font-family: Tahoma;
@@ -140,5 +144,32 @@ ul, ol {
 }
 
 /* end services */
+/* start players */
+.players .player-box {
+  float: left;
+  width: 20%;
+}
+.players .player-box:not(:last-of-type) {
+  padding-right: 20px;
+}
+.players .player-box img {
+  max-width: 100%;
+}
+.players .player-box .player-title {
+  color: #666;
+  font-weight: normal;
+}
+.players .player-box .player-title span {
+  font-weight: bold;
+}
+.players .player-box p {
+  color: #777;
+  line-height: 1.5;
+}
+.players .player-box .player-link {
+  color: #e2494c;
+}
+
+/* end players */
 
 /*# sourceMappingURL=homepage.css.map */

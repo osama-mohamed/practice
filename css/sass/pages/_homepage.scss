@@ -115,3 +115,34 @@
 }
 
 /* end services */
+
+/* start players */
+
+.players {
+  .player-box {
+    float: $floatLeft;
+    width: (100% / 5);
+    &:not(:last-of-type) {
+      padding-right: 20px;
+    }
+    img {
+      max-width: 100%;
+    }
+    .player-title {
+      color: #666;
+      font-weight: normal;
+      span {
+        font-weight: bold;
+      }
+    }
+    p {
+      color: #777;
+      line-height: 1.5;
+    }
+    .player-link {
+      color: $mainColor;
+    }
+  }
+}
+
+/* end players */
