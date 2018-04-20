@@ -21,6 +21,11 @@
   width: 300px;
   height: 150px;
   position: relative;
+  -webkit-animation: fadeInOut 2s infinite linear;
+  -moz-animation: fadeInOut 2s infinite linear;
+  -o-animation: fadeInOut 2s infinite linear;
+  -ms-animation: fadeInOut 2s infinite linear;
+  animation: fadeInOut 2s infinite linear;
   -webkit-box-shadow: 10px 10px 10px #ccc;
   -moz-box-shadow: 10px 10px 10px #ccc;
   -o-box-shadow: 10px 10px 10px #ccc;
@@ -35,6 +40,62 @@
   position: absolute;
   background-color: rgba(226, 73, 76, 0.1);
   color: #fff;
+}
+
+@-webkit-keyframes fadeInOut {
+  0% {
+    opacity: .5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: .5;
+  }
+}
+@-moz-keyframes fadeInOut {
+  0% {
+    opacity: .5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: .5;
+  }
+}
+@-o-keyframes fadeInOut {
+  0% {
+    opacity: .5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: .5;
+  }
+}
+@-ms-keyframes fadeInOut {
+  0% {
+    opacity: .5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: .5;
+  }
+}
+@keyframes fadeInOut {
+  0% {
+    opacity: .5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: .5;
+  }
 }
 
 /*# sourceMappingURL=homepage.css.map */
