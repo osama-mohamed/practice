@@ -171,5 +171,18 @@ ul, ol {
 }
 
 /* end players */
+/* start lorem */
+.lorem .lorem-box {
+  float: left;
+  width: 31.3333333333%;
+}
+.lorem .lorem-box:not(:last-of-type) {
+  margin-right: 3%;
+}
+.lorem .lorem-box img {
+  max-width: 100%;
+}
+
+/* end lorem */
 
 /*# sourceMappingURL=homepage.css.map */

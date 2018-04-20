@@ -146,3 +146,20 @@
 }
 
 /* end players */
+
+/* start lorem */
+
+.lorem {
+  .lorem-box {
+    float: $floatLeft;
+    width: (94% / 3);
+    &:not(:last-of-type) {
+      margin-right: 3%;
+    }
+    img {
+      max-width: 100%;
+    }
+  }
+}
+
+/* end lorem */
