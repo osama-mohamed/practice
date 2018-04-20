@@ -12,3 +12,18 @@ p {
     color: red;
   }
 }
+
+
+.product {
+  background-color: #eee;
+  padding: 10px;
+  border: 1px solid #ccc;
+  width: 300px;
+  height: 150px;
+  position: relative;
+  .overlay {
+    @include overlay;
+    background-color: rgba($mainColor, .1);
+    color: #fff;
+  }
+}
