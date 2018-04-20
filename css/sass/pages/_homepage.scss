@@ -1,0 +1,14 @@
+p {
+  @media (min-width: $minSmall) {
+    color: blue;
+  }
+  @include minMedium {
+    color: orange;
+  }
+  // @media #{$minMedium} {
+  //   color: green;
+  // }
+  @media (max-width: $maxMobile) {
+    color: red;
+  }
+}

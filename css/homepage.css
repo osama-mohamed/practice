@@ -1,3 +1,17 @@
-
+@media (min-width: 768px) {
+  p {
+    color: blue;
+  }
+}
+@media (min-width: 992px) {
+  p {
+    color: orange;
+  }
+}
+@media (max-width: 767px) {
+  p {
+    color: red;
+  }
+}
 
 /*# sourceMappingURL=homepage.css.map */
