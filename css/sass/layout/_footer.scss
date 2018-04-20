@@ -3,7 +3,6 @@
   background-color: #e2e2e2;
   overflow: hidden;
   padding-top: 30px;
-  padding-bottom: 30px;
   margin-top: 50px;
   .gallery, .info, .contact {
     float: $floatLeft;
@@ -37,26 +36,58 @@
   .info {
     width: 25%;
     ul {
+      color: #444;
+      line-height: 1.8;
       li {
-
+        span {
+          color: $mainColor;
+        }
       }
     }
     h4 {
-
+      color: #444;
+      font-weight: bold;
+      margin-bottom: 0;
     }
     p {
-
+      color: #444;
+      margin-top: 5px;
     }
   }
   .contact {
     width: 25%;
     form {
-
+      input[type="text"],
+      input[type="email"],
+      textarea {
+        border: 1px solid #c9c9c9;
+        padding: 10px;
+        margin-bottom: 5px;
+        border-radius: 10px;
+        width: 100%;
+      }
+      textarea {
+        height: 140px;
+      }
     }
   }
   .section-title {
     color: #444;
     font-weight: normal;
+  }
+  .copyright {
+    color: #444;
+    padding: 25px 0;
+    border-top: 1px solid #c5c5c5;
+    overflow: hidden;
+    .text,
+    .author {
+      float: $floatLeft;
+      width: 50%;
+    }
+    .author {
+      text-align: $textRight;
+    }
   }
 }
 /* end footer */

@@ -205,7 +205,6 @@ ul, ol {
   background-color: #e2e2e2;
   overflow: hidden;
   padding-top: 30px;
-  padding-bottom: 30px;
   margin-top: 50px;
 }
 .footer .gallery, .footer .info, .footer .contact {
@@ -240,12 +239,54 @@ ul, ol {
 .footer .info {
   width: 25%;
 }
+.footer .info ul {
+  color: #444;
+  line-height: 1.8;
+}
+.footer .info ul li span {
+  color: #e2494c;
+}
+.footer .info h4 {
+  color: #444;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+.footer .info p {
+  color: #444;
+  margin-top: 5px;
+}
 .footer .contact {
   width: 25%;
+}
+.footer .contact form input[type="text"],
+.footer .contact form input[type="email"],
+.footer .contact form textarea {
+  border: 1px solid #c9c9c9;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  width: 100%;
+}
+.footer .contact form textarea {
+  height: 140px;
 }
 .footer .section-title {
   color: #444;
   font-weight: normal;
+}
+.footer .copyright {
+  color: #444;
+  padding: 25px 0;
+  border-top: 1px solid #c5c5c5;
+  overflow: hidden;
+}
+.footer .copyright .text,
+.footer .copyright .author {
+  float: left;
+  width: 50%;
+}
+.footer .copyright .author {
+  text-align: right;
 }
 
 /* end footer */
