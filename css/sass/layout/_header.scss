@@ -1,7 +1,7 @@
 .header {
   .logo {
     width: 30%;
-    float: left;
+    float: $floatLeft;
     h1 {
 
     }
@@ -11,7 +11,7 @@
   }
   .navbar {
     width: 70%;
-    float: left;
+    float: $floatLeft;
     li {
 
     }
