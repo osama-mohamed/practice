@@ -70,19 +70,42 @@ ul, ol {
   overflow: hidden;
   border-bottom: 1px solid #d9d9d9;
 }
-.header .logo {
-  width: 30%;
-  float: left;
+@media (min-width: 768px) {
+  .header .logo {
+    width: 100%;
+    float: none;
+    text-align: center;
+  }
+}
+@media (min-width: 992px) {
+  .header .logo {
+    width: 30%;
+    float: left;
+    text-align: left;
+  }
 }
 .header .logo h1 {
   margin-bottom: 0;
   margin-top: 10px;
 }
 .header .navbar {
-  width: 70%;
-  float: left;
   background-color: #e2494c;
   border-radius: 15px;
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  .header .navbar {
+    width: 100%;
+    float: none;
+    margin-top: 30px;
+  }
+}
+@media (min-width: 992px) {
+  .header .navbar {
+    width: 70%;
+    float: left;
+    margin-top: 1em;
+  }
 }
 .header .navbar li {
   width: 20%;
