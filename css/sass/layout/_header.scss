@@ -3,6 +3,7 @@
   overflow: hidden;
   border-bottom: 1px solid $secondColor;
   .logo {
+    position: relative;
     @media #{$minSmall} {
       width: 100%;
       float: none;
@@ -29,17 +30,26 @@
       width: 100%;
       float: none;
       margin-top: 30px;
+      display: block !important;
     }
     @media #{$minMedium} {
       width: 70%;
       float: $floatLeft;
       margin-top: 1em;
     }
+    @media (max-width: #{$maxMobile}) {
+      display: none;
+      border-radius: 0;
+    }
     li {
       width: 20%;
       float: $floatLeft;
       font-size: 18px;
       text-align: center;
+      @media (max-width: #{$maxMobile}) {
+        display: block;
+        float: none;
+      }
       a {
         display: block;
         padding: 20px 10px;
