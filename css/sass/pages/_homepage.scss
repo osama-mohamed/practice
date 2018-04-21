@@ -128,10 +128,27 @@
 
 .players {
   .player-box {
-    float: $floatLeft;
-    width: (100% / 5);
-    &:not(:last-of-type) {
+    // &:not(:last-of-type) {
+    //   padding-right: 20px;
+    // }
+    @media #{$minSmall} {
+      float: $floatLeft;
+      width: (100% / 2);
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    @media #{$minMedium} {
+      width: (100% / 3);
+      text-align: $textLeft;
+      padding-left: 20px;
       padding-right: 20px;
+    }
+    @media #{$minLarge} {
+      width: (100% / 5);
+      margin-bottom: 0;
+    }
+    @media (max-width: #{$maxMobile}) {
+      margin-bottom: 40px;
     }
     img {
       max-width: 100%;

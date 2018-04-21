@@ -9,6 +9,9 @@
     max-width: 400px;
     padding: 10px 15px;
     text-transform: uppercase;
+    @media (max-width: #{$maxMobile}) {
+      max-width: 300px;
+    }
     &:before {
       content: '';
       width: 100%;
