@@ -30,6 +30,12 @@
   clear: both;
 }
 
+@media (max-width: 767px) {
+  .text-center-xs {
+    text-align: center;
+  }
+}
+
 body {
   background-color: #f6f6f6;
   font-family: Tahoma;
@@ -127,6 +133,7 @@ ul, ol {
   .header .navbar li {
     display: block;
     float: none;
+    width: 100%;
   }
 }
 .header .navbar li a {
@@ -173,12 +180,20 @@ ul, ol {
 
 /* end slider */
 /* start services */
-.services .service-box {
-  float: left;
-  width: 33.3333333333%;
+@media (min-width: 992px) {
+  .services .service-box {
+    float: left;
+    width: 33.3333333333%;
+  }
+  .services .service-box:not(:last-of-type) {
+    padding-right: 20px;
+  }
 }
-.services .service-box:not(:last-of-type) {
-  padding-right: 20px;
+@media (max-width: 767px) {
+  .services .service-box i {
+    display: block;
+    margin-bottom: 15px;
+  }
 }
 .services .service-box .service-title {
   color: #666;

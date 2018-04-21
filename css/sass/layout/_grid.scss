@@ -20,3 +20,9 @@
 .clearFix {
   clear: both;
 }
+
+.text-center-xs {
+  @media (max-width: #{$maxMobile}) {
+    text-align: center;
+  }
+}

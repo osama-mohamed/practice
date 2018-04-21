@@ -87,15 +87,23 @@
 
 .services {
   .service-box {
-    float: $floatLeft;
-    width: (100% / 3);
-    &:not(:last-of-type) {
-      padding-right: 20px;
+    @media #{$minMedium} {
+      float: $floatLeft;
+      width: (100% / 3);
+      &:not(:last-of-type) {
+        padding-right: 20px;
+      }
+      // padding-right: 10px;
+      // &:last-child {
+      //   padding-right: 0; 
+      // }
     }
-    // padding-right: 10px;
-    // &:last-child {
-    //   padding-right: 0; 
-    // }
+    @media (max-width: #{$maxMobile}) {
+      i {
+        display: block;
+        margin-bottom: 15px;
+      }
+    }
     .service-title {
       color: #666;
       i {
