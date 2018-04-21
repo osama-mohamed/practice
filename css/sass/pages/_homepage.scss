@@ -176,13 +176,26 @@
 
 .lorem {
   .lorem-box {
-    float: $floatLeft;
-    width: (94% / 3);
-    &:not(:last-of-type) {
-      margin-right: 3%;
+    @media #{$minSmall} {
+      float: $floatLeft;
+      width: (94% / 3);
+      &:not(:last-of-type) {
+        margin-right: 3%;
+      }
+    }
+    @media (max-width: #{$maxMobile}) {
+      &:not(:last-of-type) {
+        display: inline;
+      }
     }
     img {
-      max-width: 100%;
+      @media #{$minSmall} {
+        max-width: 100%;
+      }  
+      @media (max-width: #{$maxMobile}) {
+        margin-bottom: 10px;
+        width: 49%;
+      }
     }
   }
 }

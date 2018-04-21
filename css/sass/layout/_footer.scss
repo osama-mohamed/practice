@@ -8,20 +8,29 @@
     float: $floatLeft;
   }
   .gallery {
-    width: 50%;
+    @media #{$minSmall} {
+      width: 100%;
+    }
+    @media #{$minMedium} {
+      width: 50%;
+    }
     .img-box {
       overflow: hidden;
       margin-bottom: 20px;
       img {
-        float: $floatLeft;
+        @media #{$minSmall} {
+          float: $floatLeft;
+        }
         width: 150px;
         height: 150px;
       }
       .text {
-        float: $floatLeft;
-        margin-left: 15px;
-        margin-right: 15px;
-        width: calc(100% - 180px);
+        @media #{$minSmall} {
+          float: $floatLeft;
+          margin-left: 15px;
+          margin-right: 15px;
+          width: calc(100% - 180px);
+        }
         h4 {
           color: $mainColor;
           margin: 5px 0 0 0;
@@ -34,7 +43,15 @@
     }
   }
   .info {
-    width: 25%;
+    @media (max-width: #{$maxMobile}) {
+      width: 100%;
+    }
+    @media #{$minSmall} {
+      width: 50%;
+    }
+    @media #{$minMedium} {
+      width: 25%;
+    }
     ul {
       color: #444;
       line-height: 1.8;
@@ -55,7 +72,12 @@
     }
   }
   .contact {
-    width: 25%;
+    @media #{$minSmall} {
+      width: 50%;
+    }
+    @media #{$minMedium} {
+      width: 25%;
+    }
     form {
       input[type="text"],
       input[type="email"],
@@ -80,13 +102,21 @@
     padding: 25px 0;
     border-top: 1px solid #c5c5c5;
     overflow: hidden;
+    margin-top: 30px;
     .text,
     .author {
-      float: $floatLeft;
-      width: 50%;
+      @media #{$minSmall} {
+        float: $floatLeft;
+        width: 50%;
+      }
     }
     .author {
-      text-align: $textRight;
+      @media (max-width: #{$maxMobile}) {
+        margin-top: 20px;
+      }
+      @media #{$minMedium} {
+        text-align: $textRight;
+      }
     }
   }
 }
