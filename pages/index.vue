@@ -18,24 +18,46 @@ export default {
   components: {
     PostPreview
   },
-  data () {
-    return {
-      posts: [
-        {
-          id: 'first-post',
-          title: 'first post',
-          previewText: 'here some text',
-          thumbnailUrl: 'http://placehold.it/300/300'
-        },
-        {
-          id: 'second-post',
-          title: 'second post',
-          previewText: 'here some text',
-          thumbnailUrl: 'http://placehold.it/300/400'
+  asyncData (context) {
+    return context.app.$storyapi.get('cdn/stories', {
+      version: 'draft',
+      starts_with: 'blog/'
+    })
+      .then(res => {
+        return {
+          posts: res.data.stories.map(blogPost => {
+            return {
+              id: blogPost.slug,
+              title: blogPost.content.title,
+              previewText: blogPost.content.summary,
+              thumbnailUrl: blogPost.content.thumbnail
+            }
+          })
         }
-      ]
-    }
+      })
+      .catch(res => {
+        console.log(res)
+        context.error({ statusCode: res.response.status, message: res.response.data })
+      })
   }
+  // data () {
+  //   return {
+  //     posts: [
+  //       {
+  //         id: 'first-post',
+  //         title: 'first post',
+  //         previewText: 'here some text',
+  //         thumbnailUrl: 'http://placehold.it/300/300'
+  //       },
+  //       {
+  //         id: 'second-post',
+  //         title: 'second post',
+  //         previewText: 'here some text',
+  //         thumbnailUrl: 'http://placehold.it/300/400'
+  //       }
+  //     ]
+  //   }
+  // }
 }
 </script>
 
