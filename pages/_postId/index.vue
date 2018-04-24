@@ -1,5 +1,5 @@
 <template>
-  <div id="post">
+  <div id="post" v-editable="blok">
     <div class="post-thumbnail" :style="{backgroundImage: 'url(' + image + ')'}"></div>
     <section class="post-content">
       <h2>{{id}}</h2>
@@ -18,17 +18,20 @@ export default {
     })
       .then(res => {
         return {
-              id: res.data.story.id,
-              title: res.data.story.content.title,
-              content: res.data.story.content.content,
-              summary: res.data.story.content.summary,
-              image: res.data.story.content.thumbnail
+          blok: res.data.story,
+          id: res.data.story.id,
+          title: res.data.story.content.title,
+          content: res.data.story.content.content,
+          summary: res.data.story.content.summary,
+          image: res.data.story.content.thumbnail
         }
       })
-      .catch(res => {
-        console.log(res)
-        context.error({ statusCode: res.response.status, message: res.response.data })
-      })
+  },
+  mounted () {
+    this.$storyblok.init()
+    this.$storyblok.on('change', () => {
+      location.reload(true)
+    })
   }
 }
 </script>
