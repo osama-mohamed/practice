@@ -1,22 +1,51 @@
-# storyblock-blog
+# [Blog App](https://osama-mohamed.github.io/blog_vue_nuxt) By Vue.js & nuxt.
+* Blog App By Vue & nuxt.
 
-> My fantabulous Nuxt.js project
+[<img src="https://vuejs.org/images/logo.png" width="300" title="Meetup App" >](https://github.com/osama-mohamed)
 
-## Build Setup
 
-``` bash
-# install dependencies
-$ npm install
+## For live preview :
+> [Blog App](https://osama-mohamed.github.io/blog_vue_nuxt)
 
-# serve with hot reload at localhost:3000
-$ npm run dev
 
-# build for production and launch server
-$ npm run build
-$ npm start
+## Blog Manager app contains:
+* Show all posts
+* Show post detail
 
-# generate static project
-$ npm run generate
+
+## Usage :
+### Run project by :
+
+``` vue.js
+
+// install dependencies
+
+1. npm install
+
+// serve with hot reload
+
+2. npm run dev
+
+// build for production
+
+3. npm run build
+4. npm start
+
+// Or you can simply run:
+
+> npm i & npm run dev
+
 ```
 
-For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+That's it.
+
+## Done :
+
+Now the project is running at `http://localhost:3000` :
+
+
+## Developer
+This project made by [Osama Mohamed](https://www.facebook.com/osama.mohamed.ms)
+
+## License
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT)
