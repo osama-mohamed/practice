@@ -29,7 +29,6 @@
 // build for production
 
 3. npm run build
-4. npm start
 
 // Or you can simply run:
 
