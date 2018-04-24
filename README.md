@@ -1,7 +1,7 @@
 # [Blog App](https://osama-mohamed.github.io/blog_vue_nuxt) By Vue.js & nuxt.
 * Blog App By Vue & nuxt.
 
-[<img src="https://vuejs.org/images/logo.png" width="300" title="Meetup App" >](https://github.com/osama-mohamed)
+[<img src="https://vuejs.org/images/logo.png" width="300" title="Blog App" >](https://github.com/osama-mohamed)
 
 
 ## For live preview :
