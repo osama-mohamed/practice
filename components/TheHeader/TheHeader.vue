@@ -2,8 +2,8 @@
   <header class="main-header">
     <nav class="main-nav">
       <ul class="nav-links">
-        <nuxt-link to="/blog" tag="li" class="nav-link"><a>All Posts</a></nuxt-link>
-        <nuxt-link to="/about" tag="li" class="nav-link"><a>About</a></nuxt-link>
+        <nuxt-link to="/blog_vue_nuxt/blog" tag="li" class="nav-link"><a>All Posts</a></nuxt-link>
+        <nuxt-link to="/blog_vue_nuxt/about" tag="li" class="nav-link"><a>About</a></nuxt-link>
       </ul>
     </nav>
   </header>

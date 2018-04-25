@@ -56,10 +56,12 @@ module.exports = {
         .then(res => {
           const blogPosts = res.data.stories.map(blogPost => blogPost.full_slug)
           return [
-            '/',
-            '/blog',
-            '/about',
-            ...blogPosts
+            '/blog_vue_nuxt',
+            '/blog_vue_nuxt/blog',
+            '/blog_vue_nuxt/about',
+            '/blog_vue_nuxt/' + blogPosts[0],
+            '/blog_vue_nuxt/' + blogPosts[1]
+            // '/blog_vue_nuxt/'.concat(...blogPosts)
           ]
         })
     }
