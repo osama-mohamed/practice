@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <nuxt-link
-      :to="id"
+      :to="'/blog/' + id"
     >
       <article class="post-preview">
         <div 

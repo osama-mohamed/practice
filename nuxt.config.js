@@ -1,9 +1,14 @@
 const pkg = require('./package')
-const axios = require('axios')
+
+const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
+  router: {
+    base: '/blog_vue_nuxt/'
+  }
+} : {}
 
 module.exports = {
   mode: 'universal',
-  // mode: 'spa',
+  ...routerBase,
 
   /*
   ** Headers of the page
@@ -44,28 +49,8 @@ module.exports = {
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
-    ['storyblok-nuxt', {
-      accessToken: 
-        process.env.NODE_ENV == 'production' ? 'ocwrqGf1QPqIRpQVoKYjfAtt' : 'Abv6grUYmH2gCJdHN7rAgAtt',
-      cacheProvider: 'memory'
-    }],
+    ['storyblok-nuxt', {accessToken: 'Abv6grUYmH2gCJdHN7rAgAtt', cacheProvider: 'memory'}],
   ],
-  generate: {
-    routes: function () {
-      return axios.get('https://api.storyblok.com/v1/cdn/stories?version=published&token=ocwrqGf1QPqIRpQVoKYjfAtt&starts_with=blog&cv=' + Math.floor(Date.now() / 1e3))
-        .then(res => {
-          const blogPosts = res.data.stories.map(blogPost => blogPost.full_slug)
-          return [
-            '/blog_vue_nuxt',
-            '/blog_vue_nuxt/blog',
-            '/blog_vue_nuxt/about',
-            '/blog_vue_nuxt/' + blogPosts[0],
-            '/blog_vue_nuxt/' + blogPosts[1]
-            // '/blog_vue_nuxt/'.concat(...blogPosts)
-          ]
-        })
-    }
-  },
   /*
   ** Axios module configuration
   */
