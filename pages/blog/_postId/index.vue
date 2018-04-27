@@ -2,7 +2,7 @@
   <div id="post" v-editable="blok">
     <div class="post-thumbnail" :style="{backgroundImage: 'url(' + image + ')'}"></div>
     <section class="post-content">
-      <h2>{{id}}</h2>
+      <h2>#{{id}}</h2>
       <h1>{{title}}</h1>
       <p>{{content}}</p>
       <p>{{summary}}</p>
