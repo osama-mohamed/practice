@@ -52,7 +52,7 @@ class SignInAPIView(APIView):
       if user.exists() and user.count() == 1:
         user_data = user.first()
         print(user_data)
-        return Response({'message': {'success': True}}, status=HTTP_200_OK)
+        return Response({'message': {'success': True, 'token': 'random token is here for test'}}, status=HTTP_200_OK)
       else:
         return Response({'message': {'success': 'not found'}}, status=HTTP_200_OK)
     except:
