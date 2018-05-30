@@ -4,11 +4,11 @@
     <form @submit.prevent="onSubmit()">
       <div class="form-group">
         <label for="firstName">First Name</label>
-        <input v-model="firstName" required type="text" class="form-control" id="firstName" aria-describedby="emailHelp" placeholder="First name">
+        <input v-model="firstName" autocomplete="off" required type="text" class="form-control" id="firstName" aria-describedby="emailHelp" placeholder="First name">
       </div>
       <div class="form-group">
         <label for="lastName">Last Name</label>
-        <input v-model="lastName" required type="text" class="form-control" id="lastName" aria-describedby="emailHelp" placeholder="Last name">
+        <input v-model="lastName" autocomplete="off" required type="text" class="form-control" id="lastName" aria-describedby="emailHelp" placeholder="Last name">
       </div>
       <div class="form-group">
         <label for="username">Username</label>
@@ -19,7 +19,7 @@
       </div>
       <div class="form-group">
         <label for="email">Email address</label>
-        <input v-model="email" required type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-Mail">
+        <input v-model="email" autocomplete="off" required type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-Mail">
         <small class="form-text text-muted" v-if="email">We'll never share your email with anyone else.</small>
       </div>
       <div class="form-group">
@@ -32,11 +32,11 @@
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input v-model="password" required type="password" class="form-control" id="password" placeholder="Password">
+        <input v-model="password" autocomplete="off" required type="password" class="form-control" id="password" placeholder="Password">
       </div>
       <div class="form-group">
         <label for="confirmPassword">Confirm Password</label>
-        <input v-model="confirmPassword" required type="password" class="form-control" id="confirmPassword" placeholder="Repeat Password">
+        <input v-model="confirmPassword" autocomplete="off" required type="password" class="form-control" id="confirmPassword" placeholder="Repeat Password">
         <small class="form-text text-muted error" v-if="passwordError">Passwords does not matched</small>
       </div>
       <button type="submit" class="btn btn-primary" >Sign up</button>
@@ -46,7 +46,7 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'SignUp',
   data () {
     return {
       firstName: null,

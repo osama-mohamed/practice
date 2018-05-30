@@ -47,12 +47,8 @@ class SignUpAPIView(APIView):
 class SignInAPIView(APIView):
   def post(self, request):
     try:
-      user = User.objects.filter(
-        Q(username=request.data['username'], is_active=True) |
-        Q(email=request.data['email'], is_active=True)
-      ).distinct()
+      user = User.objects.filter(username=request.data['username'], is_active=True)
       print(user)
-      user = user.exclude(email__isnull=True).exclude(email__iexact='')
       if user.exists() and user.count() == 1:
         user_data = user.first()
         print(user_data)

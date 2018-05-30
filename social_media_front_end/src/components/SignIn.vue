@@ -4,16 +4,12 @@
     <form @submit.prevent="onSubmit()">
       <div class="form-group">
         <label for="username">Username</label>
-        <input v-model="username" required type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Username">
+        <input v-model="username" autocomplete="off" required type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Username">
+        <small class="form-text text-muted error" v-if="signInError">Username or password is invalid.</small>
       </div>
-      <!-- <div class="form-group">
-        <label for="email">Email address</label>
-        <input v-model="email" required type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-Mail">
-        <small id="emailHelp" class="form-text text-muted" v-if="email">We'll never share your email with anyone else.</small>
-      </div> -->
       <div class="form-group">
         <label for="password">Password</label>
-        <input v-model="password" required type="password" class="form-control" id="password" placeholder="Password">
+        <input v-model="password" autocomplete="off" required type="password" class="form-control" id="password" placeholder="Password">
       </div>
       <button type="submit" class="btn btn-primary" >Sign in</button>
     </form>
@@ -22,29 +18,41 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'SignIn',
   data () {
     return {
       username: null,
-      email: null,
       password: null,
+      signInError: false
     }
   },
   computed: {
   },
   methods: {
+    checkSignIn () {
+      console.log(this.$store.state.signInError)
+      if (this.$store.state.signInError === true) {
+        this.signInError = false
+      } else {
+        this.signInError = true
+      }
+    },
     onSubmit () {
       let user = {
         username: this.username,
-        email: this.email,
         password: this.password
       }
       this.$store.dispatch('SignIn', user)
-
-      this.username= null
-      this.email= null
-      this.password= null
-      this.passwordError= false
+      setTimeout (() => {
+        this.checkSignIn()
+        if (this.signInError === false) {
+          this.$router.push({name: 'HomePage'})
+          this.username= null
+          this.password= null
+          this.passwordError= false
+          this.signInError = false
+        }
+      }, 600)
     }
   }
 }
