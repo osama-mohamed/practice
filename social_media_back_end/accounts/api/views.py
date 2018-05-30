@@ -1,5 +1,5 @@
 from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
 from rest_framework.views import APIView
 from django.db.models import Q
 
@@ -9,6 +9,18 @@ from accounts.models import Account
 
 
 # User = settings.AUTH_USER_MODEL
+
+class CheckUsernameAPIView(APIView):
+  def post(self, request):
+    try:
+      qs = User.objects.filter(username=request.data['username'], is_active=True)
+      if qs:
+        return Response({'message': {'success': True}}, status=HTTP_200_OK)
+      else:
+        return Response({'message': {'success': 'not found'}}, status=HTTP_200_OK)
+    except:
+      return Response({'message': {'success': False}}, status=HTTP_400_BAD_REQUEST)
+
 
 class SignUpAPIView(APIView):
   def post(self, request):

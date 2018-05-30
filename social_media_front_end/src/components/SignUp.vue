@@ -12,20 +12,23 @@
       </div>
       <div class="form-group">
         <label for="username">Username</label>
-        <input v-model="username" required type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Username">
+        <input v-model="username" @keyup="checkUsername()" autocomplete="off" required type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Username">
+        <small class="form-text text-muted success" v-if="username && available">{{username}} is {{available}}</small>
+        <small class="form-text text-muted error" v-if="username && notAvailable">{{username}} is {{notAvailable}}</small>
+        <small class="form-text text-muted error" v-if="notAvailableError && notAvailable">This {{username}} is {{notAvailable}}, so please select another username</small>
       </div>
       <div class="form-group">
         <label for="email">Email address</label>
         <input v-model="email" required type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-Mail">
-        <small id="emailHelp" class="form-text text-muted" v-if="email">We'll never share your email with anyone else.</small>
+        <small class="form-text text-muted" v-if="email">We'll never share your email with anyone else.</small>
       </div>
       <div class="form-group">
         <label for="gender">Select Gender</label>
-        <select class="form-control" id="gender" v-model="gender">
+        <select class="form-control" id="gender" v-model="gender" @change="changeGender()">
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
-        <small id="emailHelp" class="form-text text-muted error" v-if="email">Please select a valid gender.</small>
+        <small class="form-text text-muted error" v-if="genderError">Please select a valid gender.</small>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
@@ -34,7 +37,7 @@
       <div class="form-group">
         <label for="confirmPassword">Confirm Password</label>
         <input v-model="confirmPassword" required type="password" class="form-control" id="confirmPassword" placeholder="Repeat Password">
-        <small id="emailHelp" class="form-text text-muted error" v-if="passwordError">Passwords does not matched</small>
+        <small class="form-text text-muted error" v-if="passwordError">Passwords does not matched</small>
       </div>
       <button type="submit" class="btn btn-primary" >Sign up</button>
     </form>
@@ -55,22 +58,14 @@ export default {
       confirmPassword: null,
       passwordError: false,
       genderError: false,
+      available: null,
+      notAvailable: null,
+      notAvailableError: false
     }
   },
-  // created () {
-  //   this.$bus.$on('signUpError', (data) => {
-  //       console.log(data)
-  //       this.passwordError = true
-  //     })
-  //   this.hjfhj
-  // },
+  created () {
+  },
   computed: {
-    // hjfhj () {
-    //   this.$bus.$on('signUpError', (data) => {
-    //     console.log(data)
-    //     this.passwordError = true
-    //   })
-    // },
     formIsFilled () {
       return this.firstName !== null && this.lastName !== null &&  this.username !== null &&  this.email !== null && this.password !== null && this.confirmPassword !== null
     },
@@ -79,12 +74,32 @@ export default {
     },
     genderIsValid () {
       return this.gender == 'male' || this.gender == 'female'
-    },
-    // signUpError () {
-    //   this.passwordError = this.$store.state.signUpError
-    // }
+    }
   },
   methods: {
+    changeGender () {
+      if (this.gender == null) {
+        this.genderError = true
+      }
+      if (this.gender == 'male' || this.gender == 'female') {
+        this.genderError = false
+      }
+    },
+    checkUsernameAvailability () {
+      if (this.$store.state.checkUsername === true) {
+        this.available = null
+        this.notAvailable = 'not available'
+      } else {
+        this.notAvailable = null
+        this.available = 'available'
+      }
+    },
+    checkUsername() {
+      this.$store.dispatch('checkUsername', this.username)
+      setTimeout (() => {
+        this.checkUsernameAvailability()
+      }, 600)
+    },
     onSubmit () {
       if (!this.formIsValid) {
         this.passwordError = true
@@ -94,34 +109,41 @@ export default {
         this.genderError = true
         return
       }
-      let newUser = {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        username: this.username,
-        email: this.email,
-        gender: this.gender,
-        password: this.password,
-        confirmPassword: this.confirmPassword
+      if (this.notAvailable) {
+        this.notAvailableError = true
+        return
       }
-      this.$store.dispatch('SignUp', newUser)
-      this.$router.push({name: 'SignIn'})
+      if (!this.notAvailable) {
+        let newUser = {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          username: this.username,
+          email: this.email,
+          gender: this.gender,
+          password: this.password,
+          confirmPassword: this.confirmPassword
+        }
+        this.$store.dispatch('SignUp', newUser)
+        this.$router.push({name: 'SignIn'})
 
-      this.firstName= null
-      this.lastName= null
-      this.username= null
-      this.email= null
-      this.gender= null
-      this.password= null
-      this.confirmPassword= null
-      this.passwordError= false
-      this.genderError= false
+        this.firstName= null
+        this.lastName= null
+        this.username= null
+        this.email= null
+        this.gender= null
+        this.password= null
+        this.confirmPassword= null
+        this.passwordError= false
+        this.genderError= false
+        this.available= null
+        this.notAvailable= null
+        this.notAvailableError= false
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-.error {
-  color: red!important;
-}
+
 </style>

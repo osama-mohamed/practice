@@ -18,4 +18,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
 }
+.error {
+  color: red!important;
+}
+.success {
+  color: green!important;
+}
 </style>
