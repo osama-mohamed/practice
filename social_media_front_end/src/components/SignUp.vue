@@ -57,7 +57,20 @@ export default {
       genderError: false,
     }
   },
+  // created () {
+  //   this.$bus.$on('signUpError', (data) => {
+  //       console.log(data)
+  //       this.passwordError = true
+  //     })
+  //   this.hjfhj
+  // },
   computed: {
+    // hjfhj () {
+    //   this.$bus.$on('signUpError', (data) => {
+    //     console.log(data)
+    //     this.passwordError = true
+    //   })
+    // },
     formIsFilled () {
       return this.firstName !== null && this.lastName !== null &&  this.username !== null &&  this.email !== null && this.password !== null && this.confirmPassword !== null
     },
@@ -66,7 +79,10 @@ export default {
     },
     genderIsValid () {
       return this.gender == 'male' || this.gender == 'female'
-    }
+    },
+    // signUpError () {
+    //   this.passwordError = this.$store.state.signUpError
+    // }
   },
   methods: {
     onSubmit () {
@@ -88,6 +104,7 @@ export default {
         confirmPassword: this.confirmPassword
       }
       this.$store.dispatch('SignUp', newUser)
+      this.$router.push({name: 'SignIn'})
 
       this.firstName= null
       this.lastName= null

@@ -15,12 +15,3 @@ class Account(models.Model):
 
   def __str__(self):
     return self.user.username
-
-
-# def post_save_user_receiver(sender, instance, created, *args, **kwargs):
-#   if created:
-#     is_created = Account.objects.get_or_create(
-#       user=instance
-#     )
-
-# post_save.connect(post_save_user_receiver, sender=User)

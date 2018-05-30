@@ -5,6 +5,14 @@ import {store} from './store'
 import VueResource from 'vue-resource'
 
 
+const eventBus = {}
+
+eventBus.install = function (Vue) {
+  Vue.prototype.$bus = new Vue()
+}
+
+Vue.use(eventBus)
+
 Vue.config.productionTip = false
 Vue.use(VueResource)
 

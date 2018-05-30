@@ -2,16 +2,13 @@ import Vue from 'vue'
 
 export default {
   state: {
-    
+    // signUpError: null
   },
   mutations: {
     
   },
   actions: {
     SignUp ({commit}, payload) {
-      // console.log(payload)
-      // console.log(this.state.shared.baseURL)
-      // console.log(this.$store.state.shared.baseURL)
       Vue.http.post(`${this.state.shared.baseURL}accounts/signup/`, payload)
       // {
       //   headers: {
@@ -21,8 +18,18 @@ export default {
       //   }
       // })
         .then(data => {
+          // this.$bus.$emit('signUpError', data.body)
+          return data
+        })
+        .catch(error => {
+          console.log(error)
+        })
+        
+      },
+      SignIn ({commit}, payload) {
+        Vue.http.post(`${this.state.shared.baseURL}accounts/signin/`, payload)
+        .then(data => {
           console.log(data)
-          console.log(data.body.message[0])
           return data
         })
         .catch(error => {
