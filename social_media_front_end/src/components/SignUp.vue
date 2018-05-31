@@ -76,7 +76,17 @@ export default {
   computed: {
     formIsFilled () {
       this.changeGender
-      return this.firstName !== '' && this.lastName !== '' &&  this.username !== '' &&  this.email !== '' && this.password !== '' && this.confirmPassword !== '' && this.passwordError2 !== true  && this.passwordError3 !== true
+      return this.firstName !== ''
+        && this.lastName !== ''
+        &&  this.username !== ''
+        &&  this.email !== ''
+        &&  this.gender !== ''
+        && this.password !== ''
+        && this.confirmPassword !== ''
+        && this.genderError !== true
+        && this.passwordError !== true
+        && this.passwordError2 !== true 
+        && this.passwordError3 !== true
     },
     formIsValid () {
       return this.password == this.confirmPassword
@@ -84,24 +94,13 @@ export default {
     genderIsValid () {
       return this.gender == 'male' || this.gender == 'female'
     },
+  },
+  methods: {
     changeGender () {
-      if (this.gender == '') {
-        this.genderError = true
-      }
-      if (this.gender == 'male' || this.gender == 'female') {
+      if (this.genderIsValid) {
         this.genderError = false
       }
     },
-  },
-  methods: {
-    // changeGender () {
-      //   if (this.gender == '') {
-        //     this.genderError = true
-    //   }
-    //   if (this.gender == 'male' || this.gender == 'female') {
-      //     this.genderError = false
-    //   }
-    // },
     checkUsernameAvailability () {
       if (this.$store.state.checkUsername === true) {
         this.available = null
@@ -118,6 +117,9 @@ export default {
       }, 600)
     },
     checkPassword () {
+      if (!this.genderIsValid) {
+        this.genderError = true
+      }
       if (this.password.length < this.minlength) {
         this.passwordError2 = true
       } else {
@@ -137,14 +139,6 @@ export default {
       }
     },
     onSubmit () {
-      if (!this.formIsValid) {
-        this.passwordError = true
-        return
-      }
-      if (!this.genderIsValid) {
-        this.genderError = true
-        return
-      }
       if (this.notAvailable) {
         this.notAvailableError = true
         return
