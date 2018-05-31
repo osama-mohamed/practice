@@ -38,11 +38,12 @@
       </div>
       <div class="form-group">
         <label for="confirmPassword">Confirm Password</label>
-        <input v-model="confirmPassword" autocomplete="off" :minlength="minlength" :maxlength="maxlength" required type="password" class="form-control" id="confirmPassword" placeholder="Repeat Password">
+        <input v-model="confirmPassword" autocomplete="off" @keyup="checkConfirmPassword()" :minlength="minlength" :maxlength="maxlength" required type="password" class="form-control" id="confirmPassword" placeholder="Repeat Password">
         <span v-if="confirmPassword"  v-text="confirmPassword.length + ' of ' + maxlength + ' characters'"></span>
+        <small class="form-text text-muted error" v-if="confirmPassword && passwordError3">Password must be more than or equal to 8 characters</small>
         <small class="form-text text-muted error" v-if="passwordError">Passwords does not matched</small>
       </div>
-      <button type="submit" class="btn btn-primary" >Sign up</button>
+      <button type="submit" class="btn btn-primary" :disabled="!formIsFilled">Sign up</button>
     </form>
   </div>
 </template>
@@ -56,11 +57,12 @@ export default {
       lastName: '',
       username: '',
       email: '',
-      gender: 'Select gender',
+      gender: '',
       password: '',
       confirmPassword: '',
       passwordError: false,
       passwordError2: false,
+      passwordError3: false,
       genderError: false,
       available: '',
       notAvailable: '',
@@ -73,24 +75,33 @@ export default {
   },
   computed: {
     formIsFilled () {
-      return this.firstName !== null && this.lastName !== null &&  this.username !== null &&  this.email !== null && this.password !== null && this.confirmPassword !== null
+      this.changeGender
+      return this.firstName !== '' && this.lastName !== '' &&  this.username !== '' &&  this.email !== '' && this.password !== '' && this.confirmPassword !== '' && this.passwordError2 !== true  && this.passwordError3 !== true
     },
     formIsValid () {
       return this.password == this.confirmPassword
     },
     genderIsValid () {
       return this.gender == 'male' || this.gender == 'female'
-    }
-  },
-  methods: {
+    },
     changeGender () {
-      if (this.gender == null) {
+      if (this.gender == '') {
         this.genderError = true
       }
       if (this.gender == 'male' || this.gender == 'female') {
         this.genderError = false
       }
     },
+  },
+  methods: {
+    // changeGender () {
+      //   if (this.gender == '') {
+        //     this.genderError = true
+    //   }
+    //   if (this.gender == 'male' || this.gender == 'female') {
+      //     this.genderError = false
+    //   }
+    // },
     checkUsernameAvailability () {
       if (this.$store.state.checkUsername === true) {
         this.available = null
@@ -106,22 +117,23 @@ export default {
         this.checkUsernameAvailability()
       }, 600)
     },
-
-
-
-
-
-
-
-
-
-
     checkPassword () {
       if (this.password.length < this.minlength) {
-        console.log(this.password.length)
         this.passwordError2 = true
       } else {
         this.passwordError2 = false
+      }
+    },
+    checkConfirmPassword () {
+      if (!this.formIsValid) {
+        this.passwordError = true
+      } else {
+        this.passwordError = false
+      }
+      if (this.confirmPassword.length < this.minlength) {
+        this.passwordError3 = true
+      } else {
+        this.passwordError3 = false
       }
     },
     onSubmit () {
@@ -150,18 +162,22 @@ export default {
         this.$store.dispatch('SignUp', newUser)
         this.$router.push({name: 'SignIn'})
 
-        this.firstName= null
-        this.lastName= null
-        this.username= null
-        this.email= null
-        this.gender= null
-        this.password= null
-        this.confirmPassword= null
+        this.firstName= ''
+        this.lastName= ''
+        this.username= ''
+        this.email= ''
+        this.gender= ''
+        this.password= ''
+        this.confirmPassword= ''
         this.passwordError= false
+        this.passwordError2= false
+        this.passwordError3= false
         this.genderError= false
-        this.available= null
-        this.notAvailable= null
+        this.available= ''
+        this.notAvailable= ''
         this.notAvailableError= false
+        this.minlength= ''
+        this.maxlength= ''
       }
     }
   }
