@@ -78,14 +78,14 @@ export default {
       this.changeGender
       return this.firstName !== ''
         && this.lastName !== ''
-        &&  this.username !== ''
-        &&  this.email !== ''
-        &&  this.gender !== ''
+        && this.username !== ''
+        && this.email !== ''
+        && this.gender !== ''
         && this.password !== ''
         && this.confirmPassword !== ''
         && this.genderError !== true
         && this.passwordError !== true
-        && this.passwordError2 !== true 
+        && this.passwordError2 !== true
         && this.passwordError3 !== true
         && this.notAvailableError !== true
     },
