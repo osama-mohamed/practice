@@ -87,6 +87,7 @@ export default {
         && this.passwordError !== true
         && this.passwordError2 !== true 
         && this.passwordError3 !== true
+        && this.notAvailableError !== true
     },
     formIsValid () {
       return this.password == this.confirmPassword
@@ -105,9 +106,11 @@ export default {
       if (this.$store.state.checkUsername === true) {
         this.available = null
         this.notAvailable = 'not available'
+        this.notAvailableError = true
       } else {
         this.notAvailable = null
         this.available = 'available'
+        this.notAvailableError = false
       }
     },
     checkUsername() {
@@ -144,10 +147,6 @@ export default {
       }
     },
     onSubmit () {
-      if (this.notAvailable) {
-        this.notAvailableError = true
-        return
-      }
       if (!this.notAvailable) {
         let newUser = {
           firstName: this.firstName,
