@@ -24,15 +24,7 @@ export default {
     },
     SignUp ({commit}, payload) {
       Vue.http.post(`${this.state.shared.baseURL}accounts/signup/`, payload)
-      // {
-      //   headers: {
-      //     'X-Mashape-Key': 'x1TtXXYZYemshmluWEEZ3mqnx78yp1RtL6gjsnoxDbxhy4TBoT',
-      //     'Content-Type': 'application/x-www-form-urlencoded',
-      //     'Accept': 'application/json'
-      //   }
-      // })
         .then(data => {
-          // this.$bus.$emit('signUpError', data.body)
           return data
         })
         .catch(error => {
@@ -43,7 +35,7 @@ export default {
       SignIn ({commit}, payload) {
         Vue.http.post(`${this.state.shared.baseURL}accounts/signin/`, payload)
         .then(data => {
-          console.log(data)
+          console.log(data.body.message[0])
           this.state.signInError = data.body.message.success
           return data
         })

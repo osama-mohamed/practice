@@ -32,11 +32,14 @@
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input v-model="password" autocomplete="off" required type="password" class="form-control" id="password" placeholder="Password">
+        <input v-model="password" autocomplete="off" @keyup="checkPassword()" :minlength="minlength" :maxlength="maxlength" required type="password" class="form-control" id="password" placeholder="Password">
+        <small class="form-text text-muted error" v-if="password && passwordError2">Password must be more than or equal to 8 characters</small>
+        <span v-if="password" v-text="password.length + ' of ' + maxlength + ' characters'"></span>
       </div>
       <div class="form-group">
         <label for="confirmPassword">Confirm Password</label>
-        <input v-model="confirmPassword" autocomplete="off" required type="password" class="form-control" id="confirmPassword" placeholder="Repeat Password">
+        <input v-model="confirmPassword" autocomplete="off" :minlength="minlength" :maxlength="maxlength" required type="password" class="form-control" id="confirmPassword" placeholder="Repeat Password">
+        <span v-if="confirmPassword"  v-text="confirmPassword.length + ' of ' + maxlength + ' characters'"></span>
         <small class="form-text text-muted error" v-if="passwordError">Passwords does not matched</small>
       </div>
       <button type="submit" class="btn btn-primary" >Sign up</button>
@@ -49,18 +52,21 @@ export default {
   name: 'SignUp',
   data () {
     return {
-      firstName: null,
-      lastName: null,
-      username: null,
-      email: null,
+      firstName: '',
+      lastName: '',
+      username: '',
+      email: '',
       gender: 'Select gender',
-      password: null,
-      confirmPassword: null,
+      password: '',
+      confirmPassword: '',
       passwordError: false,
+      passwordError2: false,
       genderError: false,
-      available: null,
-      notAvailable: null,
-      notAvailableError: false
+      available: '',
+      notAvailable: '',
+      notAvailableError: false,
+      minlength: this.$store.state.shared.minlength,
+      maxlength: this.$store.state.shared.maxlength
     }
   },
   created () {
@@ -99,6 +105,24 @@ export default {
       setTimeout (() => {
         this.checkUsernameAvailability()
       }, 600)
+    },
+
+
+
+
+
+
+
+
+
+
+    checkPassword () {
+      if (this.password.length < this.minlength) {
+        console.log(this.password.length)
+        this.passwordError2 = true
+      } else {
+        this.passwordError2 = false
+      }
     },
     onSubmit () {
       if (!this.formIsValid) {

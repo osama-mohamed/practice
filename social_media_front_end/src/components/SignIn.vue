@@ -30,7 +30,6 @@ export default {
   },
   methods: {
     checkSignIn () {
-      console.log(this.$store.state.signInError)
       if (this.$store.state.signInError === true) {
         this.signInError = false
       } else {
