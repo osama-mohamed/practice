@@ -120,6 +120,11 @@ export default {
       if (!this.genderIsValid) {
         this.genderError = true
       }
+      if (!this.formIsValid) {
+        this.passwordError = true
+      } else {
+        this.passwordError = false
+      }
       if (this.password.length < this.minlength) {
         this.passwordError2 = true
       } else {
