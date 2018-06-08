@@ -30,7 +30,7 @@ function renderCafe(doc){
 
 
 // getting data
-db.collection('cafe').get().then(snapshot => {
+db.collection('cafe').where('city', '<', 'u').get().then(snapshot => {
   snapshot.docs.forEach(doc => {
       renderCafe(doc);
   });
