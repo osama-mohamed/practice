@@ -62,7 +62,6 @@ class SignInAPIView(APIView):
         # print(token)
         # print(token[0])
         # print(token.key)
-        print('"' + token[0] + '"')
         
         # print(user_data.gender)
 
@@ -70,7 +69,7 @@ class SignInAPIView(APIView):
           c = check_password(password, user_data.password)
           if check_password(password, user_data.password) == True:
             # user = authenticate(username=username, password=password)
-            return Response({'message': {'success': True, 'message': 'logged in successfully', 'token': '"' + token[0] + '"' }}, status=HTTP_200_OK)
+            return Response({'message': {'success': True, 'message': 'logged in successfully', 'token': str(token[0]) }}, status=HTTP_200_OK)
           else:
             return Response({'message':  {'success': False, 'message': 'invalid password'}}, status=HTTP_200_OK)
       else:
