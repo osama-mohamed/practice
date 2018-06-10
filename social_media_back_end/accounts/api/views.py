@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from django.db.models import Q
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password
-# from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.models import Token
 
 # from django.conf import settings
 from django.contrib.auth.models import User
@@ -55,16 +55,22 @@ class SignInAPIView(APIView):
         user_data = user.first()
         username = request.data['username']
         password = request.data['password']
-        print(user_data.password)
-        print(password)
-        # token = Token.objects.create(user=request)
+
+        # token = Token.objects.get_or_create(user=request.data)
+        # token = Token.objects.create(user=39)
+        token = Token.objects.get_or_create(user_id=user_data.id)
         # print(token)
+        # print(token[0])
+        # print(token.key)
+        print('"' + token[0] + '"')
+        
+        # print(user_data.gender)
 
         if username and password:
           c = check_password(password, user_data.password)
           if check_password(password, user_data.password) == True:
             # user = authenticate(username=username, password=password)
-            return Response({'message': {'success': True, 'message': 'logged in successfully', 'token': 'random token is here for test'}}, status=HTTP_200_OK)
+            return Response({'message': {'success': True, 'message': 'logged in successfully', 'token': '"' + token[0] + '"' }}, status=HTTP_200_OK)
           else:
             return Response({'message':  {'success': False, 'message': 'invalid password'}}, status=HTTP_200_OK)
       else:
