@@ -1,12 +1,17 @@
 <template>
   <div>
     <h1 class="text-center">Sign In</h1>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="signInError && signInErrorMessage">
+      {{signInErrorMessage}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
     <form @submit.prevent="onSubmit()">
       <div class="form-group">
         <label for="username">Username</label>
         <input v-model="username" autocomplete="off" required type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Username">
-        <small class="form-text text-muted error" v-if="signInError">Username or password is invalid.</small>
-        <small class="form-text text-muted error" v-if="signInErrorMessage">{{signInErrorMessage}}</small>
+        <!-- <small class="form-text text-muted error" v-if="signInError">Username or password is invalid.</small> -->
       </div>
       <div class="form-group">
         <label for="password">Password</label>
