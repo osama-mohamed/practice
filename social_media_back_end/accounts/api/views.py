@@ -2,6 +2,9 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
 from rest_framework.views import APIView
 from django.db.models import Q
+from django.contrib.auth import authenticate
+from django.contrib.auth.hashers import check_password
+# from rest_framework.authtoken.models import Token
 
 # from django.conf import settings
 from django.contrib.auth.models import User
@@ -48,11 +51,25 @@ class SignInAPIView(APIView):
   def post(self, request):
     try:
       user = User.objects.filter(username=request.data['username'], is_active=True)
-      print(user)
       if user.exists() and user.count() == 1:
         user_data = user.first()
-        print(user_data)
-        return Response({'message': {'success': True, 'token': 'random token is here for test'}}, status=HTTP_200_OK)
+        username = request.data['username']
+        password = request.data['password']
+        print(user_data.password)
+        print(password)
+        # token = Token.objects.create(user=request)
+        # print(token)
+
+        if username and password:
+          print(check_password(password, user_data.password))
+          c = check_password(password, user_data.password)
+          if check_password(password, user_data.password) == True:
+            user = authenticate(username=username, password=password)
+            print('yes')
+            return Response({'message': {'success': True, 'message': 'logged in successfully', 'token': 'random token is here for test'}}, status=HTTP_200_OK)
+          else:
+            print('no')
+            return Response({'message':  {'success': False, 'message': 'logged in failed'}}, status=HTTP_200_OK)
       else:
         return Response({'message': {'success': 'not found'}}, status=HTTP_200_OK)
     except:

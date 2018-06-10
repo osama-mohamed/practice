@@ -35,7 +35,7 @@ export default {
       SignIn ({commit}, payload) {
         Vue.http.post(`${this.state.shared.baseURL}accounts/signin/`, payload)
         .then(data => {
-          console.log(data.body.message[0])
+          console.log(data.body.message)
           this.state.signInError = data.body.message.success
           return data
         })

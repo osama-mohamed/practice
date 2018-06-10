@@ -51,7 +51,7 @@ export default {
           this.passwordError= false
           this.signInError = false
         }
-      }, 600)
+      }, 1000)
     }
   }
 }
