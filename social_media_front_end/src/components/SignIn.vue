@@ -6,6 +6,7 @@
         <label for="username">Username</label>
         <input v-model="username" autocomplete="off" required type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Username">
         <small class="form-text text-muted error" v-if="signInError">Username or password is invalid.</small>
+        <small class="form-text text-muted error" v-if="signInErrorMessage">{{signInErrorMessage}}</small>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
@@ -23,7 +24,8 @@ export default {
     return {
       username: null,
       password: null,
-      signInError: false
+      signInError: false,
+      signInErrorMessage: null
     }
   },
   computed: {
@@ -32,8 +34,10 @@ export default {
     checkSignIn () {
       if (this.$store.state.signInError === true) {
         this.signInError = false
+        this.signInErrorMessage = null
       } else {
         this.signInError = true
+        this.signInErrorMessage = this.$store.state.signInErrorMessage
       }
     },
     onSubmit () {

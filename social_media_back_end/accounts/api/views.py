@@ -61,16 +61,13 @@ class SignInAPIView(APIView):
         # print(token)
 
         if username and password:
-          print(check_password(password, user_data.password))
           c = check_password(password, user_data.password)
           if check_password(password, user_data.password) == True:
-            user = authenticate(username=username, password=password)
-            print('yes')
+            # user = authenticate(username=username, password=password)
             return Response({'message': {'success': True, 'message': 'logged in successfully', 'token': 'random token is here for test'}}, status=HTTP_200_OK)
           else:
-            print('no')
-            return Response({'message':  {'success': False, 'message': 'logged in failed'}}, status=HTTP_200_OK)
+            return Response({'message':  {'success': False, 'message': 'invalid password'}}, status=HTTP_200_OK)
       else:
-        return Response({'message': {'success': 'not found'}}, status=HTTP_200_OK)
+        return Response({'message': {'success': False, 'message': 'user not found'}}, status=HTTP_200_OK)
     except:
       return Response({'message': {'success': False}}, status=HTTP_400_BAD_REQUEST)
