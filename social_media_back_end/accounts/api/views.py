@@ -63,7 +63,8 @@ class SignInAPIView(APIView):
           if check_password(password, user_data.password) == True:
             user = authenticate(username=username, password=password)
             login(request, user)
-            return Response({'message': {'success': True, 'message': 'logged in successfully'}, 'user': {'username': username, 'token': str(token[0]), 'userId': user_data.id}}, status=HTTP_200_OK)
+            # return Response({'message': {'success': True, 'message': 'logged in successfully'}, 'user': {'username': username, 'token': str(token[0]), 'userId': user_data.id}}, status=HTTP_200_OK)
+            return Response({'message': {'success': True, 'message': 'logged in successfully'}, 'user': {'token': str(token[0])}}, status=HTTP_200_OK)
           else:
             return Response({'message':  {'success': False, 'message': 'invalid password'}}, status=HTTP_200_OK)
       else:
@@ -75,12 +76,11 @@ class SignInAPIView(APIView):
 class ProfileAPIView(APIView):
 
   def post(self, request, *args, **kwargs):
-    user = User.objects.filter(id=request.data.get('id'), is_active=True)
-    token = Token.objects.filter(user_id=request.data.get('id')).first()
-    print(token)
-    token2 = Token.objects.filter(key=token).first()
-    print(token2.user_id)
     # user = User.objects.filter(id=request.data.get('id'), is_active=True)
+    # token = Token.objects.filter(user_id=request.data.get('id')).first()
+    # print(token)
+    token = Token.objects.filter(key=request.data.get('token')).first()
+    user = User.objects.filter(id=token.user_id, is_active=True)
 
     if user.exists() and user.count() == 1:
       user_data = user.first()

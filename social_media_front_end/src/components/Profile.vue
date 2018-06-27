@@ -25,7 +25,8 @@ export default {
   },
   methods: {
     getUser () {
-      this.$store.dispatch('getUser', {id: sessionStorage.getItem('userID')})
+      // this.$store.dispatch('getUser', {id: sessionStorage.getItem('userID')})
+      this.$store.dispatch('getUser', {token: sessionStorage.getItem('userToken')})
     }
   }
 }

@@ -39,17 +39,22 @@ export default {
       SignIn ({commit}, payload) {
         Vue.http.post(`${this.state.shared.baseURL}accounts/signin/`, payload)
         .then(data => {
-          console.log(data)
           this.state.signInError = data.body.message.success
           this.state.signInErrorMessage = data.body.message.message
           // commit('setUser', data.body.user)
-          if (sessionStorage.getItem('userID') && sessionStorage.getItem('userToken')) {
-            sessionStorage.removeItem('userID')
-            sessionStorage.setItem('userID', data.body.user.userId)
+          // if (sessionStorage.getItem('userID') && sessionStorage.getItem('userToken')) {
+            //   sessionStorage.removeItem('userID')
+            //   sessionStorage.setItem('userID', data.body.user.userId)
+            //   sessionStorage.removeItem('userToken')
+            //   sessionStorage.setItem('userToken', data.body.user.token)
+          // } else {
+            //   sessionStorage.setItem('userID', data.body.user.userId)
+          //   sessionStorage.setItem('userToken', data.body.user.token)
+          // }
+          if (sessionStorage.getItem('userToken')) {
             sessionStorage.removeItem('userToken')
             sessionStorage.setItem('userToken', data.body.user.token)
           } else {
-            sessionStorage.setItem('userID', data.body.user.userId)
             sessionStorage.setItem('userToken', data.body.user.token)
           }
           return data
@@ -61,6 +66,7 @@ export default {
       getUser ({commit}, payload) {
         Vue.http.post(`${this.state.shared.baseURL}accounts/profile/`, payload)
         .then(data => {
+          console.log(data)
           this.state.user.userData = data.body.user
           return data
         })
