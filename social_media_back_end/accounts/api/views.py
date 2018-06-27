@@ -54,6 +54,8 @@ class SignInAPIView(APIView):
         user_data = user.first()
         username = request.data['username']
         password = request.data['password']
+        # token = Token.objects.get_or_create(user_id=user_data.id)
+        Token.objects.filter(user_id=user_data.id).delete()
         token = Token.objects.get_or_create(user_id=user_data.id)
 
         if username and password:
@@ -74,11 +76,18 @@ class ProfileAPIView(APIView):
 
   def post(self, request, *args, **kwargs):
     user = User.objects.filter(id=request.data.get('id'), is_active=True)
+    token = Token.objects.filter(user_id=request.data.get('id')).first()
+    print(token)
+    token2 = Token.objects.filter(key=token).first()
+    print(token2.user_id)
+    # user = User.objects.filter(id=request.data.get('id'), is_active=True)
+
     if user.exists() and user.count() == 1:
       user_data = user.first()
       us = {
         'id': user_data.id,
-        'username': user_data.username
+        'username': user_data.username,
+        'token': str(token)
       }
       return Response({'message': {'success': True}, 'user': us}, status=HTTP_200_OK)
     else:
