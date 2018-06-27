@@ -82,4 +82,4 @@ class ProfileAPIView(APIView):
       }
       return Response({'message': {'success': True}, 'user': us}, status=HTTP_200_OK)
     else:
-      return Response({'message': {'success': False, 'message': 'user not found'}}, status=HTTP_200_OK)
+      return Response({'message': {'success': False, 'message': 'user not found'}}, status=HTTP_404_NOT_FOUND)
