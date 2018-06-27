@@ -5,11 +5,11 @@ export default {
     checkUsername: null,
     signInError: null,
     signInErrorMessage: null,
-    // userData: null
+    userData: null
   },
   mutations: {
     // setUser (state, payload) {
-    //   state.userData = payload
+    //   state.user = payload
     // }
   },
   actions: {
@@ -42,15 +42,29 @@ export default {
           this.state.signInError = data.body.message.success
           this.state.signInErrorMessage = data.body.message.message
           // commit('setUser', data.body.user)
+          if (sessionStorage.getItem('userID')) {
+            sessionStorage.removeItem('userID')
+            sessionStorage.setItem('userID', data.body.user.userId)
+          } else {
+            sessionStorage.setItem('userID', data.body.user.userId)
+          }
           return data
         })
         .catch(error => {
           console.log(error)
         })
-        
-    }
+      },
+      getUser ({commit}, payload) {
+        Vue.http.post(`${this.state.shared.baseURL}accounts/profile/`, payload)
+        .then(data => {
+          this.state.user.userData = data.body.user
+          return data
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      }
   },
   getters: {
-    
   }
 }

@@ -61,10 +61,25 @@ class SignInAPIView(APIView):
           if check_password(password, user_data.password) == True:
             user = authenticate(username=username, password=password)
             login(request, user)
-            return Response({'message': {'success': True, 'message': 'logged in successfully'}, 'user': {'username': username, 'token': str(token[0])}}, status=HTTP_200_OK)
+            return Response({'message': {'success': True, 'message': 'logged in successfully'}, 'user': {'username': username, 'token': str(token[0]), 'userId': user_data.id}}, status=HTTP_200_OK)
           else:
             return Response({'message':  {'success': False, 'message': 'invalid password'}}, status=HTTP_200_OK)
       else:
         return Response({'message': {'success': False, 'message': 'user not found'}}, status=HTTP_200_OK)
     except:
       return Response({'message': {'success': False}}, status=HTTP_400_BAD_REQUEST)
+
+
+class ProfileAPIView(APIView):
+
+  def post(self, request, *args, **kwargs):
+    user = User.objects.filter(id=request.data.get('id'), is_active=True)
+    if user.exists() and user.count() == 1:
+      user_data = user.first()
+      us = {
+        'id': user_data.id,
+        'username': user_data.username
+      }
+      return Response({'message': {'success': True}, 'user': us}, status=HTTP_200_OK)
+    else:
+      return Response({'message': {'success': False, 'message': 'user not found'}}, status=HTTP_200_OK)
