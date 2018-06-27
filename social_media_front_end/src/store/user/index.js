@@ -4,10 +4,13 @@ export default {
   state: {
     checkUsername: null,
     signInError: null,
-    signInErrorMessage: null
+    signInErrorMessage: null,
+    // userData: null
   },
   mutations: {
-    
+    // setUser (state, payload) {
+    //   state.userData = payload
+    // }
   },
   actions: {
     checkUsername ({commit}, payload) {
@@ -38,6 +41,7 @@ export default {
         .then(data => {
           this.state.signInError = data.body.message.success
           this.state.signInErrorMessage = data.body.message.message
+          // commit('setUser', data.body.user)
           return data
         })
         .catch(error => {

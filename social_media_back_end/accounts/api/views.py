@@ -2,14 +2,13 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
 from rest_framework.views import APIView
 from django.db.models import Q
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import check_password
 from rest_framework.authtoken.models import Token
 
 # from django.conf import settings
 from django.contrib.auth.models import User
 from accounts.models import Account
-
 
 # User = settings.AUTH_USER_MODEL
 
@@ -55,21 +54,14 @@ class SignInAPIView(APIView):
         user_data = user.first()
         username = request.data['username']
         password = request.data['password']
-
-        # token = Token.objects.get_or_create(user=request.data)
-        # token = Token.objects.create(user=39)
         token = Token.objects.get_or_create(user_id=user_data.id)
-        # print(token)
-        # print(token[0])
-        # print(token.key)
-        
-        # print(user_data.gender)
 
         if username and password:
           c = check_password(password, user_data.password)
           if check_password(password, user_data.password) == True:
-            # user = authenticate(username=username, password=password)
-            return Response({'message': {'success': True, 'message': 'logged in successfully', 'token': str(token[0]) }}, status=HTTP_200_OK)
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return Response({'message': {'success': True, 'message': 'logged in successfully'}, 'user': {'username': username, 'token': str(token[0])}}, status=HTTP_200_OK)
           else:
             return Response({'message':  {'success': False, 'message': 'invalid password'}}, status=HTTP_200_OK)
       else:
