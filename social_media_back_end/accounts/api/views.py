@@ -82,6 +82,7 @@ class ProfileAPIView(APIView):
     token = Token.objects.filter(key=request.data.get('token')).first()
     user = User.objects.filter(id=token.user_id, is_active=True)
 
+    
     if user.exists() and user.count() == 1:
       user_data = user.first()
       us = {
@@ -89,6 +90,6 @@ class ProfileAPIView(APIView):
         'username': user_data.username,
         'token': str(token)
       }
-      return Response({'message': {'success': True}, 'user': us}, status=HTTP_200_OK)
+      return Response({'message': {'success': True}, 'user': us}, status=HTTP_200_OK, headers= {'kjnjk': "my value"})
     else:
       return Response({'message': {'success': False, 'message': 'user not found'}}, status=HTTP_404_NOT_FOUND)

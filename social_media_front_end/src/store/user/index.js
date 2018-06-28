@@ -66,6 +66,7 @@ export default {
       getUser ({commit}, payload) {
         Vue.http.post(`${this.state.shared.baseURL}accounts/profile/`, payload)
         .then(data => {
+          data.headers.token = data.body.user.token
           console.log(data)
           this.state.user.userData = data.body.user
           return data
