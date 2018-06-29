@@ -49,12 +49,11 @@ class SignUpAPIView(APIView):
 class SignInAPIView(APIView):
   def post(self, request):
     try:
-      user = User.objects.filter(username=request.data['username'], is_active=True)
+      username = request.data['username']
+      password = request.data['password']
+      user = User.objects.filter(username=username, is_active=True)
       if user.exists() and user.count() == 1:
         user_data = user.first()
-        username = request.data['username']
-        password = request.data['password']
-        # token = Token.objects.get_or_create(user_id=user_data.id)
         Token.objects.filter(user_id=user_data.id).delete()
         token = Token.objects.get_or_create(user_id=user_data.id)
 
@@ -63,7 +62,6 @@ class SignInAPIView(APIView):
           if check_password(password, user_data.password) == True:
             user = authenticate(username=username, password=password)
             login(request, user)
-            # return Response({'message': {'success': True, 'message': 'logged in successfully'}, 'user': {'username': username, 'token': str(token[0]), 'userId': user_data.id}}, status=HTTP_200_OK)
             return Response({'message': {'success': True, 'message': 'logged in successfully'}, 'user': {'token': str(token[0])}}, status=HTTP_200_OK)
           else:
             return Response({'message':  {'success': False, 'message': 'invalid password'}}, status=HTTP_200_OK)
@@ -76,20 +74,19 @@ class SignInAPIView(APIView):
 class ProfileAPIView(APIView):
 
   def post(self, request, *args, **kwargs):
-    # user = User.objects.filter(id=request.data.get('id'), is_active=True)
-    # token = Token.objects.filter(user_id=request.data.get('id')).first()
-    # print(token)
+    print(request.data.get('token'))
     token = Token.objects.filter(key=request.data.get('token')).first()
+    print(token)
+    print(token.user_id)
     user = User.objects.filter(id=token.user_id, is_active=True)
-
     
     if user.exists() and user.count() == 1:
       user_data = user.first()
-      us = {
+      current_user = {
         'id': user_data.id,
         'username': user_data.username,
         'token': str(token)
       }
-      return Response({'message': {'success': True}, 'user': us}, status=HTTP_200_OK, headers= {'kjnjk': "my value"})
+      return Response({'message': {'success': True}, 'user': current_user}, status=HTTP_200_OK)
     else:
       return Response({'message': {'success': False, 'message': 'user not found'}}, status=HTTP_404_NOT_FOUND)

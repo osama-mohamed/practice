@@ -54,13 +54,14 @@ export default {
       setTimeout (() => {
         this.checkSignIn()
         if (this.signInError === false) {
+          alert('logged in')
           this.$router.push({name: 'Profile'})
           this.username= null
           this.password= null
           this.passwordError= false
           this.signInError = false
         }
-      }, 1000)
+      }, 1500)
     }
   }
 }

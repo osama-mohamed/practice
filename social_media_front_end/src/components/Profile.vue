@@ -25,8 +25,11 @@ export default {
   },
   methods: {
     getUser () {
-      // this.$store.dispatch('getUser', {id: sessionStorage.getItem('userID')})
-      this.$store.dispatch('getUser', {token: sessionStorage.getItem('userToken')})
+      if (sessionStorage.getItem('userToken')) {
+      // console.log('from session profile')
+      // console.log(sessionStorage.getItem('userToken'))
+        this.$store.dispatch('getUser', {token: sessionStorage.getItem('userToken')})
+      }
     }
   }
 }

@@ -41,22 +41,13 @@ export default {
         .then(data => {
           this.state.signInError = data.body.message.success
           this.state.signInErrorMessage = data.body.message.message
-          // commit('setUser', data.body.user)
-          // if (sessionStorage.getItem('userID') && sessionStorage.getItem('userToken')) {
-            //   sessionStorage.removeItem('userID')
-            //   sessionStorage.setItem('userID', data.body.user.userId)
-            //   sessionStorage.removeItem('userToken')
-            //   sessionStorage.setItem('userToken', data.body.user.token)
-          // } else {
-            //   sessionStorage.setItem('userID', data.body.user.userId)
-          //   sessionStorage.setItem('userToken', data.body.user.token)
-          // }
           if (sessionStorage.getItem('userToken')) {
             sessionStorage.removeItem('userToken')
             sessionStorage.setItem('userToken', data.body.user.token)
           } else {
             sessionStorage.setItem('userToken', data.body.user.token)
           }
+          alert(sessionStorage.getItem('userToken'))
           return data
         })
         .catch(error => {
@@ -64,10 +55,13 @@ export default {
         })
       },
       getUser ({commit}, payload) {
+        // console.log('from profile vuex')
+        // console.log(payload)
         Vue.http.post(`${this.state.shared.baseURL}accounts/profile/`, payload)
         .then(data => {
+          // console.log('from profile response vuex')
+          // console.log(data.body.user.token)
           data.headers.token = data.body.user.token
-          console.log(data)
           this.state.user.userData = data.body.user
           return data
         })
