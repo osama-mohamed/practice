@@ -71,7 +71,6 @@ export default {
       const userStatus = await this.$store.dispatch('SignIn', user)
       this.checkSignIn()
       if (this.signInError === false) {
-        alert('logged in')
         this.$router.push({name: 'Profile'})
         this.username= null
         this.password= null

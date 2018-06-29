@@ -113,11 +113,15 @@ export default {
         this.notAvailableError = false
       }
     },
-    checkUsername() {
-      this.$store.dispatch('checkUsername', this.username)
-      setTimeout (() => {
+    // checkUsername() {
+    //   this.$store.dispatch('checkUsername', this.username)
+    //   setTimeout (() => {
+    //     this.checkUsernameAvailability()
+    //   }, 600)
+    // },
+    async checkUsername() {
+      const newUsername = await this.$store.dispatch('checkUsername', this.username)
         this.checkUsernameAvailability()
-      }, 600)
     },
     checkPassword () {
       if (!this.genderIsValid) {

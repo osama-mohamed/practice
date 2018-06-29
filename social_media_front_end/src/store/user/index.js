@@ -17,7 +17,7 @@ export default {
       let newPayload = {
         username: payload
       }
-      Vue.http.post(`${this.state.shared.baseURL}accounts/checkusername/`, newPayload)
+      return Vue.http.post(`${this.state.shared.baseURL}accounts/checkusername/`, newPayload)
         .then(data => {
           this.state.checkUsername = data.body.message.success
           return data
@@ -48,7 +48,6 @@ export default {
           } else {
             sessionStorage.setItem('userToken', data.body.user.token)
           }
-          alert(sessionStorage.getItem('userToken'))
           return data
         })
         .catch(error => {
