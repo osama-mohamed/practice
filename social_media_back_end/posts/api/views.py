@@ -18,6 +18,10 @@ class NewPostAPIView(APIView):
   def post(self, request, *args, **kwargs):
     request_token = request.data.get('token')
     request_post = request.data.get('post')
+    request_file = request.data.get('file')
+    print(request.data['file'])
+    print(request_file)
+    # print(request_file.name)
     token = Token.objects.filter(key=request_token).first()
     user = User.objects.filter(id=token.user_id, is_active=True)
     

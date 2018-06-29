@@ -8,10 +8,10 @@
         <label for="newPost">New Post</label>
         <textarea v-model="post" required id="newPost" class="form-control" autocomplete="off"></textarea>
       </div>
-      <!-- <div class="form-group">
-        <label for="password">Password</label>
-        <input v-model="password" autocomplete="off" required type="password" class="form-control" id="password" placeholder="Password">
-      </div> -->
+      <div class="form-group">
+        <label for="newFile">File</label>
+        <input v-on:change="fileChange($event.target.files)" type="file" class="form-control" id="newFile">
+      </div>
       <button type="submit" class="btn btn-primary" >Post</button>
     </form>
   </div>
@@ -23,6 +23,9 @@ export default {
   data () {
     return {
       post: null,
+      selectedFile: null,
+      imageUrl: null,
+      image: null,
     }
   },
   created() {
@@ -37,11 +40,33 @@ export default {
     }
   },
   methods: {
+    fileChange (e) {
+      // this.selectedFile = fileList[0]
+      // console.log(this.selectedFile)
+      const files = event.target.files
+      let filename = files[0].name
+      if (filename.lastIndexOf('.') <= 0) {
+        return alert('Choose a valid file!')
+      }
+      const fileReader = new FileReader()
+      fileReader.addEventListener('load', () => {
+        this.imageUrl = fileReader.result
+      })
+      fileReader.readAsDataURL(files[0])
+      this.image = files[0]
+      console.log(files)
+      console.log(filename)
+      console.log(fileReader)
+      console.log(this.imageUrl)
+      console.log(this.image)
+    },
     onSubmit () {
       if (sessionStorage.getItem('userToken')) {
+        // console.log(this.$refs.file.files[0])
         let newPost = {
           token: sessionStorage.getItem('userToken'),
           post: this.post,
+          file: this.imageUrl,
         }
         this.post = null
         this.$store.dispatch('newPost', newPost)
