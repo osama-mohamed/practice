@@ -16,7 +16,7 @@ export default {
     }
   },
   created() {
-    this.getUser()
+    this.profile()
     },
   computed: {
     user () {
@@ -24,9 +24,11 @@ export default {
     }
   },
   methods: {
-    getUser () {
+    profile () {
       if (sessionStorage.getItem('userToken')) {
-        this.$store.dispatch('getUser', {token: sessionStorage.getItem('userToken')})
+        this.$store.dispatch('profile', {token: sessionStorage.getItem('userToken')})
+      } else {
+        this.$router.push({name: 'SignIn'})
       }
     }
   }

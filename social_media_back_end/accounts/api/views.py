@@ -77,8 +77,9 @@ class SignOutAPIView(APIView):
     user = Token.objects.filter(key=token)
     if user.exists() and user.count() == 1:
       user_data = user.first()
-      user_data.delete()
+      print(request.data)
       logout(request)
+      user_data.delete()
       return Response({'message': {'success': True, 'message': 'logged out successfully'}}, status=HTTP_200_OK)
     else:
       return Response({'message': {'success': False, 'message': 'user not found'}}, status=HTTP_200_OK)

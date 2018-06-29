@@ -54,13 +54,19 @@ export default {
           console.log(error)
         })
       },
-      getUser ({commit}, payload) {
-        // console.log('from profile vuex')
-        // console.log(payload)
+      SignOut ({commit}, payload) {
+        return Vue.http.post(`${this.state.shared.baseURL}accounts/signout/`, payload)
+        .then(data => {
+          this.state.user.userData = null
+          return data
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      },
+      profile ({commit}, payload) {
         Vue.http.post(`${this.state.shared.baseURL}accounts/profile/`, payload)
         .then(data => {
-          // console.log('from profile response vuex')
-          // console.log(data.body.user.token)
           data.headers.token = data.body.user.token
           this.state.user.userData = data.body.user
           return data
@@ -69,16 +75,6 @@ export default {
           console.log(error)
         })
       },
-      SignOut ({commit}, payload) {
-        console.log(payload)
-        return Vue.http.post(`${this.state.shared.baseURL}accounts/signout/`, payload)
-        .then(data => {
-          return data
-        })
-        .catch(error => {
-          console.log(error)
-        })
-      }
   },
   getters: {
   }

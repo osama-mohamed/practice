@@ -10,16 +10,16 @@
         <li class="nav-item">
           <router-link class="nav-link" :to="{name: 'HomePage'}">Home</router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="!user">
           <router-link class="nav-link" :to="{name: 'SignUp'}">Sign Up</router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="!user">
           <router-link class="nav-link" :to="{name: 'SignIn'}">Sign In</router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="user">
           <router-link class="nav-link" :to="{name: 'Profile'}">Profile</router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="user">
           <router-link class="nav-link" :to="{name: 'NewPost'}">New Post</router-link>
         </li>
         <!-- <li class="nav-item dropdown">
@@ -38,7 +38,7 @@
         </li> -->
       </ul>
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
+        <li class="nav-item" v-if="user">
           <button class="nav-link" @click="signOut()">Sign Out</button>
         </li>
       </ul>
@@ -60,12 +60,16 @@ export default {
     }
   },
   computed: {
+    user () {
+      return this.$store.state.user.userData
+    }
   },
   methods: {
     async signOut () {
       if (sessionStorage.getItem('userToken')) {
         const logOutUser = await this.$store.dispatch('SignOut', {token: sessionStorage.getItem('userToken')})
         sessionStorage.removeItem('userToken')
+        this.$router.push({name: 'HomePage'})
       }
     }
   }
