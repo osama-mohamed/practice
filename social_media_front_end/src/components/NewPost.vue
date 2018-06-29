@@ -43,9 +43,8 @@ export default {
           token: sessionStorage.getItem('userToken'),
           post: this.post,
         }
-        console.log(newPost)
         this.post = null
-        // this.$store.dispatch('newPost', newPost)
+        this.$store.dispatch('newPost', newPost)
       } else {
         this.$router.push({name: 'SignIn'})
       }

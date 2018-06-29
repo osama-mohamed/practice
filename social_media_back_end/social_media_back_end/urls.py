@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'^api/accounts/', include('accounts.api.urls', namespace='accounts_api')),
+    url(r'^api/posts/', include('posts.api.urls', namespace='posts_api')),
 ]
