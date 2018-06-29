@@ -70,7 +70,7 @@ export default {
         .then(data => {
           data.headers.token = data.body.user.token
           this.state.user.userData = data.body.user
-          commit('setUser', data.body.user)
+          // commit('setUser', data.body.user)
           return data
         })
         .catch(error => {

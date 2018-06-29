@@ -43,7 +43,7 @@ export default {
           token: sessionStorage.getItem('userToken'),
           post: this.post,
         }
-        // console.log(newPost)
+        console.log(newPost)
         this.post = null
         // this.$store.dispatch('newPost', newPost)
       } else {
