@@ -37,6 +37,11 @@
           <a class="nav-link disabled" href="#">Disabled</a>
         </li> -->
       </ul>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <button class="nav-link" @click="signOut()">Sign Out</button>
+        </li>
+      </ul>
       <!-- <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -44,3 +49,29 @@
     </div>
   </nav>
 </template>
+
+
+<script>
+export default {
+  name: 'NavBar',
+  data () {
+    return {
+      username: null
+    }
+  },
+  computed: {
+  },
+  methods: {
+    async signOut () {
+      if (sessionStorage.getItem('userToken')) {
+        const logOutUser = await this.$store.dispatch('SignOut', {token: sessionStorage.getItem('userToken')})
+        sessionStorage.removeItem('userToken')
+      }
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

@@ -68,6 +68,16 @@ export default {
         .catch(error => {
           console.log(error)
         })
+      },
+      SignOut ({commit}, payload) {
+        console.log(payload)
+        return Vue.http.post(`${this.state.shared.baseURL}accounts/signout/`, payload)
+        .then(data => {
+          return data
+        })
+        .catch(error => {
+          console.log(error)
+        })
       }
   },
   getters: {

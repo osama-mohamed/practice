@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
 from rest_framework.views import APIView
 from django.db.models import Q
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import check_password
 from rest_framework.authtoken.models import Token
 
@@ -71,15 +71,27 @@ class SignInAPIView(APIView):
       return Response({'message': {'success': False}}, status=HTTP_400_BAD_REQUEST)
 
 
-class ProfileAPIView(APIView):
+class SignOutAPIView(APIView):
+  def post(self, request):
+    token = request.data['token']
+    user = Token.objects.filter(key=token)
+    if user.exists() and user.count() == 1:
+      user_data = user.first()
+      user_data.delete()
+      logout(request)
+      return Response({'message': {'success': True, 'message': 'logged out successfully'}}, status=HTTP_200_OK)
+    else:
+      return Response({'message': {'success': False, 'message': 'user not found'}}, status=HTTP_200_OK)
 
+
+
+class ProfileAPIView(APIView):
   def post(self, request, *args, **kwargs):
-    print(request.data.get('token'))
-    token = Token.objects.filter(key=request.data.get('token')).first()
-    print(token)
-    print(token.user_id)
+    request_token = request.data.get('token')
+    token = Token.objects.filter(key=request_token).first()
     user = User.objects.filter(id=token.user_id, is_active=True)
     
+    # print(request.headers['Authorization'])
     if user.exists() and user.count() == 1:
       user_data = user.first()
       current_user = {
@@ -90,3 +102,4 @@ class ProfileAPIView(APIView):
       return Response({'message': {'success': True}, 'user': current_user}, status=HTTP_200_OK)
     else:
       return Response({'message': {'success': False, 'message': 'user not found'}}, status=HTTP_404_NOT_FOUND)
+
