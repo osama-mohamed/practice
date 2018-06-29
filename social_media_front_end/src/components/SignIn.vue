@@ -11,7 +11,6 @@
       <div class="form-group">
         <label for="username">Username</label>
         <input v-model="username" autocomplete="off" required type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Username">
-        <!-- <small class="form-text text-muted error" v-if="signInError">Username or password is invalid.</small> -->
       </div>
       <div class="form-group">
         <label for="password">Password</label>
@@ -45,24 +44,6 @@ export default {
         this.signInErrorMessage = this.$store.state.signInErrorMessage
       }
     },
-    // onSubmit () {
-    //   let user = {
-    //     username: this.username,
-    //     password: this.password
-    //   }
-    //   this.$store.dispatch('SignIn', user)
-    //   setTimeout (() => {
-    //     this.checkSignIn()
-    //     if (this.signInError === false) {
-    //       alert('logged in')
-    //       this.$router.push({name: 'Profile'})
-    //       this.username= null
-    //       this.password= null
-    //       this.passwordError= false
-    //       this.signInError = false
-    //     }
-    //   }, 1500)
-    // }
     async onSubmit () {
       let user = {
         username: this.username,

@@ -9,9 +9,8 @@ export default {
   },
   mutations: {
     setUser (state, payload) {
-      // console.log(state.userData)
       state.userData = payload
-    }
+    },
   },
   actions: {
     checkUsername ({commit}, payload) {
@@ -38,9 +37,9 @@ export default {
         
       },
       SignIn ({commit}, payload) {
-        // Vue.http.post(`${this.state.shared.baseURL}accounts/signin/`, payload)
         return Vue.http.post(`${this.state.shared.baseURL}accounts/signin/`, payload)
         .then(data => {
+          // this.state.user.userData = data.body.user
           // commit('setUser', data.body.user)
           this.state.signInError = data.body.message.success
           this.state.signInErrorMessage = data.body.message.message
@@ -71,7 +70,7 @@ export default {
         .then(data => {
           data.headers.token = data.body.user.token
           this.state.user.userData = data.body.user
-          // commit('setUser', data.body.user)
+          commit('setUser', data.body.user)
           return data
         })
         .catch(error => {
@@ -80,7 +79,7 @@ export default {
       },
   },
   getters: {
-    user (state) {
+    userData (state) {
       return state.userData
     }
   }

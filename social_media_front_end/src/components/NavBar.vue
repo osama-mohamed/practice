@@ -39,7 +39,7 @@
       </ul>
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" v-if="user">
-          <button class="nav-link" @click="signOut()">Sign Out</button>
+          <button class="btn btn-link" @click="signOut()">Sign Out</button>
         </li>
       </ul>
       <!-- <form class="form-inline my-2 my-lg-0">

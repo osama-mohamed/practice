@@ -28,19 +28,12 @@ export default {
   created() {
     this.user
   },
-  // watch: {
-  //   user (value) {
-  //     if (value !== null && value !== undefined) {
-  //       this.$router.push({name: 'HomePage'})
-  //     }
-  //   }
-  // },
   computed: {
     user () {
-      console.log(this.$store.getters.user)
-      console.log(this.$store.state.user.userData)
-      // return this.$store.getters.user
-      return this.$store.state.user.userData
+      // console.log(this.$store.getters.userData)
+      // console.log(this.$store.state.user.userData)
+      return this.$store.getters.userData
+      // return this.$store.state.user.userData
     }
   },
   methods: {
@@ -50,7 +43,7 @@ export default {
           token: sessionStorage.getItem('userToken'),
           post: this.post,
         }
-        console.log(newPost)
+        // console.log(newPost)
         this.post = null
         // this.$store.dispatch('newPost', newPost)
       } else {
