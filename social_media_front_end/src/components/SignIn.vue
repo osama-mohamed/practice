@@ -45,23 +45,39 @@ export default {
         this.signInErrorMessage = this.$store.state.signInErrorMessage
       }
     },
-    onSubmit () {
+    // onSubmit () {
+    //   let user = {
+    //     username: this.username,
+    //     password: this.password
+    //   }
+    //   this.$store.dispatch('SignIn', user)
+    //   setTimeout (() => {
+    //     this.checkSignIn()
+    //     if (this.signInError === false) {
+    //       alert('logged in')
+    //       this.$router.push({name: 'Profile'})
+    //       this.username= null
+    //       this.password= null
+    //       this.passwordError= false
+    //       this.signInError = false
+    //     }
+    //   }, 1500)
+    // }
+    async onSubmit () {
       let user = {
         username: this.username,
         password: this.password
       }
-      this.$store.dispatch('SignIn', user)
-      setTimeout (() => {
-        this.checkSignIn()
-        if (this.signInError === false) {
-          alert('logged in')
-          this.$router.push({name: 'Profile'})
-          this.username= null
-          this.password= null
-          this.passwordError= false
-          this.signInError = false
-        }
-      }, 1500)
+      const userStatus = await this.$store.dispatch('SignIn', user)
+      this.checkSignIn()
+      if (this.signInError === false) {
+        alert('logged in')
+        this.$router.push({name: 'Profile'})
+        this.username= null
+        this.password= null
+        this.passwordError= false
+        this.signInError = false
+      }
     }
   }
 }
