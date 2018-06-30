@@ -6,15 +6,8 @@ from django.conf import settings
 User = settings.AUTH_USER_MODEL
 
 def get_image_path(instance, filename):
-  # print(filename)
-  # print(instance)
-  # print(instance.user.username)
-  # print(instance.user.id)
-
-  # print(os.path.dirname(settings.BASE_DIR) + r"\uploads\user\{}".format(instance.user.id))
-  # print(os.path.exists(os.path.dirname(settings.BASE_DIR) + r"\uploads\user\{}".format(instance.user.id)))
-
   return os.path.join('user', str(instance.user.id), filename)
+
 
 class Posts(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)

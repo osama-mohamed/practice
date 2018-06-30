@@ -43,14 +43,22 @@ export default {
     },
     onSubmit () {
       if (sessionStorage.getItem('userToken')) {
-        const newPost = new FormData()
-        newPost.append('token', sessionStorage.getItem('userToken'))
-        newPost.append('post', this.post)
-        newPost.append('file', this.image, this.image.name)
+        if (this.image === null) {
+          let newPost = {
+            token: sessionStorage.getItem('userToken'),
+            post: this.post
+          }
+          this.$store.dispatch('newPost', newPost)
+        } else {
+          const newPost = new FormData()
+          newPost.append('token', sessionStorage.getItem('userToken'))
+          newPost.append('post', this.post)
+          newPost.append('file', this.image, this.image.name)
+          this.$store.dispatch('newPost', newPost)
+        }
         this.post = null
         this.$refs.fileInput.type = 'text'
         this.$refs.fileInput.type = 'file'
-        this.$store.dispatch('newPost', newPost)
       } else {
         this.$router.push({name: 'SignIn'})
       }
