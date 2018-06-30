@@ -13,9 +13,9 @@
               <span style="position: absolute; top: 46px; left: 69px; font-size: 12px;">{{post.added | DateTime}}</span>
             </div>
             <div class="">
-              <a style="position: relative; left: 496px; top: -50px; cursor: pointer; font-weight: 900;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="menu-button" style="position: relative; left: 496px; top: -50px; cursor: pointer; font-weight: 900; background: none; border: none;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 ...
-              </a>
+              </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="#">Edit Post</a>
                 <a class="dropdown-item" href="#">Delete</a>
@@ -30,7 +30,7 @@
             <div class="mb-3">
               <form class="form-group">
                 <img class="mr-2 mt-4" style="border-radius: 50%; width: 40px; height: 40px;" v-if="post.image" :src="'static/uploads/' + post.image" :alt="post.post">
-                <textarea type="text" class="form-control" placeholder="Write a comment ..." style="position: relative; top: -35px; left: 48px; max-width: 90%;"></textarea>
+                <textarea type="text" class="form-control" placeholder="Write a comment ..." style="position: relative; top: -35px; left: 48px; max-width: 90%; border-radius: 20px; overflow: hidden; height: 38px;"></textarea>
               </form>
             </div>
           </div>
@@ -83,6 +83,9 @@ export default {
 
 <style scoped>
 .dropdown-menu.show {
-  left: -142px !important;
+  left: -136px !important;
+}
+.menu-button {
+  outline: none !important;
 }
 </style>
