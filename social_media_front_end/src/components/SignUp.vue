@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!user">
     <h1 class="text-center">Sign Up</h1>
     <form @submit.prevent="onSubmit()">
       <div class="form-group">
@@ -74,6 +74,9 @@ export default {
   created () {
   },
   computed: {
+    user () {
+      return this.$store.state.user.userData
+    },
     formIsFilled () {
       this.changeGender
       return this.firstName !== ''

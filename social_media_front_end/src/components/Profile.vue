@@ -1,9 +1,8 @@
 <template>
-  <div>
-    <div v-if="user">
-      <h1 class="text-center">Profile {{user}}</h1>
-    </div>
-    <div v-if="!user">
+  <div v-if="user">
+    <div>
+      <h1 class="text-center">Profile</h1>
+      <h2 class="text-center">{{user}}</h2>
     </div>
   </div>
 </template>

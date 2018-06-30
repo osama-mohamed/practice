@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!user">
     <h1 class="text-center">Sign In</h1>
     <div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="signInError && signInErrorMessage">
       {{signInErrorMessage}}
@@ -33,6 +33,9 @@ export default {
     }
   },
   computed: {
+    user () {
+      return this.$store.state.user.userData
+    }
   },
   methods: {
     checkSignIn () {

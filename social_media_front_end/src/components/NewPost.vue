@@ -31,11 +31,7 @@ export default {
   },
   computed: {
     user () {
-      if (localStorage.getItem('userToken')) {
-        return this.$store.state.user.userData
-      } else {
-        this.$router.push({name: 'SignIn'})
-      }
+      return this.$store.state.user.userData
     }
   },
   methods: {

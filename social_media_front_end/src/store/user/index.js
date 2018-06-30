@@ -5,7 +5,7 @@ export default {
     checkUsername: null,
     signInError: null,
     signInErrorMessage: null,
-    userData: localStorage.getItem('userToken') || null
+    userData: localStorage.getItem('userToken') || null,
   },
   mutations: {
     setUser (state, payload) {
@@ -41,6 +41,7 @@ export default {
         .then(data => {
           // this.state.user.userData = data.body.user
           // commit('setUser', data.body.user)
+          this.state.user.userStatus = true
           this.state.signInError = data.body.message.success
           this.state.signInErrorMessage = data.body.message.message
           if (localStorage.getItem('userToken')) {
