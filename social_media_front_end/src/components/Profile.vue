@@ -5,12 +5,13 @@
       <h2 class="text-center">{{user}}</h2>
 
       <div v-for="post in posts" :key="post.id" class="card" style="width: 49%;">
-        <img class="card-img-top" v-if="post.image" :src="'static/uploads/' + post.image" alt="Card image cap">
+        <img class="card-img-top" v-if="post.image" :src="'static/uploads/' + post.image" :alt="post.post">
         <div class="card-body">
           <h5 class="card-title">#{{post.id}}</h5>
-          <h5 class="card-title">Card title</h5>
+          <h5 class="card-title">{{post.added}}</h5>
+          <h5 class="card-title">{{post.updated}}</h5>
           <p class="card-text">{{post.post}}</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
         </div>
       </div>
       <!-- <ul v-for="post in posts" :key="post.id">

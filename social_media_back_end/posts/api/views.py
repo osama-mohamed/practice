@@ -55,7 +55,9 @@ class ProfilePostsAPIView(APIView):
         all_posts = {
           "id": post.id,
           "post": post.post,
-          "image": str(post.image)
+          "image": str(post.image),
+          "added": post.added,
+          "updated": post.updated
         }
         posts.append(all_posts)
         
