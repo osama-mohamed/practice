@@ -52,6 +52,7 @@ export default {
           newPost.append('post', this.post)
           newPost.append('file', this.image, this.image.name)
           this.$store.dispatch('newPost', newPost)
+          this.$router.push({name: 'Profile'})
         }
         this.post = null
         this.image = null

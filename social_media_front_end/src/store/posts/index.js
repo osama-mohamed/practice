@@ -19,6 +19,15 @@ export default {
           console.log(error)
         })
       },
+      profilePosts ({commit}, payload) {
+        return Vue.http.post(`${this.state.shared.baseURL}posts/profile_posts/`, payload)
+        .then(data => {
+          return data.body.user.posts
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      },
   },
   getters: {
     

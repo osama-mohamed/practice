@@ -39,9 +39,6 @@ export default {
       SignIn ({commit}, payload) {
         return Vue.http.post(`${this.state.shared.baseURL}accounts/signin/`, payload)
         .then(data => {
-          // this.state.user.userData = data.body.user
-          // commit('setUser', data.body.user)
-          this.state.user.userStatus = true
           this.state.signInError = data.body.message.success
           this.state.signInErrorMessage = data.body.message.message
           if (localStorage.getItem('userToken')) {
@@ -50,7 +47,6 @@ export default {
           } else {
             localStorage.setItem('userToken', data.body.user.token)
           }
-          return data
         })
         .catch(error => {
           console.log(error)
@@ -60,7 +56,6 @@ export default {
         return Vue.http.post(`${this.state.shared.baseURL}accounts/signout/`, payload)
         .then(data => {
           this.state.user.userData = null
-          return data
         })
         .catch(error => {
           console.log(error)
@@ -71,8 +66,6 @@ export default {
         .then(data => {
           data.headers.token = data.body.user.token
           this.state.user.userData = data.body.user
-          // commit('setUser', data.body.user)
-          return data
         })
         .catch(error => {
           console.log(error)

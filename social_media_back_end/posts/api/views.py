@@ -6,10 +6,16 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import check_password
 from rest_framework.authtoken.models import Token
 
-# from django.conf import settings
+from django.conf import settings
+import os
 from django.contrib.auth.models import User
 from accounts.models import Account
 from posts.models import Posts
+
+from rest_framework.generics import (
+    RetrieveAPIView,
+    ListAPIView,
+)
 
 # User = settings.AUTH_USER_MODEL
 
@@ -35,3 +41,25 @@ class NewPostAPIView(APIView):
     else:
       return Response({'message': {'success': False, 'message': 'post can not be saved successfully'}}, status=HTTP_404_NOT_FOUND)
 
+
+class ProfilePostsAPIView(APIView):
+  def post(self, request):
+    request_token = request.data.get('token')
+    token = Token.objects.filter(key=request_token)
+    
+    if token.exists() and token.count() == 1:
+      user_id = token.first().user_id
+      qs = Posts.objects.filter(user_id=user_id)
+      posts = []
+      for post in qs:
+        all_posts = {
+          "id": post.id,
+          "post": post.post,
+          "image": str(post.image)
+        }
+        posts.append(all_posts)
+        
+      return Response({'message': {'success': True, 'message': 'posts retrives successfully'}, 
+                       'user': {'posts': posts}}, status=HTTP_200_OK)
+    else:
+      return Response({'message': {'success': False, 'message': 'posts does not retives successfully'}}, status=HTTP_404_NOT_FOUND)
