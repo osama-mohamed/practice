@@ -30,7 +30,7 @@
             <div class="mb-3">
               <form class="form-group">
                 <img class="mr-2 mt-4" style="border-radius: 50%; width: 40px; height: 40px;" v-if="post.image" :src="'static/uploads/' + post.image" :alt="post.post">
-                <textarea type="text" class="form-control" placeholder="Write a comment ..." style="position: relative; top: -35px; left: 48px; max-width: 90%; border-radius: 20px; overflow: hidden; height: 38px;"></textarea>
+                <textarea type="text" class="form-control" placeholder="Write a comment ..." style="position: relative; top: -35px; left: 48px; max-width: 90%; border-radius: 20px; overflow: hidden; height: 38px; min-height: 38px;"></textarea>
               </form>
             </div>
           </div>
