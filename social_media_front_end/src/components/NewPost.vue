@@ -10,7 +10,7 @@
       </div>
       <div class="form-group">
         <label for="newFile">File</label>
-        <input v-on:change="fileChange($event.target.files)" type="file" class="form-control" id="newFile">
+        <input type="file" id="newFile" v-on:change="fileChange($event.target.files)" ref="fileInput" class="form-control"/>
       </div>
       <button type="submit" class="btn btn-primary" >Post</button>
     </form>
@@ -23,8 +23,6 @@ export default {
   data () {
     return {
       post: null,
-      selectedFile: null,
-      imageUrl: null,
       image: null,
     }
   },
@@ -40,35 +38,18 @@ export default {
     }
   },
   methods: {
-    fileChange (e) {
-      // this.selectedFile = fileList[0]
-      // console.log(this.selectedFile)
-      const files = event.target.files
-      let filename = files[0].name
-      if (filename.lastIndexOf('.') <= 0) {
-        return alert('Choose a valid file!')
-      }
-      const fileReader = new FileReader()
-      fileReader.addEventListener('load', () => {
-        this.imageUrl = fileReader.result
-      })
-      fileReader.readAsDataURL(files[0])
-      this.image = files[0]
-      console.log(files)
-      console.log(filename)
-      console.log(fileReader)
-      console.log(this.imageUrl)
-      console.log(this.image)
+    fileChange(fileList) {
+      this.image = fileList[0]
     },
     onSubmit () {
       if (sessionStorage.getItem('userToken')) {
-        // console.log(this.$refs.file.files[0])
-        let newPost = {
-          token: sessionStorage.getItem('userToken'),
-          post: this.post,
-          file: this.imageUrl,
-        }
+        const newPost = new FormData()
+        newPost.append('token', sessionStorage.getItem('userToken'))
+        newPost.append('post', this.post)
+        newPost.append('file', this.image, this.image.name)
         this.post = null
+        this.$refs.fileInput.type = 'text'
+        this.$refs.fileInput.type = 'file'
         this.$store.dispatch('newPost', newPost)
       } else {
         this.$router.push({name: 'SignIn'})

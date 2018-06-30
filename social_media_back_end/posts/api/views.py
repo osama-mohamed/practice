@@ -15,25 +15,23 @@ from posts.models import Posts
 
 
 class NewPostAPIView(APIView):
-  def post(self, request, *args, **kwargs):
+  def post(self, request):
     request_token = request.data.get('token')
     request_post = request.data.get('post')
     request_file = request.data.get('file')
-    print(request.data['file'])
-    print(request_file)
-    # print(request_file.name)
     token = Token.objects.filter(key=request_token).first()
     user = User.objects.filter(id=token.user_id, is_active=True)
     
-    print(request.data)
     if user.exists() and user.count() == 1:
       user_data = user.first()
-
       Posts.objects.create(
         user=user_data,
-        post=request_post
+        post=request_post,
+        image=request_file
       )
-      return Response({'message': {'success': True, 'message': 'post saved successfully'}}, status=HTTP_200_OK)
+      img = Posts.objects.filter(post=request_post).first().image
+
+      return Response({'message': {'success': True, 'message': 'post saved successfully', 'img': str(img)}}, status=HTTP_200_OK)
     else:
       return Response({'message': {'success': False, 'message': 'post can not be saved successfully'}}, status=HTTP_404_NOT_FOUND)
 

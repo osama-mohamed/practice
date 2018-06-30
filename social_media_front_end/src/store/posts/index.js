@@ -7,7 +7,6 @@ export default {
   },
   actions: {
       newPost ({commit}, payload) {
-        console.log(payload)
         Vue.http.post(`${this.state.shared.baseURL}posts/new_post/`, payload)
         .then(data => {
           console.log(data)
