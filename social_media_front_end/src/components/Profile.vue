@@ -20,13 +20,17 @@ export default {
     },
   computed: {
     user () {
+      // console.log(this.$store.getters.userData)
+      // console.log(this.$store.state.user.userData)
+      // return this.$store.getters.userData
+      // return this.$store.state.user.userData
       return this.$store.state.user.userData
     }
   },
   methods: {
     profile () {
-      if (sessionStorage.getItem('userToken')) {
-        this.$store.dispatch('profile', {token: sessionStorage.getItem('userToken')})
+      if (localStorage.getItem('userToken')) {
+        this.$store.dispatch('profile', {token: localStorage.getItem('userToken')})
       } else {
         this.$router.push({name: 'SignIn'})
       }

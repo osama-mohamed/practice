@@ -33,30 +33,37 @@ export default {
     user () {
       // console.log(this.$store.getters.userData)
       // console.log(this.$store.state.user.userData)
-      return this.$store.getters.userData
+      // return this.$store.getters.userData
       // return this.$store.state.user.userData
+      return this.$store.state.user.userData
     }
   },
+  // computed: {
+  //   user () {
+  //     return this.$store.getters.userData
+  //   }
+  // },
   methods: {
     fileChange(fileList) {
       this.image = fileList[0]
     },
     onSubmit () {
-      if (sessionStorage.getItem('userToken')) {
+      if (localStorage.getItem('userToken')) {
         if (this.image === null) {
           let newPost = {
-            token: sessionStorage.getItem('userToken'),
+            token: localStorage.getItem('userToken'),
             post: this.post
           }
           this.$store.dispatch('newPost', newPost)
         } else {
           const newPost = new FormData()
-          newPost.append('token', sessionStorage.getItem('userToken'))
+          newPost.append('token', localStorage.getItem('userToken'))
           newPost.append('post', this.post)
           newPost.append('file', this.image, this.image.name)
           this.$store.dispatch('newPost', newPost)
         }
         this.post = null
+        this.image = null
         this.$refs.fileInput.type = 'text'
         this.$refs.fileInput.type = 'file'
       } else {

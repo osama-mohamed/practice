@@ -7,10 +7,13 @@ export default {
   },
   actions: {
       newPost ({commit}, payload) {
-        Vue.http.post(`${this.state.shared.baseURL}posts/new_post/`, payload)
+        Vue.http.post(`${this.state.shared.baseURL}posts/new_post/`, payload, {
+          progress: uploadEvent => {
+            console.log('Upload Progress : ' + Math.round((uploadEvent.loaded / uploadEvent.total) * 100) + ' %')
+          }
+        }
+      )
         .then(data => {
-          console.log(data)
-          return data
         })
         .catch(error => {
           console.log(error)

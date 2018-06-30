@@ -5,7 +5,7 @@ export default {
     checkUsername: null,
     signInError: null,
     signInErrorMessage: null,
-    userData: null
+    userData: localStorage.getItem('userToken') || null
   },
   mutations: {
     setUser (state, payload) {
@@ -43,11 +43,11 @@ export default {
           // commit('setUser', data.body.user)
           this.state.signInError = data.body.message.success
           this.state.signInErrorMessage = data.body.message.message
-          if (sessionStorage.getItem('userToken')) {
-            sessionStorage.removeItem('userToken')
-            sessionStorage.setItem('userToken', data.body.user.token)
+          if (localStorage.getItem('userToken')) {
+            localStorage.removeItem('userToken')
+            localStorage.setItem('userToken', data.body.user.token)
           } else {
-            sessionStorage.setItem('userToken', data.body.user.token)
+            localStorage.setItem('userToken', data.body.user.token)
           }
           return data
         })

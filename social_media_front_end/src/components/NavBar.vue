@@ -66,9 +66,9 @@ export default {
   },
   methods: {
     async signOut () {
-      if (sessionStorage.getItem('userToken')) {
-        const logOutUser = await this.$store.dispatch('SignOut', {token: sessionStorage.getItem('userToken')})
-        sessionStorage.removeItem('userToken')
+      if (localStorage.getItem('userToken')) {
+        const logOutUser = await this.$store.dispatch('SignOut', {token: localStorage.getItem('userToken')})
+        localStorage.removeItem('userToken')
         this.$router.push({name: 'HomePage'})
       }
     }
