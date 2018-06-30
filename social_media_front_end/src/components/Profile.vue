@@ -8,8 +8,8 @@
         <img class="card-img-top" v-if="post.image" :src="'static/uploads/' + post.image" :alt="post.post">
         <div class="card-body">
           <h5 class="card-title">#{{post.id}}</h5>
-          <h5 class="card-title">{{post.added}}</h5>
-          <h5 class="card-title">{{post.updated}}</h5>
+          <h5 class="card-title">{{post.added | DateTime}}</h5>
+          <h5 class="card-title">{{post.updated | DateTime}}</h5>
           <p class="card-text">{{post.post}}</p>
           <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
         </div>
