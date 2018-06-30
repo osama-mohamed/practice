@@ -17,7 +17,7 @@ export default {
   },
   created() {
     this.profile()
-    },
+  },
   computed: {
     user () {
       // console.log(this.$store.getters.userData)

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-if="user">
+  <div v-if="user">
+    <div>
       <h1 class="text-center">New Post</h1>
     </div>
     <form @submit.prevent="onSubmit()">
@@ -31,18 +31,13 @@ export default {
   },
   computed: {
     user () {
-      // console.log(this.$store.getters.userData)
-      // console.log(this.$store.state.user.userData)
-      // return this.$store.getters.userData
-      // return this.$store.state.user.userData
-      return this.$store.state.user.userData
+      if (localStorage.getItem('userToken')) {
+        return this.$store.state.user.userData
+      } else {
+        this.$router.push({name: 'SignIn'})
+      }
     }
   },
-  // computed: {
-  //   user () {
-  //     return this.$store.getters.userData
-  //   }
-  // },
   methods: {
     fileChange(fileList) {
       this.image = fileList[0]
