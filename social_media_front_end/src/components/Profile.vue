@@ -48,6 +48,13 @@ export default {
       posts: [],
     }
   },
+  beforeRouteEnter (from, to, content) {
+    console.log(from)
+    console.log()
+    console.log(to)
+    console.log()
+    console.log(content)
+  },
   created() {
     this.profile()
     this.profilePosts
