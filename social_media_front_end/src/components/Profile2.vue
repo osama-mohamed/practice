@@ -52,17 +52,28 @@ export default {
     }
   },
   beforeRouteEnter (from, to, next) {
-    Vue.http.post(`http://localhost:8000/api/posts/profile_posts_for_username/`, {username: from.params.username})
-      .then(data => {
-        next(vm=>{
-        vm.posts = data.body.user.posts
-        vm.username = data.body.user.username
+    next(vm => {
+      vm.$store.dispatch('ProfilePostsForUsername', {username: from.params.username})
+        .then(data => {
+          console.log(data)
+          vm.posts = data.posts
+          vm.username = data.username
         })
-        return data.body.user.posts
-      })
-      .catch(error => {
-        console.log(error)
-      })
+        .catch(error => {
+          console.log(error)
+        })
+    })
+    // return Vue.http.post(`http://localhost:8000/api/posts/profile_posts_for_username/`, {username: from.params.username})
+    //   .then(data => {
+    //     next(vm=>{
+    //     vm.posts = data.body.user.posts
+    //     vm.username = data.body.user.username
+    //     })
+    //     return data.body.user.posts
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
   },
   created() {
     // this.profile()
