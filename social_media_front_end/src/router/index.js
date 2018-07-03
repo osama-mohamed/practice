@@ -4,6 +4,7 @@ import SignUp from '@/components/SignUp'
 import SignIn from '@/components/SignIn'
 import HomePage from '@/components/HomePage'
 import Profile from '@/components/Profile'
+import Profile2 from '@/components/Profile2'
 import NewPost from '@/components/NewPost'
 
 Vue.use(Router)
@@ -35,6 +36,11 @@ export default new Router({
       path: '/new-post',
       name: 'NewPost',
       component: NewPost
+    },
+    {
+      path: '/profile/:username',
+      name: 'Profile2',
+      component: Profile2
     },
   ]
 })

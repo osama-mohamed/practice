@@ -49,7 +49,7 @@ class ProfilePostsAPIView(APIView):
     
     if token.exists() and token.count() == 1:
       user_id = token.first().user_id
-      qs = Posts.objects.filter(user_id=user_id)
+      qs = Posts.objects.filter(user_id=user_id).order_by('-id')
       posts = []
       for post in qs:
         all_posts = {
@@ -63,5 +63,29 @@ class ProfilePostsAPIView(APIView):
         
       return Response({'message': {'success': True, 'message': 'posts retrives successfully'}, 
                        'user': {'posts': posts}}, status=HTTP_200_OK)
+    else:
+      return Response({'message': {'success': False, 'message': 'posts does not retives successfully'}}, status=HTTP_404_NOT_FOUND)
+
+
+class ProfilePostsForUsernameAPIView(APIView):
+  def post(self, request):
+    print(request.data)
+    username = request.data.get('username')
+    if username:
+      qs = Posts.objects.filter(user_id__username=username).order_by('-id')
+      print(qs)
+      posts = []
+      for post in qs:
+        all_posts = {
+          "id": post.id,
+          "post": post.post,
+          "image": str(post.image),
+          "added": post.added,
+          "updated": post.updated
+        }
+        posts.append(all_posts)
+        
+      return Response({'message': {'success': True, 'message': 'posts retrives successfully'}, 
+                       'user': {'username': username, 'posts': posts}}, status=HTTP_200_OK)
     else:
       return Response({'message': {'success': False, 'message': 'posts does not retives successfully'}}, status=HTTP_404_NOT_FOUND)

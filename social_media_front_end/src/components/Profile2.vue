@@ -2,14 +2,14 @@
   <div v-if="user">
     <div>
       <h1 class="text-center">Profile</h1>
-      <h2 class="text-center">{{user}}</h2>
+      <h2 class="text-center">{{username}}</h2>
 
       <div class="container">
         <div class="row">
-          <div v-for="post in posts" :key="post.id" class="card col-sm-6 offset-sm-3 my-2" style="width: 49%;">
+          <div v-for="post in posts" :key="post.id" class="card col-sm-6 offset-sm-3 my-2">
             <div>
               <img class="mr-2 mt-4" style="border-radius: 50%; width: 40px; height: 40px;" v-if="post.image" :src="'/static/uploads/' + post.image" :alt="post.post">
-              <span style="top: 3px; position: relative; font-size: 14px; font-weight: 600; color: #365899;">{{user.username}}</span>
+              <span style="top: 3px; position: relative; font-size: 14px; font-weight: 600; color: #365899;">{{username}}</span>
               <span style="position: absolute; top: 46px; left: 69px; font-size: 12px;">{{post.added | DateTime}}</span>
             </div>
             <div class="">
@@ -41,16 +41,32 @@
 </template>
 
 <script>
+import Vue from 'vue'
+
 export default {
   name: 'Profile',
   data () {
     return {
       posts: [],
+      username: null
     }
   },
+  beforeRouteEnter (from, to, next) {
+    Vue.http.post(`http://localhost:8000/api/posts/profile_posts_for_username/`, {username: from.params.username})
+      .then(data => {
+        next(vm=>{
+        vm.posts = data.body.user.posts
+        vm.username = data.body.user.username
+        })
+        return data.body.user.posts
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  },
   created() {
-    this.profile()
-    this.profilePosts
+    // this.profile()
+    // this.profilePosts
   },
   computed: {
     user () {
@@ -60,19 +76,15 @@ export default {
       // return this.$store.state.user.userData
       return this.$store.state.user.userData
     },
-    async profilePosts () {
-      const posts = await this.$store.dispatch('profilePosts', {token: localStorage.getItem('userToken')})
-      this.posts = posts
-    },
   },
   methods: {
-    profile () {
-      if (localStorage.getItem('userToken')) {
-        this.$store.dispatch('profile', {token: localStorage.getItem('userToken')})
-      } else {
-        this.$router.push({name: 'SignIn'})
-      }
-    },
+    // profile () {
+    //   if (localStorage.getItem('userToken')) {
+    //     this.$store.dispatch('profile', {token: localStorage.getItem('userToken')})
+    //   } else {
+    //     this.$router.push({name: 'SignIn'})
+    //   }
+    // },
     // async profilePosts () {
     //   const posts = await this.$store.dispatch('profilePosts', {token: localStorage.getItem('userToken')})
     //   this.posts = posts
