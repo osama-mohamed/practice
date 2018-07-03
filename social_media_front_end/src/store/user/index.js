@@ -71,6 +71,15 @@ export default {
           console.log(error)
         })
       },
+      profilePic ({commit}, payload) {
+        return Vue.http.post(`${this.state.shared.baseURL}accounts/profile_pic/`, payload)
+        .then(data => {
+          return data.body
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      }
   },
   getters: {
     userData (state) {

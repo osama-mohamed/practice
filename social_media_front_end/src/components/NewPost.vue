@@ -46,6 +46,7 @@ export default {
             post: this.post
           }
           this.$store.dispatch('newPost', newPost)
+          this.$router.push({name: 'Profile'})
         } else {
           const newPost = new FormData()
           newPost.append('token', localStorage.getItem('userToken'))

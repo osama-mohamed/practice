@@ -104,3 +104,18 @@ class ProfileAPIView(APIView):
     else:
       return Response({'message': {'success': False, 'message': 'user not found'}}, status=HTTP_404_NOT_FOUND)
 
+
+class ProfilePicAPIView(APIView):
+  def post(self, request):
+    request_token = request.data.get('token')
+    request_file = request.data.get('file')
+    token = Token.objects.filter(key=request_token).first()
+    user = Account.objects.filter(user_id=token.user_id)
+    if user.exists() and user.count() == 1:
+      user_data = user.first()
+      user_data.image = request_file
+      user_data.save()
+        
+      return Response({'message': {'success': True, 'message': 'user profile image changed successfully'}}, status=HTTP_200_OK)
+    else:
+      return Response({'message': {'success': False, 'message': 'user profile image not changed'}}, status=HTTP_404_NOT_FOUND)

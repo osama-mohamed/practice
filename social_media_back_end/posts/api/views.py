@@ -69,11 +69,9 @@ class ProfilePostsAPIView(APIView):
 
 class ProfilePostsForUsernameAPIView(APIView):
   def post(self, request):
-    print(request.data)
     username = request.data.get('username')
     if username:
-      qs = Posts.objects.filter(user_id__username=username).order_by('-id')
-      print(qs)
+      qs = Posts.objects.filter(user_id__username=username, publish=True).order_by('-id')
       posts = []
       for post in qs:
         all_posts = {
@@ -84,8 +82,9 @@ class ProfilePostsForUsernameAPIView(APIView):
           "updated": post.updated
         }
         posts.append(all_posts)
+      user_profile_pic = Account.objects.filter(user_id__username=username).first()
         
       return Response({'message': {'success': True, 'message': 'posts retrives successfully'}, 
-                       'user': {'username': username, 'posts': posts}}, status=HTTP_200_OK)
+                       'user': {'username': username, 'posts': posts, 'userProfilePic': str(user_profile_pic.image)}}, status=HTTP_200_OK)
     else:
       return Response({'message': {'success': False, 'message': 'posts does not retives successfully'}}, status=HTTP_404_NOT_FOUND)

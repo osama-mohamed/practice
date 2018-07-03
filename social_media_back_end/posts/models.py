@@ -15,6 +15,8 @@ class Posts(models.Model):
   image = models.ImageField(upload_to=get_image_path, null=True)
   sound = models.CharField(max_length=1000, null=True)
   video = models.CharField(max_length=1000, null=True)
+  publish = models.BooleanField(default=True)
+  block_comment = models.BooleanField(default=False)
   added = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
 

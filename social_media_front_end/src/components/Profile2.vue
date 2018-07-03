@@ -8,7 +8,7 @@
         <div class="row">
           <div v-for="post in posts" :key="post.id" class="card col-sm-6 offset-sm-3 my-2">
             <div>
-              <img class="mr-2 mt-4" style="border-radius: 50%; width: 40px; height: 40px;" v-if="post.image" :src="'/static/uploads/' + post.image" :alt="post.post">
+              <img class="mr-2 mt-4" style="border-radius: 50%; width: 40px; height: 40px;" v-if="userProfilePic" :src="'/static/uploads/' + userProfilePic" :alt="post.post">
               <span style="top: 3px; position: relative; font-size: 14px; font-weight: 600; color: #365899;">{{username}}</span>
               <span style="position: absolute; top: 46px; left: 69px; font-size: 12px;">{{post.added | DateTime}}</span>
             </div>
@@ -29,7 +29,7 @@
             </div>
             <div class="mb-3">
               <form class="form-group">
-                <img class="mr-2 mt-4" style="border-radius: 50%; width: 40px; height: 40px;" v-if="post.image" :src="'/static/uploads/' + post.image" :alt="post.post">
+                <img class="mr-2 mt-4" style="border-radius: 50%; width: 40px; height: 40px;" v-if="userProfilePic" :src="'/static/uploads/' + userProfilePic" :alt="post.post">
                 <textarea type="text" class="form-control" placeholder="Write a comment ..." style="position: relative; top: -35px; left: 48px; max-width: 90%; border-radius: 20px; overflow: hidden; height: 38px; min-height: 38px;"></textarea>
               </form>
             </div>
@@ -48,57 +48,43 @@ export default {
   data () {
     return {
       posts: [],
-      username: null
+      username: null,
+      userProfilePic: null,
     }
   },
   beforeRouteEnter (from, to, next) {
     next(vm => {
       vm.$store.dispatch('ProfilePostsForUsername', {username: from.params.username})
         .then(data => {
-          console.log(data)
           vm.posts = data.posts
           vm.username = data.username
+          vm.userProfilePic = data.userProfilePic
         })
         .catch(error => {
           console.log(error)
         })
     })
-    // return Vue.http.post(`http://localhost:8000/api/posts/profile_posts_for_username/`, {username: from.params.username})
-    //   .then(data => {
-    //     next(vm=>{
-    //     vm.posts = data.body.user.posts
-    //     vm.username = data.body.user.username
-    //     })
-    //     return data.body.user.posts
-    //   })
-    //   .catch(error => {
-    //     console.log(error)
-    //   })
   },
   created() {
-    // this.profile()
-    // this.profilePosts
+    // this.post()
   },
   computed: {
     user () {
-      // console.log(this.$store.getters.userData)
-      // console.log(this.$store.state.user.userData)
-      // return this.$store.getters.userData
-      // return this.$store.state.user.userData
       return this.$store.state.user.userData
     },
   },
   methods: {
-    // profile () {
-    //   if (localStorage.getItem('userToken')) {
-    //     this.$store.dispatch('profile', {token: localStorage.getItem('userToken')})
-    //   } else {
-    //     this.$router.push({name: 'SignIn'})
-    //   }
-    // },
-    // async profilePosts () {
-    //   const posts = await this.$store.dispatch('profilePosts', {token: localStorage.getItem('userToken')})
-    //   this.posts = posts
+    // post () {
+    //   console.log(this.username)
+    //   this.$store.dispatch('ProfilePostsForUsername', {username: this.username})
+    //   .then(data => {
+    //     this.posts = data.posts
+    //     this.username = data.username
+    //     this.userProfilePic = data.userProfilePic
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
     // }
   }
 }
