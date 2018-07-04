@@ -11,6 +11,9 @@ export default {
     setUser (state, payload) {
       state.userData = payload
     },
+    userData (state, payload) {
+      state.userData = payload
+    },
   },
   actions: {
     checkUsername ({commit}, payload) {
@@ -41,6 +44,9 @@ export default {
         .then(data => {
           this.state.signInError = data.body.message.success
           this.state.signInErrorMessage = data.body.message.message
+
+          commit('userData', data.body.message.message)
+
           if (localStorage.getItem('userToken')) {
             localStorage.removeItem('userToken')
             localStorage.setItem('userToken', data.body.user.token)
@@ -62,16 +68,16 @@ export default {
           console.log(error)
         })
       },
-      profile ({commit}, payload) {
-        Vue.http.post(`${this.state.shared.baseURL}accounts/profile/`, payload)
-        .then(data => {
-          data.headers.token = data.body.user.token
-          this.state.user.userData = data.body.user
-        })
-        .catch(error => {
-          console.log(error)
-        })
-      },
+      // profile ({commit}, payload) {
+      //   Vue.http.post(`${this.state.shared.baseURL}accounts/profile/`, payload)
+      //   .then(data => {
+      //     data.headers.token = data.body.user.token
+      //     this.state.user.userData = data.body.user
+      //   })
+      //   .catch(error => {
+      //     console.log(error)
+      //   })
+      // },
       profilePic ({commit}, payload) {
         return Vue.http.post(`${this.state.shared.baseURL}accounts/profile_pic/`, payload)
         .then(data => {
@@ -85,6 +91,6 @@ export default {
   getters: {
     userData (state) {
       return state.userData
-    }
+    },
   }
 }

@@ -88,8 +88,12 @@ export default {
       image: null
     }
   },
+  created () {
+  },
   computed: {
     user () {
+      // console.log(this.$store.state.user.userData)
+      // console.log(this.$store.getters.userData)
       return this.$store.state.user.userData
     },
   },
