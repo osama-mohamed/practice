@@ -86,9 +86,9 @@ export default {
       //     console.log(error)
     //   })
     // }
-    deletePost (e) {
-      console.log(e.path[3].dataset.id)
-      this.$store.dispatch('deleteProfilePost', {id: e.path[3].dataset.id})
+    async deletePost (e) {
+      await this.$store.dispatch('deleteProfilePost', {id: e.path[3].dataset.id})
+      e.path[3].remove()
 
       // console.log(e.path[3].getAttribute('data-id'))
       // console.log(e)

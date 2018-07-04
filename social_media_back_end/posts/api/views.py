@@ -88,3 +88,15 @@ class ProfilePostsForUsernameAPIView(APIView):
                        'user': {'username': username, 'posts': posts, 'userProfilePic': str(user_profile_pic.image)}}, status=HTTP_200_OK)
     else:
       return Response({'message': {'success': False, 'message': 'posts does not retives successfully'}}, status=HTTP_404_NOT_FOUND)
+
+
+
+class DeleteProfilePostAPIView(APIView):
+  def post(self, request):
+    request_id = request.data.get('id')
+    if request_id:
+      qs = Posts.objects.filter(id=request_id, publish=True).first()
+      qs.delete()
+      return Response({'message': {'success': True, 'message': 'post deleted successfully'}}, status=HTTP_200_OK)
+    else:
+      return Response({'message': {'success': False, 'message': 'post does not deleted successfully'}}, status=HTTP_404_NOT_FOUND)

@@ -37,6 +37,16 @@ export default {
           console.log(error)
         })
       },
+      deleteProfilePost ({commit}, payload) {
+        return Vue.http.post(`${this.state.shared.baseURL}posts/delete_profile_post/`, payload)
+        .then(data => {
+          return data
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      },
+
   },
   getters: {
     
