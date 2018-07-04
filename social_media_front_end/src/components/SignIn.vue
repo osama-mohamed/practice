@@ -48,14 +48,14 @@ export default {
       }
     },
     async onSubmit () {
-      let user = {
+      let userInfo = {
         username: this.username,
         password: this.password
       }
-      const userStatus = await this.$store.dispatch('SignIn', user)
+      const userStatus = await this.$store.dispatch('SignIn', userInfo)
       this.checkSignIn()
       if (this.signInError === false) {
-        this.$router.push({name: 'Profile'})
+        this.$router.push({name: 'Profile', params: {username: userInfo.username}})
         this.username= null
         this.password= null
         this.passwordError= false

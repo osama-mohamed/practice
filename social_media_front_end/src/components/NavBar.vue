@@ -18,7 +18,7 @@
           <router-link class="nav-link" :to="{name: 'SignIn'}">Sign In</router-link>
         </li>
         <li class="nav-item" v-if="user">
-          <router-link class="nav-link" :to="{name: 'Profile'}">Profile</router-link>
+          <router-link class="nav-link" :to="{name: 'Profile', params: {username: 'OSAMA.MOHAMED'}}">Profile</router-link>
         </li>
         <li class="nav-item" v-if="user">
           <router-link class="nav-link" :to="{name: 'NewPost'}">New Post</router-link>

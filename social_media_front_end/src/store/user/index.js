@@ -47,6 +47,7 @@ export default {
           } else {
             localStorage.setItem('userToken', data.body.user.token)
           }
+          return data
         })
         .catch(error => {
           console.log(error)

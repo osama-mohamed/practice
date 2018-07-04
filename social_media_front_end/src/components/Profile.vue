@@ -72,27 +72,43 @@ export default {
         })
     })
   },
+  beforeCreate () {
+    this.$store.dispatch('ProfilePostsForUsername', {username: this.$route.params.username})
+      .then(data => {
+        console.log(data)
+        this.posts = data.posts
+        this.username = data.username
+        this.userProfilePic = data.userProfilePic
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  },
   created() {
-    // this.post()
+    this.post()
   },
   computed: {
     user () {
       return this.$store.state.user.userData
     },
   },
+  watch: {
+    '$route': 'post',
+    '$route': 'beforeRouteEnter'
+  },
   methods: {
-    // post () {
-    //   console.log(this.username)
-    //   this.$store.dispatch('ProfilePostsForUsername', {username: this.username})
-    //   .then(data => {
-      //     this.posts = data.posts
-    //     this.username = data.username
-    //     this.userProfilePic = data.userProfilePic
-    //   })
-    //   .catch(error => {
-      //     console.log(error)
-    //   })
-    // }
+    async post () {
+      await this.$store.dispatch('ProfilePostsForUsername', {username: this.$route.params.username})
+        .then(data => {
+          console.log(data)
+          this.posts = data.posts
+          this.username = data.username
+          this.userProfilePic = data.userProfilePic
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
     async deletePost (e) {
       const deletePostData = await this.$store.dispatch('deleteProfilePost', {id: e.path[3].dataset.id})
       this.alertMessage = deletePostData.body.message.message
