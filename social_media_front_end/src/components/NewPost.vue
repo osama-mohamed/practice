@@ -38,22 +38,22 @@ export default {
     fileChange(fileList) {
       this.image = fileList[0]
     },
-    onSubmit () {
+    async onSubmit () {
       if (localStorage.getItem('userToken')) {
         if (this.image === null) {
           let newPost = {
             token: localStorage.getItem('userToken'),
             post: this.post
           }
-          this.$store.dispatch('newPost', newPost)
-          this.$router.push({name: 'Profile'})
+          const response = await this.$store.dispatch('newPost', newPost)
+          this.$router.push({name: 'Profile', params: {username: response.user.username}})
         } else {
           const newPost = new FormData()
           newPost.append('token', localStorage.getItem('userToken'))
           newPost.append('post', this.post)
           newPost.append('file', this.image, this.image.name)
-          this.$store.dispatch('newPost', newPost)
-          this.$router.push({name: 'Profile'})
+          const response = await this.$store.dispatch('newPost', newPost)
+          this.$router.push({name: 'Profile', params: {username: response.user.username}})
         }
         this.post = null
         this.image = null

@@ -30,6 +30,7 @@ class NewPostAPIView(APIView):
     
     if user.exists() and user.count() == 1:
       user_data = user.first()
+      username = user_data.username
       Posts.objects.create(
         user=user_data,
         post=request_post,
@@ -37,7 +38,8 @@ class NewPostAPIView(APIView):
       )
       img = Posts.objects.filter(post=request_post).first().image
 
-      return Response({'message': {'success': True, 'message': 'post saved successfully', 'img': str(img)}}, status=HTTP_200_OK)
+      return Response({'message': {'success': True, 'message': 'post saved successfully', 'img': str(img)},
+                       'user': {'username': username}}, status=HTTP_200_OK)
     else:
       return Response({'message': {'success': False, 'message': 'post can not be saved successfully'}}, status=HTTP_404_NOT_FOUND)
 

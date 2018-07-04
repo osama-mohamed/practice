@@ -4,7 +4,7 @@ import SignUp from '@/components/SignUp'
 import SignIn from '@/components/SignIn'
 import HomePage from '@/components/HomePage'
 import Profile from '@/components/Profile'
-import Profile2 from '@/components/Profile2'
+// import Profile2 from '@/components/Profile2'
 import NewPost from '@/components/NewPost'
 
 Vue.use(Router)
@@ -27,11 +27,11 @@ export default new Router({
       name: 'HomePage',
       component: HomePage
     },
-    {
-      path: '/profile',
-      name: 'Profile',
-      component: Profile
-    },
+    // {
+    //   path: '/profile',
+    //   name: 'Profile',
+    //   component: Profile
+    // },
     {
       path: '/new-post',
       name: 'NewPost',
@@ -39,8 +39,8 @@ export default new Router({
     },
     {
       path: '/profile/:username',
-      name: 'Profile2',
-      component: Profile2
+      name: 'Profile',
+      component: Profile
     },
   ]
 })
