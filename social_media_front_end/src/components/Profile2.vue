@@ -3,6 +3,12 @@
     <div>
       <h1 class="text-center">Profile</h1>
       <h2 class="text-center">{{username}}</h2>
+      <div v-if="alertMessage" class="alert alert-success alert-dismissible fade show" role="alert" style="margin: auto; max-width: 50%;">
+        {{alertMessage}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
       <div class="container">
         <div class="row">
@@ -50,6 +56,7 @@ export default {
       posts: [],
       username: null,
       userProfilePic: null,
+      alertMessage: null,
     }
   },
   beforeRouteEnter (from, to, next) {
@@ -87,15 +94,12 @@ export default {
     //   })
     // }
     async deletePost (e) {
-      await this.$store.dispatch('deleteProfilePost', {id: e.path[3].dataset.id})
+      const deletePostData = await this.$store.dispatch('deleteProfilePost', {id: e.path[3].dataset.id})
+      this.alertMessage = deletePostData.body.message.message
+      setTimeout(() => {
+        this.alertMessage = null
+      }, 3000)
       e.path[3].remove()
-
-      // console.log(e.path[3].getAttribute('data-id'))
-      // console.log(e)
-      // console.log(e.value)
-      // console.log(e.target.dataset)
-      // console.log(e.target.getAttribute('data-id'))
-      // console.log(e.currentTarget.getAttribute('data-id'))
     }
   }
 }

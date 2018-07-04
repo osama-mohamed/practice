@@ -1,5 +1,6 @@
 import os
 from django.db import models
+from django.db.models.signals import post_save, pre_delete
 from django.conf import settings
 
 
@@ -22,3 +23,12 @@ class Posts(models.Model):
 
   def __str__(self):
     return self.user.username
+
+
+def pre_delete_post_img(sender, instance, *args, **kwargs):
+  if instance.image:
+    if os.path.isfile(instance.image.path):
+      os.remove(instance.image.path)
+
+
+pre_delete.connect(pre_delete_post_img, sender=Posts)
