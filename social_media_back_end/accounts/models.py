@@ -5,11 +5,16 @@ from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
 import os
+from shutil import rmtree
 
 User = settings.AUTH_USER_MODEL
 
 def get_image_path(instance, filename):
-
+  # print(os.path.dirname(settings.BASE_DIR) + r"\social_media_front_end\static\uploads\user\{}\profile".format(instance.user.id))
+  # print(os.path.exists(os.path.dirname(settings.BASE_DIR) + r"\social_media_front_end\static\uploads\user\{}\profile".format(instance.user.id)))
+  if os.path.exists(os.path.dirname(settings.BASE_DIR) + "/social_media_front_end/static/uploads/user/{}/profile".format(instance.user.id)):
+  # if os.path.exists(os.path.dirname(settings.BASE_DIR) + r"\social_media_front_end\static\uploads\user\{}\profile\\".format(instance.user.id)):
+    rmtree(os.path.dirname(settings.BASE_DIR) + "/social_media_front_end/static/uploads/user/{}/profile/".format(instance.user.id))
   return os.path.join('user', str(instance.user.id) + '/profile/', filename)
 
 
