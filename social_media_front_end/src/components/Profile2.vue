@@ -6,7 +6,7 @@
 
       <div class="container">
         <div class="row">
-          <div v-for="post in posts" :key="post.id" class="card col-sm-6 offset-sm-3 my-2">
+          <div v-for="post in posts" :key="post.id" :data-id="post.id" class="card col-sm-6 offset-sm-3 my-2">
             <div>
               <img class="mr-2 mt-4" style="border-radius: 50%; width: 40px; height: 40px;" v-if="userProfilePic" :src="'/static/uploads/' + userProfilePic" :alt="post.post">
               <span style="top: 3px; position: relative; font-size: 14px; font-weight: 600; color: #365899;">{{username}}</span>
@@ -18,7 +18,7 @@
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="#">Edit Post</a>
-                <a class="dropdown-item" href="#">Delete</a>
+                <a class="dropdown-item" href="#" @click.prevent="deletePost">Delete</a>
               </div>
             </div>
             <p class="card-text mt-1">{{post.post}}</p>
@@ -78,14 +78,25 @@ export default {
     //   console.log(this.username)
     //   this.$store.dispatch('ProfilePostsForUsername', {username: this.username})
     //   .then(data => {
-    //     this.posts = data.posts
+      //     this.posts = data.posts
     //     this.username = data.username
     //     this.userProfilePic = data.userProfilePic
     //   })
     //   .catch(error => {
-    //     console.log(error)
+      //     console.log(error)
     //   })
     // }
+    deletePost (e) {
+      console.log(e.path[3].dataset.id)
+      this.$store.dispatch('deleteProfilePost', {id: e.path[3].dataset.id})
+
+      // console.log(e.path[3].getAttribute('data-id'))
+      // console.log(e)
+      // console.log(e.value)
+      // console.log(e.target.dataset)
+      // console.log(e.target.getAttribute('data-id'))
+      // console.log(e.currentTarget.getAttribute('data-id'))
+    }
   }
 }
 </script>

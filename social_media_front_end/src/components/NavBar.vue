@@ -110,7 +110,7 @@ export default {
       const u = await this.$store.dispatch('profilePic', profilePic)
       // console.log(u)
       // console.log(this.username)
-      this.$store.dispatch('ProfilePostsForUsername', {username: 'OSAMA.MOHAMED'})
+      // this.$store.dispatch('ProfilePostsForUsername', {username: 'OSAMA.MOHAMED'})
       this.$refs.profilePic.type = 'text'
       this.$refs.profilePic.type = 'file'
     },
