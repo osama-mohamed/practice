@@ -10,12 +10,7 @@ from shutil import rmtree
 User = settings.AUTH_USER_MODEL
 
 def get_image_path(instance, filename):
-  # print(os.path.dirname(settings.BASE_DIR) + r"\social_media_front_end\static\uploads\user\{}\profile".format(instance.user.id))
-  # print(os.path.exists(os.path.dirname(settings.BASE_DIR) + r"\social_media_front_end\static\uploads\user\{}\profile".format(instance.user.id)))
-  if os.path.exists(os.path.dirname(settings.BASE_DIR) + "/social_media_front_end/static/uploads/user/{}/profile".format(instance.user.id)):
-  # if os.path.exists(os.path.dirname(settings.BASE_DIR) + r"\social_media_front_end\static\uploads\user\{}\profile\\".format(instance.user.id)):
-    rmtree(os.path.dirname(settings.BASE_DIR) + "/social_media_front_end/static/uploads/user/{}/profile/".format(instance.user.id))
-  return os.path.join('user', str(instance.user.id) + '/profile/', filename)
+  return os.path.join('user', str(instance.user.id) + '\profile', filename)
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)

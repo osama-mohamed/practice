@@ -15,7 +15,9 @@
           <div v-for="post in posts" :key="post.id" :data-id="post.id" class="card col-sm-6 offset-sm-3 my-2">
             <div>
               <img class="mr-2 mt-4" style="border-radius: 50%; width: 40px; height: 40px;" v-if="userProfilePic" :src="'/static/uploads/' + userProfilePic" :alt="post.post">
-              <span style="top: 3px; position: relative; font-size: 14px; font-weight: 600; color: #365899;">{{username}}</span>
+              <span style="top: 3px; position: relative; font-size: 14px; font-weight: 600; color: #365899;">
+                {{username}}
+              </span>
               <span style="position: absolute; top: 46px; left: 69px; font-size: 12px;">{{post.added | DateTime}}</span>
             </div>
             <div class="">
