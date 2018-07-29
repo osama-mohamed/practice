@@ -6,7 +6,13 @@
 
     <ul>
         {% for my_item in my_list %}
-        <li>{{ forloop.counter }} - {{ my_item }}</li>
+            {% if my_item == 113 %}
+                <li>{{ forloop.counter }} - {{ my_item |add:10 }}</li>
+            {% elif my_item == "osama" %}
+                <li>{{ forloop.counter }} - {{ my_item }} -> hey this is you osama</li>
+            {% else %}
+                <li>{{ forloop.counter }} - {{ my_item }}</li>
+            {% endif %}
         {% endfor %}
     </ul>
 {% endblock %}
