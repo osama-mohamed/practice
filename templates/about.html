@@ -3,4 +3,10 @@
 {% block content %}
     about
     <p>{{ my_text }}, {{ my_number }}, {{ my_list }} </p>
+
+    <ul>
+        {% for my_item in my_list %}
+        <li>{{ forloop.counter }} - {{ my_item }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}
