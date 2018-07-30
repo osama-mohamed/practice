@@ -21,7 +21,7 @@ from products.views import product_create_view, product_detail_view
 urlpatterns = [
     path('', home_view, name='home'),
     path('product/', product_detail_view, name='product_detail'),
-    path('product/create', product_create_view, name='product_create'),
+    path('product/create/', product_create_view, name='product_create'),
     path('about/', about_view, name='about'),
     path('contact/', contact_view, name='contact'),
     path('admin/', admin.site.urls),

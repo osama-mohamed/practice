@@ -1,17 +1,33 @@
 from django.shortcuts import render
 
 from .models import Product
-from .forms import ProductForm
+from .forms import ProductForm, RawProductForm
 
 # Create your views here. 
 def product_create_view(request):
-    if request.method == 'POST':
-        my_new_title = request.POST.get('title')
-        # Product.objects.create(title=my_new_title)
+    my_form = RawProductForm()
+    if request.method == "POST":
+        my_form = RawProductForm(request.POST)
+        if my_form.is_valid():
+            # now the data is good
+            print(my_form.cleaned_data)
+            Product.objects.create(**my_form.cleaned_data)
+        else:
+            print(my_form.errors)
     context = {
-        
+        "form": my_form
     }
-    return render(request, 'products/product_create.html', context)
+    return render(request, "products/product_create.html", context)
+
+
+# def product_create_view(request):
+#     if request.method == 'POST':
+#         my_new_title = request.POST.get('title')
+#         # Product.objects.create(title=my_new_title)
+#     context = {
+        
+#     }
+#     return render(request, 'products/product_create.html', context)
 
 
 # def product_create_view(request):
@@ -26,7 +42,7 @@ def product_create_view(request):
 
 
 def product_detail_view(request):
-    qs = Product.objects.get(id=1)
+    # qs = Product.objects.get(id=1)
     # context = {
     #     'title': qs.title,
     #     'description': qs.description,
@@ -36,7 +52,7 @@ def product_detail_view(request):
     #     'featured': qs.featured
     # }
     context = {
-        'object': qs
+        # 'object': qs
     }
     # return render(request, 'product/detail.html', context)
     return render(request, 'products/product_detail.html', context)
