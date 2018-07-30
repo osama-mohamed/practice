@@ -3,6 +3,7 @@
 {% block content %}
     about
     <p>{{ my_text }}, {{ my_number }}, {{ my_list }} </p>
+    <p>{{ my_html |safe }} </p>
 
     <ul>
         {% for my_item in my_list %}
