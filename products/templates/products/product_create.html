@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- GOOGLE SEARCH -->
+<!-- <form action='http://www.google.com/search' method='GET'>
+    <input type='text' name='q'/>
+</form> -->
+
+
+<form action='.' method='POST'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <!-- <input type='text' name='title' placeholder='title'/> -->
+    <input type='submit' value='Save' />
+</form>
+{% endblock %}
