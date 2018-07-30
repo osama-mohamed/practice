@@ -63,7 +63,6 @@ def product_create_view(request):
 
 
 
-
 def product_detail_view(request):
     # qs = Product.objects.get(id=1)
     # context = {
@@ -78,4 +77,12 @@ def product_detail_view(request):
         # 'object': qs
     }
     # return render(request, 'product/detail.html', context)
+    return render(request, 'products/product_detail.html', context)
+
+
+def dynamic_product_detail_view(request, my_id):
+    obj = Product.objects.get(id=my_id)
+    context = {
+       'object' : obj
+    }
     return render(request, 'products/product_detail.html', context)
