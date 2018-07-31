@@ -3,7 +3,8 @@
 {% block content %}
 
 {% for instance in object_list %}
-    <p>#{{ instance.id }} - {{ instance.title }} - ${{ instance.price }}</p>
+    <!-- <p>#{{ instance.id }} - <a href="/products/{{ instance.id }}/">{{ instance.title }}</a> - ${{ instance.price }}</p> -->
+    <p>#{{ instance.id }} - <a href="{{ instance.get_absolute_url }}">{{ instance.title }}</a> - ${{ instance.price }}</p>
     <hr>
 {% endfor %}
 
