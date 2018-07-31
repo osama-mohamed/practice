@@ -10,5 +10,10 @@ class Product(models.Model):
     featured    = models.BooleanField(default=False)
 
     def get_absolute_url(self):
-        # return f'/products/{self.id}/'
-        return reverse('product_detail', kwargs={'my_id': self.id})
+        return reverse('products:product_detail', kwargs={'my_id': self.id})
+
+    def get_absolute_update_url(self):
+        return reverse('products:product_update', kwargs={'my_id': self.id})
+
+    def get_absolute_delete_url(self):
+        return reverse('products:product_delete', kwargs={'my_id': self.id})
