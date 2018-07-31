@@ -3,7 +3,8 @@ from .views import (
     ArticleListView,
     ArticleDetailView,
     ArticleCreateView,
-    ArticleUpdateView
+    ArticleUpdateView,
+    ArticleDeleteView
 )
 
 app_name = 'blog'
@@ -14,5 +15,5 @@ urlpatterns = [
     # path('<int:pk>/', ArticleDetailView.as_view(), name='article_detail'),
     path('<int:id>/', ArticleDetailView.as_view(), name='article_detail'),
     path('<int:id>/update/', ArticleUpdateView.as_view(), name='article_update'),
-    #path('<int:id>/delete/', view_name, name='article_delete'),
+    path('<int:id>/delete/', ArticleDeleteView.as_view(), name='article_delete'),
 ]

@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 
 from django.views.generic import (
-    CreateView,
+    ListView,
     DetailView,
-    ListView,
+    CreateView,
     UpdateView,
-    ListView,
     DeleteView
 )
 
@@ -54,3 +54,14 @@ class ArticleUpdateView(UpdateView):
     
     # def get_success_url(self):
     #     return '/'
+
+
+class ArticleDeleteView(DeleteView):
+    template_name = 'blog/article_delete.html'
+    # queryset = Article.objects.all()
+
+    def get_object(self):
+        return get_object_or_404(Article, id=self.kwargs.get('id'))
+    
+    def get_success_url(self):
+        return reverse('blog:article_list')
