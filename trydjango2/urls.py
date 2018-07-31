@@ -21,8 +21,8 @@ from products.views import product_create_view, product_detail_view, dynamic_pro
 urlpatterns = [
     path('', home_view, name='home'),
     path('products/', product_list_view, name='products_list'),
-    path('products/detail/', product_detail_view, name='product_detail'),
-    path('products/<int:my_id>/', dynamic_product_detail_view, name='product'),
+    path('products/detail/', product_detail_view, name='product'),
+    path('products/<int:my_id>/', dynamic_product_detail_view, name='product_detail'),
     path('products/<int:my_id>/delete/', product_delete_view, name='product_delete'),
     path('products/create/', product_create_view, name='product_create'),
     path('about/', about_view, name='about'),
