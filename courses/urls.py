@@ -1,12 +1,14 @@
 from django.urls import path
 from .views import (
     CourseView,
+    CourseListView
     # my_fbv
 )
 
 app_name = 'courses'
 urlpatterns = [
-    path('', CourseView.as_view(template_name='contact.html'), name='courses_list'),
+    path('', CourseListView.as_view(), name='courses_list'),
+    # path('', CourseView.as_view(template_name='contact.html'), name='courses_list'),
     # path('', my_fbv, name='courses_list'),
     
 
