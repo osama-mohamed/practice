@@ -1,6 +1,3 @@
-# Mac Calculator by Vue.js
-
-
 # [Mac_Calculator](https://osama-mohamed.github.io/mac_calculator_vue) By Vue.js
 
 
