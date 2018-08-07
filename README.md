@@ -1,10 +1,8 @@
-# mac_calculator_vue
-Mac Calculator Vue.
+# Mac Calculator by Vue.js
 
 
+# [Mac_Calculator](https://osama-mohamed.github.io/mac_calculator_vue) By Vue.js
 
-# [mac_calculator](https://osama-mohamed.github.io/mac_calculator_vue) By Vue.js
-* mac_calculator by Vue.js
 
 [<img src="https://vuejs.org/images/logo.png" width="300" title="mac_calculator" >](https://github.com/osama-mohamed)
 
