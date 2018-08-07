@@ -9,7 +9,7 @@
 > [Meetup App](https://osama-mohamed.github.io/meet_up_vue)
 
 
-## Employee Manager app contains:
+## Meetup app contains:
 * User register 
 * User login
 * User logout 
