@@ -8,4 +8,5 @@ $(document).ready(function () {
         yearRange: 2
     });
     $('.tooltipped').tooltip();
+    $('.scrollspy').scrollSpy();
 });
