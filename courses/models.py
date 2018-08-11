@@ -13,5 +13,5 @@ class Course(models.Model):
     def get_absolute_update_url(self):
         return reverse('courses:courses_update', kwargs={'id': self.id})
 
-    # def get_absolute_delete_url(self):
-    #     return reverse('courses:courses_delete', kwargs={'id': self.id})
+    def get_absolute_delete_url(self):
+        return reverse('courses:courses_delete', kwargs={'id': self.id})
