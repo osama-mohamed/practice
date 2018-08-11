@@ -2,9 +2,11 @@
 
 {% block content %}
 
-<a href="{% url 'products:product_create'%}">Add Product</a>
+<a href="{% url 'courses:courses_create'%}">Add title</a>
 {% for instance in object_list %}
-    <p>#{{ instance.id }} - <a href="/">{{ instance.title }}</a>
+    <p>#{{ instance.id }} - <a href="{{ instance.get_absolute_url }}">{{ instance.title }}</a>
+        <a href='{{ instance.get_absolute_update_url }}'>Update</a>
+        <!-- <a href='{{ instance.get_absolute_delete_url }}'>Delete</a> -->
     </p>
     <hr>
 {% endfor %}
