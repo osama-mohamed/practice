@@ -2,7 +2,8 @@ from django.urls import path
 from .views import (
     CourseView,
     CourseListView,
-    CourseCreateView
+    CourseCreateView,
+    CourseUpdateView
     # my_fbv
 )
 
@@ -15,6 +16,6 @@ urlpatterns = [
 
     path('create/', CourseCreateView.as_view(), name='courses_create'),
     path('<int:id>/', CourseView.as_view(), name='courses_detail'),
-    # path('<int:id>/update/', <update_view>, name='courses_update'),
+    path('<int:id>/update/', CourseUpdateView.as_view(), name='courses_update'),
     # path('<int:id>/delete/', <delete_view>, name='courses_delete'),
 ]
