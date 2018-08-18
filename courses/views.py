@@ -5,6 +5,16 @@ from .models import Course
 from .forms import CourseModelForm
 
 
+class CourseObjectMixin(object):
+    model = Course
+    def get_object(self):
+        id = self.kwargs.get('id')
+        obj = None
+        if id is not None:
+            obj = get_object_or_404(self.model, id=id)
+        return obj
+
+
 class CourseCreateView(View):
     template_name = "courses/course_create.html"
 
@@ -21,7 +31,7 @@ class CourseCreateView(View):
         context = {'form': form}
         return render(request, self.template_name, context)
 
-class CourseUpdateView(View):
+class CourseUpdateView(CourseObjectMixin, View):
     template_name = "courses/course_update.html"
 
     def get_object(self):
@@ -52,14 +62,8 @@ class CourseUpdateView(View):
         return render(request, self.template_name, context)
 
 
-class CourseDeleteView(View):
+class CourseDeleteView(CourseObjectMixin, View):
     template_name = "courses/course_delete.html"
-    def get_object(self):
-        id = self.kwargs.get('id')
-        obj = None
-        if id is not None:
-            obj = get_object_or_404(Course, id=id)
-        return obj
 
     def get(self, request, id=None, *args, **kwargs):
         context = {}
@@ -90,14 +94,11 @@ class CourseListView(View):
         return render(request, self.template_name, context)
 
 
-class CourseView(View):
+class CourseView(CourseObjectMixin, View):
     template_name = "courses/course_detail.html"
 
     def get(self, request, id=None, *args, **kwargs):
-        context = {}
-        if id is not None:
-            obj = get_object_or_404(Course, id=id)
-            context['object'] = obj
+        context = {'object': self.get_object()}
         return render(request, self.template_name, context)
 
     # def post(self, request, *args, **kwargs):
