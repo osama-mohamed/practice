@@ -5,8 +5,20 @@ html
     title cv
     link
   body
-    div(class='container', id='main')
-    h1(class='title' id='title') title
-    p.main-p paragraph
-    p#main-id paragraph
+    form
+      h2.contact-title Contact Me
+      input(
+        class='form-control',
+        type='text',
+        name='user'
+      )
+      input(
+        class='form-control',
+        type='email',
+        name='email'
+      )
+      input(class='form-control' type='text' name='subject')
+      button(style='background-color: green; color: white') Send
+      button(style={'background-color': 'green', 'color': 'white'}) Send
+      button Reset
       
