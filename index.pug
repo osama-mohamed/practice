@@ -1,9 +1,10 @@
 doctype
-html
+html(lang='en')
   head
-    meta
+    meta(charset='utf-8')
+    meta(name='description' content='lear pugJs')
     title cv
-    link
+    include includes/styles.pug
   body
     form
       h2.contact-title Contact Me
@@ -21,4 +22,5 @@ html
       button(style='background-color: green; color: white') Send
       button(style={'background-color': 'green', 'color': 'white'}) Send
       button Reset
+    include includes/scripts.pug
       
