@@ -1,9 +1,8 @@
-include includes/mymixins
 doctype
 html(lang='en')
   head
     title cv
   body
-    h1 mixin with args
-    +feature('vue framework')
-    +feature('pugjs')
+    block testingContent
+      .main this content from main page
+    hi main page
