@@ -1,10 +1,8 @@
-include includes/myvars.pug
+include includes/mymixins
 doctype
 html(lang='en')
   head
     title cv
   body
-    hi \#{osama}
-    hi #{'#{osama}'}
-    
-    p tag inerpolation #[b test]
+    h1 skill list
+    +skillList
