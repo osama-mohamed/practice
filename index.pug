@@ -1,15 +1,13 @@
 include includes/myvars
-- var className2 = 'font2'
 doctype
 html(lang='en')
   head
     title cv
   body
-    hi(class='cls ' + className + ' '+ className2) this is heading 1
-    - var className = 'font'
-    div(class='parent ' + className3) parent div
-      div(class=className) child div
-      div(class='child ' + className) child div
-    div this <strong>tag</strong> will not appear
-    div= 'this <strong>tag</strong> will appear'
-    div!= 'this <strong>tag</strong> will appear'
+    ul
+      - for (var x = 0; x <= 10; x++)
+        li item #{x}
+    - var y = 0
+    ul
+      while y <= 10
+        li= 'item ' + y++
