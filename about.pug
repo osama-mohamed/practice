@@ -1,3 +1,10 @@
 extends index
-block testingContent
-  p.about this content from about page
+block prepend pageInfo
+  main About page info prepended
+block append pageInfo
+  main About page info appended
+
+prepend pageInfo
+  main About page info prepended 2
+append pageInfo
+  main About page info appended 2
