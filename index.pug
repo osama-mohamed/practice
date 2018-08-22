@@ -1,13 +1,10 @@
+include includes/myvars.pug
 doctype
 html(lang='en')
   head
     title cv
   body
-    each val, index in [1, 2, 3, 4, 'five', 6]
-      div= 'item ' + val + ', index: ' + index
-    
-    - var array = ['html', 'css', 'python', 'js']
-    each val, index in array
-      div= index + ' : ' + val
-    else
-      p there is no value
+    h1 #{themeName.toUpperCase()}
+    h2 #{authorName}
+    div #{themeTag}
+    div !{themeTag}
