@@ -1,13 +1,13 @@
-include includes/myvars
 doctype
 html(lang='en')
   head
     title cv
   body
-    ul
-      - for (var x = 0; x <= 10; x++)
-        li item #{x}
-    - var y = 0
-    ul
-      while y <= 10
-        li= 'item ' + y++
+    each val, index in [1, 2, 3, 4, 'five', 6]
+      div= 'item ' + val + ', index: ' + index
+    
+    - var array = ['html', 'css', 'python', 'js']
+    each val, index in array
+      div= index + ' : ' + val
+    else
+      p there is no value
