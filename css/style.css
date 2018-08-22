@@ -1,0 +1,102 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: #ececec;
+  display: -ms-grid;
+  display: grid;
+  justify-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.switch {
+  position: relative;
+  display: block;
+  width: 90px;
+  height: 55px;
+  margin-bottom: 30px;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: white;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  border: 3px solid white;
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+          box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.slider2 {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: white;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  border: 3px solid #000;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  bottom: 14px;
+  background-color: #afafaf;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.slider2:before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  bottom: 14px;
+  background-color: #000;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.switch input {
+  display: none;
+}
+
+input:checked + .slider {
+  background-color: #afafaf;
+}
+
+input:checked + .slider2 {
+  background-color: black;
+}
+
+input:checked + .slider:before, input:checked + .slider2:before {
+  -webkit-transform: translateX(47px) rotateZ(45deg);
+          transform: translateX(47px) rotateZ(45deg);
+  background: yellow;
+}
+
+.slider.round, .slider2.round {
+  border-radius: 35px;
+}
+
+.slider.round:before, .slider2.round:before {
+  width: 43%;
+  height: 43%;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  -webkit-transform: rotateZ(-45deg);
+          transform: rotateZ(-45deg);
+}
+/*# sourceMappingURL=style.css.map */
