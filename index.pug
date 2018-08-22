@@ -1,26 +1,15 @@
+include includes/myvars
+- var className2 = 'font2'
 doctype
 html(lang='en')
   head
-    meta(charset='utf-8')
-    meta(name='description' content='lear pugJs')
     title cv
-    include includes/styles.pug
   body
-    form
-      h2.contact-title Contact Me
-      input(
-        class='form-control',
-        type='text',
-        name='user'
-      )
-      input(
-        class='form-control',
-        type='email',
-        name='email'
-      )
-      input(class='form-control' type='text' name='subject')
-      button(style='background-color: green; color: white') Send
-      button(style={'background-color': 'green', 'color': 'white'}) Send
-      button Reset
-    include includes/scripts.pug
-      
+    hi(class='cls ' + className + ' '+ className2) this is heading 1
+    - var className = 'font'
+    div(class='parent ' + className3) parent div
+      div(class=className) child div
+      div(class='child ' + className) child div
+    div this <strong>tag</strong> will not appear
+    div= 'this <strong>tag</strong> will appear'
+    div!= 'this <strong>tag</strong> will appear'
