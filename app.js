@@ -1,10 +1,8 @@
-var http = require("http");
+var url = require("url");
 var fs = require("fs");
-var port = 8000;
 
-function onRequest(request, response) {
-  response.writeHead(200, { "Content-Type": "text/html" });
-  fs.readFile("./index.html", null, function(error, data) {
+function renderHTML(path, response) {
+  fs.readFile(path, null, function(error, data) {
     if (error) {
       response.writeHead(404);
       response.write("file not found!");
@@ -15,6 +13,22 @@ function onRequest(request, response) {
   });
 }
 
-http.createServer(onRequest).listen(port, () => {
-  console.log("Server started on port " + port);
-});
+module.exports = {
+  handleRequest: function(request, response) {
+    response.writeHead(200, { "Content-Type": "text/html" });
+
+    var path = url.parse(request.url).pathname;
+    switch (path) {
+      case "/":
+        renderHTML("./index.html", response);
+        break;
+      case "/login":
+        renderHTML("./login.html", response);
+        break;
+      default:
+        response.writeHead(404);
+        response.write("Route not defined!");
+        response.end();
+    }
+  }
+};
