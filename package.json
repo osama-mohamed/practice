@@ -1,11 +1,16 @@
 {
-  "name": "test-node",
-  "version": "1.0.0",
-  "description": "simple node app test",
-  "main": "app.js",
+  "name": "first-app",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon ./bin/www"
   },
-  "author": "OSAMA MOHAMED <osama6osama6@gmail.com> (https://www.osamamohamed.com/)",
-  "license": "MIT"
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.0"
+  }
 }
