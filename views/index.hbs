@@ -1,17 +1,7 @@
 <h1>{{ title }}</h1>
 <p>Welcome to {{ title }}</p>
 
-{{# if condition}}
-    condition is true
-{{ else }}
-    condition is false
-{{/ if }}
-
-{{# each array }}
-    {{ this }}
-{{/ each }}
-
-{{# each array as |val key| }}
-    <br>
-    {{ key }} - {{ val }}
-{{/ each }}
+<form action="/test/submit" method="POST">
+    <input type="text" name="id">
+    <button type="submit">Submit</button>
+</form>
