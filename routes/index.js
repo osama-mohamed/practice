@@ -16,6 +16,7 @@ router.get("/get-data", function(req, res, next) {
   var resultArray = [];
   mongo.connect(
     url,
+    { useNewUrlParser: true },
     function(err, db) {
       var dbn = db.db("test");
       assert.equal(null, err);
@@ -44,6 +45,7 @@ router.post("/insert", function(req, res, next) {
   };
   mongo.connect(
     url,
+    { useNewUrlParser: true },
     function(err, db) {
       assert.equal(null, err);
       var dbn = db.db("test");
@@ -67,6 +69,7 @@ router.post("/update", function(req, res, next) {
   };
   mongo.connect(
     url,
+    { useNewUrlParser: true },
     function(err, db) {
       assert.equal(null, err);
       var dbn = db.db("test");
@@ -90,6 +93,7 @@ router.post("/delete", function(req, res, next) {
   var id = req.body.id;
   mongo.connect(
     url,
+    { useNewUrlParser: true },
     function(err, db) {
       assert.equal(null, err);
       var dbn = db.db("test");
