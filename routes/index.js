@@ -1,10 +1,7 @@
 var express = require("express");
 var router = express.Router();
-var mongo = require("mongodb").MongoClient;
-var objectId = require("mongodb").ObjectID;
-var assert = require("assert");
-
-var url = "mongodb://localhost:27017/";
+var db = require("monk")("localhost:27017/test");
+var userData = db.get("user-data");
 
 /* GET home page. */
 router.get("/", function(req, res, next) {
@@ -13,27 +10,10 @@ router.get("/", function(req, res, next) {
 
 // retrive data
 router.get("/get-data", function(req, res, next) {
-  var resultArray = [];
-  mongo.connect(
-    url,
-    { useNewUrlParser: true },
-    function(err, db) {
-      var dbn = db.db("test");
-      assert.equal(null, err);
-      var cursor = dbn.collection("user-data").find();
-      cursor.forEach(
-        function(doc, err) {
-          assert.equal(null, err);
-          resultArray.push(doc);
-        },
-        function() {
-          db.close();
-          console.log("Done!");
-          res.render("index", { items: resultArray });
-        }
-      );
-    }
-  );
+  var data = userData.find({});
+  data.then(function(docs) {
+    res.render("index", { items: docs });
+  });
 });
 
 // insert data
@@ -43,19 +23,7 @@ router.post("/insert", function(req, res, next) {
     content: req.body.content,
     author: req.body.author
   };
-  mongo.connect(
-    url,
-    { useNewUrlParser: true },
-    function(err, db) {
-      assert.equal(null, err);
-      var dbn = db.db("test");
-      dbn.collection("user-data").insertOne(item, function(err, result) {
-        assert.equal(null, err);
-        console.log("Item inserted");
-        db.close();
-      });
-    }
-  );
+  userData.insert(item);
   res.redirect("/");
 });
 
@@ -67,45 +35,16 @@ router.post("/update", function(req, res, next) {
     content: req.body.content,
     author: req.body.author
   };
-  mongo.connect(
-    url,
-    { useNewUrlParser: true },
-    function(err, db) {
-      assert.equal(null, err);
-      var dbn = db.db("test");
-      dbn
-        .collection("user-data")
-        .updateOne({ _id: objectId(id) }, { $set: item }, function(
-          err,
-          result
-        ) {
-          assert.equal(null, err);
-          console.log("Item updated");
-          db.close();
-        });
-    }
-  );
+  userData.update({"_id": db.id(id)}, item);
+  // userData.updateById(id, item);
   res.redirect("/");
 });
 
 // delete data
 router.post("/delete", function(req, res, next) {
   var id = req.body.id;
-  mongo.connect(
-    url,
-    { useNewUrlParser: true },
-    function(err, db) {
-      assert.equal(null, err);
-      var dbn = db.db("test");
-      dbn
-        .collection("user-data")
-        .deleteOne({ _id: objectId(id) }, function(err, result) {
-          assert.equal(null, err);
-          console.log("Item deleted");
-          db.close();
-        });
-    }
-  );
+  userData.remove({"_id": db.id(id)});
+  // userData.removeById(id);
   res.redirect("/");
 });
 
