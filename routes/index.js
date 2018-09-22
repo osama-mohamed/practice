@@ -1,7 +1,22 @@
 var express = require("express");
 var router = express.Router();
-var db = require("monk")("localhost:27017/test");
-var userData = db.get("user-data");
+var mongoose = require("mongoose");
+mongoose.connect(
+  "mongodb://localhost:27017/test",
+  { useNewUrlParser: true }
+);
+var Schema = mongoose.Schema;
+
+var userDataSchema = new Schema(
+  {
+    title: { type: String, required: true },
+    content: { type: String, required: true },
+    author: { type: String, required: true }
+  },
+  { collection: "user-data" }
+);
+
+var UserData = mongoose.model("UserData", userDataSchema);
 
 /* GET home page. */
 router.get("/", function(req, res, next) {
@@ -10,9 +25,8 @@ router.get("/", function(req, res, next) {
 
 // retrive data
 router.get("/get-data", function(req, res, next) {
-  var data = userData.find({});
-  data.then(function(docs) {
-    res.render("index", { items: docs });
+  UserData.find().then(function(doc) {
+    res.render("index", { items: doc });
   });
 });
 
@@ -23,28 +37,30 @@ router.post("/insert", function(req, res, next) {
     content: req.body.content,
     author: req.body.author
   };
-  userData.insert(item);
+  var data = new UserData(item);
+  data.save();
   res.redirect("/");
 });
 
 // update data
 router.post("/update", function(req, res, next) {
   var id = req.body.id;
-  var item = {
-    title: req.body.title,
-    content: req.body.content,
-    author: req.body.author
-  };
-  userData.update({"_id": db.id(id)}, item);
-  // userData.updateById(id, item);
+  UserData.findById(id, function(err, doc) {
+    if (err) {
+      console.log("error, not saved");
+    }
+    doc.title = req.body.title;
+    doc.content = req.body.content;
+    doc.author = req.body.author;
+    doc.save();
+  });
   res.redirect("/");
 });
 
 // delete data
 router.post("/delete", function(req, res, next) {
   var id = req.body.id;
-  userData.remove({"_id": db.id(id)});
-  // userData.removeById(id);
+  UserData.findOneAndDelete(id).exec();
   res.redirect("/");
 });
 
