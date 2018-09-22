@@ -34,6 +34,8 @@
         <%= user.first_name %>
         <%= user.last_name %> @:
         <%= user.email %>
+        &emsp;
+        <a href="#" class="deleteUser" data-id="<%= user._id %>">Delete</a>
     </li>
     <% }) %>
 </ul>
