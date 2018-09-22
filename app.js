@@ -3,7 +3,7 @@ var bodyParser = require("body-parser");
 var path = require("path");
 var expressValidator = require("express-validator");
 var mongojs = require("mongojs");
-var db = mongojs('test', ["users"]);
+var db = mongojs("test", ["users"]);
 
 var app = express();
 
@@ -51,10 +51,8 @@ app.use(
   })
 );
 
-
 app.get("/", function(req, res) {
   db.users.find(function(err, docs) {
-    console.log(docs);
     res.render("index", {
       title: "Customers",
       users: docs
@@ -70,7 +68,6 @@ app.post("/users/add", function(req, res) {
   var errors = req.validationErrors();
 
   if (errors) {
-    console.log("error", errors);
     res.render("index", {
       title: "Customers",
       users: users,
@@ -82,8 +79,12 @@ app.post("/users/add", function(req, res) {
       last_name: req.body.last_name,
       email: req.body.email
     };
-    console.log("new", newUser);
-    res.redirect("/");
+    db.users.insert(newUser, function(err, result) {
+      if (err) {
+        console.log(err);
+      }
+      res.redirect("/");
+    });
   }
 });
 
