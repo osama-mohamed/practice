@@ -1,60 +1,92 @@
-var createError = require("http-errors");
 var express = require("express");
+var bodyParser = require("body-parser");
 var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-
-var hbs = require("express-handlebars");
 var expressValidator = require("express-validator");
-var expressSession = require("express-session");
+var mongojs = require("mongojs");
+var db = mongojs('test', ["users"]);
 
 var app = express();
 
-// view engine setup
-app.engine(
-  "hbs",
-  hbs({
-    extname: "hbs",
-    defaultLayout: "layout",
-    layoutsDir: __dirname + "/views/layouts/"
-  })
-);
+/* var logger = function(req, res, next) {
+  console.log("Logging ...");
+  next();
+};
+
+app.use(logger); */
+
+// view engine
+app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "hbs");
 
-app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+// body parser middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(expressValidator());
-
-app.use(cookieParser());
+// static path
 app.use(express.static(path.join(__dirname, "public")));
 
+// global vars
+app.use(function(req, res, next) {
+  res.locals.errors = null;
+  next();
+});
+
+// express-validator middleware options
 app.use(
-  expressSession({ secret: "max", saveUninitialized: false, resave: false })
+  expressValidator({
+    errorFormatter: function(param, msg, value) {
+      var namespace = param.split("."),
+        root = namespace.shift(),
+        formParam = root;
+
+      while (namespace.length) {
+        formParam += "[" + namespace.shift() + "]";
+      }
+      return {
+        param: formParam,
+        msg: msg,
+        value: value
+      };
+    }
+  })
 );
 
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+app.get("/", function(req, res) {
+  db.users.find(function(err, docs) {
+    console.log(docs);
+    res.render("index", {
+      title: "Customers",
+      users: docs
+    });
+  });
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+app.post("/users/add", function(req, res) {
+  req.checkBody("first_name", "First name is required").notEmpty();
+  req.checkBody("last_name", "Last name is required").notEmpty();
+  req.checkBody("email", "Email is required").notEmpty();
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+  var errors = req.validationErrors();
+
+  if (errors) {
+    console.log("error", errors);
+    res.render("index", {
+      title: "Customers",
+      users: users,
+      errors: errors
+    });
+  } else {
+    var newUser = {
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email: req.body.email
+    };
+    console.log("new", newUser);
+    res.redirect("/");
+  }
 });
 
-module.exports = app;
+app.listen(3000, function() {
+  console.log("Server started on port 3000 ...");
+});
