@@ -2,10 +2,7 @@ extends layout
 
 block content
     h1 #{title}
-    ul
+    ul.list-group
         each article, index in articles
-            li ##{article.id} - #{article.title}
-            li Body: #{article.body}
-            li By: #{article.author}
-            hr
-            br
+            li.list-group-item
+                a(href="/article/" + article._id)= article.title
