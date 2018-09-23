@@ -93,10 +93,11 @@ app.get("/", (req, res) => {
   });
 });
 
-
 // route files
-let articles = require('./routes/articles');
-app.use('/articles', articles);
+let articles = require("./routes/articles");
+let users = require("./routes/users");
+app.use("/articles", articles);
+app.use("/users", users);
 
 // start server
 app.listen(3000, () => {
