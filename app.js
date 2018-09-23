@@ -110,13 +110,26 @@ app.post("/article/edit/:id", (req, res) => {
   article.author = req.body.author;
   article.body = req.body.body;
 
-  let query = {_id: req.params.id}
+  let query = { _id: req.params.id };
   Article.update(query, article, err => {
     if (err) {
       console.log(err);
       return;
     } else {
       res.redirect("/article/" + req.params.id);
+    }
+  });
+});
+
+// delete article
+app.delete("/article/delete/:id", (req, res) => {
+  let query = { _id: req.params.id };
+  Article.remove(query, err => {
+    if (err) {
+      console.log(err);
+      return;
+    } else {
+      res.send("Success");
     }
   });
 });
