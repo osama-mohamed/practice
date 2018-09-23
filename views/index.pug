@@ -5,6 +5,8 @@ block content
     ul.list-group
         each article, index in articles
             li.list-group-item
-                a(href="/article/" + article._id)= article.title
-                a.btn.btn-warning(href="/article/edit/" + article._id) Edit
+                a(href="/articles/" + article._id)= article.title
+                span &emsp;
+                a.btn.btn-warning(href="/articles/edit/" + article._id) Edit 
+                span &emsp;
                 a.btn.btn-danger.delete-article(href="#", data-id=article._id, data-title=article.title) Delete

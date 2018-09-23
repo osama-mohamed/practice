@@ -19,6 +19,11 @@ html
 
         .container
             br
+            != messages('message', locals)
+            if errors
+                each error, index in errors
+                    div(class="alert alert-danger") #{error.msg}
+            br
             block content
             br
             hr

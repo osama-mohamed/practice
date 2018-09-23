@@ -11,9 +11,9 @@ $(document).ready(function() {
     if (confirmation) {
       $.ajax({
         type: "DELETE",
-        url: "/article/delete/" + id,
+        url: "/articles/delete/" + id,
         success: function() {
-          alert("Deleting Article" + articleTitle);
+          alert("Deleting Article " + articleTitle);
           window.location.href = "/";
         },
         error: function(err) {
