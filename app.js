@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const favicon = require("serve-favicon");
 const path = require("path");
 const mongoose = require("mongoose");
 const session = require("express-session");
@@ -44,6 +45,11 @@ app.use(bodyParser.json());
 // set public folder
 app.use(express.static(path.join(__dirname, "public")));
 
+// set favicon
+app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
+// app.use('/favicon.ico', express.static('images/favicon.ico'));
+// app.use(favicon(__dirname + '/public/images/favicon.ico'));
+
 // express session middleware
 app.use(
   session({
@@ -82,13 +88,13 @@ app.use(
 );
 
 // Passport Config
-require('./config/passport')(passport);
+require("./config/passport")(passport);
 // Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Set user in var if the user logged in
-app.get('*', (req, res, next) => {
+app.get("*", (req, res, next) => {
   res.locals.user = req.user || null;
   next();
 });
