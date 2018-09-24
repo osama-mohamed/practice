@@ -6,7 +6,9 @@ block content
         each article, index in articles
             li.list-group-item
                 a(href="/articles/" + article._id)= article.title
-                span &emsp;
-                a.btn.btn-warning(href="/articles/edit/" + article._id) Edit 
-                span &emsp;
-                a.btn.btn-danger.delete-article(href="#", data-id=article._id, data-title=article.title) Delete
+                if user
+                    if user._id == article.author
+                        span &emsp;
+                        a.btn.btn-warning(href="/articles/edit/" + article._id) Edit 
+                        span &emsp;
+                        a.btn.btn-danger.delete-article(href="#", data-id=article._id, data-title=article.title) Delete

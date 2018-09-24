@@ -3,11 +3,13 @@ extends layout
 block content
     h1 #{article.title}
     br
-    h5 written by: #{article.author}
+    h5 written by: #{author}
     br
     br
     p #{article.body}
     hr
-    a.btn.btn-warning(href="/articles/edit/" + article._id) Edit
-    span &emsp;
-    a.btn.btn-danger.delete-article(href="#", data-id=article._id, data-title=article.title) Delete
+    if user
+        if user._id == article.author
+            a.btn.btn-warning(href="/articles/edit/" + article._id) Edit
+            span &emsp;
+            a.btn.btn-danger.delete-article(href="#", data-id=article._id, data-title=article.title) Delete
