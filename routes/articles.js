@@ -95,7 +95,7 @@ router.delete("/delete/:id", ensureAuthenticated, (req, res) => {
     if (article.author != req.user._id) {
       res.status(500).send();
     } else {
-      Article.remove(query, err => {
+      Article.deleteOne(query, err => {
         if (err) {
           console.log(err);
           return;
