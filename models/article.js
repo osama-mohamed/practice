@@ -13,6 +13,12 @@ let articleSchema = mongoose.Schema({
   body: {
     type: String,
     required: true
+  },
+  created: {
+    type: Date
+  },
+  updated: {
+    type: Date
   }
 });
 

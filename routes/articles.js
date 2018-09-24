@@ -32,6 +32,7 @@ router.post("/add", ensureAuthenticated, (req, res) => {
     // article.author = req.body.author;
     article.author = req.user._id;
     article.body = req.body.body;
+    article.created = new Date();
     article.save(err => {
       if (err) {
         console.log(err);
@@ -69,6 +70,7 @@ router.post("/edit/:id", ensureAuthenticated, (req, res) => {
   article.title = req.body.title;
   article.author = req.body.author;
   article.body = req.body.body;
+  article.updated = new Date();
 
   let query = { _id: req.params.id };
   Article.updateOne(query, article, err => {

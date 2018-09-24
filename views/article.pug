@@ -4,6 +4,9 @@ block content
     h1 #{article.title}
     br
     h5 written by: #{author}
+    p Created in: #{article.created.toString().slice(0, 25)}
+    if article.updated
+        p Updated in: #{article.updated.toString().slice(0, 25)}
     br
     br
     p #{article.body}
