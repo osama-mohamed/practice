@@ -2,6 +2,8 @@ extends layout
 
 block content
     h1 #{title}
+    h2 Login
+    br
     form(action="/users/login", method="POST")
         #form-group
             label Username:
