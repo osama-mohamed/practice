@@ -1,0 +1,29 @@
+$(document).ready(() => {
+  $("form").on("submit", () => {
+    let item = $("form input");
+    let todo = { item: item.val() };
+
+    $.ajax({
+      type: "POST",
+      url: "/todo",
+      data: todo,
+      success: (data) => {
+        location.reload();
+      }
+    });
+    return false;
+  });
+
+  $("li").on("click", function() {
+    let item = $(this)
+      .text()
+      .replace(/ /g, "-");
+    $.ajax({
+      type: "DELETE",
+      url: "/todo/" + item,
+      success: (data) => {
+        location.reload();
+      }
+    });
+  });
+});
