@@ -13,12 +13,12 @@
     <div class="container">
         <h1>File Upload</h1>
         <%= typeof msg != 'undefined' ? msg : '' %>
-        <p><%= typeof fileInfo != 'undefined' ? fileInfo : '' %></p>
+        <p><%= typeof filesInfo != 'undefined' ? filesInfo : '' %></p>
         <form action="/upload" method="POST" enctype="multipart/form-data">
             <div class="file-field input-field">
                 <div class="btn grey">
                     <span>File</span>
-                    <input type="file" name="myImage">
+                    <input type="file" name="myImage" multiple>
                 </div>
                 <div class="file-path-wrapper">
                     <input class="file-path validate" type="text">
@@ -27,9 +27,14 @@
             <button type="submit" class="btn">Upload</button>
         </form>
         <br>
-        <img src="<%= typeof file != 'undefined' ? file : '' %>" class="responsive-img">
-
-    </div>
+        <% if (files) { %>
+            <div>
+                <% for(let i=0; i < files.length; i++) { %>
+                    <img src="uploads/<%= typeof files[i].filename != 'undefined' ? files[i].filename : '' %>" class="responsive-img">
+                <% } %>
+            </div>
+        <% } %>
+        </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>

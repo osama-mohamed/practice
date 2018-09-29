@@ -4,6 +4,7 @@ const ejs = require("ejs");
 const path = require("path");
 const port = process.env.PORT || 3000;
 const app = express();
+const numberOfFiles = 2;
 
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
@@ -27,7 +28,7 @@ const upload = multer({
   fileFilter: function(req, file, cb) {
     checkFileType(file, cb);
   }
-}).single("myImage");
+}).array("myImage", numberOfFiles);
 
 // check File Type
 function checkFileType(file, cb) {
@@ -42,31 +43,39 @@ function checkFileType(file, cb) {
 }
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index", {files: ''});
 });
 
 app.post("/upload", (req, res) => {
   upload(req, res, err => {
     if (err) {
-      if (err instanceof multer.MulterError) {
+      if (err == 'MulterError: Unexpected field') {
         res.render("index", {
-          msg: "Error: File is too Large!"
+          msg: `Error: Files are more than ${numberOfFiles}!`,
+          files: ''
+        });
+      } else if (err instanceof multer.MulterError) {
+        res.render("index", {
+          msg: "Error: Files are too Large!",
+          files: ''
         });
       } else {
         res.render("index", {
-          msg: err
+          msg: err,
+          files: ''
         });
       }
     } else {
-      if (req.file == undefined) {
+      if (req.files == undefined || req.files == '') {
         res.render("index", {
-          msg: "Error: No File Selected!"
+          msg: "Error: No Files Selected!",
+          files: ''
         });
       } else {
         res.render("index", {
-          msg: "File Uploaded",
-          file: path.join("uploads", req.file.filename),
-          fileInfo: JSON.stringify(req.file)
+          msg: "Files Uploaded",
+          filesInfo: JSON.stringify(req.files),
+          files: req.files
         });
       }
     }
