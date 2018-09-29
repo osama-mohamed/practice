@@ -1,7 +1,6 @@
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
-const todoController = require("./controllers/todoController");
 const mongoose = require("mongoose");
 const config = require("./config/database");
 
@@ -21,7 +20,9 @@ const app = express();
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
-todoController(app);
+
+let todos = require("./routes/todo");
+app.use("/", todos);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
