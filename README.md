@@ -11,8 +11,8 @@
 * Add todo
 * Delete todo
 * Toggle done todo
-* show number of done todos
-* show number of total todos
+* Show number of done todos
+* Show number of total todos
 
 
 ## Usage :
