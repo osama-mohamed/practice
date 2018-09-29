@@ -1,0 +1,100 @@
+* {
+    box-sizing: border-box;
+}
+
+.deleteItem {
+    position: relative;
+    right: -98.1%;
+    top: -20px;
+}
+
+body {
+    background: #0d1521;
+    font-family: tahoma;
+    color: #989898;
+}
+
+#todo-table {
+    position: relative;
+    width: 95%;
+    background: #090d13;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#todo-table form {
+    left: 65px;
+    position: relative;
+}
+
+#todo-table form:after {
+    margin: 0;
+    content: '';
+    display: block;
+    clear: both;
+}
+
+input[type="text"] {
+    width: 70%;
+    padding: 20px;
+    background: #181c22;
+    border: 0;
+    float: left;
+    font-size: 20px;
+    color: #989898;
+}
+
+button {
+    padding: 20px;
+    float: left;
+    background: #23282e;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+span {
+    margin-left: 90px;
+    padding: 20px;
+    float: left;
+    background: #23282e;
+    border: 0;
+    color: #fff;
+    font-size: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    width: 100%;
+    padding: 20px;
+    font-family: arial;
+    font-size: 20px;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+
+li[data-done="true"] {
+    color: #a8ec3e;
+    text-decoration: line-through;
+}
+
+li[data-done="false"] {
+    color: #fff;
+}
+
+li:hover {
+    text-decoration: line-through;
+    background: rgba(39, 77, 136, 1);
+}
+
+h1 {
+    color: #fff;
+    margin: auto;
+    display: table;
+}
