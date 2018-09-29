@@ -7,6 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app"
   },
+  "engines": {
+    "node": "8.11.3",
+    "npm": "5.6.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/osama-mohamed/to_do_express"

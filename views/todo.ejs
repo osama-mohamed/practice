@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Todo List</title>
     <link rel="stylesheet" href="/assets/style.css">
+    <link rel="icon" href="/assets/i.ico">
 </head>
 
 <body>
@@ -15,10 +16,15 @@
         <form action="/todo" method="POST">
             <input type="text" name="item" placeholder="Add new item ..." required>
             <button type="submit">Add item</button>
+            <span>done : <%= doneTodos %> - <%= todos.length %></span>
         </form>
         <ul>
             <% for(let i = 0; i < todos.length; i++) { %>
-                <li><%= todos[i].item %></li>
+                <li data-value="<%= todos[i].item %>" data-done="<%= todos[i].done %>">
+                    <%= i + 1 %> - <%= todos[i].item %>
+                    <button class="deleteItem">X</button>
+                </li>
+                <br>
             <% } %>
         </ul>
     </div>
