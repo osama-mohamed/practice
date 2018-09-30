@@ -124,6 +124,19 @@ router.get("/:id", (req, res) => {
   });
 });
 
+// delete account
+router.post("/delete-articles", (req, res, next) => {
+  Article.deleteMany({ author: req.user._id }, err => {
+    if (err) {
+      console.log(err);
+      return;
+    } else {
+        res.send("Success");
+    }
+  });
+});
+
+
 // Access Control
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {

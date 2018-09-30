@@ -41,4 +41,23 @@ $(document).ready(function() {
       });
     }
   });
+  
+  $(".delete-articles").on("click", function(e) {
+    const confirmation = confirm(
+      "Are you sure that you want to delete your all of your articles ?"
+    );
+    if (confirmation) {
+      $.ajax({
+        type: "POST",
+        url: "/articles/delete-articles",
+        success: function() {
+          alert("Deleting Articles");
+          window.location.href = "/";
+        },
+        error: function(err) {
+          console.log(err);
+        }
+      });
+    }
+  });
 });

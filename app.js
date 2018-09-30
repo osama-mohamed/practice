@@ -94,8 +94,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Set user in var if the user logged in
-app.get("*", (req, res, next) => {
+app.get("*", async (req, res, next) => {
   res.locals.user = req.user || null;
+  if (req.user) {
+    await Article.find({ author: req.user._id }, (err, data) => {
+      res.locals.userArticles = data;
+    });
+  }
   next();
 });
 

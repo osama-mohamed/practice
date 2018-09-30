@@ -3,6 +3,11 @@ extends layout
 block content
     h1 #{title}
     if user
+        if userArticles == ''
+            button.btn.btn-danger.delete-articles(disabled) Delete All Articles
+        else
+            button.btn.btn-danger.delete-articles Delete All Articles
+    if user
         button.btn.btn-danger.delete-account Delete Your Account
     ul.list-group
         each article, index in articles
