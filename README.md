@@ -14,6 +14,8 @@
 * Add article
 * Edit article
 * Delete article
+* Delete all articles
+* Delete user account
 
 
 ## Usage :
@@ -48,12 +50,14 @@ Now the project is running at `http://localhost:3000` and your routes is:
 | {host}/articles/{id}/                        	             | GET       	     | Article detail                               |
 | {host}/articles/edit/{id}  	                               | GET        	   | User show edit article form                  |
 | {host}/articles/edit/{id}                                  | POST       	   | User edit article                            |
+| {host}/articles/delete-articles                            | POST       	   | User delete all article                      |
 | {host}/articles/delete/{id}                                | DELETE      	   | User delete article                          |
 | {host}/users/register                        	             | GET      	     | User register show form                      |
 | {host}/users/register                        	             | POST      	     | User register                                |
 | {host}/users/login                           	             | GET        	   | User login show form                         |
 | {host}/users/login                           	             | POST       	   | User login                                   |
 | {host}/users/logout                          	             | GET         	   | User logout                                  |
+| {host}/users/delete-account                  	             | POST         	 | User delete account and all articles         |
 
 
 
