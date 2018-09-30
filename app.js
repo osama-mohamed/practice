@@ -93,16 +93,19 @@ require("./config/passport")(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
+/* jshint ignore:start */
 // Set user in var if the user logged in
 app.get("*", async (req, res, next) => {
   res.locals.user = req.user || null;
   if (req.user) {
-    await Article.find({ author: req.user._id }, (err, data) => {
-      res.locals.userArticles = data;
+    let article = await Article.find({ author: req.user._id }, (err, data) => {
+      return data;
     });
+    res.locals.userArticles = article;
   }
   next();
 });
+/* jshint ignore:end */
 
 // home route
 app.get("/", (req, res) => {
