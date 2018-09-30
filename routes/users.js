@@ -3,9 +3,9 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 
-
 // bring in Article Model
 let User = require("../models/user");
+let Article = require("../models/article");
 
 // register form
 router.get("/register", (req, res) => {
@@ -68,9 +68,9 @@ router.get("/login", (req, res) => {
 
 // login submit
 router.post("/login", (req, res, next) => {
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/users/login',
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/users/login",
     failureFlash: true
   })(req, res, next);
 });
@@ -78,8 +78,26 @@ router.post("/login", (req, res, next) => {
 // logout
 router.get("/logout", (req, res, next) => {
   req.logout();
-  req.flash('success', 'You logged out successfully!');
-  res.redirect('/users/login');
+  req.flash("success", "You logged out successfully!");
+  res.redirect("/users/login");
+});
+
+// delete account
+router.post("/delete-account", (req, res, next) => {
+  Article.deleteMany({ author: req.user._id }, err => {
+    if (err) {
+      console.log(err);
+      return;
+    } else {
+      User.deleteOne({ _id: req.user._id }, err => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        res.send("Success");
+      });
+    }
+  });
 });
 
 module.exports = router;

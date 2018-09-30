@@ -22,4 +22,23 @@ $(document).ready(function() {
       });
     }
   });
+  
+  $(".delete-account").on("click", function(e) {
+    const confirmation = confirm(
+      "Are you sure that you want to delete your account and your articles ?"
+    );
+    if (confirmation) {
+      $.ajax({
+        type: "POST",
+        url: "/users/delete-account",
+        success: function() {
+          alert("Deleting Account");
+          window.location.href = "/";
+        },
+        error: function(err) {
+          console.log(err);
+        }
+      });
+    }
+  });
 });

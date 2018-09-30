@@ -16,3 +16,9 @@
     top: 8px;
     right: 15px;
 }
+
+.delete-account {
+    position: relative;
+    top: -48px;
+    left: 84%;
+}
