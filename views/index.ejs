@@ -29,8 +29,12 @@
         <br>
         <% if (files) { %>
             <div>
-                <% for(let i=0; i < files.length; i++) { %>
-                    <img src="uploads/<%= typeof files[i].filename != 'undefined' ? files[i].filename : '' %>" class="responsive-img">
+                <% 
+                    for(let i=0; i < files.length; i++) { 
+                    let fullPath = files[i].path ? files[i].path : '';
+                    let filePath = fullPath.split('uploads')[1];
+                %>
+                    <img src="uploads<%= filePath %>" class="responsive-img">
                 <% } %>
             </div>
         <% } %>
