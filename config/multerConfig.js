@@ -1,6 +1,5 @@
 const multer = require("multer");
 const path = require("path");
-// const numberOfFiles = 2;
 
 module.exports = function(
   folderName = "defaultUploadsFolder",
