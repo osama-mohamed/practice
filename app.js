@@ -21,10 +21,11 @@ app.post("/upload", (req, res) => {
     const errorMsg = multerError(req, err, numberOfFiles);
     const context = {
       msg: errorMsg.msg,
-      files: req.files,
+      files: ''
     };
     if (errorMsg.msg == "Files Uploaded") {
       context.filesInfo = JSON.stringify(req.files);
+      context.files = req.files;
     }
     res.render("index", context);
   });
