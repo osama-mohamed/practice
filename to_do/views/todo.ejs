@@ -12,12 +12,17 @@
 
 <body>
     <h1>Todo List</h1>
+    <br>
+    <h1>Developed By : <a href="https://www.osamamohamed.com" target="_blank" style="color: #fff; text-decoration: none;">OSAMA MOHAMED</a></h1>
+    <br>
     <div id="todo-table">
         <form action="/todo" method="POST">
+            <br>
             <input type="text" name="item" placeholder="Add new item ..." required>
             <button type="submit">Add item</button>
             <span>done : <%= doneTodos %> - <%= todos.length %></span>
         </form>
+        <br>
         <ul>
             <% for(let i = 0; i < todos.length; i++) { %>
                 <li data-value="<%= todos[i].item %>" data-done="<%= todos[i].done %>">
