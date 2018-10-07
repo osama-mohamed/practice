@@ -2,6 +2,13 @@ const express = require("express");
 const router = express.Router();
 let Todo = require("../models/todo");
 
+router.get("/all", (req, res) => {
+  Todo.find({}, (err, data) => {
+    if (err) throw err;
+    res.json(data);
+  });
+});
+
 router.get("/", (req, res) => {
   Todo.find({}, (err, data) => {
     if (err) throw err;
