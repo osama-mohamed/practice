@@ -32,14 +32,14 @@ $(document).ready(() => {
       type: "DELETE",
       url: "/" + item,
       success: data => {
-        const item = $(this).parent()
-        item.next('br').remove();
+        const item = $(this).parent();
+        item.next("br").remove();
         item.fadeOut().remove();
       }
     });
   });
 
-  $("li").on("click", function() {
+  $("html").on("click", "li", function() {
     let item = $(this)
       .attr("data-value")
       .replace(/ /g, "-");
@@ -47,7 +47,11 @@ $(document).ready(() => {
       type: "POST",
       url: "/done/" + item,
       success: data => {
-        location.reload();
+        if (data.done === true) {
+          $(this).attr("data-done", true);
+        } else {
+          $(this).attr("data-done", false);
+        }
       }
     });
   });
