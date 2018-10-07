@@ -7,13 +7,22 @@ $(document).ready(() => {
       url: "/",
       data: todo,
       success: data => {
-        location.reload();
+        $("ul").append(
+          '<li data-value="' +
+            data.item +
+            '" data-done="false">' +
+            ($("ul li").length + 1) +
+            " - " +
+            data.item +
+            '<button class="deleteItem">X</button></li><br>'
+        );
+        item.val("").blur();
       }
     });
     return false;
   });
 
-  $(".deleteItem").on("click", function(event) {
+  $("html").on("click", ".deleteItem", function(event) {
     event.stopPropagation();
     let item = $(this)
       .parent()
@@ -23,7 +32,9 @@ $(document).ready(() => {
       type: "DELETE",
       url: "/" + item,
       success: data => {
-        location.reload();
+        const item = $(this).parent()
+        item.next('br').remove();
+        item.fadeOut().remove();
       }
     });
   });
