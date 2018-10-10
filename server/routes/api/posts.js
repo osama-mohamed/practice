@@ -22,7 +22,11 @@ router.post("/", async (req, res, next) => {
     createdAt: new Date()
   });
   res.status(201).send();
-
 });
 
+router.delete("/:id", async (req, res, next) => {
+  const posts = await loadPostsCollection();
+  await posts.deleteOne({ _id: new mongodb.ObjectID(req.params.id) });
+  res.status(200).send();
+});
 module.exports = router;
