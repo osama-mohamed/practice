@@ -8,6 +8,8 @@
       <button @click="createPost">Post</button>
     </div>
     <hr>
+    <h3 v-if="posts.length > 0 && posts.length!= 1">All Posts : {{ posts.length }} Posts</h3>
+    <h3 v-else-if="posts.length == 1">Only one Post</h3>
     <p class="error" v-if="error">{{ error }}</p>
     <div class="posts-container">
       <div class="post"
@@ -17,7 +19,8 @@
         :key="post._id"
         @dblclick="deletePost(post._id)">
         <div class="created-at">
-          {{ `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/${post.createdAt.getFullYear()} ` }}
+          {{ `${post.createdAt.getDate()}/${post.createdAt.getMonth() + 1}/${post.createdAt.getFullYear()} ` }}
+          {{ `${post.createdAt.getHours()}-${post.createdAt.getMinutes()}-${post.createdAt.getSeconds()}` }}
         </div>
         <p class="text">{{ post.text }}</p>
       </div>
