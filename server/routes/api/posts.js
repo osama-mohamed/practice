@@ -15,4 +15,14 @@ router.get("/", async (req, res, next) => {
   res.send(await posts.find({}).toArray());
 });
 
+router.post("/", async (req, res, next) => {
+  const posts = await loadPostsCollection();
+  await posts.insertOne({
+    text: req.body.text,
+    createdAt: new Date()
+  });
+  res.status(201).send();
+
+});
+
 module.exports = router;
