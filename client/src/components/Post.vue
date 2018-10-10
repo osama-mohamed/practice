@@ -14,7 +14,8 @@
         v-for="(post, index) in posts"
         :item="post"
         :index="index"
-        :key="post._id">
+        :key="post._id"
+        @dblclick="deletePost(post._id)">
         <div class="created-at">
           {{ `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/${post.createdAt.getFullYear()} ` }}
         </div>
@@ -47,6 +48,10 @@ export default {
   methods: {
     async createPost() {
       await PostService.insertPost(this.text);
+      this.posts = await PostService.getPosts();
+    },
+    async deletePost(id) {
+      await PostService.deletePost(id);
       this.posts = await PostService.getPosts();
     }
   }
