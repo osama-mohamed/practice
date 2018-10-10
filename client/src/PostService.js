@@ -1,4 +1,4 @@
-import axios from axios;
+import axios from 'axios';
 
 const url = 'http://localhost:5000/api/posts/';
 class PostService {
@@ -8,7 +8,7 @@ class PostService {
         const res = await axios.get(url);
         const data = res.data;
         resolve(
-          data.map(post => ({
+          data.posts.map(post => ({
             ...post,
             createdAt: new Date(post.createdAt)
           }))
