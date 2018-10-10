@@ -2,6 +2,11 @@
   <div class="container">
     <h1>Latest Posts</h1>
     <!-- create new post -->
+    <div class="create-post">
+      <label for="create-post">Write post...</label>
+      <input type="text" id="create-post" v-model="text" placeholder="Create a new post">
+      <button @click="createPost">Post</button>
+    </div>
     <hr>
     <p class="error" v-if="error">{{ error }}</p>
     <div class="posts-container">
@@ -10,8 +15,9 @@
         :item="post"
         :index="index"
         :key="post._id">
-
+        <div class="created-at">
           {{ `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/${post.createdAt.getFullYear()} ` }}
+        </div>
         <p class="text">{{ post.text }}</p>
       </div>
       
@@ -36,6 +42,12 @@ export default {
       this.posts = await PostService.getPosts();
     } catch (err) {
       this.error = err.message;
+    }
+  },
+  methods: {
+    async createPost() {
+      await PostService.insertPost(this.text);
+      this.posts = await PostService.getPosts();
     }
   }
 };
