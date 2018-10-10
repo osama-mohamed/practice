@@ -12,7 +12,7 @@ async function loadPostsCollection() {
 
 router.get("/", async (req, res, next) => {
   const posts = await loadPostsCollection();
-  const allPosts = await posts.find({}).toArray();
+  const allPosts = await posts.find({}).sort({createdAt: -1}).toArray();
   res.send({ posts: allPosts, count: allPosts.length });
 });
 
