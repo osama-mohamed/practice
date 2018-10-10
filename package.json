@@ -8,6 +8,10 @@
     "start": "node server/index",
     "dev": "nodemon server/index"
   },
+  "engines": {
+    "node": "8.11.3",
+    "npm": "5.6.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/osama-mohamed/posts_express.git"
