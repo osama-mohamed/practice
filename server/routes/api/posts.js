@@ -12,7 +12,8 @@ async function loadPostsCollection() {
 
 router.get("/", async (req, res, next) => {
   const posts = await loadPostsCollection();
-  res.send(await posts.find({}).toArray());
+  const allPosts = await posts.find({}).toArray();
+  res.send({ posts: allPosts, count: allPosts.length });
 });
 
 router.post("/", async (req, res, next) => {
@@ -21,12 +22,12 @@ router.post("/", async (req, res, next) => {
     text: req.body.text,
     createdAt: new Date()
   });
-  res.status(201).send();
+  res.status(201).send({ message: "Post created successfully!" });
 });
 
 router.delete("/:id", async (req, res, next) => {
   const posts = await loadPostsCollection();
   await posts.deleteOne({ _id: new mongodb.ObjectID(req.params.id) });
-  res.status(200).send();
+  res.status(200).send({ message: "Post deleted successfully!" });
 });
 module.exports = router;
