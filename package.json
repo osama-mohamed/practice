@@ -1,0 +1,27 @@
+{
+  "name": "full-stack_vue_express",
+  "version": "1.0.0",
+  "description": "Full Stack posts app with vue and express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/index",
+    "dev": "nodemon server/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osama-mohamed/posts_express.git"
+  },
+  "author": "OSAMA MOHAMED <osama6osama6@gmail.com> (https://www.osamamohamed.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/osama-mohamed/posts_express/issues"
+  },
+  "homepage": "https://github.com/osama-mohamed/posts_express#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "mongodb": "^3.1.7"
+  }
+}
