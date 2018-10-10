@@ -10,5 +10,9 @@ async function loadPostsCollection() {
   return client.db("posts").collection("posts");
 }
 
+router.get("/", async (req, res, next) => {
+  const posts = await loadPostsCollection();
+  res.send(await posts.find({}).toArray());
+});
 
 module.exports = router;
