@@ -1,0 +1,52 @@
+* {
+    box-sizing: border-box;
+}
+
+.post {
+    max-width: 600px;
+    position: relative;
+    margin: 100px auto;
+}
+
+.post:before, .post:after {
+    position: absolute;
+    top: 10px;
+    font-size: 350px;
+    color: #16B6DF;
+    font-family: Arial;
+    font-weight: bold;
+    line-height: 300px;
+}
+
+.post:before {
+    left: -200px;
+    content: '\201c';
+}
+
+.post:after {
+    right: -200px;
+    content: '\201d';
+}
+
+#quote-content {
+    font-family: 'Lora', serif;
+    font-size: 36px;
+    line-height: 1.3em;
+    margin-bottom: 10px;
+}
+
+#quote-content p {
+    padding: 0px;
+    padding-top: 24px;
+}
+
+#quote-title-dash, #quote-title {
+    font-size: 26px;
+    text-transform: uppercase;
+    color: #16B6DF;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: none;
+}
