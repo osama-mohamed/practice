@@ -5,7 +5,7 @@
 .post {
     max-width: 600px;
     position: relative;
-    margin: 100px auto;
+    margin: 20px auto;
 }
 
 .post:before, .post:after {
@@ -65,6 +65,26 @@ h2 {
     text-align: center;
 }
 
-h2 a {
+h2 a,
+#quote-id {
     color: #16B6DF;
+}
+
+button {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    display: block;
+    margin: auto;
+    cursor: pointer;
+    font-weight: 400;
+    text-align: center;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    text-transform: none;
+    overflow: visible;
 }

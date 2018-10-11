@@ -1,4 +1,13 @@
 $(document).on("ready", () => {
+  loadData();
+});
+
+$("html").on("click", "button", () => {
+  loadData();
+});
+
+function loadData() {
+  $("#overlay").fadeIn();
   $.ajax({
     url:
       "https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1",
@@ -14,4 +23,4 @@ $(document).on("ready", () => {
     },
     cache: false
   });
-});
+}
