@@ -1,10 +1,10 @@
 # Quotes
-Show random quotes every time you reload the page.
+Show random quotes every time you reload the page or when press new quote button.
 
 
 
 ## For live preview :
-> [Quotes](https://osama-mohamed.github.io/quotes_api)
+> [Quotes](https://osama-mohamed.github.io/quotes_api_jq)
 
 ## Developer
 This project made by [Osama Mohamed](https://www.facebook.com/osama.mohamed.ms)
