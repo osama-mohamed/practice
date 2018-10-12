@@ -2,8 +2,34 @@ window.onload = loadData();
 // document.getElementById("new-quote").addEventListener("click", loadData);
 document.getElementById("new-quote").onclick = loadData;
 
+function fadeOut(el) {
+  el.style.opacity = 1;
+
+  (function fade() {
+    if ((el.style.opacity -= 0.1) <= 0) {
+      el.style.display = "none";
+    } else {
+      requestAnimationFrame(fade);
+    }
+  })();
+}
+
+function fadeIn(el, display) {
+  el.style.opacity = 0;
+  el.style.display = display || "block";
+
+  (function fade() {
+    var val = parseFloat(el.style.opacity);
+    if ( !((val += 0.1) > 1) ) {
+      el.style.opacity = val;
+      requestAnimationFrame(fade);
+    }
+  })();
+}
+
 function loadData() {
-  document.getElementById("overlay").style.display = "block";
+  fadeIn(document.getElementById("overlay"));
+  // document.getElementById("overlay").style.display = "block";
   // const myHeaders = new Headers();
   // myHeaders.append('pragma', 'no-cache');
   // myHeaders.append("cache-control", "no-cache");
@@ -24,7 +50,8 @@ function loadData() {
       document.getElementById("quote-link").href = post.link;
       document.getElementById("quote-title").textContent = post.title;
       document.getElementById("quote-id").textContent = "#" + post.ID;
-      document.getElementById("overlay").style.display = "none";
+      // document.getElementById("overlay").style.display = "none";
+      fadeOut(document.getElementById("overlay"));
     });
 }
 
