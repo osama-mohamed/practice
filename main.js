@@ -27,33 +27,33 @@ function fadeIn(el, display) {
   })();
 }
 
-// function loadData() {
-//   fadeIn(document.getElementById("overlay"));
-//   // document.getElementById("overlay").style.display = "block";
-//   // const myHeaders = new Headers();
-//   // myHeaders.append('pragma', 'no-cache');
-//   // myHeaders.append("cache-control", "no-cache");
-//   fetch(
-//     "https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1",
-//     {
-//       mode: "cors",
-//       cache: "no-cache"
-//       // headers: myHeaders
-//     }
-//   )
-//     .then(res => res.json())
-//     .then(data => {
-//       const post = data.shift();
-//       document.title = "Quote | " + post.title;
-//       document.getElementById("quote-content").innerHTML = post.content;
-//       document.getElementById("quote-title-dash").innerHTML = "&#8212;";
-//       document.getElementById("quote-link").href = post.link;
-//       document.getElementById("quote-title").textContent = post.title;
-//       document.getElementById("quote-id").textContent = "#" + post.ID;
-//       // document.getElementById("overlay").style.display = "none";
-//       fadeOut(document.getElementById("overlay"));
-//     });
-// }
+function loadData() {
+  fadeIn(document.getElementById("overlay"));
+  // document.getElementById("overlay").style.display = "block";
+  // const myHeaders = new Headers();
+  // myHeaders.append('pragma', 'no-cache');
+  // myHeaders.append("cache-control", "no-cache");
+  fetch(
+    "https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1",
+    {
+      mode: "cors",
+      cache: "no-cache"
+      // headers: myHeaders
+    }
+  )
+    .then(res => res.json())
+    .then(data => {
+      const post = data.shift();
+      document.title = "Quote | " + post.title;
+      document.getElementById("quote-content").innerHTML = post.content;
+      document.getElementById("quote-title-dash").innerHTML = "&#8212;";
+      document.getElementById("quote-link").href = post.link;
+      document.getElementById("quote-title").textContent = post.title;
+      document.getElementById("quote-id").textContent = "#" + post.ID;
+      // document.getElementById("overlay").style.display = "none";
+      fadeOut(document.getElementById("overlay"));
+    });
+}
 
 // function loadData() {
 //   document.getElementById("overlay").style.display = "block";
@@ -72,32 +72,32 @@ function fadeIn(el, display) {
 //   };
 //   xhttp.open(
 //     "GET",
-//     "https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1",
+//     `https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1&timestamp=${new Date().getTime()}`,
 //     true
 //   );
 //   xhttp.send();
 // }
 
-function loadData() {
-  document.getElementById("overlay").style.display = "block";
-  axios({
-    method: "get",
-    url:
-      "https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1",
-    headers: { "cache-control": "no-cache" }
-  })
-    .then(response => {
-      const post = response.data.shift();
-      document.title = "Quote | " + post.title;
-      document.getElementById("quote-content").innerHTML = post.content;
-      document.getElementById("quote-title-dash").innerHTML = "&#8212;";
-      document.getElementById("quote-link").href = post.link;
-      document.getElementById("quote-title").textContent = post.title;
-      document.getElementById("quote-id").textContent = "#" + post.ID;
-      fadeOut(document.getElementById("overlay"));
-    })
-    .catch(error => {
-      console.log(error);
-    })
-    .then(() => {});
-}
+// function loadData() {
+//   document.getElementById("overlay").style.display = "block";
+//   axios({
+//     method: "get",
+//     url:
+//       `https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1&timestamp=${new Date().getTime()}`,
+//     // headers: { "cache-control": "no-cache" }
+//   })
+//     .then(response => {
+//       const post = response.data.shift();
+//       document.title = "Quote | " + post.title;
+//       document.getElementById("quote-content").innerHTML = post.content;
+//       document.getElementById("quote-title-dash").innerHTML = "&#8212;";
+//       document.getElementById("quote-link").href = post.link;
+//       document.getElementById("quote-title").textContent = post.title;
+//       document.getElementById("quote-id").textContent = "#" + post.ID;
+//       fadeOut(document.getElementById("overlay"));
+//     })
+//     .catch(error => {
+//       console.log(error);
+//     })
+//     .then(() => {});
+// }
