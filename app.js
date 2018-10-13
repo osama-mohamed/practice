@@ -30,7 +30,7 @@ app.get("/create-posts-table", (req, res) => {
   });
 });
 
-app.get("/create", (req, res) => {
+app.get("/create", checkQuery, (req, res) => {
   const post = {
     title: req.query.title,
     body: req.query.body
@@ -61,7 +61,7 @@ app.get("/read", (req, res) => {
   });
 });
 
-app.get("/read/:id", checkId, (req, res, next) => {
+app.get("/read/:id", checkId, (req, res) => {
   const sql = `SELECT * FROM posts WHERE id = ${req.params.id}`;
   db.query(sql, (err, post) => {
     if (err) throw err;
@@ -72,7 +72,7 @@ app.get("/read/:id", checkId, (req, res, next) => {
   });
 });
 
-app.get("/update/:id", checkId, (req, res) => {
+app.get("/update/:id", checkQuery, checkId, (req, res) => {
   const newPost = {
     title: req.query.title,
     body: req.query.body
@@ -110,6 +110,25 @@ function checkId(req, res, next) {
       });
     }
   });
+}
+
+function checkQuery(req, res, next) {
+  if (
+    req.query.title == "" ||
+    req.query.title == undefined ||
+    req.query.body == undefined ||
+    req.query.body == ""
+  ) {
+    res.send({
+      message: "Queries shoulde not be null >_<",
+      query: {
+        title: "String",
+        body: "String"
+      }
+    });
+  } else {
+    next();
+  }
 }
 // app.get("/create", (req, res) => {
 //   const post = {
