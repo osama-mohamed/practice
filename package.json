@@ -1,7 +1,7 @@
 {
-  "name": "node-auth-api",
+  "name": "node-mysql",
   "version": "1.0.0",
-  "description": "node jwt",
+  "description": "Practice node js.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,6 +18,6 @@
   "homepage": "https://github.com/osama-mohamed/node_practice#readme",
   "dependencies": {
     "express": "^4.16.4",
-    "jsonwebtoken": "^8.3.0"
+    "mysql": "^2.16.0"
   }
 }
