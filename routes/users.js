@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 let User = require("../models/user");
 
 router.get("/register", (req, res, next) => {
@@ -18,13 +19,15 @@ router.post("/register", (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   const confirmPassword = req.body.confirmPassword;
-  req.checkBody('name', 'Name is required').notEmpty();
-  req.checkBody('username', 'Username is required').notEmpty();
-  req.checkBody('email', 'Email is required').notEmpty();
-  req.checkBody('email', 'Email is not valid').isEmail();
-  req.checkBody('password', 'Password is required').notEmpty();
-  req.checkBody('confirmPassword', 'Confirm Password is required').notEmpty();
-  req.checkBody('confirmPassword', 'Passwords does not matched').equals(password);
+  req.checkBody("name", "Name is required").notEmpty();
+  req.checkBody("username", "Username is required").notEmpty();
+  req.checkBody("email", "Email is required").notEmpty();
+  req.checkBody("email", "Email is not valid").isEmail();
+  req.checkBody("password", "Password is required").notEmpty();
+  req.checkBody("confirmPassword", "Confirm Password is required").notEmpty();
+  req
+    .checkBody("confirmPassword", "Passwords does not matched")
+    .equals(password);
   const errors = req.validationErrors();
   if (errors) {
     res.render("register", {
@@ -38,11 +41,61 @@ router.post("/register", (req, res, next) => {
       password
     });
     User.createUser(newUser, (err, user) => {
-      if(err) throw err;
+      if (err) throw err;
     });
-    req.flash('success_msg', 'You registered successfully!');
-    res.redirect('/users/login');
+    req.flash("success_msg", "You registered successfully!");
+    res.redirect("/users/login");
   }
 });
 
+passport.use(
+  new LocalStrategy(function(username, password, done) {
+    // User.findOne({ username: username }, function(err, user) {
+    //   if (err) { return done(err); }
+    //   if (!user) {
+    //     return done(null, false, { message: 'Incorrect username.' });
+    //   }
+    //   if (!user.validPassword(password)) {
+    //     return done(null, false, { message: 'Incorrect password.' });
+    //   }
+    //   return done(null, user);
+    // });
+    User.getUserByUsername(username, (err, user) => {
+      if (err) throw err;
+      if (!user) {
+        return done(null, false, { message: "Incorrect username." });
+      }
+      User.comparePassword(password, user.password, (err, isMatch) => {
+        if (err) throw err;
+        if (isMatch) {
+          return done(null, user);
+        } else {
+          return done(null, false, { message: "Incorrect password." });
+        }
+      });
+    });
+  })
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  User.getUserById(id, (err, user) => {
+    done(err, user);
+  });
+});
+
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/users/login",
+    failureFlash: true
+  }),
+  function(req, res) {
+    res.redirect("/");
+  }
+);
 module.exports = router;
