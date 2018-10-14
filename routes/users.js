@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 let User = require("../models/user");
@@ -50,16 +49,6 @@ router.post("/register", (req, res, next) => {
 
 passport.use(
   new LocalStrategy(function(username, password, done) {
-    // User.findOne({ username: username }, function(err, user) {
-    //   if (err) { return done(err); }
-    //   if (!user) {
-    //     return done(null, false, { message: 'Incorrect username.' });
-    //   }
-    //   if (!user.validPassword(password)) {
-    //     return done(null, false, { message: 'Incorrect password.' });
-    //   }
-    //   return done(null, user);
-    // });
     User.getUserByUsername(username, (err, user) => {
       if (err) throw err;
       if (!user) {
