@@ -1,24 +1,29 @@
-let mongoose = require("mongoose");
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
-// User Schema
 let UserSchema = mongoose.Schema({
   name: {
-    type: String,
-    required: true
-  },
-  email: {
-    type: String,
-    required: true
+    type: String
   },
   username: {
     type: String,
-    required: true
+    createIndexes: true
+  },
+  email: {
+    type: String
   },
   password: {
-    type: String,
-    required: true
+    type: String
   }
 });
 
-// export the model
-let User = module.exports = mongoose.model("User", UserSchema);
+let User = (module.exports = mongoose.model("User", UserSchema));
+
+module.exports.createUser = function(newUser, callback) {
+  bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.hash(newUser.password, salt, function(err, hash) {
+      newUser.password = hash;
+      newUser.save(callback);
+    });
+  });
+};
