@@ -72,7 +72,7 @@ app.delete("/delete/:id", (req, res) => {
       if (err) {
         return console.error("error while deleting query ", err);
       }
-      res.send(200);
+      res.sendStatus(200);
     }
   );
 });
