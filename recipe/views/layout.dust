@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Recipe</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="/css/style.css" >
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 col-md-offset-2">
+                <h1>
+                    Developed By: 
+                    <a href="https://www.osamamohamed.com" target="_blank">
+                        OSAMA MOHAMED
+                    </a>
+                </h1>
+                <br>
+                <br>
+                {+body /}
+            </div>
+        </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>
