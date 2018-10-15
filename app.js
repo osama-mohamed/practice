@@ -15,7 +15,7 @@ const client = new Client({
 //   password: 'OSAMA',
 //   port: 5432,
 // })
-client.connect(console.log('Connected to Postgres'));
+client.connect(console.log("Connected to Postgres"));
 const port = process.env.PORT || 3000;
 const app = express();
 
@@ -36,6 +36,19 @@ app.get("/", (req, res) => {
       recipes: result.rows
     });
   });
+});
+
+app.post("/add", (req, res) => {
+  client.query(
+    "INSERT INTO recipes(name, ingredients, directions) VALUES($1, $2, $3)",
+    [req.body.name, req.body.ingredients, req.body.directions],
+    (err, result) => {
+      if (err) {
+        return console.error("error while inserting query ", err);
+      }
+      res.redirect("/");
+    }
+  );
 });
 
 app.listen(port, () => {
