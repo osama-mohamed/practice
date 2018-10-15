@@ -51,6 +51,19 @@ app.post("/add", (req, res) => {
   );
 });
 
+app.post("/edit", (req, res) => {
+  client.query(
+    "UPDATE recipes SET name=$1, ingredients=$2, directions=$3 WHERE id=$4",
+    [req.body.name, req.body.ingredients, req.body.directions, req.body.id],
+    (err, result) => {
+      if (err) {
+        return console.error("error while updating query ", err);
+      }
+      res.redirect("/");
+    }
+  );
+});
+
 app.listen(port, () => {
   console.log("Server started on port 3000");
 });
