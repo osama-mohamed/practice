@@ -12,6 +12,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-7 col-md-offset-2">
+                <h1>
+                    Developed By: 
+                    <a href="https://www.osamamohamed.com" target="_blank">
+                        OSAMA MOHAMED
+                    </a>
+                </h1>
+                <br>
+                <br>
                 {+body /}
             </div>
         </div>

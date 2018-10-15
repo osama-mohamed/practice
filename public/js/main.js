@@ -1,14 +1,12 @@
 $(document).ready(function() {
-  $('.delete-recipe').on('click', function() {
-    const id = $(this).data('id');
-    const url = '/delete/' + id;
-    if(confirm('Delete recipe ?')) {
+  $(".delete-recipe").on("click", function() {
+    const id = $(this).data("id");
+    if (confirm("Delete recipe ?")) {
       $.ajax({
-        url: url,
-        type: 'DELETE',
+        url: "/delete/" + id,
+        type: "DELETE",
         success: function(result) {
-          console.log(result);
-          window.location.href = '/';
+          window.location.href = "/";
         },
         error: function(err) {
           console.log(err);
@@ -17,10 +15,10 @@ $(document).ready(function() {
     }
   });
 
-  $('.edit-recipe').on('click', function() {
-    $('#edit-form-id').val( $(this).data('id') );
-    $('#edit-form-name').val( $(this).data('name') );
-    $('#edit-form-ingredients').val( $(this).data('ingredients') );
-    $('#edit-form-directions').val( $(this).data('directions') );
+  $(".edit-recipe").on("click", function() {
+    $("#edit-form-id").val($(this).data("id"));
+    $("#edit-form-name").val($(this).data("name"));
+    $("#edit-form-ingredients").val($(this).data("ingredients"));
+    $("#edit-form-directions").val($(this).data("directions"));
   });
 });
