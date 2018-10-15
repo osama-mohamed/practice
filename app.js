@@ -54,6 +54,11 @@ app.post("/send", (req, res) => {
     <p>${req.body.message}</p>`;
 
   let transporter = nodemailer.createTransport({
+    // host: process.env.HOST2,
+    // auth: {
+    //   user: process.env.USER2,
+    //   pass: process.env.PASSWORD2
+    // },
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
@@ -67,6 +72,7 @@ app.post("/send", (req, res) => {
   });
 
   let mailOptions = {
+    // from: `"Node Mailer" ${process.env.USER2}`,
     from: `"Node Mailer" ${process.env.USER}`,
     to: req.body.email,
     subject: req.body.name,
@@ -76,9 +82,8 @@ app.post("/send", (req, res) => {
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      // return console.log(error);
       console.log(error);
-      req.flash("error_msg", error);
+      req.flash("error_msg", 'An error occurred');
       res.redirect("/");
     } else {
       req.flash("success_msg", "Your email has been sent successfully!");
