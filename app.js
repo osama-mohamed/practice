@@ -64,6 +64,19 @@ app.post("/edit", (req, res) => {
   );
 });
 
+app.delete("/delete/:id", (req, res) => {
+  client.query(
+    "DELETE FROM recipes WHERE id=$1",
+    [req.params.id],
+    (err, result) => {
+      if (err) {
+        return console.error("error while deleting query ", err);
+      }
+      res.send(200);
+    }
+  );
+});
+
 app.listen(port, () => {
   console.log("Server started on port 3000");
 });
