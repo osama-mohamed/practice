@@ -80,16 +80,20 @@ app.post("/send", (req, res) => {
     html: output
   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-      req.flash("error_msg", 'An error occurred');
-      res.redirect("/");
-    } else {
-      req.flash("success_msg", "Your email has been sent successfully!");
-      res.redirect("/");
-    }
-  });
+  if (req.body.email == "") {
+    req.flash("error_msg", "No recipients found");
+    res.redirect("/");
+  } else {
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        req.flash("error_msg", "An error occurred");
+        res.redirect("/");
+      } else {
+        req.flash("success_msg", "Your email has been sent successfully!");
+        res.redirect("/");
+      }
+    });
+  }
 });
 
 app.listen(port, () => {
