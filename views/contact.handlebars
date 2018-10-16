@@ -33,24 +33,24 @@
         {{/if }}
         <form method="POST" action="/send">
           <p>
-            <label>Name</label>
-            <input type="text" name="name">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name">
           </p>
           <p>
-            <label>Company</label>
-            <input type="text" name="company">
+            <label for="company">Company</label>
+            <input type="text" name="company" id="company">
           </p>
           <p>
-            <label>Email Address</label>
-            <input type="email" name="email">
+            <label for="email">Email Address</label>
+            <input type="email" name="email" id="email">
           </p>
           <p>
-            <label>Phone Number</label>
-            <input type="text" name="phone">
+            <label for="phone">Phone Number</label>
+            <input type="text" name="phone" id="phone">
           </p>
           <p class="full">
-            <label>Message</label>
-            <textarea name="message" rows="5"></textarea>
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="5"></textarea>
           </p>
           <p class="full">
             <button type="submit">Submit</button>
