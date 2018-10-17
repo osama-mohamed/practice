@@ -28,7 +28,7 @@ That's it.
 Now the project is running at `http://localhost:3000` .
 
 
-For detailed explanation on how project work, read the [Node Docs](https://nodejs.org/en/docs/), [Express Docs](http://expressjs.com/en/guide/routing.html) [Nexmon](https://developer.nexmo.com/messaging/sms/overview).
+For detailed explanation on how project work, read the [Node Docs](https://nodejs.org/en/docs/), [Express Docs](http://expressjs.com/en/guide/routing.html), [Nexmon Docs](https://developer.nexmo.com/messaging/sms/overview).
 
 ## Developer
 This project made by [Osama Mohamed](https://www.facebook.com/osama.mohamed.ms)
