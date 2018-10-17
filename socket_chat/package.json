@@ -1,0 +1,24 @@
+{
+  "name": "socket_chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osama-mohamed/socket_chat.git"
+  },
+  "author": "OSAMA MOHAMED <osama6osama6@gmail.com> (https://www.osamamohamed.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/osama-mohamed/socket_chat/issues"
+  },
+  "homepage": "https://github.com/osama-mohamed/socket_chat#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "socket.io": "^2.1.1"
+  }
+}
