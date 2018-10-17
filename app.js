@@ -45,17 +45,6 @@ app.use(function(req, res, next) {
 });
 
 app.get("/", (req, res) => {
-  firebase.database().ref("messages").once("value", response => {
-    console.log('data: ', response.val());
-  });
-
-  https.get({ host: "api.ipify.org" }, response => {
-    let ip = "";
-    response.once("data", d => {
-      ip += d;
-      console.log('globalIp : ', ip);
-    });
-  });
   res.render("contact");
 });
 
