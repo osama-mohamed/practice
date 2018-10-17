@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Node Mailer</title>
+  <link rel="icon" href="https://nodemailer.com/nm_logo_200x136.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" />
   <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -33,24 +34,24 @@
         {{/if }}
         <form method="POST" action="/send">
           <p>
-            <label>Name</label>
-            <input type="text" name="name">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name">
           </p>
           <p>
-            <label>Company</label>
-            <input type="text" name="company">
+            <label for="company">Company</label>
+            <input type="text" name="company" id="company">
           </p>
           <p>
-            <label>Email Address</label>
-            <input type="email" name="email">
+            <label for="email">Email Address</label>
+            <input type="email" name="email" id="email">
           </p>
           <p>
-            <label>Phone Number</label>
-            <input type="text" name="phone">
+            <label for="phone">Phone Number</label>
+            <input type="text" name="phone" id="phone">
           </p>
           <p class="full">
-            <label>Message</label>
-            <textarea name="message" rows="5"></textarea>
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="5"></textarea>
           </p>
           <p class="full">
             <button type="submit">Submit</button>
