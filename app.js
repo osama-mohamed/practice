@@ -5,6 +5,9 @@ const expressHandlebars = require("express-handlebars");
 const nodemailer = require("nodemailer");
 const flash = require("connect-flash");
 const session = require("express-session");
+const firebase = require("firebase");
+const os = require("os");
+const https = require("https");
 const port = process.env.PORT || 3000;
 const app = express();
 
@@ -15,6 +18,16 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 require("dotenv").config();
+
+const config = {
+  apiKey: process.env.APIKEY,
+  authDomain: process.env.AUTHDOMAIN,
+  databaseURL: process.env.DATABASEURL,
+  projectId: process.env.PROJECTID,
+  storageBucket: process.env.STORAGEBUCKET,
+  messagingSenderId: process.env.MESSAGINGSENDERID
+};
+firebase.initializeApp(config);
 
 app.use(
   session({
@@ -32,10 +45,64 @@ app.use(function(req, res, next) {
 });
 
 app.get("/", (req, res) => {
+  firebase.database().ref("messages").once("value", response => {
+    console.log('data: ', response.val());
+  });
+
+  https.get({ host: "api.ipify.org" }, response => {
+    let ip = "";
+    response.once("data", d => {
+      ip += d;
+      console.log('globalIp : ', ip);
+    });
+  });
   res.render("contact");
 });
 
 app.post("/send", (req, res) => {
+  const newMessage = {
+    name: req.body.name,
+    company: req.body.company,
+    email: req.body.email,
+    phone: req.body.phone,
+    message: req.body.message,
+    time: new Date().toJSON(),
+    host: os.networkInterfaces(),
+    user: {
+      USERDOMAIN: process.env.USERDOMAIN,
+      USERDOMAIN_ROAMINGPROFILE: process.env.USERDOMAIN_ROAMINGPROFILE,
+      USERNAME: process.env.USERNAME,
+      system: process.platform,
+      ip: [req.socket.remoteAddress, req.connection.remoteAddress],
+      globalIP: ""
+    }
+  };
+  
+  const id = firebase
+    .database()
+    .ref("messages")
+    .push(newMessage).key;
+  firebase
+    .database()
+    .ref("messages")
+    .once("value")
+    .then(data => {
+      const obj = data.val();
+      for (let key in obj) {
+        if (key == id) {
+          // console.log("obj[key] == : ", obj[key]);
+          const updateglobalIP = {};
+          https.get({ host: "api.ipify.org" }, response => {
+            let ip = "";
+            response.on("data", d => {
+              ip += d;
+              updateglobalIP['user/globalIP'] = ip;
+              firebase.database().ref('messages').child(id).update(updateglobalIP);
+            });
+          });
+        }
+      }
+    });
   const outputPlainText = ` 
     Name: ${req.body.name}, 
     Company: ${req.body.company} 
