@@ -1,0 +1,28 @@
+{
+  "name": "sms-message",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osama-mohamed/sms_message_express.git"
+  },
+  "author": "OSAMA MOHAMED <osama6osama6@gmail.com> (https://www.osamamohamed.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/osama-mohamed/sms_message_express/issues"
+  },
+  "homepage": "https://github.com/osama-mohamed/sms_message_express#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.1.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "nexmo": "^2.4.0",
+    "socket.io": "^2.1.1"
+  }
+}
