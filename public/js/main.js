@@ -8,13 +8,15 @@ button.addEventListener('click', send, false);
 
 const socket = io();
 socket.on('smsStatus', (data) => {
+    numberInput.value = '';
+    textInput.value = '';
     response.innerHTML = `<h5>Text message sent to ${data.number} with id : ${data.id}</h5>`;
 });
 
 function send() {
     const number = numberInput.value.replace(/\D/g, '');
     const text = textInput.value;
-
+    
     fetch('/', {
         method: 'post',
         headers: {
