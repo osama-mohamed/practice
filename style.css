@@ -1,0 +1,21 @@
+.navbar {
+  background-color: #029acf;
+  border-color: #029acf;
+}
+.navbar-brand,
+.navbar-brand:hover,
+.navbar-brand:focus{
+  color: #fff;
+}
+.avatar {
+  width: 100%;
+}
+
+.repo-name,
+.repo-name:hover,
+.repo-name:focus,
+.user-website ,
+.user-website:hover, 
+.user-website:focus{
+  color: #029acf;
+}
