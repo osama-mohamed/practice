@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_mail import Mail, Message
 from dotenv import load_dotenv
+import json
 import os
 load_dotenv()
 
@@ -13,8 +14,22 @@ app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
 
+
+@app.route('/', methods=['GET'])
+def get_data():
+  try:
+    read_file = open("github-webhook.json", "r").read()
+    data = json.loads(read_file)
+    return jsonify({"message": "GitHub Data...", "data": data})
+  except:
+    return jsonify({"message": "No Github Data!"})
+
+
 @app.route('/', methods=['POST'])
 def index():
+  f = open("github-webhook.json", "w")
+  f.write(json.dumps(request.json))
+  f.close()
   if len(request.json['commits']) > 0:
     output = """
       <h3>Repository {name} Notification Detail</h3>
