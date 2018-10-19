@@ -8,6 +8,7 @@ Bookmark Your Favorite Sites
 * Show alerts
 * Add bookmark
 * View bookmark URL
+* View number of clicks on every bookmark
 * Delete bookmark
 * Delete all bookmarks
 
