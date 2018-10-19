@@ -6,6 +6,8 @@
 
 ## Github Webhook Email Flask website contains:
 * Send email via flask mailer to your email when you make a push request into github
+* Save data into json file
+* Show saved data
 
 
 ## Usage :
