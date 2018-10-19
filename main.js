@@ -112,8 +112,10 @@ $(document).ready(() => {
                 <img class="thumbnail avatar" src="${user.avatar_url}" title="${user.name}" alt="${user.name}">
               </a>
                 <a href="${user.html_url}" target="_blank" class="btn btn-info btn-block">Go to ${user.name || user.login} Profile</a>
-              </div>
-              <div class="col-md-9">
+                <br>
+                <a href="https://gist.github.com/${username}" target="_blank" class="btn btn-warning btn-block">Go to ${user.name || user.login} Gists Page</a>
+                </div>
+                <div class="col-md-9">
                 <span class="label label-info">Public Repositories: ${user.public_repos}</span>
                 <span class="label label-warning">Public Gists: ${user.public_gists}</span>
                 <span class="label label-success">Followers: ${user.followers}</span>
@@ -128,6 +130,7 @@ $(document).ready(() => {
                   <li class="list-group-item">Location: ${user.location}</li>
                   <li class="list-group-item">Member Since: ${user.created_at}</li>
                   <li class="list-group-item">Bio: ${user.bio}</li>
+                  <li class="list-group-item">Hireable: <input type="checkbox" checked="${user.hireable}" disabled="${true}"></li>
                 </ul>
               </div>
             </div>
