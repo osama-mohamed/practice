@@ -10,7 +10,8 @@ function saveBookmark(e) {
   }
   const bookmark = {
     name: siteName,
-    url: siteUrl
+    url: siteUrl,
+    click: 0
   };
   if (localStorage.getItem("bookmarks") == null) {
     let bookmarks = [];
@@ -34,7 +35,8 @@ function getBookmarks() {
       bookmarksHTML.innerHTML += `<div class="well">
                                     <h3>
                                       ${bookmark.name}
-                                      <a class="btn btn-default" href="${bookmark.url}" target="_blank">View</a>
+                                      - ${bookmark.click} clicks
+                                      <a class="btn btn-default" href="${bookmark.url}" target="_blank" onclick="numberOfClicks('${bookmark.url},${bookmark.name}')">View</a>
                                       <a class="btn btn-danger" href="#" onclick="deleteBookmark('${bookmark.url},${bookmark.name}')">Delete</a>
                                     </h3>
                                   </div>`;
@@ -58,7 +60,6 @@ function validateForm(siteName, siteUrl) {
     alert("Please fill in the form correctly!");
     return false;
   }
-  const expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
   const regex = new RegExp(/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi);
   if (siteUrl.match(regex)) {
     return true;
@@ -68,8 +69,18 @@ function validateForm(siteName, siteUrl) {
   }
 }
 
-
 function deleteAll() {
   localStorage.removeItem("bookmarks");
+  getBookmarks();
+}
+
+function numberOfClicks(url){
+  let bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+  bookmarks.forEach((bookmark, index) => {
+    if (bookmark.url == url.split(',')[0] && bookmark.name == url.split(',')[1]) {
+      bookmark.click += 1;
+    }
+  });
+  localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   getBookmarks();
 }
