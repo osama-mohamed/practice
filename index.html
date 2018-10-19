@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Bookmarker</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="i.ico">
+</head>
+
+<body onload="getBookmarks()">
+  <div class="container">
+    <div class="header clearfix">
+      <nav></nav>
+      <h3 class="text-muted">Bookmarker</h3>
+      <h3 class="text-muted">Developed By: <a href="https://www.osamamohamed.com" target="_blank">OSAMA MOHAMED</a></h3>
+    </div>
+    
+    <div class="jumbotron">
+      <h2>Bookmark Your Favorite Sites</h2>
+      <form id="myForm">
+        <div class="form-group">
+          <label for="siteName">Site Name</label>
+          <input type="text" id="siteName" class="form-control" placeholder="Website Name...">
+        </div>
+        <div class="form-group">
+          <label for="siteUrl">Site URL</label>
+          <input type="text" id="siteUrl" class="form-control" placeholder="Website URL...">
+        </div>
+        <button type="submit" class="btn btn-primary">Bookmark</button>
+      </form>
+    </div>
+
+    <div class="row marketing">
+      <div class="col-lg-12">
+        <div id="bookmarks">
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <button type="button" id="deleteAll" class="btn btn-danger" style="margin: 0 auto; display: table;">Delete All Bookmarks</button>
+    </footer>
+
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="main.js"></script>
+</body>
+
+</html>
