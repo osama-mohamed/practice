@@ -36,37 +36,83 @@ $(document).ready(() => {
                 client_secret: CLIENTSECRET,
               }
             }).done(forks => {
-              $.each(forks, (index, fork)=> {
-                // append repos with forks
-                $('#repositories').append(`
-                  <div class="well">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <strong>Repository ID : ${repository.id}</strong>
-                        <br>
-                        <strong>Repository Name: <a href="${repository.html_url}" target="_blank" class="repo-name">${repository.name}</a></strong>
-                        <br> 
-                        <p><strong>Repository Description : </strong>${repository.description}</p>
-                      </div>
-                      <div class="col-md-4">
-                        <span class="label label-info">Forks: ${repository.forks_count}</span>
-                        <span class="label label-warning">Watchers: ${repository.watchers_count}</span>
-                        <span class="label label-success">Stars: ${repository.stargazers_count}</span>
-                        <span class="label label-primary">Open Issues: ${repository.open_issues_count}</span>
-                        <br>
-                        <br>
-                        <strong>Forks from: <a href="${fork.owner.html_url}" target="_blank" class="repo-name">${fork.owner.login}</a></strong>
-                      </div>
-                      <div class="col-md-2">
-                        <a href="${repository.clone_url}" class="btn btn-info clone">Clone Repo</a>
-                        <br>
-                        <br>
-                        <a href="${repository.homepage}" target="_blank" class="btn btn-default">Home Page</a>
-                      </div>
+
+
+              let d = '';
+              for(let i = 0; i < forks.length; i++) {
+                d += `<a href="${forks[i].owner.html_url}" target="_blank" class="repo-name">${forks[i].owner.login}</a>, `;
+              }
+              $('#repositories').append(`
+                <div class="well">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <strong>Repository ID : ${repository.id}</strong>
+                      <br>
+                      <strong>Repository Name: <a href="${repository.html_url}" target="_blank" class="repo-name">${repository.name}</a></strong>
+                      <br> 
+                      <p><strong>Repository Description : </strong>${repository.description}</p>
+                    </div>
+                    <div class="col-md-4">
+                      <span class="label label-info">Forks: ${repository.forks_count}</span>
+                      <span class="label label-warning">Watchers: ${repository.watchers_count}</span>
+                      <span class="label label-success">Stars: ${repository.stargazers_count}</span>
+                      <span class="label label-primary">Open Issues: ${repository.open_issues_count}</span>
+                      <br>
+                      <br>
+                      <strong>Forks from: ` +
+                        d +
+                      `
+                      </strong>
+                    </div>
+                    <div class="col-md-2">
+                      <a href="${repository.clone_url}" class="btn btn-info clone">Clone Repo</a>
+                      <br>
+                      <br>
+                      <a href="${repository.homepage}" target="_blank" class="btn btn-default">Home Page</a>
                     </div>
                   </div>
-                `);
-              });
+                </div>
+              `);
+
+
+
+
+
+
+
+              // $.each(forks, (index, fork)=> {
+              //   // console.log("fork", fork)
+              //   // console.log("index", index)
+              //   // append repos with forks
+              //   $('#repositories').append(`
+              //     <div class="well">
+              //       <div class="row">
+              //         <div class="col-md-6">
+              //           <strong>Repository ID : ${repository.id}</strong>
+              //           <br>
+              //           <strong>Repository Name: <a href="${repository.html_url}" target="_blank" class="repo-name">${repository.name}</a></strong>
+              //           <br> 
+              //           <p><strong>Repository Description : </strong>${repository.description}</p>
+              //         </div>
+              //         <div class="col-md-4">
+              //           <span class="label label-info">Forks: ${repository.forks_count}</span>
+              //           <span class="label label-warning">Watchers: ${repository.watchers_count}</span>
+              //           <span class="label label-success">Stars: ${repository.stargazers_count}</span>
+              //           <span class="label label-primary">Open Issues: ${repository.open_issues_count}</span>
+              //           <br>
+              //           <br>
+              //           <strong>Forks from: <a href="${fork.owner.html_url}" target="_blank" class="repo-name">${fork.owner.login}</a></strong>
+              //         </div>
+              //         <div class="col-md-2">
+              //           <a href="${repository.clone_url}" class="btn btn-info clone">Clone Repo</a>
+              //           <br>
+              //           <br>
+              //           <a href="${repository.homepage}" target="_blank" class="btn btn-default">Home Page</a>
+              //         </div>
+              //       </div>
+              //     </div>
+              //   `);
+              // });
             });
           } else {
             // append repos with 0 forks
