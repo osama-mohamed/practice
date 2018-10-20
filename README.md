@@ -1,7 +1,11 @@
-# Github User Finder Jq.
+# [Github User Finder](https://osama-mohamed.github.io/github_user_finder_jq) Jq.
 
 
-[<img src="https://github.com/fluidicon.png" width="150" title="Github User Finder" >]()
+[<img src="https://github.com/fluidicon.png" width="150" title="Github User Finder" >](https://osama-mohamed.github.io/github_user_finder_jq)
+
+
+## For live preview :
+> [Github User Finder](https://osama-mohamed.github.io/github_user_finder_jq)
 
 
 ## Github User Finder website contains:
