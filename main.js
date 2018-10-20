@@ -19,8 +19,9 @@ $(document).ready(() => {
         data: {
           client_id: CLIENTID,
           client_secret: CLIENTSECRET,
-          sort: 'created',
-          direction: 'asc',
+          sort: 'pushed',
+          // sort: 'created',
+          // direction: 'asc',
           per_page: 5000
         }
       }).done(repositories => {
@@ -37,7 +38,7 @@ $(document).ready(() => {
               }
             }).done(forks => {
               // append repos with forks
-              repositoryWithForks(repository, forks);
+              repositoryWithForks(repository, forks, index);
             });
           } else {
             // append repos with 0 forks
@@ -121,7 +122,7 @@ function repositoryWithoutForks(repository, index) {
     <div class="well">
       <div class="row">
         <div class="col-md-6">
-        ${index + 1}
+          #${index + 1}
           <strong>Repository ID : ${repository.id}</strong>
           <br>
           <strong>Repository Name: <a href="${repository.html_url}" target="_blank" class="repo-name">${repository.name}</a></strong>
@@ -152,7 +153,7 @@ function repositoryWithoutForks(repository, index) {
   `);
 }
 
-function repositoryWithForks(repository, forks) {
+function repositoryWithForks(repository, forks, index) {
   let d = '';
   for(let i = 0; i < forks.length; i++) {
     d += `<a href="${forks[i].owner.html_url}" target="_blank" class="repo-name">${forks[i].owner.login}</a>, `;
@@ -161,6 +162,7 @@ function repositoryWithForks(repository, forks) {
     <div class="well">
       <div class="row">
         <div class="col-md-6">
+          ##${index + 1}
           <strong>Repository ID : ${repository.id}</strong>
           <br>
           <strong>Repository Name: <a href="${repository.html_url}" target="_blank" class="repo-name">${repository.name}</a></strong>
