@@ -1,0 +1,63 @@
+.navbar {
+  background-color: #029acf;
+  border-color: #029acf;
+}
+.navbar-brand,
+.navbar-brand:hover,
+.navbar-brand:focus{
+  color: #fff;
+}
+.avatar {
+  width: 100%;
+}
+
+.repo-name,
+.repo-name:hover,
+.repo-name:focus,
+.user-website ,
+.user-website:hover, 
+.user-website:focus{
+  color: #029acf;
+}
+.license-url:hover, 
+.license-url:focus{
+  text-decoration: none;
+}
+
+.tooltipp {
+  position: relative;
+  display: block;
+}
+
+.tooltipp .tooltiptext {
+  visibility: hidden;
+  width: 165px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 115%;
+  left: 45%;
+  margin-left: -75px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltipp .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltipp:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
