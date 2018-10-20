@@ -4,54 +4,56 @@ const CLIENTSECRET = 'Your gihub OAuth Apps Client Secret here';
 
 $(document).ready(() => {
   $("#searchUser").on("keyup", e => {
-    const username = e.target.value;
-    $.ajax({
-      url: `https://api.github.com/users/${username}`,
-      method: "GET",
-      data: {
-        client_id: CLIENTID,
-        client_secret: CLIENTSECRET
-      }
-    }).done(user => {
+    if(e.which == 13) {
+      const username = e.target.value;
       $.ajax({
-        url: `https://api.github.com/users/${username}/repos`,
+        url: `https://api.github.com/users/${username}`,
         method: "GET",
         data: {
-          client_id: CLIENTID,
-          client_secret: CLIENTSECRET,
-          sort: 'pushed',
-          // sort: 'created',
-          // direction: 'asc',
-          per_page: 5000
+            client_id: CLIENTID,
+            client_secret: CLIENTSECRET
         }
-      }).done(repositories => {
-        // loop to append repos details
-        $.each(repositories, (index, repository)=> {
-          if(repository.forks_count > 0){
-            // make ajax to to forks details
-            $.ajax({
-              url: repository.forks_url,
-              method: "GET",
-              data: {
-                client_id: CLIENTID,
-                client_secret: CLIENTSECRET,
-              }
-            }).done(forks => {
-              // append repos with forks
-              repositoryWithForks(repository, forks, index);
-            });
-          } else {
-            // append repos with 0 forks
-            repositoryWithoutForks(repository, index);
+      }).done(user => {
+        $.ajax({
+          url: `https://api.github.com/users/${username}/repos`,
+          method: "GET",
+          data: {
+            client_id: CLIENTID,
+            client_secret: CLIENTSECRET,
+            sort: 'pushed',
+            // sort: 'created',
+            // direction: 'asc',
+            per_page: 5000
           }
+        }).done(repositories => {
+          // loop to append repos details
+          $.each(repositories, (index, repository)=> {
+            if(repository.forks_count > 0){
+              // make ajax to to forks details
+              $.ajax({
+                url: repository.forks_url,
+                method: "GET",
+                data: {
+                  client_id: CLIENTID,
+                  client_secret: CLIENTSECRET,
+                }
+              }).done(forks => {
+                // append repos with forks
+                repositoryWithForks(repository, forks, index);
+              });
+            } else {
+              // append repos with 0 forks
+              repositoryWithoutForks(repository, index);
+            }
+          });
         });
+        // append user profile details
+        userProfile(user, username);
+      })
+      .fail(err => {
+        $("#profile").text(`User ${username} ${JSON.parse(err.responseText).message}`);
       });
-      // append user profile details
-      userProfile(user, username);
-    })
-    .fail(err => {
-      $("#profile").text(`User ${username} ${JSON.parse(err.responseText).message}`);
-    });
+    }
   });
 
   $('html').on('click', '.clone', (e) =>{
