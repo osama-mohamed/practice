@@ -140,13 +140,12 @@ function repositoryWithoutForks(repository, index) {
         </div>
         <div class="col-md-2">
           <span class="tooltipp">
-            <a href="${repository.clone_url}" class="btn btn-info clone">Clone Repo
+            <a href="${repository.clone_url}" class="btn btn-info btn-block clone">Clone Repo
               <span class="tooltiptext">Copy to clipboard</span>
             </a>
           </span>
-          <br>
-          <br>
-          <a href="${repository.homepage}" target="_blank" class="btn btn-default">Home Page</a>
+          <a href="${repository.svn_url}/archive/master.zip" target="_blank" class="btn btn-success btn-block" style="margin-top: 10px; margin-bottom: 10px;">Download ZIP</a>
+          <a href="${repository.homepage}" target="_blank" class="btn btn-warning btn-block">Home Page</a>
         </div>
       </div>
     </div>
@@ -182,13 +181,12 @@ function repositoryWithForks(repository, forks) {
         </div>
         <div class="col-md-2">
           <span class="tooltipp">
-            <a href="${repository.clone_url}" class="btn btn-info clone">Clone Repo
+            <a href="${repository.clone_url}" class="btn btn-info btn-block clone">Clone Repo
               <span class="tooltiptext">Copy to clipboard</span>
             </a>
           </span>
-          <br>
-          <br>
-          <a href="${repository.homepage}" target="_blank" class="btn btn-default">Home Page</a>
+          <a href="${repository.svn_url}/archive/master.zip" target="_blank" class="btn btn-success btn-block" style="margin-top: 10px; margin-bottom: 10px;">Download ZIP</a>
+          <a href="${repository.homepage}" target="_blank" class="btn btn-warning btn-block">Home Page</a>
         </div>
       </div>
     </div>

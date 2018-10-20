@@ -26,7 +26,7 @@
 
 .tooltipp {
   position: relative;
-  display: inline-block;
+  display: block;
 }
 
 .tooltipp .tooltiptext {
@@ -40,7 +40,7 @@
   position: absolute;
   z-index: 1;
   bottom: 115%;
-  left: 42%;
+  left: 45%;
   margin-left: -75px;
   opacity: 0;
   transition: opacity 0.3s;
