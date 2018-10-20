@@ -1,0 +1,38 @@
+html {
+  font-size: 10px;
+  background: linear-gradient(45deg,  #42a5f5 0%,#478ed1 50%,#0d47a1 100%);
+}
+
+body {
+  margin:0;
+  text-align: center;
+  font-family: 'Inconsolata', monospace;
+}
+
+.timer {
+  display:flex;
+  min-height: 100vh;
+  flex-direction:column;
+}
+
+.display {
+  flex:1;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.display__end-time {
+  font-size: 4rem;
+}
+
+h1 > a,
+h1, 
+h3{
+  color: #fff;
+  font-family: 'Inconsolata', monospace;
+}
+h3{
+  font-size: 2rem;
+}
