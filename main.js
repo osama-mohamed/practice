@@ -48,7 +48,8 @@ $(document).ready(() => {
       });
       // append user profile details
       userProfile(user, username);
-    }).fail(err => {
+    })
+    .fail(err => {
       $("#profile").text(`User ${username} ${JSON.parse(err.responseText).message}`);
     });
   });
@@ -70,7 +71,7 @@ function userProfile(user, username) {
   $("#profile").html(`
     <div class="panel panel-default">
       <div class="panel-heading">
-          <h3 class="panel-title">${user.name || user.login}</h3>
+        <h3 class="panel-title">${user.name || user.login}</h3>
       </div>
       <div class="panel-body">
         <div class="row">
@@ -123,6 +124,7 @@ function repositoryWithoutForks(repository, index) {
       <div class="row">
         <div class="col-md-6">
           #${index + 1}
+          <br>
           <strong>Repository ID : ${repository.id}</strong>
           <br>
           <strong>Repository Name: <a href="${repository.html_url}" target="_blank" class="repo-name">${repository.name}</a></strong>
@@ -163,6 +165,7 @@ function repositoryWithForks(repository, forks, index) {
       <div class="row">
         <div class="col-md-6">
           ##${index + 1}
+          <br>
           <strong>Repository ID : ${repository.id}</strong>
           <br>
           <strong>Repository Name: <a href="${repository.html_url}" target="_blank" class="repo-name">${repository.name}</a></strong>
