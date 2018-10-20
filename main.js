@@ -65,7 +65,11 @@ $(document).ready(() => {
                       </strong>
                     </div>
                     <div class="col-md-2">
-                      <a href="${repository.clone_url}" class="btn btn-info clone">Clone Repo</a>
+                      <span class="tooltipp">
+                        <a href="${repository.clone_url}" class="btn btn-info clone">Clone Repo
+                          <span class="tooltiptext">Copy to clipboard</span>
+                        </a>
+                      </span>
                       <br>
                       <br>
                       <a href="${repository.homepage}" target="_blank" class="btn btn-default">Home Page</a>
@@ -116,6 +120,13 @@ $(document).ready(() => {
             });
           } else {
             // append repos with 0 forks
+            let license = '';
+            if(repository.license) {
+              license += `
+              <a href="${repository.license.url}" target="_blank" class="license-url">
+                <span class="label label-default">License: ${repository.license.spdx_id}</span>
+              </a>`;
+            }
             $('#repositories').append(`
               <div class="well">
                 <div class="row">
@@ -132,9 +143,17 @@ $(document).ready(() => {
                     <span class="label label-warning">Watchers: ${repository.watchers_count}</span>
                     <span class="label label-success">Stars: ${repository.stargazers_count}</span>
                     <span class="label label-primary">Open Issues: ${repository.open_issues_count}</span>
+                    <br>
+                    <br>` +
+                    license +
+                    `
                   </div>
                   <div class="col-md-2">
-                    <a href="${repository.clone_url}" class="btn btn-info clone">Clone Repo</a>
+                    <span class="tooltipp">
+                      <a href="${repository.clone_url}" class="btn btn-info clone">Clone Repo
+                        <span class="tooltiptext">Copy to clipboard</span>
+                      </a>
+                    </span>
                     <br>
                     <br>
                     <a href="${repository.homepage}" target="_blank" class="btn btn-default">Home Page</a>
@@ -193,7 +212,13 @@ $(document).ready(() => {
 
   $('html').on('click', '.clone', (e) =>{
     e.preventDefault();
+    const tooltip = e.target.children[0];
+    // tooltip.innerHTML = "Copied: git clone " + e.target.href;
+    tooltip.innerHTML = "&check; &ensp; Coppied to clipboard";
     textToClipboard(e.target.href);
+    setTimeout(() => {
+      resetTooltip(e);
+    }, 1000);
   });
 });
 
@@ -201,13 +226,17 @@ $(document).ready(() => {
 
 
 function textToClipboard(text) {
-  let dummy = document.createElement("textarea");
-  document.body.appendChild(dummy);
-  dummy.value = 'git clone ' + text;
-  dummy.select();
+  let copyText = document.createElement("textarea");
+  document.body.appendChild(copyText);
+  copyText.value = 'git clone ' + text;
+  copyText.select();
   document.execCommand("copy");
-  document.body.removeChild(dummy);
-  alert('coppied to clipboard!');
+  document.body.removeChild(copyText);
+  // alert('coppied to clipboard!');
 }
 
-// <a href="#" class="btn btn-info" onclick="textToClipboard('${repository.clone_url}')">Clone Repo</a>
+function resetTooltip(e) {
+  const tooltip = e.target.children[0];
+  tooltip.innerHTML = "Copy to clipboard";
+}
+
