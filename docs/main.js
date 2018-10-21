@@ -1,10 +1,10 @@
-document.addEventListener('keydown', (event)=> {
-  document.getElementById('initial').style.display = 'none'
-  document.getElementById('code').innerText = '(code) : ' + event.code
-  document.getElementById('key').innerText = '(key) : ' + event.key
-  document.getElementById('key-code').innerText = '(key code) : ' + event.keyCode
-})
-
+document.addEventListener("keydown", event => {
+  event.preventDefault();
+  document.getElementById("initial").style.display = "none";
+  document.getElementById("code").innerText = "(code) : " + event.code;
+  document.getElementById("key").innerText = "(key) : " + event.key;
+  document.getElementById("key-code").innerText = "(key code) : " + event.keyCode;
+});
 
 const keyCodes = {
   0 : "That key has no keycode",
@@ -179,9 +179,10 @@ const keyCodes = {
   255 : "toggle touchpad"
 }
 
-document.getElementById('key2').style.display = 'none'
-document.getElementById('body').onkeydown = (e) => {
-  document.getElementById('key2').style.display = 'inline-block'
-  document.getElementById('key-code2').innerText = e.keyCode
-  document.getElementById('key2').innerText = keyCodes[e.keyCode]
-}
+document.getElementById("key2").style.display = "none";
+document.getElementById("body").onkeydown = e => {
+  e.preventDefault();
+  document.getElementById("key2").style.display = "inline-block";
+  document.getElementById("key-code2").innerText = e.keyCode;
+  document.getElementById("key2").innerText = keyCodes[e.keyCode];
+};
