@@ -368,7 +368,8 @@ function searchRepositoryWithForks(repository, forks) {
 
 
 function copy(text) {
-  let copyText = document.body.appendChild(document.createElement("textarea"));
+  let copyText = document.createElement("textarea");
+  document.body.appendChild(copyText);
   copyText.value = text;
   console.log(copyText.value);
   copyText.select();
