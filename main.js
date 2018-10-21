@@ -180,7 +180,7 @@ function repositoryWithForks(html, repository, index, forks) {
   $('#repositoriesButtons').append(
     `<div class="col-md-3">
       <a data-name="${repository.html_url}" href="${repository.html_url}" target="_blank" class="btn btn-info">${repository.name}</a>
-    </div>`)
+    </div>`);
   let license = '';
   if(repository.license) {
     license += `
