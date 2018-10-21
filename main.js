@@ -359,3 +359,36 @@ function searchRepositoryWithForks(repository, forks) {
     </div>
   `);
 }
+
+
+
+
+
+
+
+
+function copy(text) {
+  let copyText = document.body.appendChild(document.createElement("textarea"));
+  copyText.value = text;
+  console.log(copyText.value);
+  copyText.select();
+  document.execCommand("copy");
+  document.body.removeChild(copyText);
+}
+
+
+function gitStatus() {copy('git status');}
+
+function gitAddAll() {copy('git add .');}
+
+function gitCommit(text) {copy(text + ' ""');}
+
+function gitPush() {copy('git push');}
+
+function gitPushUOriginMaster() {copy('git push -u origin master');}
+
+function gitReset() {copy('git reset --hard ');}
+
+function gitClean() {copy('git clean -f -d');}
+
+function gitPushUOriginMasterHard() {copy('git push -u origin +master');}
