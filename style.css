@@ -23,6 +23,12 @@
 .license-url:focus{
   text-decoration: none;
 }
+#repositoriesButtons > div > a {
+  margin-bottom: 10px;
+  display: block;
+  width: 100%;
+  font-size: 15px;
+}
 
 .tooltipp {
   position: relative;
