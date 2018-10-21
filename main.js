@@ -4,8 +4,12 @@ const CLIENTSECRET = '0d21bf38b2edcbec8e9314abc6026284ff6d9127';
 
 $(document).ready(() => {
   $('html').on('click', '#osamaMohamed', (e) => {
-    $("#searchUser").val(e.target.dataset.name);
-    $appendRepositories(e.target.dataset.name);
+    const username = e.target.dataset.name;
+    $("#searchUser").val(username);
+    $appendRepositories(username);
+    $("#search-repository").on("keyup", event => {
+      $appendSearchRepository(event, username);
+    });
   });
 
   $("#searchUser").on("keyup", event => {
