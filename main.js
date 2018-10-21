@@ -4,7 +4,38 @@ const CLIENTSECRET = '0d21bf38b2edcbec8e9314abc6026284ff6d9127';
 
 $(document).ready(() => {
   $("#searchUser").on("keyup", e => {
-    let username = e.target.value;
+    const username = e.target.value;
+    $("#search-repository").on("keyup", e => {
+      const searchRepository = e.target.value;
+      $('#searched-repository').html('');
+      $.ajax({
+        url: `https://api.github.com/repos/${username}/${searchRepository}`,
+        method: "GET",
+        data: {
+            client_id: CLIENTID,
+            client_secret: CLIENTSECRET
+        }
+      }).done(repository => {
+        if(repository.forks_count > 0){
+          // make ajax to get forks details
+          $.ajax({
+            url: repository.forks_url,
+            method: "GET",
+            data: {
+              client_id: CLIENTID,
+              client_secret: CLIENTSECRET,
+            }
+          }).done(forks => {
+            // append searched repo with forks
+            searchRepositoryWithForks(repository, forks);
+          });
+        } else {
+          // append searched repo with 0 forks
+          searchRepositoryWithoutForks(repository);
+        }
+      });
+    });
+
     $.ajax({
       url: `https://api.github.com/users/${username}`,
       method: "GET",
@@ -28,7 +59,7 @@ $(document).ready(() => {
         // loop to append repos details
         $.each(repositories, (index, repository)=> {
           if(repository.forks_count > 0){
-            // make ajax to to forks details
+            // make ajax to get forks details
             $.ajax({
               url: repository.forks_url,
               method: "GET",
@@ -243,3 +274,88 @@ function resetTooltip(e) {
   tooltip.innerHTML = "Copy to clipboard";
 }
 
+
+function searchRepositoryWithoutForks(repository) {
+  let license = '';
+  if(repository.license) {
+    license += `
+    <a href="${repository.license.url}" target="_blank" class="license-url">
+      <span class="label label-default">License: ${repository.license.spdx_id}</span>
+    </a>`;
+  }
+  $('#searched-repository').append(`
+    <div class="well">
+      <div class="row">
+        <div class="col-md-6">
+          <br>
+          <strong>Repository ID : ${repository.id}</strong>
+          <br>
+          <strong>Repository Name: <a href="${repository.html_url}" target="_blank" class="repo-name">${repository.name}</a></strong>
+          <br> 
+          <p><strong>Repository Description : </strong>${repository.description}</p>
+        </div>
+        <div class="col-md-4">
+          <span class="label label-info">Forks: ${repository.forks_count}</span>
+          <span class="label label-warning">Watchers: ${repository.watchers_count}</span>
+          <span class="label label-success">Stars: ${repository.stargazers_count}</span>
+          <span class="label label-primary">Open Issues: ${repository.open_issues_count}</span>
+          <br>
+          <br>` +
+          license +
+          `
+        </div>
+        <div class="col-md-2">
+          <span class="tooltipp">
+            <a href="${repository.clone_url}" class="btn btn-info btn-block clone">Clone Repo
+              <span class="tooltiptext">Copy to clipboard</span>
+            </a>
+          </span>
+          <a href="${repository.svn_url}/archive/master.zip" target="_blank" class="btn btn-success btn-block" style="margin-top: 10px; margin-bottom: 10px;">Download ZIP</a>
+          <a href="${repository.homepage}" target="_blank" class="btn btn-warning btn-block">Home Page</a>
+        </div>
+      </div>
+    </div>
+  `);
+}
+
+function searchRepositoryWithForks(repository, forks) {
+  let d = '';
+  for(let i = 0; i < forks.length; i++) {
+    d += `<a href="${forks[i].owner.html_url}" target="_blank" class="repo-name">${forks[i].owner.login}</a>, `;
+  }
+  $('#searched-repository').append(`
+    <div class="well">
+      <div class="row">
+        <div class="col-md-6">
+          <br>
+          <strong>Repository ID : ${repository.id}</strong>
+          <br>
+          <strong>Repository Name: <a href="${repository.html_url}" target="_blank" class="repo-name">${repository.name}</a></strong>
+          <br> 
+          <p><strong>Repository Description : </strong>${repository.description}</p>
+        </div>
+        <div class="col-md-4">
+          <span class="label label-info">Forks: ${repository.forks_count}</span>
+          <span class="label label-warning">Watchers: ${repository.watchers_count}</span>
+          <span class="label label-success">Stars: ${repository.stargazers_count}</span>
+          <span class="label label-primary">Open Issues: ${repository.open_issues_count}</span>
+          <br>
+          <br>
+          <strong>Forks from: ` +
+            d +
+          `
+          </strong>
+        </div>
+        <div class="col-md-2">
+          <span class="tooltipp">
+            <a href="${repository.clone_url}" class="btn btn-info btn-block clone">Clone Repo
+              <span class="tooltiptext">Copy to clipboard</span>
+            </a>
+          </span>
+          <a href="${repository.svn_url}/archive/master.zip" target="_blank" class="btn btn-success btn-block" style="margin-top: 10px; margin-bottom: 10px;">Download ZIP</a>
+          <a href="${repository.homepage}" target="_blank" class="btn btn-warning btn-block">Home Page</a>
+        </div>
+      </div>
+    </div>
+  `);
+}
