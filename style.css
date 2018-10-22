@@ -23,11 +23,13 @@
 .license-url:focus{
   text-decoration: none;
 }
-#repositoriesButtons > div > a {
+#repositoriesButtons > div > a,
+#followers > div > a,
+#followings > div > a {
   margin-bottom: 10px;
   display: block;
   width: 100%;
-  font-size: 15px;
+  font-size: 12px;
 }
 
 .tooltipp {

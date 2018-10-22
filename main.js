@@ -7,22 +7,31 @@ $(document).ready(() => {
     const username = e.target.dataset.name;
     $("#searchUser").val(username);
     $appendRepositories(username);
-    $("#search-repository").on("keyup", event => {
+    $("#searchRepository").on("keyup", event => {
+      console.log('button then key up')
       $appendSearchRepository(event, username);
     });
   });
   $('html').on('click', '.repository-name', (e) => {
-    $("#search-repository").val(e.target.dataset.name);
+    $("#searchRepository").val(e.target.dataset.name);
     e.target.value = e.target.dataset.name;
+    console.log('key up class')
     $appendSearchRepository(e, e.target.dataset.owner);
   });
 
-  $("#searchUser").on("keyup", event => {
-    $("#search-repository").on("keyup", e => {
-      $appendSearchRepository(e, event.target.value);
-    });
-    $appendRepositories(event.target.value);
+  let user = '';
+  $("#searchUser").on("keyup", e => {
+    user = e.target.value;
+    $appendRepositories(e.target.value);
+    console.log('key up outer')
   });
+  if(user) {
+    $("#searchRepository").on("keyup", e => {
+      console.log('key up inner')
+      // $appendSearchRepository(e, event.target.value);
+      $appendSearchRepository(e, user);
+    });
+  }
   
   $('html').on('click', '.clone', (e) =>{
     cloneRepository(e);
@@ -86,49 +95,68 @@ function $appendSearchRepository(e, username) {
 
 
 function $appendRepositories(username) {
+  $('#repositoriesButtons').html('');
   $.ajax({
     url: `https://api.github.com/users/${username}`,
     method: "GET",
     data: {
-        client_id: CLIENTID,
-        client_secret: CLIENTSECRET
+      client_id: CLIENTID,
+      client_secret: CLIENTSECRET
     }
   }).done(user => {
     $.ajax({
-      url: `https://api.github.com/users/${username}/repos`,
+      url: user.followers_url,
       method: "GET",
       data: {
         client_id: CLIENTID,
-        client_secret: CLIENTSECRET,
-        sort: 'pushed',
-        // sort: 'created',
-        // direction: 'asc',
-        per_page: 5000
+        client_secret: CLIENTSECRET
       }
-    }).done(repositories => {
-      // loop to append repos details
-      $.each(repositories, (index, repository)=> {
-        if(repository.forks_count > 0){
-          // make ajax to get forks details
-          $.ajax({
-            url: repository.forks_url,
-            method: "GET",
-            data: {
-              client_id: CLIENTID,
-              client_secret: CLIENTSECRET,
-            }
-          }).done(forks => {
-            // append repos with forks
-            repositoryWithForks('#repositories', repository, index, forks);
-          });
-        } else {
-          // append repos with 0 forks
-          repositoryWithForks('#repositories', repository, index);
+    }).done(followers => {
+      $.ajax({
+        url: user.url + '/following',
+        method: "GET",
+        data: {
+          client_id: CLIENTID,
+          client_secret: CLIENTSECRET
         }
+      }).done(followings => {
+        // append user profile details
+        userProfile("#profile", user, username, followers, followings);
+        $.ajax({
+          url: `https://api.github.com/users/${username}/repos`,
+          method: "GET",
+          data: {
+            client_id: CLIENTID,
+            client_secret: CLIENTSECRET,
+            sort: 'pushed',
+            // sort: 'created',
+            // direction: 'asc',
+            per_page: 5000
+          }
+        }).done(repositories => {
+          // loop to append repos details
+          $.each(repositories, (index, repository)=> {
+            if(repository.forks_count > 0){
+              // make ajax to get forks details
+              $.ajax({
+                url: repository.forks_url,
+                method: "GET",
+                data: {
+                  client_id: CLIENTID,
+                  client_secret: CLIENTSECRET,
+                }
+              }).done(forks => {
+                // append repos with forks
+                repositoryWithForks('#repositories', repository, index, forks);
+              });
+            } else {
+              // append repos with 0 forks
+              repositoryWithForks('#repositories', repository, index);
+            }
+          });
+        });
       });
-    });
-    // append user profile details
-    userProfile("#profile", user, username);
+    });    
   })
   .fail(err => {
     $("#profile").text(`User ${username} ${JSON.parse(err.responseText).message}`);
@@ -136,7 +164,15 @@ function $appendRepositories(username) {
 }
 
 
-function userProfile(html, user, username) {
+function userProfile(html, user, username, followers, followings) {
+  let follower = '';
+  for(let i = 0; i < followers.length; i++) {
+    follower += `<div class="col-md-3"><a href="${followers[i].html_url}" target="_blank" class="btn btn-success">${followers[i].login}</a></div>`;
+  }
+  let following = '';
+  for(let i = 0; i < followings.length; i++) {
+    following += `<div class="col-md-3"><a href="${followings[i].html_url}" target="_blank" class="btn btn-danger">${followings[i].login}</a></div>`;
+  }
   $(html).html(`
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -171,21 +207,53 @@ function userProfile(html, user, username) {
             </ul>
           </div>
         </div>
+        <div id="f"></div>
+        <div id="h"></div>
       </div>
     </div>
   `);
+  if(followers != '') {
+    $('#f').append(`
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Followers</h3>
+        <div id="followers">` +
+        follower +
+        `
+        </div>
+      </div>
+    </div>
+    `);
+  }
+  if(followings != '') {
+    $('#h').append(`
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Following</h3>
+        <div id="followings">` +
+          following +
+        `</div>
+      </div>
+    </div>
+    `);
+  }
   if(user.public_repos) {
     $(html).append(`<h3 class="page-header">Latest Repositories</h3>
     <div id="repositories"></div>`);
+  }
+  if(user.public_repos) {
+    $('#repositoriesButtons').append(`<h3>Repositories</h3>`);
   }
 }
 
 
 function repositoryWithForks(html, repository, index, forks) {
-  $('#repositoriesButtons').append(
-    `<div class="col-md-3">
-      <a data-name="${repository.name}" data-owner="${repository.owner.login}" href="${repository.html_url}" target="_blank" class="btn btn-info repository-name">${repository.name}</a>
-    </div>`);
+  if(html === '#repositories') {
+    $('#repositoriesButtons').append(
+      `<div class="col-md-3">
+        <a data-name="${repository.name}" data-owner="${repository.owner.login}" href="${repository.html_url}" target="_blank" class="btn btn-info repository-name">${repository.name}</a>
+      </div>`);
+  }
   let license = '';
   if(repository.license) {
     license += `
