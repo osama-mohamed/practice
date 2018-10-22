@@ -11,6 +11,11 @@ $(document).ready(() => {
       $appendSearchRepository(event, username);
     });
   });
+  $('html').on('click', '.repository-name', (e) => {
+    $("#search-repository").val(e.target.dataset.name);
+    e.target.value = e.target.dataset.name;
+    $appendSearchRepository(e, e.target.dataset.owner);
+  });
 
   $("#searchUser").on("keyup", event => {
     $("#search-repository").on("keyup", e => {
@@ -179,7 +184,7 @@ function userProfile(html, user, username) {
 function repositoryWithForks(html, repository, index, forks) {
   $('#repositoriesButtons').append(
     `<div class="col-md-3">
-      <a data-name="${repository.html_url}" href="${repository.html_url}" target="_blank" class="btn btn-info">${repository.name}</a>
+      <a data-name="${repository.name}" data-owner="${repository.owner.login}" href="${repository.html_url}" target="_blank" class="btn btn-info repository-name">${repository.name}</a>
     </div>`);
   let license = '';
   if(repository.license) {
