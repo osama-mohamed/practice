@@ -2,6 +2,7 @@ const CLIENTID = '7c80255428a2c94ac7ab';
 const CLIENTSECRET = '0d21bf38b2edcbec8e9314abc6026284ff6d9127';
 
 
+
 $(document).ready(() => {
   $('html').on('click', '#osamaMohamed', (e) => {
     const username = e.target.dataset.name;
