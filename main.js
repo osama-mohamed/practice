@@ -8,14 +8,12 @@ $(document).ready(() => {
     $("#searchUser").val(username);
     $appendRepositories(username);
     $("#searchRepository").on("keyup", event => {
-      console.log('button then key up')
       $appendSearchRepository(event, username);
     });
   });
   $('html').on('click', '.repository-name', (e) => {
     $("#searchRepository").val(e.target.dataset.name);
     e.target.value = e.target.dataset.name;
-    console.log('key up class')
     $appendSearchRepository(e, e.target.dataset.owner);
   });
 
@@ -23,15 +21,12 @@ $(document).ready(() => {
   $("#searchUser").on("keyup", e => {
     user = e.target.value;
     $appendRepositories(e.target.value);
-    console.log('key up outer')
   });
-  if(user) {
-    $("#searchRepository").on("keyup", e => {
-      console.log('key up inner')
-      // $appendSearchRepository(e, event.target.value);
+  $("#searchRepository").on("keyup", e => {
+    if(user) {
       $appendSearchRepository(e, user);
-    });
-  }
+    }
+  });
   
   $('html').on('click', '.clone', (e) =>{
     cloneRepository(e);
