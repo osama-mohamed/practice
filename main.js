@@ -16,6 +16,7 @@ $(document).ready(() => {
     $("#searchRepository").val(e.target.dataset.name);
     e.target.value = e.target.dataset.name;
     $appendSearchRepository(e, e.target.dataset.owner);
+    window.scrollTo(0, 0);
   });
 
   let user = '';
