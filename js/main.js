@@ -1,5 +1,5 @@
 const APIKEY = "86422a8278fea6af679b768074ccf0ee";
-const URL = "http://api.petfinder.com/";
+const URL = "https://api.petfinder.com/";
 
 import fetchJsonp from "fetch-jsonp";
 import { isValidZip, showAlert } from "./validate";
