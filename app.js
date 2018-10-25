@@ -18,6 +18,9 @@ mongoose
   })
   .catch(err => console.log(err));
 
+require("./models/Idea");
+const Idea = mongoose.model("ideas");
+
 app.set("views", path.join(__dirname, "views"));
 app.engine(
   "handlebars",
