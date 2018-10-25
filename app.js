@@ -1,31 +1,22 @@
 const express = require("express");
 const path = require("path");
-const mongoose = require("mongoose");
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 const flash = require("connect-flash");
 const session = require("express-session");
-const passport = require("passport");
+// const passport = require("passport");
 // LocalStrategy = require('passport-local').Strategy;
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-mongoose.Promise = global.Promise;
-mongoose
-  .connect(
-    "mongodb://localhost:27017/videoidea",
-    { useNewUrlParser: true }
-  )
-  .then(() => {
-    console.log("MongoDB connected ...");
-  })
-  .catch(err => console.log(err));
+require('./config/database');
 
 
 
 app.set("views", path.join(__dirname, "views"));
+app.use(express.static(path.join(__dirname, "public")));
 app.engine(
   "handlebars",
   exphbs({
