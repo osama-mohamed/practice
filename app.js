@@ -43,6 +43,14 @@ app.get("/about", (req, res) => {
   res.render("about");
 });
 
+app.get("/ideas", (req, res) => {
+  Idea.find({})
+    .sort({ date: "desc" })
+    .then(ideas => {
+      res.render("ideas/index", { ideas: ideas });
+    });
+});
+
 app.get("/ideas/add", (req, res) => {
   res.render("ideas/add");
 });
@@ -56,7 +64,7 @@ app.post("/ideas", (req, res) => {
     errors.push({ text: "Please add some details" });
   }
   if (errors.length > 0) {
-    res.render("ideas/add", { 
+    res.render("ideas/add", {
       errors: errors,
       title: req.body.title,
       details: req.body.details
@@ -66,8 +74,8 @@ app.post("/ideas", (req, res) => {
       title: req.body.title,
       details: req.body.details
     };
-    new Idea(newIdea).save().then((idea) => {
-      res.redirect('/ideas');
+    new Idea(newIdea).save().then(idea => {
+      res.redirect("/ideas");
     });
   }
 });
