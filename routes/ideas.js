@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Idea = require("../models/Idea");
+const {ensureAuthenticated} = require("../helpers/auth");
 
-router.get("/", (req, res) => {
+router.get("/", ensureAuthenticated, (req, res) => {
   Idea.find({})
     .sort({ date: "desc" })
     .then(ideas => {
@@ -10,17 +11,17 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/add", (req, res) => {
+router.get("/add", ensureAuthenticated, (req, res) => {
   res.render("ideas/add");
 });
 
-router.get("/edit/:id", (req, res) => {
+router.get("/edit/:id", ensureAuthenticated, (req, res) => {
   Idea.findOne({ _id: req.params.id }).then(idea => {
     res.render("ideas/edit", { idea: idea });
   });
 });
 
-router.post("/", (req, res) => {
+router.post("/", ensureAuthenticated, (req, res) => {
   let errors = [];
   if (!req.body.title) {
     errors.push({ text: "Please add a title" });
@@ -46,7 +47,7 @@ router.post("/", (req, res) => {
   }
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", ensureAuthenticated, (req, res) => {
   Idea.findOne({ _id: req.params.id }).then(idea => {
     idea.title = req.body.title;
     idea.details = req.body.details;
@@ -57,7 +58,7 @@ router.put("/:id", (req, res) => {
   });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", ensureAuthenticated, (req, res) => {
   Idea.deleteOne({ _id: req.params.id }).then(() => {
     req.flash('success_msg', 'Deleted successfully!');
     res.redirect("/ideas");
