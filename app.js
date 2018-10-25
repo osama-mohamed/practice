@@ -5,8 +5,7 @@ const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 const flash = require("connect-flash");
 const session = require("express-session");
-// const passport = require("passport");
-// LocalStrategy = require('passport-local').Strategy;
+
 
 const app = express();
 const port = process.env.PORT || 3000;
