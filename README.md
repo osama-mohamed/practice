@@ -8,12 +8,14 @@
 
 
 ## Video Idea Express website contains:
-* Add todo
-* Delete todo
-* Toggle done todo
-* Show number of done todos
-* Show number of total todos
-
+* Add video idea
+* Edit video idea
+* Delete video idea
+* Show ideas to his owner only
+* User register
+* User login with passport
+* Route proticting
+* Access control
 
 ## Usage :
 ### Run project by :
