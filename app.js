@@ -101,6 +101,12 @@ app.put("/ideas/:id", (req, res) => {
   });
 });
 
+app.delete("/ideas/:id", (req, res) => {
+  Idea.deleteOne({_id: req.params.id}).then(() => {
+    res.redirect('/ideas');
+  });
+});
+
 
 
 
