@@ -10,7 +10,7 @@ const passport = require("passport");
 
 const app = express();
 const port = process.env.PORT || 3000;
-
+require("dotenv").config();
 require('./config/database');
 require("./config/passport")(passport);
 
