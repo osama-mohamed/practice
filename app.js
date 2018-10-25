@@ -3,6 +3,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
+const methodOverride = require('method-override')
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -31,6 +32,10 @@ app.engine(
 app.set("view engine", "handlebars");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(methodOverride('_method'));
+
+
+
 
 app.get("/", (req, res) => {
   const title = "Hello osama";
@@ -85,6 +90,19 @@ app.post("/ideas", (req, res) => {
     });
   }
 });
+
+app.put("/ideas/:id", (req, res) => {
+  Idea.findOne({_id: req.params.id}).then(idea => {
+    idea.title = req.body.title;
+    idea.details = req.body.details;
+    idea.save().then(idea => {
+      res.redirect('/ideas');
+    });
+  });
+});
+
+
+
 
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
