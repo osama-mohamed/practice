@@ -1,0 +1,31 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <h1>{{ object.title }}</h1>
+      <p class="lead">Published: {{ object.timestamp | timesince}} ago.</p>
+      <a href="{{ object.get_absolute_pdf_url }}" class="btn btn-outline-success">Download PDF</a>
+      <br>
+      <br>
+      {% include 'base/copy-link.html' with product=object class="btn-outline-info" %}
+      <br>
+      <p class="lead">{{ object.price }} &#36;</p>
+      {% if object.image %}
+        <a href="{{object.image.url}}" target="_blank">
+          <img src="{{object.image.url}}" alt="{{object.title}}" class="img-fluid">
+        </a>
+      {% endif %}
+      <hr>
+      <br>
+      {{ object.description | linebreaks }}
+      <br>
+    </div>
+
+    <div class="col-12 col-md-6">
+      {% include 'products/snippets/update-cart.html' with product=object cart=cart %}
+    </div>
+  </div>
+
+{% endblock %}
