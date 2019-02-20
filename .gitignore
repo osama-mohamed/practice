@@ -19,6 +19,7 @@ Scripts/
 include/
 tcl/
 .vscode/
+static_cdn/
 pip-selfcheck.json
 lib64/
 parts/
