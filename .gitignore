@@ -20,6 +20,7 @@ include/
 tcl/
 .vscode/
 static_cdn/
+config.py
 pip-selfcheck.json
 lib64/
 parts/
