@@ -23,6 +23,7 @@
 * User dashboard
 * Listings page
 * Listing detail
+* Listings search
 * Make inquiry -auto fill if user logged in-
 * Seller of month
 
@@ -51,18 +52,18 @@ That's it.
 Now the project is running at `http://localhost:8000` and your routes is:
 
 
-| Route                                                      | HTTP Method       | Description                            	    |
-|:-----------------------------------------------------------|:------------------|:---------------------------------------------|
+| Route                                                      | HTTP Method         | Description                           	    |
+|:-----------------------------------------------------------|:--------------------|:---------------------------------------------|
 | {host}       	                                             | GET       	       | Home page                                    |
-| {host}/admin/  	                                           | GET      	       | Admin control panel                        	|
-| {host}/about/  	                                           | GET      	       | About page                                   |
-| {host}/accounts/register/                                  | POST       	     | User register             	                  |
+| {host}/admin/  	                                         | GET      	       | Admin control panel                          |
+| {host}/about/  	                                         | GET      	       | About page                                   |
+| {host}/accounts/register/                                  | POST       	       | User register             	                  |
 | {host}/accounts/login/                                     | POST      	       | User login                	                  |
 | {host}/accounts/logout/                                    | POST      	       | User logout              	                  |
 | {host}/accounts/dashboard/                                 | GET      	       | User dashboard           	                  |
 | {host}/listings/                                           | GET      	       | Listings page            	                  |
 | {host}/listings/{listing_id}/                              | GET      	       | Listing detail           	                  |
-| {host}/listings/search/                                    | GET      	       | Listing search        	                      |
+| {host}/listings/search/                                    | GET      	       | Listings search        	                  |
 | {host}/contacts/contact/                                   | POST      	       | Make inquiry              	                  |
 
 
