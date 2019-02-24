@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+from .config import Config
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,7 +27,7 @@ SECRET_KEY = 'p-an!i=724ktrdm5%zs_p9pc%e&@-t5vy^48y15_3hc+aa=e@6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['osama-btre-django.herokuapp.com', 'localhost']
 
 
 # Application definition
@@ -83,10 +85,11 @@ WSGI_APPLICATION = 'btre.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': 'localhost',
-        'USER': 'OSAMA',
-        'PASSWORD': 'OSAMA',
-        'NAME': 'btredb',
+        'NAME': Config.DATABASE_NAME,
+        'HOST': Config.DATABASE_HOST,
+        'USER': Config.DATABASE_USER,
+        'PASSWORD': Config.DATABASE_PASSWORD,
+        'PORT': '',
     }
 }
 
@@ -145,7 +148,7 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger'
 } 
 
-from .config import Config
+
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = Config.EMAIL_HOST_USER
