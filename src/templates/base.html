@@ -1,0 +1,31 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tweetme {% block title %}{% endblock %}</title>
+    
+    <link rel="icon" href="{% static 'icon/i.ico' %}">
+    
+    {% include 'base/css.html' %}
+    
+    {% block base_head %}
+    {% endblock %}
+  </head>
+  <body>
+
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+    
+    {% include 'base/js.html' %}
+
+    {% block javascript %}
+    {% endblock %}
+  </body>
+</html>
