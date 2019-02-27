@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tweetme {% block title %}{% endblock %}</title>
+    <title>{% block title %}Tweetme {% endblock %}</title>
     
     <link rel="icon" href="{% static 'icon/i.ico' %}">
     
@@ -18,6 +18,7 @@
   </head>
   <body>
 
+    {% include "snippets/navbar.html" %}
     <div class="container">
       {% block content %}
       {% endblock %}

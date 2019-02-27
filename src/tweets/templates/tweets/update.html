@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Update Tweet | {{ block.super }}
+{% endblock title %}
+
+
+{% block content %}
+  
+  {% include "tweets/form.html" with form=form action_url='' btn_title='Update' class='' go_back=object.get_absolute_url %}
+
+{% endblock %}

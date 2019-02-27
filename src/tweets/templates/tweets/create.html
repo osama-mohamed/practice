@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Create Tweet | {{ block.super }}
+{% endblock title %}
+
+
+{% block content %}
+
+  <div class='row'>
+    <div class='col-sm-8 col-sm-offset-2'>
+      <h1>Create Tweet</h1>
+      <!-- {% include "tweets/form.html" with form=form action_url='' btn_title='Tweet' class='' go_back=request.META.HTTP_REFERER %} -->
+      {% url 'tweet:list' as go_back_url %}
+      {% include "tweets/form.html" with form=form action_url='' btn_title='Tweet' class='' go_back=go_back_url %}
+    </div>
+  </div>
+
+{% endblock %}

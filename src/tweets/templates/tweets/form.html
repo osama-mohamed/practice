@@ -1,0 +1,10 @@
+{% load crispy_forms_tags %}
+
+<form class='form-group' method='POST' action="{% if action_url %}{{ action_url }}{% endif %}">
+  {% csrf_token %}
+  {{ form|crispy }}
+  <input type="submit" value="{{ btn_title }}" class="btn {% if class %}{{ class }}{% else %}btn-primary{% endif %}"/>
+  {% if go_back %}
+    <a href="{{ go_back }}" class="btn {% if class %}{{ class }}{% else %}btn-default{% endif %}">Go back</a>
+  {% endif %}
+</form>
