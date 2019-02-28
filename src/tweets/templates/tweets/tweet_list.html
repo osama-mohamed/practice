@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}
   Tweets List | {{ block.super }}
 {% endblock title %}
@@ -15,10 +17,12 @@
       
       {% if not request.GET.q %}
       <div class=''>
-        {% include "tweets/form.html" with form=create_form action_url=create_url btn_title='Tweet' %}
+        {% include "tweets/form.html" with form=create_form action_url=create_url btn_title='Tweet' form_id='tweet-form' %}
       </div>
       <hr/>
       {% endif %}
+
+      <div id='tweet-container'></div>
 
       {% for object in object_list %}
         <div class="media">
@@ -52,3 +56,18 @@
   </div>
 
 {% endblock %}
+
+
+
+{% block base_head %}
+
+  <link rel="stylesheet" href="{% static 'css/count_chars.css' %}">
+
+{% endblock %}
+
+
+{% block javascript %}
+
+  <script src="{% static 'js/list_tweets.js' %} "></script>
+
+{% endblock javascript %}

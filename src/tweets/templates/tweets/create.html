@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}
   Create Tweet | {{ block.super }}
 {% endblock title %}
@@ -12,8 +14,23 @@
       <h1>Create Tweet</h1>
       <!-- {% include "tweets/form.html" with form=form action_url='' btn_title='Tweet' class='' go_back=request.META.HTTP_REFERER %} -->
       {% url 'tweet:list' as go_back_url %}
-      {% include "tweets/form.html" with form=form action_url='' btn_title='Tweet' class='' go_back=go_back_url %}
+      {% include "tweets/form.html" with form=form action_url='' btn_title='Tweet' class='' go_back=go_back_url form_id='tweet-form' %}
     </div>
   </div>
 
 {% endblock %}
+
+
+
+{% block base_head %}
+
+  <link rel="stylesheet" href="{% static 'css/count_chars.css' %}">
+
+{% endblock %}
+
+
+{% block javascript %}
+
+  <script src="{% static 'js/list_tweets.js' %} "></script>
+
+{% endblock javascript %}

@@ -40,8 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
     'crispy_forms',
     'tweets.apps.TweetsConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 CRISPY_TEMPLATE_PACK  = 'bootstrap3'
