@@ -19,11 +19,11 @@ function attachTweet(tweetValue, prepend){
           <div class="media-body">
             ${tweetContent} 
             <br/> 
-            via ${tweetUser.username} |
+            via <a href='${tweetUser.user_url}'>${tweetUser.username}</a> |
             ${dateDisplay} | 
-            <a href='/tweet/${tweetValue.id}/'>View</a> |
-            <a href="/tweet/${tweetValue.id}/update/">Update</a> |
-            <a href="/tweet/${tweetValue.id}/delete/">Delete</a>
+            <a href='${tweetValue.view_url}'>View</a> |
+            <a href="${tweetValue.update_url}">Update</a> |
+            <a href="${tweetValue.delete_url}">Delete</a>
           </div>
         </div>
         <hr/>`;
@@ -39,23 +39,33 @@ function parseTweets(tweetList){
     $("#tweet-container").text("No tweets currently found.");
   } else {
     $.each(tweetList, function(key, value){
-      const tweetKey = key;
       attachTweet(value);
     });
   }
 }
 
-function fetchTweets(){
+function fetchTweets(url){
   const query = getParameterByName('q');
   let tweetList = [];
+  let fecthUrl;
+  if (!url) {
+    fecthUrl = "/api/tweet/";
+  } else {
+    fecthUrl = url;
+  }
   $.ajax({
-    url: "/api/tweet/",
+    url: fecthUrl,
     data: {
       "q": query
     },
     method: "GET",
     success: function(data){
-      tweetList = data;
+      tweetList = data.results;
+      if (data.next){
+        nextTweetUrl = data.next;
+      } else {
+        $("#loadmore").css("display", "none");
+      }
       parseTweets(tweetList);
     },
     error: function(error){
@@ -65,12 +75,11 @@ function fetchTweets(){
 }
 
 
-
-
+let nextTweetUrl;
 
 $(document).ready(() => {
   fetchTweets();
-  
+    
   const charsStart = 140;
   let charsCurrent = 0;
   $("#tweet-form").append(`<span id='tweetCharsLeft'>${charsStart}</span>`);
@@ -111,4 +120,12 @@ $(document).ready(() => {
       alert("Cannot send, tweet too long.");
     }
   });
+
+  $("#loadmore").click(function(event){
+    event.preventDefault();
+    if (nextTweetUrl) {
+      fetchTweets(nextTweetUrl);
+    }
+  });
+
 });
