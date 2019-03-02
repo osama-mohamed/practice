@@ -21,7 +21,11 @@ class TweetListAPIView(ListAPIView):
   pagination_class = StandardResultsPagination
 
   def get_queryset(self, *args, **kwargs):
-    qs = Tweet.objects.all()
+    im_following = self.request.user.profile.get_following()
+    qs = Tweet.objects.filter(
+      Q(user__in=im_following) |
+      Q(user=self.request.user)
+    )
     query = self.request.GET.get("q", None)
     if query is not None:
       qs = qs.filter(
@@ -29,3 +33,18 @@ class TweetListAPIView(ListAPIView):
         Q(user__username__icontains=query)
       )
     return qs
+
+
+# class SearchAPIView(ListAPIView):
+#   serializer_class = TweetModelSerializer
+#   pagination_class = StandardResultsPagination
+
+#   def get_queryset(self, *args, **kwargs):
+#     qs = Tweet.objects.all()
+#     query = self.request.GET.get("q", None)
+#     if query is not None:
+#       qs = qs.filter(
+#         Q(content__icontains=query) |
+#         Q(user__username__icontains=query)
+#       )
+#     return qs

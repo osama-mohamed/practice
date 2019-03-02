@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'tweets.apps.TweetsConfig',
     'accounts.apps.AccountsConfig',
+    'hashtags.apps.HashtagsConfig',
 ]
 
 CRISPY_TEMPLATE_PACK  = 'bootstrap3'

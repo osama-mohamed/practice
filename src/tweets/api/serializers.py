@@ -15,6 +15,7 @@ class TweetModelSerializer(ModelSerializer):
   date_display = SerializerMethodField()
   timesince = SerializerMethodField()
   id = SerializerMethodField()
+  owner = SerializerMethodField()
   view_url = HyperlinkedIdentityField(
     view_name='tweet:detail',
     # lookup_field='pk',
@@ -37,6 +38,7 @@ class TweetModelSerializer(ModelSerializer):
       'date_display',
       'timesince',
       'id',
+      'owner',
       'view_url',
       'update_url',
       'delete_url',
@@ -50,3 +52,10 @@ class TweetModelSerializer(ModelSerializer):
   
   def get_id(self, obj):
     return obj.id
+  
+  def get_owner(self, obj):
+    tweet_owner = obj.user.username
+    current_user = self.context['request'].user.username
+    if tweet_owner == current_user:
+      return True
+    return False

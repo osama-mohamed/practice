@@ -14,6 +14,13 @@ function attachTweet(tweetValue, prepend){
   const dateDisplay = tweetValue.timesince; // tweetValue.date_display;
   const tweetContent = tweetValue.content;
   const tweetUser = tweetValue.user;
+  let owner = '';
+  if(tweetValue.owner) {
+    owner += `
+          |  <a href="${tweetValue.update_url}">Update</a> |
+             <a href="${tweetValue.delete_url}">Delete</a>
+    `;
+  }
   const tweetFormattedHtml = `
         <div class="media">
           <div class="media-body">
@@ -21,9 +28,9 @@ function attachTweet(tweetValue, prepend){
             <br/> 
             via <a href='${tweetUser.user_url}'>${tweetUser.username}</a> |
             ${dateDisplay} | 
-            <a href='${tweetValue.view_url}'>View</a> |
-            <a href="${tweetValue.update_url}">Update</a> |
-            <a href="${tweetValue.delete_url}">Delete</a>
+            <a href='${tweetValue.view_url}'>View</a>
+            ` + owner +
+            ` 
           </div>
         </div>
         <hr/>`;
@@ -67,6 +74,7 @@ function fetchTweets(url){
         $("#loadmore").css("display", "none");
       }
       parseTweets(tweetList);
+      updateHashLinks();
     },
     error: function(error){
       console.log("error while listing tweets", error);
@@ -74,6 +82,13 @@ function fetchTweets(url){
   });
 }
 
+function updateHashLinks(){
+  $(".media-body").each(function(data){
+    const hashtagRegex = /(^|\s)#([\w\d-]+)/g;
+    let newText = $(this).html().replace(hashtagRegex, "$1<a href='/tags/$2/'>#$2</a>");
+    $(this).html(newText);
+  });
+}
 
 let nextTweetUrl;
 
@@ -110,6 +125,7 @@ $(document).ready(() => {
           // this_[0].reset();
           this_.find("input[type=text], textarea").val("");
           attachTweet(data, true);
+          updateHashLinks();
         },
         error: function(error){
           console.log("error while submitting new tweet ", error, error.statusText, error.status);
