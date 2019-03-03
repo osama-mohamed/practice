@@ -1,11 +1,12 @@
 from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from django.db.models import Q
 
 from tweets.models import Tweet
 from .serializers import TweetModelSerializer
 from .pagination import StandardResultsPagination
-# from rest_framework.response import Response
 
 
 class TweetCreateAPIView(CreateAPIView):
@@ -33,6 +34,22 @@ class TweetListAPIView(ListAPIView):
         Q(user__username__icontains=query)
       )
     return qs
+
+
+class RetweetAPIView(APIView):
+  permission_classes = [IsAuthenticated]
+
+  def get(self, request, pk, format=None):
+    tweet_qs = Tweet.objects.filter(pk=pk)
+    message = "Not allowed"
+    if tweet_qs.exists() and tweet_qs.count() == 1:
+      new_tweet = Tweet.objects.retweet(request.user, tweet_qs.first())
+      if new_tweet is not None:
+        data = TweetModelSerializer(new_tweet, context={'request': request}).data
+        return Response(data)
+      message = "Cannot retweet the same tweet in 1 day"
+    return Response({"message": message}, status=400)
+
 
 
 # class SearchAPIView(ListAPIView):

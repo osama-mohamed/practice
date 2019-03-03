@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404, reverse
+from django.shortcuts import render, get_object_or_404, reverse, redirect
+from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
   CreateView,
@@ -6,6 +7,7 @@ from django.views.generic import (
   ListView,
   UpdateView,
   DeleteView,
+  View,
 )
 from django.urls import reverse_lazy
 from django.db.models import Q
@@ -72,3 +74,12 @@ class TweetDeleteView(LoginRequiredMixin, DeleteView):
   queryset = Tweet.objects.all()
   # template_name = 'tweets/tweet_confirm_delete.html'
   success_url = reverse_lazy('tweet:list')
+
+
+class RetweetView(View):
+  def get(self, request, pk, *args, **kwargs):
+    tweet = get_object_or_404(Tweet, pk=pk)
+    if request.user.is_authenticated():
+      new_tweet = Tweet.objects.retweet(request.user, tweet)
+      return redirect('home')
+    return HttpResponseRedirect(tweet.get_absolute_url())
