@@ -38,6 +38,7 @@ function attachTweet(tweetValue, prepend, retweet){
           ${mainTweet.timesince} |
           <a href='${mainTweet.view_url}'>View</a> |
           <a href="${mainTweet.retweet_url}" class="retweetBtn" data-href="${mainTweet.api_retweet_url}">Retweet</a>
+          | <a href='#' class='tweet-like' data-id=${tweetValue.id}>Like</a>
         </div>
       </div>
       <hr/>
@@ -52,6 +53,7 @@ function attachTweet(tweetValue, prepend, retweet){
           ${dateDisplay} | 
           <a href='${tweetValue.view_url}'>View</a> |
           <a href="${tweetValue.retweet_url}" class="retweetBtn" data-href="${tweetValue.api_retweet_url}">Retweet</a>
+          | <a href='#' class='tweet-like' data-id=${tweetValue.id}>Like</a>
           ` + owner +
           ` 
         </div>
@@ -85,7 +87,7 @@ function fetchTweets(url){
   let tweetList = [];
   let fecthUrl;
   if (!url) {
-    fecthUrl = "/api/tweet/";
+    fecthUrl = $("#tweet-container").attr("data-url") || "/api/tweet/";
   } else {
     fecthUrl = url;
   }
@@ -114,16 +116,20 @@ function fetchTweets(url){
 function updateHashLinks(){
   $(".media-body").each(function(data){
     const hashtagRegex = /(^|\s)#([\w\d-]+)/g;
-    let newText = $(this).html().replace(hashtagRegex, "$1<a href='/tags/$2/'>#$2</a>");
+    const usernameRegex = /(^|\s)@([\w\d-]+)/g;
+    const currentHtml = $(this).html();
+    let newText;
+    newText = currentHtml.replace(hashtagRegex, "$1<a href='/tags/$2/'>#$2</a>");
+    newText = newText.replace(usernameRegex, "$1 @<a href='/$2/'>$2</a>");
     $(this).html(newText);
   });
 }
 
 let nextTweetUrl;
 
-$(document).ready(() => {
+
+function loadTweetData () {
   fetchTweets();
-    
   const charsStart = 140;
   let charsCurrent = 0;
   $("#tweet-form").append(`<span id='tweetCharsLeft'>${charsStart}</span>`);
@@ -180,13 +186,18 @@ $(document).ready(() => {
       method: "GET",
       url: url,
       success: function (data) {
-        attachTweet(data, true, true);
-        updateHashLinks();
+        if ($("#tweet-container").attr("data-url") == "/api/tweet/") {
+          attachTweet(data, true, true);
+          updateHashLinks();
+        }
       },
       error: function(error){
         console.log("error while retweet ", error);
       }
     });
   });
+}
 
+$(document).ready(() => {
+  loadTweetData();
 });

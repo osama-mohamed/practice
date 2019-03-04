@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
+{% load static %}
+
+{% block title %}
+  User Detail | {{ block.super }}
+{% endblock title %}
+
 {% block content %}
 
   <div class='row'>
@@ -45,7 +51,11 @@
 
     <div class='col-sm-9 col-xs-12'>
       <h1>Tweets</h1>
-      {% for tweet in object.tweet_set.all %}
+
+      <div id='tweet-container' data-url="/api/{{ object.username }}/tweet/"></div>
+      <a href='#' id='loadmore'>Load More Tweets</a>
+
+      <!-- {% for tweet in object.tweet_set.all %}
         {{ tweet.content }}
         <br>
         {{ tweet.timestamp|timesince }} ago | 
@@ -54,9 +64,15 @@
         <a href="{{ tweet.get_absolute_delete_url }}">Delete</a>
         <br/>
         <hr>
-      {% endfor %}
+      {% endfor %} -->
     </div>
 
   </div>
 
 {% endblock %}
+
+{% block javascript %}
+
+  <script src="{% static 'js/list_tweets.js' %} "></script>
+
+{% endblock javascript %}
