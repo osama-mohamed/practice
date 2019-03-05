@@ -23,10 +23,12 @@
       
       {% if not request.GET.q %}
         <div class=''>
-          {% include "tweets/form.html" with form=create_form action_url=create_url btn_title='Tweet' form_id='tweet-form' %}
+          {% include "tweets/form.html" with form=create_form action_url=create_url btn_title='Tweet' form_id='tweet-form' form_class='tweet-form' %}
         </div>
         <hr/>
       {% endif %}
+
+      {% include "tweets/reply-modal.html" %}
 
       <div id='tweet-container' data-url="/api/tweet/"></div>
       <a href='#' id='loadmore'>Load More Tweets</a>

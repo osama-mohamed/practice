@@ -52,6 +52,8 @@
     <div class='col-sm-9 col-xs-12'>
       <h1>Tweets</h1>
 
+      {% include "tweets/reply-modal.html" %}
+      
       <div id='tweet-container' data-url="/api/{{ object.username }}/tweet/"></div>
       <a href='#' id='loadmore'>Load More Tweets</a>
 

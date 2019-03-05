@@ -1,7 +1,8 @@
 from rest_framework.serializers import (
   ModelSerializer,
   SerializerMethodField,
-  HyperlinkedIdentityField
+  HyperlinkedIdentityField,
+  CharField,
 )
 from django.urls import reverse
 from django.utils.timesince import timesince
@@ -33,6 +34,8 @@ class ParentTweetModelSerializer(ModelSerializer):
   api_retweet_url = HyperlinkedIdentityField(
     view_name='tweet-api:retweet',
   )
+  likes = SerializerMethodField()
+  did_like = SerializerMethodField()
 
   class Meta:
     model = Tweet
@@ -48,6 +51,8 @@ class ParentTweetModelSerializer(ModelSerializer):
       'delete_url',
       'retweet_url',
       'api_retweet_url',
+      'likes',
+      'did_like',
     ]
 
   def get_date_display(self, obj):
@@ -56,8 +61,20 @@ class ParentTweetModelSerializer(ModelSerializer):
   def get_timesince(self, obj):
     return timesince(obj.timestamp) + " ago"
 
+  def get_did_like(self, obj):
+    request = self.context.get("request")
+    user = request.user
+    if user.is_authenticated():
+      if user in obj.liked.all():
+        return True
+    return False
+
+  def get_likes(self, obj):
+    return obj.liked.all().count()
+
 
 class TweetModelSerializer(ModelSerializer):
+  parent_id = CharField(write_only=True, required=False)
   user = UserDisplaySerializer(read_only=True)
   date_display = SerializerMethodField()
   timesince = SerializerMethodField()
@@ -83,10 +100,13 @@ class TweetModelSerializer(ModelSerializer):
   )
   is_retweet = SerializerMethodField()
   parent = ParentTweetModelSerializer(read_only=True)
+  likes = SerializerMethodField()
+  did_like = SerializerMethodField()
   
   class Meta:
     model = Tweet
     fields = [
+      'parent_id',
       'user',
       'content',
       'timestamp',
@@ -101,6 +121,9 @@ class TweetModelSerializer(ModelSerializer):
       'api_retweet_url',
       'is_retweet',
       'parent',
+      'likes',
+      'did_like',
+      'reply',
     ]
   
   def get_date_display(self, obj):
@@ -120,3 +143,14 @@ class TweetModelSerializer(ModelSerializer):
     if obj.parent:
       return True
     return False
+
+  def get_did_like(self, obj):
+    request = self.context.get("request")
+    user = request.user
+    if user.is_authenticated():
+      if user in obj.liked.all():
+        return True
+    return False
+
+  def get_likes(self, obj):
+    return obj.liked.all().count()

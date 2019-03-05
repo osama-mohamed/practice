@@ -10,57 +10,126 @@ function getParameterByName(name, url) {
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-function attachTweet(tweetValue, prepend, retweet){
-  const dateDisplay = tweetValue.timesince; // tweetValue.date_display;
-  const tweetContent = tweetValue.content;
-  const tweetUser = tweetValue.user;
-  const isRetweet = tweetValue.is_retweet;
-  let owner = '';
-  if(tweetValue.owner) {
-    owner += `
-          |  <a href="${tweetValue.update_url}">Update</a> |
-             <a href="${tweetValue.delete_url}">Delete</a>
-    `;
-  }
-  let tweetFormattedHtml;
-  if (retweet && tweetValue.parent){
-    const mainTweet = tweetValue.parent;
-    tweetFormattedHtml = `
+function formatTweet(tweetValue) {
+
+  let preContent;
+  let container;
+  let tweetContent;
+  const isReply = tweetValue.reply;
+  if (tweetValue.parent && !isReply) {
+    tweetValue = tweetValue.parent;
+    preContent = `
+      <span class='grey-color'>
+        Retweet via 
+        <a href="${tweetValue.user.user_url}">${tweetValue.user.username}</a>
+        on ${tweetValue.timesince}
+      </span>
+      <br/>
+      `;
+    } else if (tweetValue.parent && isReply) {
+      preContent = `
+        <span class='grey-color'>
+          Reply to @${tweetValue.parent.user.username}
+        </span>
+        <br/>
+      `;
+    }
+  let verb = 'Like';
+  if (tweetValue.did_like){
+    verb = 'Unlike';
+  }  
+
+  tweetContent = `
+    <span class='content'>${tweetValue.content}</span>
+    <br/> via 
+    <a href="${tweetValue.user.user_url}">${tweetValue.user.username}</a> | 
+    ${tweetValue.timesince} | 
+    <a href='${tweetValue.view_url}'>View</a> | 
+    <a class='retweetBtn' href='${tweetValue.retweet_url}'>Retweet</a> | 
+    <a href='#' class='tweet-like' data-id="${tweetValue.id}">
+      ${verb} (${tweetValue.likes})
+    </a> | 
+    <a href='#' class='tweet-reply' data-user="${tweetValue.user.username}" data-id="${tweetValue.id}">Reply</a>
+  `;
+  if (preContent){
+    container = `
       <div class="media">
         <div class="media-body">
-          <span class='grey-color'>
-            Retweet via <a href='${tweetUser.user_url}'>${tweetUser.username}</a> on ${dateDisplay}
-          </span>
-          <br/>
-          ${mainTweet.content} 
-          <br/> 
-          via <a href='${mainTweet.user.user_url}'>${mainTweet.user.username}</a> |
-          ${mainTweet.timesince} |
-          <a href='${mainTweet.view_url}'>View</a> |
-          <a href="${mainTweet.retweet_url}" class="retweetBtn" data-href="${mainTweet.api_retweet_url}">Retweet</a>
-          | <a href='#' class='tweet-like' data-id=${tweetValue.id}>Like</a>
+          ${preContent}
+          ${tweetContent}
         </div>
       </div>
       <hr/>
     `;
   } else {
-    tweetFormattedHtml = `
+    container = `
       <div class="media">
         <div class="media-body">
-          ${tweetContent} 
-          <br/> 
-          via <a href='${tweetUser.user_url}'>${tweetUser.username}</a> |
-          ${dateDisplay} | 
-          <a href='${tweetValue.view_url}'>View</a> |
-          <a href="${tweetValue.retweet_url}" class="retweetBtn" data-href="${tweetValue.api_retweet_url}">Retweet</a>
-          | <a href='#' class='tweet-like' data-id=${tweetValue.id}>Like</a>
-          ` + owner +
-          ` 
+          ${tweetContent}
         </div>
       </div>
       <hr/>
     `;
   }
+  return container;
+}
+
+function attachTweet(tweetValue, prepend, retweet){
+  // const dateDisplay = tweetValue.timesince; // tweetValue.date_display;
+  // const tweetContent = tweetValue.content;
+  // const tweetUser = tweetValue.user;
+  // const isRetweet = tweetValue.is_retweet;
+  // let owner = '';
+  // if(tweetValue.owner) {
+  //   owner += `
+  //         |  <a href="${tweetValue.update_url}">Update</a> |
+  //            <a href="${tweetValue.delete_url}">Delete</a>
+  //   `;
+  // }
+  // let verb = 'Like';
+  // if (tweetValue.did_like){
+  //   verb = 'Unlike';
+  // }
+  // let tweetFormattedHtml;
+  // if (retweet && tweetValue.parent){
+  //   const mainTweet = tweetValue.parent;
+  //   tweetFormattedHtml = `
+  //     <div class="media">
+  //       <div class="media-body">
+  //         <span class='grey-color'>
+  //           Retweet via <a href='${tweetUser.user_url}'>${tweetUser.username}</a> on ${dateDisplay}
+  //         </span>
+  //         <br/>
+  //         ${mainTweet.content} 
+  //         <br/> 
+  //         via <a href='${mainTweet.user.user_url}'>${mainTweet.user.username}</a> |
+  //         ${mainTweet.timesince} |
+  //         <a href='${mainTweet.view_url}'>View</a> |
+  //         <a href="${mainTweet.retweet_url}" class="retweetBtn" data-href="${mainTweet.api_retweet_url}">Retweet</a> |
+  //         <a href='#' class='tweet-like' data-id=${tweetValue.id}>${verb} (${tweetValue.likes})</a>
+  //       </div>
+  //     </div>
+  //     <hr/>
+  //   `;
+  // } else {
+  //   tweetFormattedHtml = `
+  //     <div class="media">
+  //       <div class="media-body">
+  //         ${tweetContent} 
+  //         <br/> 
+  //         via <a href='${tweetUser.user_url}'>${tweetUser.username}</a> |
+  //         ${dateDisplay} | 
+  //         <a href='${tweetValue.view_url}'>View</a> |
+  //         <a href="${tweetValue.retweet_url}" class="retweetBtn" data-href="${tweetValue.api_retweet_url}">Retweet</a> |
+  //         <a href='#' class='tweet-like' data-id=${tweetValue.id}>${verb} (${tweetValue.likes})</a>
+  //         ` + owner +
+  //         ` 
+  //       </div>
+  //     </div>
+  //     <hr/>
+  //   `;
+  // }
+  tweetFormattedHtml = formatTweet(tweetValue);
   if (prepend == true){
     $("#tweet-container").prepend(tweetFormattedHtml);
   } else {
@@ -130,13 +199,13 @@ let nextTweetUrl;
 
 function loadTweetData () {
   fetchTweets();
-  const charsStart = 140;
+  let charsStart = 140;
   let charsCurrent = 0;
-  $("#tweet-form").append(`<span id='tweetCharsLeft'>${charsStart}</span>`);
-  $("#tweet-form textarea").keyup(function(event){
+  $(".tweet-form").append(`<span class='tweetCharsLeft' style='margin-left: 20px'>${charsStart} left</span>`);
+  $(".tweet-form textarea").keyup(function(event){
     const tweetValue = $(this).val();
     charsCurrent = charsStart - tweetValue.length;
-    const spanChars = $("#tweetCharsLeft");
+    const spanChars = $(this).parent().parent().parent().find("span.tweetCharsLeft");
     spanChars.text(charsCurrent);
     if (charsCurrent > 0 ) {
       spanChars.removeClass("grey-color").removeClass("red-color");
@@ -147,7 +216,7 @@ function loadTweetData () {
     }
   });
 
-  $("#tweet-form").submit(function(event){
+  $(".tweet-form").submit(function(event){
     event.preventDefault();
     const this_ = $(this);
     const formData =  this_.serialize();
@@ -161,6 +230,8 @@ function loadTweetData () {
           this_.find("input[type=text], textarea").val("");
           attachTweet(data, true);
           updateHashLinks();
+          $("#replyModal").modal("hide");
+          charsStart = 140;
         },
         error: function(error){
           console.log("error while submitting new tweet ", error, error.statusText, error.status);
@@ -194,6 +265,48 @@ function loadTweetData () {
       error: function(error){
         console.log("error while retweet ", error);
       }
+    });
+  });
+
+  $(document.body).on("click", ".tweet-like", function(e){
+    e.preventDefault();
+    const this_ = $(this);
+    const tweetId = this_.attr("data-id");
+    const likedUrl = `/api/tweet/${tweetId}/like/`;
+    $.ajax({
+      method:"GET",
+      url: likedUrl,
+      success: function(data){
+        if (data.liked){
+          this_.text("Like");
+        } else {
+          this_.text("Unlike");
+        }
+      },
+      error: function(error){
+        console.log("error while like tweet ", error);
+      }
+    });
+  });
+
+  
+  $(document.body).on("click", ".tweet-reply", function(e){
+    e.preventDefault();
+    const this_ = $(this);
+    const parentId = this_.attr("data-id");
+    const username = this_.attr("data-user");
+    const content = this_.parent().parent().find(".content").text();
+    $("#replyModal").modal({});
+    $("#replyModal textarea").after(`<input type='hidden' value='${parentId}' name='parent_id'/>`);
+    $("#replyModal textarea").after(`<input type='hidden' value='${true}' name='reply'/>`);
+    $("#replyModal textarea").val("@" + username + " ");
+    $("#replyModal #replyModalLabel").text("Reply to " + content);
+    // charsStart = 140;
+    // charsStart = charsStart - $("#replyModal textarea").val().length;
+    // $(".tweet-form span.tweetCharsLeft").remove();
+    // $(".tweet-form").append(`<span class='tweetCharsLeft'>${charsStart}</span>`);
+    $("#replyModal").on("shown.bs.modal", function(){
+      $('textarea').focus();
     });
   });
 }
