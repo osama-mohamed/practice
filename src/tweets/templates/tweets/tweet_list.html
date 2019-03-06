@@ -42,5 +42,10 @@
 {% block javascript %}
 
   <script src="{% static 'js/list_tweets.js' %} "></script>
+  <script>
+    $(document).ready(function(){
+      loadTweetData();
+    });
+  </script>
 
 {% endblock javascript %}

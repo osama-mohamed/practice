@@ -10,126 +10,160 @@ function getParameterByName(name, url) {
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-function formatTweet(tweetValue) {
+// function formatTweet(tweetValue) {
 
-  let preContent;
-  let container;
-  let tweetContent;
+//   let preContent;
+//   let container;
+//   let tweetContent;
+//   const isReply = tweetValue.reply;
+//   if (tweetValue.parent && !isReply) {
+//     tweetValue = tweetValue.parent;
+//     preContent = `
+//       <span class='grey-color'>
+//         Retweet via 
+//         <a href="${tweetValue.user.user_url}">${tweetValue.user.username}</a>
+//         on ${tweetValue.timesince}
+//       </span>
+//       <br/>
+//       `;
+//     } else if (tweetValue.parent && isReply) {
+//       preContent = `
+//         <span class='grey-color'>
+//           Reply to @${tweetValue.parent.user.username}
+//         </span>
+//         <br/>
+//       `;
+//     }
+//   let verb = 'Like';
+//   if (tweetValue.did_like){
+//     verb = 'Unlike';
+//   }  
+
+//   tweetContent = `
+//     <span class='content'>${tweetValue.content}</span>
+//     <br/> via 
+//     <a href="${tweetValue.user.user_url}">${tweetValue.user.username}</a> | 
+//     ${tweetValue.timesince} | 
+//     <a href='${tweetValue.view_url}'>View</a> | 
+//     <a class='retweetBtn' href='${tweetValue.retweet_url}'>Retweet</a> | 
+//     <a href='#' class='tweet-like' data-id="${tweetValue.id}">
+//       ${verb} (${tweetValue.likes})
+//     </a> | 
+//     <a href='#' class='tweet-reply' data-user="${tweetValue.user.username}" data-id="${tweetValue.id}">Reply</a>
+//   `;
+//   if (preContent){
+//     container = `
+//       <div class="media">
+//         <div class="media-body">
+//           ${preContent}
+//           ${tweetContent}
+//         </div>
+//       </div>
+//       <hr/>
+//     `;
+//   } else {
+//     container = `
+//       <div class="media">
+//         <div class="media-body">
+//           ${tweetContent}
+//         </div>
+//       </div>
+//       <hr/>
+//     `;
+//   }
+//   return container;
+// }
+
+function attachTweet(tweetValue, prepend, retweet){
+  const dateDisplay = tweetValue.timesince; // tweetValue.date_display;
+  const tweetContent = tweetValue.content;
+  const tweetUser = tweetValue.user;
+  const isRetweet = tweetValue.is_retweet;
   const isReply = tweetValue.reply;
-  if (tweetValue.parent && !isReply) {
-    tweetValue = tweetValue.parent;
-    preContent = `
-      <span class='grey-color'>
-        Retweet via 
-        <a href="${tweetValue.user.user_url}">${tweetValue.user.username}</a>
-        on ${tweetValue.timesince}
-      </span>
-      <br/>
-      `;
-    } else if (tweetValue.parent && isReply) {
-      preContent = `
-        <span class='grey-color'>
-          Reply to @${tweetValue.parent.user.username}
-        </span>
-        <br/>
-      `;
-    }
+  let tweetFormattedHtml;
+  let owner = '';
+  if(tweetValue.owner) {
+    owner += `
+          |  <a href="${tweetValue.update_url}">Update</a> |
+             <a href="${tweetValue.delete_url}">Delete</a>
+    `;
+  }
   let verb = 'Like';
   if (tweetValue.did_like){
     verb = 'Unlike';
-  }  
-
-  tweetContent = `
-    <span class='content'>${tweetValue.content}</span>
-    <br/> via 
-    <a href="${tweetValue.user.user_url}">${tweetValue.user.username}</a> | 
-    ${tweetValue.timesince} | 
-    <a href='${tweetValue.view_url}'>View</a> | 
-    <a class='retweetBtn' href='${tweetValue.retweet_url}'>Retweet</a> | 
-    <a href='#' class='tweet-like' data-id="${tweetValue.id}">
-      ${verb} (${tweetValue.likes})
-    </a> | 
-    <a href='#' class='tweet-reply' data-user="${tweetValue.user.username}" data-id="${tweetValue.id}">Reply</a>
-  `;
-  if (preContent){
-    container = `
-      <div class="media">
+  }
+  let replyId = tweetValue.id;
+  if (tweetValue.parent) {
+    replyId = tweetValue.parent.id;
+  }
+  let openingContainerDiv = `<div class="media">`;
+  if (tweetValue.id == fetchOne) {
+    openingContainerDiv = `<div class="media media-focus">`;
+    setTimeout(function(){
+      $('.media-focus').css("background-color", '#fff');
+    }, 2000);
+  }
+  if (retweet && tweetValue.parent && !isReply){
+    const mainTweet = tweetValue.parent;
+    tweetFormattedHtml = `
+      ${openingContainerDiv}
         <div class="media-body">
-          ${preContent}
-          ${tweetContent}
+          <span class='grey-color'>
+            Retweet via <a href='${tweetUser.user_url}'>${tweetUser.username}</a> on ${dateDisplay}
+          </span>
+          <br/>
+          ${mainTweet.content} 
+          <br/> 
+          via <a href='${mainTweet.user.user_url}'>${mainTweet.user.username}</a> |
+          ${mainTweet.timesince} |
+          <a href='${mainTweet.view_url}'>View</a> |
+          <a href="${mainTweet.retweet_url}" class="retweetBtn" data-href="${mainTweet.api_retweet_url}">Retweet</a> |
+          <a href='#' class='tweet-like' data-id=${tweetValue.id}>${verb} (${tweetValue.likes})</a> | 
+          <a href='#' class='tweet-reply' data-user="${mainTweet.user.username}" data-id="${replyId}">Reply</a>
+        </div>
+      </div>
+      <hr/>
+    `;
+    } else if (tweetValue.parent && isReply) {
+    tweetFormattedHtml = `
+      ${openingContainerDiv}
+        <div class="media-body">
+          <span class='grey-color'>
+            Reply to @${tweetValue.parent.user.username}
+          </span>
+          <br/>
+          ${tweetValue.content} 
+          <br/> 
+          via <a href='${tweetValue.user.user_url}'>${tweetValue.user.username}</a> |
+          ${tweetValue.timesince} |
+          <a href='${tweetValue.view_url}'>View</a> |
+          <a href="${tweetValue.retweet_url}" class="retweetBtn" data-href="${tweetValue.api_retweet_url}">Retweet</a> |
+          <a href='#' class='tweet-like' data-id=${tweetValue.id}>${verb} (${tweetValue.likes})</a> | 
+          <a href='#' class='tweet-reply' data-user="${tweetValue.user.username}" data-id="${replyId}">Reply</a>
         </div>
       </div>
       <hr/>
     `;
   } else {
-    container = `
-      <div class="media">
+    tweetFormattedHtml = `
+      ${openingContainerDiv}
         <div class="media-body">
-          ${tweetContent}
+          ${tweetContent} 
+          <br/> 
+          via <a href='${tweetUser.user_url}'>${tweetUser.username}</a> |
+          ${dateDisplay} | 
+          <a href='${tweetValue.view_url}'>View</a> |
+          <a href="${tweetValue.retweet_url}" class="retweetBtn" data-href="${tweetValue.api_retweet_url}">Retweet</a> |
+          <a href='#' class='tweet-like' data-id=${tweetValue.id}>${verb} (${tweetValue.likes})</a> | 
+          <a href='#' class='tweet-reply' data-user="${tweetValue.user.username}" data-id="${replyId}">Reply</a>
+          ` + owner +
+          ` 
         </div>
       </div>
       <hr/>
     `;
   }
-  return container;
-}
-
-function attachTweet(tweetValue, prepend, retweet){
-  // const dateDisplay = tweetValue.timesince; // tweetValue.date_display;
-  // const tweetContent = tweetValue.content;
-  // const tweetUser = tweetValue.user;
-  // const isRetweet = tweetValue.is_retweet;
-  // let owner = '';
-  // if(tweetValue.owner) {
-  //   owner += `
-  //         |  <a href="${tweetValue.update_url}">Update</a> |
-  //            <a href="${tweetValue.delete_url}">Delete</a>
-  //   `;
-  // }
-  // let verb = 'Like';
-  // if (tweetValue.did_like){
-  //   verb = 'Unlike';
-  // }
-  // let tweetFormattedHtml;
-  // if (retweet && tweetValue.parent){
-  //   const mainTweet = tweetValue.parent;
-  //   tweetFormattedHtml = `
-  //     <div class="media">
-  //       <div class="media-body">
-  //         <span class='grey-color'>
-  //           Retweet via <a href='${tweetUser.user_url}'>${tweetUser.username}</a> on ${dateDisplay}
-  //         </span>
-  //         <br/>
-  //         ${mainTweet.content} 
-  //         <br/> 
-  //         via <a href='${mainTweet.user.user_url}'>${mainTweet.user.username}</a> |
-  //         ${mainTweet.timesince} |
-  //         <a href='${mainTweet.view_url}'>View</a> |
-  //         <a href="${mainTweet.retweet_url}" class="retweetBtn" data-href="${mainTweet.api_retweet_url}">Retweet</a> |
-  //         <a href='#' class='tweet-like' data-id=${tweetValue.id}>${verb} (${tweetValue.likes})</a>
-  //       </div>
-  //     </div>
-  //     <hr/>
-  //   `;
-  // } else {
-  //   tweetFormattedHtml = `
-  //     <div class="media">
-  //       <div class="media-body">
-  //         ${tweetContent} 
-  //         <br/> 
-  //         via <a href='${tweetUser.user_url}'>${tweetUser.username}</a> |
-  //         ${dateDisplay} | 
-  //         <a href='${tweetValue.view_url}'>View</a> |
-  //         <a href="${tweetValue.retweet_url}" class="retweetBtn" data-href="${tweetValue.api_retweet_url}">Retweet</a> |
-  //         <a href='#' class='tweet-like' data-id=${tweetValue.id}>${verb} (${tweetValue.likes})</a>
-  //         ` + owner +
-  //         ` 
-  //       </div>
-  //     </div>
-  //     <hr/>
-  //   `;
-  // }
-  tweetFormattedHtml = formatTweet(tweetValue);
+  // tweetFormattedHtml = formatTweet(tweetValue);
   if (prepend == true){
     $("#tweet-container").prepend(tweetFormattedHtml);
   } else {
@@ -290,27 +324,44 @@ function loadTweetData () {
   });
 
   
-  $(document.body).on("click", ".tweet-reply", function(e){
-    e.preventDefault();
-    const this_ = $(this);
-    const parentId = this_.attr("data-id");
-    const username = this_.attr("data-user");
-    const content = this_.parent().parent().find(".content").text();
-    $("#replyModal").modal({});
-    $("#replyModal textarea").after(`<input type='hidden' value='${parentId}' name='parent_id'/>`);
-    $("#replyModal textarea").after(`<input type='hidden' value='${true}' name='reply'/>`);
-    $("#replyModal textarea").val("@" + username + " ");
-    $("#replyModal #replyModalLabel").text("Reply to " + content);
-    // charsStart = 140;
-    // charsStart = charsStart - $("#replyModal textarea").val().length;
-    // $(".tweet-form span.tweetCharsLeft").remove();
-    // $(".tweet-form").append(`<span class='tweetCharsLeft'>${charsStart}</span>`);
-    $("#replyModal").on("shown.bs.modal", function(){
-      $('textarea').focus();
-    });
+}
+$(document.body).on("click", ".tweet-reply", function(e){
+  e.preventDefault();
+  const this_ = $(this);
+  const parentId = this_.attr("data-id");
+  const username = this_.attr("data-user");
+  const content = this_.parent().parent().find(".content").text();
+  $("#replyModal").modal({});
+  $("#replyModal textarea").after(`<input type='hidden' value='${parentId}' name='parent_id'/>`);
+  $("#replyModal textarea").after(`<input type='hidden' value='${true}' name='reply'/>`);
+  $("#replyModal textarea").val("@" + username + " ");
+  $("#replyModal #replyModalLabel").text("Reply to " + content);
+  // charsStart = 140;
+  // charsStart = charsStart - $("#replyModal textarea").val().length;
+  // $(".tweet-form span.tweetCharsLeft").remove();
+  // $(".tweet-form").append(`<span class='tweetCharsLeft'>${charsStart}</span>`);
+  $("#replyModal").on("shown.bs.modal", function(){
+    $('textarea').focus();
+  });
+});
+
+// $(document).ready(() => {
+//   loadTweetData();
+// });
+let fetchOne;
+function fetchSingle(fetchOneId){
+  fetchOne = fetchOneId;
+  const fecthDetailUrl = `/api/tweet/${fetchOneId}/`;
+  $.ajax({
+    url: fecthDetailUrl,
+    method: "GET",
+    success: function(data){
+      tweetList = data.results;
+      parseTweets(tweetList);
+      updateHashLinks();
+    },
+    error: function(error){
+      console.log("error while fetching single tweet detail ", error);
+    }
   });
 }
-
-$(document).ready(() => {
-  loadTweetData();
-});

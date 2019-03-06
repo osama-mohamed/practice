@@ -1,5 +1,5 @@
 from rest_framework.generics import ListAPIView, CreateAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db.models import Q
@@ -69,6 +69,22 @@ class LikeToggleAPIView(APIView):
       is_liked = Tweet.objects.like_toggle(request.user, tweet_qs.first())
       return Response({'liked': is_liked})
     return Response({"message": message}, status=400)
+
+
+
+class TweetDetailAPIView(ListAPIView):
+  serializer_class = TweetModelSerializer
+  pagination_class = StandardResultsPagination
+  permission_classes = [AllowAny]
+
+  def get_queryset(self, *args, **kwargs):
+    tweet_id = self.kwargs.get("pk")
+    qs = Tweet.objects.filter(pk=tweet_id)
+    if qs.exists() and qs.count() == 1:
+      parent_obj = qs.first()
+      qs1 = parent_obj.get_children()
+      qs = (qs | qs1).distinct().extra(select={"parent_id_null": 'parent_id IS NULL'})
+    return qs.order_by("-parent_id_null", '-timestamp')
 
 
 # class SearchAPIView(ListAPIView):
