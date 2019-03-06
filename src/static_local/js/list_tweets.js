@@ -282,49 +282,48 @@ function loadTweetData () {
     if (nextTweetUrl) {
       fetchTweets(nextTweetUrl);
     }
-  });
-
-  $(document.body).on("click", ".retweetBtn", function(e){
-    e.preventDefault();
-    let url = $(this).attr('data-href');
-    $.ajax({
-      method: "GET",
-      url: url,
-      success: function (data) {
-        if ($("#tweet-container").attr("data-url") == "/api/tweet/") {
-          attachTweet(data, true, true);
-          updateHashLinks();
-        }
-      },
-      error: function(error){
-        console.log("error while retweet ", error);
-      }
-    });
-  });
-
-  $(document.body).on("click", ".tweet-like", function(e){
-    e.preventDefault();
-    const this_ = $(this);
-    const tweetId = this_.attr("data-id");
-    const likedUrl = `/api/tweet/${tweetId}/like/`;
-    $.ajax({
-      method:"GET",
-      url: likedUrl,
-      success: function(data){
-        if (data.liked){
-          this_.text("Like");
-        } else {
-          this_.text("Unlike");
-        }
-      },
-      error: function(error){
-        console.log("error while like tweet ", error);
-      }
-    });
-  });
-
-  
+  });  
 }
+
+$(document.body).on("click", ".retweetBtn", function(e){
+  e.preventDefault();
+  let url = $(this).attr('data-href');
+  $.ajax({
+    method: "GET",
+    url: url,
+    success: function (data) {
+      if ($("#tweet-container").attr("data-url") == "/api/tweet/") {
+        attachTweet(data, true, true);
+        updateHashLinks();
+      }
+    },
+    error: function(error){
+      console.log("error while retweet ", error);
+    }
+  });
+});
+
+$(document.body).on("click", ".tweet-like", function(e){
+  e.preventDefault();
+  const this_ = $(this);
+  const tweetId = this_.attr("data-id");
+  const likedUrl = `/api/tweet/${tweetId}/like/`;
+  $.ajax({
+    method:"GET",
+    url: likedUrl,
+    success: function(data){
+      if (data.liked){
+        this_.text("Like");
+      } else {
+        this_.text("Unlike");
+      }
+    },
+    error: function(error){
+      console.log("error while like tweet ", error);
+    }
+  });
+});
+
 $(document.body).on("click", ".tweet-reply", function(e){
   e.preventDefault();
   const this_ = $(this);
