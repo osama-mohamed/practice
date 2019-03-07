@@ -16,7 +16,7 @@ class TweetManager(models.Manager):
       org_parent = parent_obj.parent
     else:
       org_parent = parent_obj
-    qs = self.get_queryset().filter(user=user, parent=org_parent)
+    qs = self.get_queryset().filter(user=user, parent=org_parent, reply=False)
     # .filter(timestamp__year=timezone.now().year,
     #         timestamp__month=timezone.now().month, timestamp__day=timezone.now().day)
     if qs.exists():

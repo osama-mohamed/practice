@@ -13,7 +13,7 @@ $(document).ready(function() {
   });
   function doneSearchTyping() {
     if (searchQuery) {
-      const url = `/tweet/search/?q=${searchQuery}`;
+      const url = `/search/?q=${searchQuery}`;
       document.location.href = url;
     }
   }

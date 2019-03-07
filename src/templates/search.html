@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block base_head %}
+  <style>
+  #tweet-container {
+  
+  }
+  </style>
+{% endblock %}
+
+{% block content %}
+
+   
+  <div class='row'>
+    <div class='col-sm-12'>
+      {% if request.GET.q %}
+        <p class='lead'>Results for {{ request.GET.q }}</p>
+        <hr/>
+      {% endif %}
+    </div>
+
+    <div class='col-sm-9 '>
+      <h1>Tweets</h1>
+      <hr/>
+      <div id='tweet-container' data-url='/api/search/'></div>
+      <a href='#' id='loadmore'>Load More Tweets</a>
+    </div>
+
+    <div class='col-sm-3'>
+      <h1>Users</h1>
+      <hr/>
+      {% for user in users %}
+        <a href='/{{ user.username }}/'>{{ user.username}}</a><br/>
+      {% empty %}
+        <p>No users found</p>
+      {% endfor %}
+    </div>
+  </div>
+
+{% endblock content %}
+
+{% block javascript %}
+  <script src="{% static 'js/list_tweets.js' %} "></script>
+  <script>
+    $(document).ready(function(){
+      loadTweetData();
+    });
+  </script>
+{% endblock %}

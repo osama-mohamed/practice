@@ -87,16 +87,22 @@ class TweetDetailAPIView(ListAPIView):
     return qs.order_by("-parent_id_null", '-timestamp')
 
 
-# class SearchAPIView(ListAPIView):
-#   serializer_class = TweetModelSerializer
-#   pagination_class = StandardResultsPagination
+class SearchTweetAPIView(ListAPIView):
+  queryset = Tweet.objects.all().order_by("-timestamp")
+  serializer_class = TweetModelSerializer
+  pagination_class = StandardResultsPagination
 
-#   def get_queryset(self, *args, **kwargs):
-#     qs = Tweet.objects.all()
-#     query = self.request.GET.get("q", None)
-#     if query is not None:
-#       qs = qs.filter(
-#         Q(content__icontains=query) |
-#         Q(user__username__icontains=query)
-#       )
-#     return qs
+  def get_serializer_context(self, *args, **kwargs):
+    context = super(SearchTweetAPIView, self).get_serializer_context(*args, **kwargs)
+    context['request'] = self.request
+    return context
+
+  def get_queryset(self, *args, **kwargs):
+    qs = self.queryset
+    query = self.request.GET.get("q", None)
+    if query is not None:
+      qs = qs.filter(
+        Q(content__icontains=query) |
+        Q(user__username__icontains=query)
+      )
+    return qs
