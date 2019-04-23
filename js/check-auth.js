@@ -18,12 +18,19 @@ auth.onAuthStateChanged(user => {
 const setupUI = (user) => {
   const loggedOutLinks = document.querySelectorAll('.logged-out');
   const loggedInLinks = document.querySelectorAll('.logged-in');
+  const accountDetails = document.querySelector('.account-details');
   // toggle user elements
   if (user) {
     loggedInLinks.forEach(item => item.style.display = 'block');
     loggedOutLinks.forEach(item => item.style.display = 'none');
+    // account info
+    accountDetails.innerHTML = `
+      <div>Logged in as ${user.email}</div>
+    `;
   } else {
     loggedInLinks.forEach(item => item.style.display = 'none');
     loggedOutLinks.forEach(item => item.style.display = 'block');
+    // clear account info
+    accountDetails.innerHTML = '';
   }
 };
