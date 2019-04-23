@@ -3,7 +3,7 @@ auth.onAuthStateChanged(user => {
   if (user) {
     console.log('user logged in: ', user);
     // get data from db
-    db.collection('guides').get().then(snapshot => {
+    db.collection('guides').onSnapshot(snapshot => {
       setupGuides(snapshot.docs);
       setupUI(user);
     }, err => console.log(err.message));
