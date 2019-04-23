@@ -24,9 +24,12 @@ const setupUI = (user) => {
     loggedInLinks.forEach(item => item.style.display = 'block');
     loggedOutLinks.forEach(item => item.style.display = 'none');
     // account info
-    accountDetails.innerHTML = `
-      <div>Logged in as ${user.email}</div>
-    `;
+    db.collection('users').doc(user.uid).get().then(doc => {
+      accountDetails.innerHTML = `
+        <div>Logged in as ${user.email}</div>
+        <div>${doc.data().bio}</div>
+      `;
+    });
   } else {
     loggedInLinks.forEach(item => item.style.display = 'none');
     loggedOutLinks.forEach(item => item.style.display = 'block');
