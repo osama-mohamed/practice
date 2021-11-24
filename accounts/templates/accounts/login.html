@@ -5,11 +5,7 @@
     <hr>
     <form action="." method="POST">
       {% csrf_token %}
-      {% if error %}
-      <p style="color: red;">{{ error }}</p>
-      {% endif %}
-      <input type="text" name="username" placeholder="Username">
-      <input type="password" name="password" placeholder="Password">
+      {{ form.as_p }}
       <button type="submit">Login</button>
     </form>
     <p>Need an account? Please <a href="/register/">Register</a></p>
