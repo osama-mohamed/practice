@@ -2,5 +2,11 @@
 
 {% block content %}
   <h1>{{ object.title }}</h1>
+  <p>
+    Author : {{ object.user.username }} 
+    {% if request.user == object.user %} 
+      => This is you! 
+    {% endif %}
+  </p>
   <p>{{ object.content }}</p>
 {% endblock content %}
