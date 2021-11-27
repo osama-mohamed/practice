@@ -1,9 +1,34 @@
 from django.db import models
+from django.db.models import Q
 from django.db.models.signals import pre_save, post_save
 from django.urls import reverse
 from .utils import slugify_instance_title
 
 # Create your models here.
+class ArticleQuerySet(models.QuerySet):
+  def search(self, query=None):
+    if query is None or query == '':
+      return self.none()
+    return self.filter(
+      Q(title__icontains=query) |
+      Q(content__icontains=query)
+    )
+
+class ArticleManager(models.Manager):
+
+  def get_queryset(self):
+    return ArticleQuerySet(self.model, using=self._db)
+    
+  def search(self, query=None):
+    # if query is None or query == '':
+    #   return self.get_queryset().none()
+    # return self.get_queryset().filter(
+    #   Q(title__icontains=query) |
+    #   Q(content__icontains=query)
+    # )
+    return self.get_queryset().search(query=query)
+
+
 class Article(models.Model):
   title = models.CharField(max_length=220)
   slug = models.SlugField(unique=True, blank=True, null=True)
@@ -11,6 +36,8 @@ class Article(models.Model):
   timestamp = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
   publish = models.DateField(auto_now_add=False, auto_now=False, null=True, blank=True)
+
+  objects = ArticleManager()
 
   def get_absolute_url(self):
     return reverse('article-detail', kwargs={'slug': self.slug})
