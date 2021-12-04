@@ -10,6 +10,6 @@
     </form>
   {% else %}
     <p>Your article was created successfully!</p>
-    <a href="/articles/{{ object.id }}">{{ object.title }} - {{ object.content }}</a>
+    <a href="{% url 'articles:detail' slug=object.slug %}">{{ object.title }} - {{ object.content }}</a>
   {% endif %}
 {% endblock content %}
