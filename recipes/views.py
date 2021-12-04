@@ -48,5 +48,5 @@ def recipe_update_view(request, id=None):
   }
   if form.is_valid():
     form.save()
-    context['msg'] = 'Data saved.'
+    context['message'] = 'Data saved.'
   return render(request, 'recipes/create-update.html', context)
