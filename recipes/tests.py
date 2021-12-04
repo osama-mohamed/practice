@@ -24,6 +24,7 @@ class RecipeTestCase(TestCase):
     self.recipe_count = Recipe.objects.filter(user=self.user_a).count()
 
     self.recipe_ingredient_a = RecipeIngredient.objects.create(recipe=self.recipe_a, name='Chicken', quantity='1/2', unit='pound')
+    self.recipe_ingredient_b = RecipeIngredient.objects.create(recipe=self.recipe_a, name='Chicken', quantity='asdfasdf', unit='pound')
     self.recipe_ingredient_count = RecipeIngredient.objects.filter(recipe=self.recipe_a).count()
 
   def test_user_count(self):
@@ -96,3 +97,7 @@ class RecipeTestCase(TestCase):
           unit = unit
         )
         ingredient.full_clean()
+
+  def test_quantity_as_float(self):
+    self.assertIsNotNone(self.recipe_ingredient_a.quantity_as_float)
+    self.assertIsNone(self.recipe_ingredient_b.quantity_as_float)
