@@ -16,6 +16,9 @@ class Recipe(models.Model):
   timestamp = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
 
+  def get_absolute_url(self):
+    return '/pantry/recipes/'
+
 
 class RecipeIngredient(models.Model):
   recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
@@ -28,6 +31,9 @@ class RecipeIngredient(models.Model):
   active = models.BooleanField(default=True)
   timestamp = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
+
+  def get_absolute_url(self):
+    return self.recipe.get_absolute_url()
 
   def save(self, *args, **kwargs):
     qty = self.quantity
