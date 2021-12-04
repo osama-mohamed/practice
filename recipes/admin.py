@@ -21,7 +21,7 @@ admin.site.register(User, UserAdmin)
 class RecipeIngredientInline(admin.StackedInline): # TabularInline
   model = RecipeIngredient
   extra = 1
-  readonly_fields = ['quantity_as_float']
+  readonly_fields = ['quantity_as_float', 'as_mks', 'as_imperial']
   # fields = ['name', 'quantity', 'unit', 'directions']
 
 

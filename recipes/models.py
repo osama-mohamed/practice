@@ -3,6 +3,8 @@ from django.db import models
 
 from .utils import number_str_to_float
 from .validators import validate_unit_of_measure
+
+import pint
 # Create your models here.
 
 class Recipe(models.Model):
@@ -35,3 +37,18 @@ class RecipeIngredient(models.Model):
     else:
       self.quantity_as_float = None
     super().save(*args, **kwargs)
+
+  def convert_to_system(self, system="mks"):
+    if self.quantity_as_float is None:
+      return None
+    ureg = pint.UnitRegistry(system=system)
+    measurement = self.quantity_as_float * ureg[self.unit]
+    return measurement
+
+  def as_mks(self):
+    measurement = self.convert_to_system(system='mks')
+    return measurement.to_base_units()
+
+  def as_imperial(self):
+    measurement = self.convert_to_system(system='imperial')
+    return measurement.to_base_units()
