@@ -6,6 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Django</title>
   <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+  <style>
+    .htmx-indicator {
+      display: none;
+    }
+    .htmx-request .htmx-indicator {
+      display: inline;
+    }
+    .htmx-inverted-indicator {
+      display: inline;
+    }
+    .htmx-request .htmx-inverted-indicator {
+      display: none;
+    }
+  </style>
 </head>
 <body>
   <a href="{% url 'accounts:register' %}">Register</a>
