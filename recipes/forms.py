@@ -5,14 +5,15 @@ from .models import Recipe, RecipeIngredient
 class RecipeForm(forms.ModelForm):
   error_css_class = 'error-field'
   required_css_class = 'required-field'
-  name = forms.CharField(
-    widget=forms.TextInput(
-      attrs={
-        'class': 'form-control',
-        'placeholder': 'Recipe name'
-      }
-    )
-  )
+  name = forms.CharField(help_text='This is your help! <a href="/contact/">Contact us</a>')
+  # name = forms.CharField(
+  #   widget=forms.TextInput(
+  #     attrs={
+  #       'class': 'form-control',
+  #       'placeholder': 'Recipe name'
+  #     }
+  #   )
+  # )
   # description = forms.CharField(
   #   label='Recipe Description',
   #   widget=forms.Textarea(
