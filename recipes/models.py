@@ -45,6 +45,9 @@ class RecipeIngredient(models.Model):
   def get_absolute_url(self):
     return self.recipe.get_absolute_url()
 
+  def get_hx_edit_url(self):
+    return reverse("recipes:hx-ingredient-update", kwargs={"parent_id": self.recipe.id, "id": self.id})
+
   def save(self, *args, **kwargs):
     qty = self.quantity
     qty_as_float, qty_as_float_success = number_str_to_float(qty)
