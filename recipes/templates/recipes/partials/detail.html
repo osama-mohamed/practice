@@ -1,20 +1,26 @@
 
 <h1>
-  {{ object.name }} 
-  {% if object.get_edit_url %}
-    <small>
-      <!-- <a href='{% url "recipes:update" id=object.id %}'>Edit</a> -->
-      <a href='{{ object.get_edit_url }}'>Edit</a>
-    </small>
-  {% endif %}
+  {{ object.name }}
 </h1>
+{% if object.get_edit_url %}
+  <small>
+    <a href='{{ object.get_edit_url }}'>Edit</a> 
+    <a href='{{ object.get_delete_url }}'>Delete</a> 
+  </small>
+{% endif %}
 <p>{{ object.description }}</p>
 <p>{{ object.directions }}</p>
 
 <!-- {% for ingredient in object.recipeingredient_set.all %} -->
 <!-- {% endfor %} -->
 {% for ingredient in object.get_ingredients_children %}
-  <h1>{{ ingredient.name }}</h1>
+  <h1>
+    {{ ingredient.name }}
+      <small>
+        <!-- <a href='{{ ingredient.get_hx_edit_url }}'>Edit</a>  -->
+        <a href='{{ ingredient.get_delete_url }}'>Delete</a> 
+      </small>
+  </h1>
   <p>{{ ingredient.as_mks }}</p>
   <p>{{ ingredient.as_imperial }}</p>
 {% endfor %}

@@ -18,6 +18,11 @@
             <a href='{{ x.get_edit_url }}'>Edit</a>
           </small>
         {% endif %}
+        {% if x.get_delete_url %}
+          <small>
+            <a href='{{ x.get_delete_url }}'>Delete</a>
+          </small>
+        {% endif %}
       </li>
     {% endfor %}
   </ul>
