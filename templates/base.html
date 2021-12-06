@@ -30,10 +30,9 @@
   <a href="{% url 'recipes:list' %}">Recipes</a>
   <a href="{% url 'recipes:create' %}">Create recipe</a>
   <hr>
-  <form action="/articles/" method="GET">
-    <input type="text" name="q">
-    <input type="submit">
-  </form>
+
+  {% include 'search/search-form.html' %}
+  
   {% block content %}
   {% endblock content %}
 </body>
