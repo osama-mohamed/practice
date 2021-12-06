@@ -15,13 +15,15 @@
 <!-- {% for ingredient in object.recipeingredient_set.all %} -->
 <!-- {% endfor %} -->
 {% for ingredient in object.get_ingredients_children %}
-  <h1>
-    {{ ingredient.name }}
-      <small>
-        <!-- <a href='{{ ingredient.get_hx_edit_url }}'>Edit</a>  -->
-        <a href='{{ ingredient.get_delete_url }}'>Delete</a> 
-      </small>
-  </h1>
-  <p>{{ ingredient.as_mks }}</p>
-  <p>{{ ingredient.as_imperial }}</p>
+  <div id="ingredient-{{ ingredient.id }}">
+    <h1>
+      {{ ingredient.name }}
+        <small>
+          <!-- <a href='{{ ingredient.get_hx_edit_url }}'>Edit</a>  -->
+          <a hx-post='{{ ingredient.get_delete_url }}' hx-confirm='Delete ingredient {{ ingredient.name }}?' hx-trigger='click' href='{{ ingredient.get_delete_url }}' hx-target='#ingredient-{{ ingredient.id }}' hx-swap='outerHTML'>Delete</a>
+        </small>
+    </h1>
+    <p>{{ ingredient.as_mks }}</p>
+    <p>{{ ingredient.as_imperial }}</p>
+  </div>
 {% endfor %}
