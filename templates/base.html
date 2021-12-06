@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,20 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Django</title>
   <script src="https://unpkg.com/htmx.org@1.6.1"></script>
-  <style>
-    .htmx-indicator {
-      display: none;
-    }
-    .htmx-request .htmx-indicator {
-      display: inline;
-    }
-    .htmx-inverted-indicator {
-      display: inline;
-    }
-    .htmx-request .htmx-inverted-indicator {
-      display: none;
-    }
-  </style>
+
+  <link rel='stylesheet' href='{% static "recipes/recipes-htmx.css" %}' />
 </head>
 <body>
   <a href="{% url 'accounts:register' %}">Register</a>
@@ -30,7 +20,7 @@
   <a href="{% url 'recipes:list' %}">Recipes</a>
   <a href="{% url 'recipes:create' %}">Create recipe</a>
   <hr>
-
+  
   {% include 'search/search-form.html' %}
   
   {% block content %}
