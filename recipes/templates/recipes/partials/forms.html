@@ -23,6 +23,9 @@
     {% if message %}
       <p>{{ message }}</p>
     {% endif %}
-    <a href='{{ object.get_delete_url }}' hx-post='{{ object.get_delete_url }}' hx-confirm='Are you sure you want to delete {{ object.name }}?' hx-trigger='click'>Delete</a>
+    
+    {% if object.id %}
+      <a href='{{ object.get_delete_url }}' hx-post='{{ object.get_delete_url }}' hx-confirm='Are you sure you want to delete {{ object.name }}?' hx-trigger='click'>Delete</a>
+    {% endif %}
   </form>
 </div>
