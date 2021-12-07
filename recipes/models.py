@@ -7,6 +7,8 @@ from .utils import number_str_to_float
 from .validators import validate_unit_of_measure
 
 import pint
+from pathlib import Path
+from uuid import uuid1
 # Create your models here.
 
 class RecipeQuerySet(models.QuerySet):
@@ -103,3 +105,14 @@ class RecipeIngredient(models.Model):
   def as_imperial(self):
     measurement = self.convert_to_system(system='imperial')
     return measurement.to_base_units()
+
+
+def recipe_ingredient_image_upload_handler(instance, filename):
+  fpath = Path(filename)
+  new_fname = str(uuid1())
+  return f'recipes/recipe#{instance.recipe.id}-{instance.recipe.name}/ingredient/recipe{instance.recipe.id}-{instance.recipe.name}-{new_fname}{fpath.suffix}'
+
+
+class RecipeIngredientImage(models.Model):
+  recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+  image = models.ImageField(upload_to=recipe_ingredient_image_upload_handler)

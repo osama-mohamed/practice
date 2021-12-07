@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 
-from .models import Recipe, RecipeIngredient
+from .models import Recipe, RecipeIngredient, RecipeIngredientImage
 
 # Register your models here.
 
@@ -39,3 +39,6 @@ class RecipeAdmin(admin.ModelAdmin):
   readonly_fields = ['timestamp', 'updated']
   raw_id_fields = ['user']
 admin.site.register(Recipe, RecipeAdmin)
+
+
+admin.site.register(RecipeIngredientImage)
