@@ -6,6 +6,8 @@ from django.urls import reverse
 
 from .forms import RecipeForm, RecipeIngredientForm, RecipeIngredientImageForm
 from .models import Recipe, RecipeIngredient
+
+from .services import extract_text_via_ocr_service
 # Create your views here.
 
 @login_required
@@ -178,6 +180,9 @@ def recipe_ingredient_image_upload_view(request, parent_id=None):
     obj = form.save(commit=False)
     obj.recipe = parent_obj
     # obj.recipe_id = parent_id
+    obj.save()
+    result = extract_text_via_ocr_service(obj.image)
+    obj.extracted = result
     obj.save()
   context = {
     'form': form,
