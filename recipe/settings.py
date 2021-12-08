@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'recipes.apps.RecipesConfig',
     'search.apps.SearchConfig',
+    'meals.apps.MealsConfig',
 ]
 
 MIDDLEWARE = [
