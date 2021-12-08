@@ -64,9 +64,9 @@ class Recipe(models.Model):
 class RecipeIngredient(models.Model):
   recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
   name = models.CharField(max_length=220)
-  quantity = models.CharField(max_length=50)
+  quantity = models.CharField(max_length=50, blank=True, null=True)
   quantity_as_float = models.FloatField(blank=True, null=True)
-  unit = models.CharField(max_length=50, validators=[validate_unit_of_measure,])
+  unit = models.CharField(max_length=50, blank=True, null=True, validators=[validate_unit_of_measure,])
   description = models.TextField(blank=True, null=True)
   directions = models.TextField(blank=True, null=True)
   active = models.BooleanField(default=True)

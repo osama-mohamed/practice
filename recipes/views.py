@@ -8,6 +8,10 @@ from .forms import RecipeForm, RecipeIngredientForm, RecipeIngredientImageForm
 from .models import Recipe, RecipeIngredient
 
 from .services import extract_text_via_ocr_service
+from .utils import (
+  parse_paragraph_to_recipe_line,
+  convert_to_qty_units,
+)
 # Create your views here.
 
 @login_required
@@ -181,9 +185,16 @@ def recipe_ingredient_image_upload_view(request, parent_id=None):
     obj.recipe = parent_obj
     # obj.recipe_id = parent_id
     obj.save()
-    result = extract_text_via_ocr_service(obj.image)
-    obj.extracted = result
+    extracted = extract_text_via_ocr_service(obj.image)
+    obj.extracted = extracted
     obj.save()
+    results = parse_paragraph_to_recipe_line(extracted)
+    dataset = convert_to_qty_units(results)
+    new_objs = []
+    for data in dataset:
+      data['recipe_id'] = parent_id
+      new_objs.append(RecipeIngredient(**data))
+    RecipeIngredient.objects.bulk_create(new_objs)
   context = {
     'form': form,
   }
