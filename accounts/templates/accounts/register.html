@@ -6,10 +6,10 @@
     <form action="." method="POST">
       {% csrf_token %}
       {{ form.as_p }}
-      <button type="submit">Register</button>
+      <button type="submit" class='btn btn-success'>Register</button>
     </form>
-    <p>Already have an account? Please <a href="{% url 'accounts:login' %}">Login</a></p>
+    <p>Already have an account? Please <a href="{% url 'accounts:login' %}" class='link-primary'>Login</a></p>
   {% else %}
-    <p>You're already logged in and cannot register. would you like to <a href="{% url 'accounts:logout' %}">Logout ?</a></p>
+    <p>You're already logged in and cannot register. would you like to <a href="{% url 'accounts:logout' %}" class='link-primary'>Logout ?</a></p>
   {% endif %}
 {% endblock content %}

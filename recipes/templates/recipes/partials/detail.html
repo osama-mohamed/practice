@@ -1,14 +1,14 @@
 
 <h1>
   {{ object.name }}
+  {% if object.get_edit_url %}
+    <small class="blockquote">
+      <a href='{{ object.get_edit_url }}' class='link-primary'>Edit</a> 
+      <!-- <a href='{{ object.get_delete_url }}' hx-post='{{ object.get_delete_url }}' hx-confirm='Are you sure you want to delete {{ object.name }}?' hx-trigger='click' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>Delete</a> -->
+      <a href='{{ object.get_delete_url }}' hx-post='{{ object.get_delete_url }}' hx-confirm='Are you sure you want to delete {{ object.name }}?' hx-trigger='click' class='link-danger'>Delete</a>
+    </small>
+  {% endif %}
 </h1>
-{% if object.get_edit_url %}
-  <small>
-    <a href='{{ object.get_edit_url }}'>Edit</a> 
-    <!-- <a href='{{ object.get_delete_url }}' hx-post='{{ object.get_delete_url }}' hx-confirm='Are you sure you want to delete {{ object.name }}?' hx-trigger='click' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>Delete</a> -->
-    <a href='{{ object.get_delete_url }}' hx-post='{{ object.get_delete_url }}' hx-confirm='Are you sure you want to delete {{ object.name }}?' hx-trigger='click'>Delete</a>
-  </small>
-{% endif %}
 <p>{{ object.description }}</p>
 <p>{{ object.directions }}</p>
 
@@ -16,12 +16,12 @@
 <!-- {% endfor %} -->
 {% for ingredient in object.get_ingredients_children %}
   <div id="ingredient-{{ ingredient.id }}">
+    <!-- {% include 'recipes/partials/ingredient-inline.html' with object=ingredient %} -->
     <h1>
       {{ ingredient.name }}
-        <small>
-          <!-- <a href='{{ ingredient.get_hx_edit_url }}'>Edit</a>  -->
-          <a hx-post='{{ ingredient.get_delete_url }}' hx-confirm='Delete ingredient {{ ingredient.name }}?' hx-trigger='click' href='{{ ingredient.get_delete_url }}' hx-target='#ingredient-{{ ingredient.id }}' hx-swap='outerHTML'>Delete</a>
-        </small>
+      <small class="blockquote">
+        <a hx-post='{{ ingredient.get_delete_url }}' hx-confirm='Delete ingredient {{ ingredient.name }}?' hx-trigger='click' href='{{ ingredient.get_delete_url }}' hx-target='#ingredient-{{ ingredient.id }}' hx-swap='outerHTML' class='link-danger'>Delete</a>
+      </small>
     </h1>
     <p>{{ ingredient.as_mks }}</p>
     <p>{{ ingredient.as_imperial }}</p>

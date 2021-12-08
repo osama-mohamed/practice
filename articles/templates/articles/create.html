@@ -2,12 +2,20 @@
 
 {% block content %}
   {% if not created %}
-    <hr>
-    <form action="." method="POST">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Create article</button>
-    </form>
+    <div class='row'>
+      <div class='col-md-6 mx-auto'>
+        {% if not object.id %}
+          <h1>Create Article</h1>
+        {% endif %}
+        <form action="." method="POST">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <div class="d-grid gap-2">
+            <button type="submit" class='btn btn-success'>Create article</button>
+          </div>
+        </form>
+      </div>
+    </div>
   {% else %}
     <p>Your article was created successfully!</p>
     <a href="{% url 'articles:detail' slug=object.slug %}">{{ object.title }} - {{ object.content }}</a>

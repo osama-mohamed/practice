@@ -38,3 +38,14 @@ def article_detail_view(request, slug=None):
     'object': article_obj
   }
   return render(request, 'articles/article_detail_view.html', context = context)
+
+@login_required
+def all_articles_user_view(request):
+  if request.user.is_authenticated:
+    articles_obj = Article.objects.filter(user=request.user)
+  else:
+    raise Http404
+  context = {
+    'object_list': articles_obj
+  }
+  return render(request, 'articles/all_articles_user.html', context = context)

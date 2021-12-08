@@ -18,14 +18,18 @@
     {% endfor %}
 
     <div class='htmx-indicator'>Loading...</div>
-    <button class='htmx-inverted-indicator' style='margin-top:10px;' type='submit'>Save</button>
+    <div class="d-grid gap-2">
+      <button class='htmx-inverted-indicator btn btn-success mt-3' type='submit'>Save</button>
+    </div>
     
     {% if message %}
       <p>{{ message }}</p>
     {% endif %}
     
     {% if object.id %}
-      <a href='{{ object.get_delete_url }}' hx-post='{{ object.get_delete_url }}' hx-confirm='Are you sure you want to delete {{ object.name }}?' hx-trigger='click'>Delete</a>
+    <div class="d-grid gap-2">
+      <a href='{{ object.get_delete_url }}' hx-post='{{ object.get_delete_url }}' hx-confirm='Are you sure you want to delete {{ object.name }}?' hx-trigger='click' class='btn btn-danger mt-3 center'>Delete</a>
+    </div>
     {% endif %}
   </form>
 </div>
