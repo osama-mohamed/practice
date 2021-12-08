@@ -59,6 +59,9 @@ class Recipe(models.Model):
   
   def get_ingredients_children(self):
     return self.recipeingredient_set.all()
+  
+  def get_image_upload_url(self):
+    return reverse("recipes:image-upload", kwargs={"parent_id": self.id})
 
 
 class RecipeIngredient(models.Model):
