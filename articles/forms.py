@@ -9,6 +9,16 @@ class ArticleForm(forms.ModelForm):
       'title',
       'content',
     ]
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    for field in self.fields:
+      new_data = {
+        'placeholder':f'Article {str(field).title()}',
+        'class': 'form-control',
+      }
+      self.fields[str(field)].widget.attrs.update(new_data)
+      self.fields[str(field)].label = f'Article {str(field).title()}'
+    self.fields['content'].widget.attrs.update({'rows': 4})
 
   def clean(self):
     data = self.cleaned_data
