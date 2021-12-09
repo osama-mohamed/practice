@@ -8,8 +8,11 @@
   <ul>
     {% for li in object_list %}
       {% if li.title %}
-        <li>
-          <a href="{{ li.get_absolute_url }}" class='link-primary'>{{ li.title }} - {{ li.content }}</a>
+      <li>
+        <a href="{{ li.get_absolute_url }}" class='link-primary'>{{ li.title }} - {{ li.content }}</a>
+        {% if request.user == li.user %}
+          <a href="{{ li.get_edit_url }}" class='link-primary'>Edit</a>
+        {% endif %}
         </li>
       {% endif %}
     {% endfor %}

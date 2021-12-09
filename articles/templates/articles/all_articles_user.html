@@ -7,6 +7,7 @@
       {% if li.title %}
         <li>
           <a href="{{ li.get_absolute_url }}" class='link-primary'>{{ li.title }} - {{ li.content }}</a>
+          <a href="{{ li.get_edit_url }}" class='link-primary'>Edit</a>
         </li>
       {% endif %}
     {% endfor %}

@@ -5,19 +5,19 @@
     <div class='row'>
       <div class='col-md-6 mx-auto'>
         {% if not object.id %}
-          <h1>Create Article</h1>
+          <h1>{{ status | title }} Article</h1>
         {% endif %}
         <form action="." method="POST">
           {% csrf_token %}
           {{ form.as_p }}
           <div class="d-grid gap-2">
-            <button type="submit" class='btn btn-success'>Create article</button>
+            <button type="submit" class='btn btn-success'>{{ status | title }} article</button>
           </div>
         </form>
       </div>
     </div>
   {% else %}
-    <p>Your article was created successfully!</p>
+    <p>Your article was {{ status }}d successfully!</p>
     <a href="{% url 'articles:detail' slug=object.slug %}">{{ object.title }} - {{ object.content }}</a>
   {% endif %}
 {% endblock content %}

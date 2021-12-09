@@ -1,9 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Article
-from .forms import ArticleForm
+from .forms import ArticleForm, ArticleUpdateForm
 
 # Create your views here.
 
@@ -11,17 +11,32 @@ from .forms import ArticleForm
 def article_create_view(request):
   form = ArticleForm(request.POST or None)
   context = {
-    'form': form
+    'form': form,
+    'status': 'create',
   }
   if form.is_valid():
-    article_object = form.save()
-    context['form'] = ArticleForm()
+    article_object = form.save(commit=False)
+    article_object.user = request.user
+    article_object.save()
+    # context['form'] = ArticleForm()
     # context['object'] = article_object
     # context['created'] = True
     # return redirect('articles:detail', slug=article_object.slug)
     return redirect(article_object.get_absolute_url())
   return render(request, 'articles/create.html', context = context)
 
+@login_required
+def article_update_view(request, slug):
+  obj = get_object_or_404(Article, slug=slug, user=request.user)
+  form = ArticleUpdateForm(request.POST or None, instance=obj)
+  context = {
+    'form': form,
+    'status': 'update',
+  }
+  if form.is_valid():
+    form.save()
+    return redirect(obj.get_absolute_url())
+  return render(request, 'articles/create.html', context=context)
 
 def article_detail_view(request, slug=None):
   article_obj = None

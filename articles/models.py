@@ -50,6 +50,9 @@ class Article(models.Model):
 
   def get_absolute_url(self):
     return reverse('articles:detail', kwargs={'slug': self.slug})
+  
+  def get_edit_url(self):
+    return reverse('articles:update', kwargs={'slug': self.slug})
 
 
 def article_pre_save(sender, instance, *args, **kwargs):

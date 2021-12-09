@@ -28,3 +28,7 @@ class ArticleForm(forms.ModelForm):
       self.add_error('title', f'\"{title}\" is already in use. Please pick another title.')
     return data
   
+  
+class ArticleUpdateForm(ArticleForm):
+  def clean(self):
+    return super(ArticleForm, self).clean()

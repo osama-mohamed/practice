@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>{{ object.title }}</h1>
+  <h1>
+    {{ object.title }}
+    <small class="blockquote">
+      <a href="{{ object.get_edit_url }}" class='link-primary'>Edit</a>
+    </small>
+  </h1>
   <p>
     Author : {{ object.user.username }} 
     {% if request.user == object.user %} 
