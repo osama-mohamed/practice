@@ -27,3 +27,6 @@ urlpatterns = [
     path('search/', include('search.urls')),
     path('admin/', admin.site.urls),
 ]
+
+handler404 = 'recipe.views.handle404'
+handler500 = 'recipe.views.handle500'
