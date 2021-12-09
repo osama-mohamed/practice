@@ -8,6 +8,7 @@
         <li>
           <a href="{{ li.get_absolute_url }}" class='link-primary'>{{ li.title }} - {{ li.content }}</a>
           <a href="{{ li.get_edit_url }}" class='link-primary'>Edit</a>
+          <a href="{{ li.get_delete_url }}" class='link-danger'>Delete</a>
         </li>
       {% endif %}
     {% endfor %}

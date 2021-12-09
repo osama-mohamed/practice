@@ -38,6 +38,19 @@ def article_update_view(request, slug):
     return redirect(obj.get_absolute_url())
   return render(request, 'articles/create.html', context=context)
 
+
+@login_required
+def article_delete_view(request, slug=None):
+  obj = get_object_or_404(Article, slug=slug, user=request.user)
+  if request.method == "POST":
+    obj.delete()
+    return redirect('articles:all-user-articles')
+  context = {
+    "object": obj
+  }
+  return render(request, "articles/delete.html", context)
+
+
 def article_detail_view(request, slug=None):
   article_obj = None
   if slug is not None:

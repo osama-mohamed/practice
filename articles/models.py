@@ -53,6 +53,9 @@ class Article(models.Model):
   
   def get_edit_url(self):
     return reverse('articles:update', kwargs={'slug': self.slug})
+  
+  def get_delete_url(self):
+    return reverse('articles:delete', kwargs={'slug': self.slug})
 
 
 def article_pre_save(sender, instance, *args, **kwargs):

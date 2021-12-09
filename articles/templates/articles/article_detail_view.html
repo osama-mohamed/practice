@@ -3,9 +3,14 @@
 {% block content %}
   <h1>
     {{ object.title }}
-    <small class="blockquote">
-      <a href="{{ object.get_edit_url }}" class='link-primary'>Edit</a>
-    </small>
+    {% if request.user == object.user %}
+      <small class="blockquote">
+        <a href="{{ object.get_edit_url }}" class='link-primary'>Edit</a>
+      </small>
+      <small class="blockquote">
+        <a href="{{ object.get_delete_url }}" class='link-danger'>Delete</a>
+      </small>
+    {% endif %}
   </h1>
   <p>
     Author : {{ object.user.username }} 
