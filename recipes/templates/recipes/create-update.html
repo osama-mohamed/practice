@@ -16,6 +16,8 @@
   <div class='{% if object.id %}col-12 col-md-8 {% else %} col-md-6 mx-auto {% endif %}'>
     {% if not object.id %}
       <h1>Create Recipe</h1>
+    {% else %}
+      <h1>Update Recipe</h1>
     {% endif %}
 
     {% include 'recipes/partials/forms.html' %}

@@ -19,7 +19,11 @@
 
     <div class='htmx-indicator'>Loading...</div>
     <div class="d-grid gap-2">
-      <button class='htmx-inverted-indicator btn btn-success mt-3' type='submit'>Save</button>
+      {% if not form.instance.id %}
+        <button class='htmx-inverted-indicator btn btn-success mt-3' type='submit'>Create Recipe</button>
+      {% else %}
+        <button class='htmx-inverted-indicator btn btn-success mt-3' type='submit'>Update Recipe</button>
+      {% endif %}
     </div>
     
     {% if message %}
@@ -28,7 +32,7 @@
     
     {% if object.id %}
     <div class="d-grid gap-2">
-      <a href='{{ object.get_delete_url }}' hx-post='{{ object.get_delete_url }}' hx-confirm='Are you sure you want to delete {{ object.name }}?' hx-trigger='click' class='btn btn-danger mt-3 center'>Delete</a>
+      <a href='{{ object.get_delete_url }}' hx-post='{{ object.get_delete_url }}' hx-confirm='Are you sure you want to delete {{ object.name }}?' hx-trigger='click' class='btn btn-danger mt-3 center'>Delete Recipe</a>
     </div>
     {% endif %}
   </form>
