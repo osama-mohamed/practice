@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+  <h1>
+    My Recipes
+    <!-- {% if request.user == object_list.first.user %} 
+      => {{request.user}} Recipes
+    {% endif %} -->
+  </h1>
+  <ul>
+    {% for x in object_list %}
+      <li>
+        <a href='{{ x.get_absolute_url }}' class='link-primary'>{{ x.name }}</a>
+        {% if x.get_edit_url %}
+          <small>
+            <a href='{{ x.get_edit_url }}' class='link-primary'>Edit</a>
+          </small>
+        {% endif %}
+        {% if x.get_delete_url %}
+          <small>
+            <a href='{{ x.get_delete_url }}' hx-post='{{ x.get_delete_url }}' hx-confirm='Are you sure you want to delete {{ x.name }}?' hx-trigger='click' class='link-danger'>Delete</a>
+          </small>
+        {% endif %}
+        <small hx-get='{% url "meals:meal-toggle" recipe_id=x.id %}' hx-trigger='revealed'></small>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock content %}

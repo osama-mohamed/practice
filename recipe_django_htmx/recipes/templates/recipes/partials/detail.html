@@ -1,0 +1,32 @@
+<div class='row'>
+  <div class='col-12 col-md-8'>
+    <h1>
+      {{ object.name }}
+      {% if object.get_edit_url %}
+        <small class="blockquote">
+          <a href='{{ object.get_edit_url }}' class='link-primary'>Edit</a> 
+          <!-- <a href='{{ object.get_delete_url }}' hx-post='{{ object.get_delete_url }}' hx-confirm='Are you sure you want to delete {{ object.name }}?' hx-trigger='click' hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>Delete</a> -->
+          <a href='{{ object.get_delete_url }}' hx-post='{{ object.get_delete_url }}' hx-confirm='Are you sure you want to delete {{ object.name }}?' hx-trigger='click' class='link-danger'>Delete</a>
+        </small>
+      {% endif %}
+    </h1>
+    <p>{{ object.description }}</p>
+    <p>{{ object.directions }}</p>
+  </div>
+
+  <div class='col-12 col-md-4'>
+    <h3>Ingredients</h3>
+    <!-- object.recipeingredient_set.all  -->
+    {% for ingredient in object.get_ingredients_children %}
+      <div id="ingredient-{{ ingredient.id }}">
+        {% include 'recipes/partials/ingredient-inline.html' with object=ingredient %}
+      </div>
+    {% endfor %}
+
+    <div id='ingredient-create'></div>
+    <div hx-get="{{ object.get_image_upload_url }}" hx-trigger='revealed'></div>
+    <div class="d-grid gap-2">
+      <button hx-get='{% url "recipes:hx-ingredient-create" parent_id=object.id %}' hx-trigger='click' hx-target='#ingredient-create' hx-swap='beforebegin' class='btn btn-success mt-3'>Add ingredient</button>
+    </div>
+  </div>
+</div>
