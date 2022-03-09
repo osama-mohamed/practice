@@ -6,5 +6,3 @@ from .views import api_home
 urlpatterns = [
   path('', api_home),
 ]
-
-
