@@ -6,7 +6,8 @@ from .views import (
   ProductUpdateAPIView,
   ProductDeleteAPIView,
 
-  product_alt_view,
+  # product_alt_view,
+  ProductMixinView,
 )
 
 
