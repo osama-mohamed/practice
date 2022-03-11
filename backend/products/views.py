@@ -1,6 +1,7 @@
 from rest_framework.generics import (
+  ListAPIView,
   RetrieveAPIView,
-  CreateAPIView,
+  ListCreateAPIView,
 )
 
 from .models import Product
@@ -8,7 +9,7 @@ from .serializers import ProductSerializer
 
 # Create your views here.
 
-class ProductCreateAPIView(CreateAPIView):
+class ProductListCreateAPIView(ListCreateAPIView):
   queryset = Product.objects.all()
   serializer_class = ProductSerializer
 
