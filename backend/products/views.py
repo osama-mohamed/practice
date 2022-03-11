@@ -59,30 +59,30 @@ class ProductDeleteAPIView(DestroyAPIView):
 
 
 
-class ProductMixinView(
-  CreateModelMixin,
-  ListModelMixin,
-  RetrieveModelMixin,
-  GenericAPIView,
-):
-  queryset = Product.objects.all()
-  serializer_class = ProductSerializer
-  lookup_field = 'pk'
+# class ProductMixinView(
+#   CreateModelMixin,
+#   ListModelMixin,
+#   RetrieveModelMixin,
+#   GenericAPIView,
+# ):
+#   queryset = Product.objects.all()
+#   serializer_class = ProductSerializer
+#   lookup_field = 'pk'
 
-  def get(self, request, *args, **kwargs):
-    pk = kwargs.get('pk')
-    if pk is not None:
-      return self.retrieve(request, *args, **kwargs)
-    return self.list(request, *args, **kwargs)
+#   def get(self, request, *args, **kwargs):
+#     pk = kwargs.get('pk')
+#     if pk is not None:
+#       return self.retrieve(request, *args, **kwargs)
+#     return self.list(request, *args, **kwargs)
 
-  def post(self, request, *args, **kwargs):
-    return self.create(request, *args, **kwargs)
+#   def post(self, request, *args, **kwargs):
+#     return self.create(request, *args, **kwargs)
 
-  def perform_create(self, serializer):
-    content = serializer.validated_data.get('content') or None
-    if content is None:
-      content = 'content updated'
-    serializer.save(content=content)
+#   def perform_create(self, serializer):
+#     content = serializer.validated_data.get('content') or None
+#     if content is None:
+#       content = 'content updated'
+#     serializer.save(content=content)
 
 
 
