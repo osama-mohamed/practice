@@ -3,6 +3,8 @@ from rest_framework.generics import (
   ListAPIView,
   RetrieveAPIView,
   ListCreateAPIView,
+  UpdateAPIView,
+  DestroyAPIView,
 )
 
 from rest_framework.decorators import api_view
@@ -28,6 +30,28 @@ class ProductListCreateAPIView(ListCreateAPIView):
 class ProductDetailAPIView(RetrieveAPIView):
   queryset = Product.objects.all()
   serializer_class = ProductSerializer
+
+
+class ProductUpdateAPIView(UpdateAPIView):
+  queryset = Product.objects.all()
+  serializer_class = ProductSerializer
+  lookup_field = 'pk'
+
+  def perform_update(self, serializer):
+    instance = serializer.save()
+    if not instance.content:
+      instance.content = instance.title
+
+
+class ProductDeleteAPIView(DestroyAPIView):
+  queryset = Product.objects.all()
+  serializer_class = ProductSerializer
+  lookup_field = 'pk'
+
+  def perform_destroy(self, instance):
+    super().perform_destroy(instance)
+
+
 
 
 @api_view(['GET', 'POST'])
