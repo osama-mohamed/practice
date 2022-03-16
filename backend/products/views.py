@@ -1,4 +1,13 @@
 from django.http import Http404
+
+from rest_framework.authentication import (
+  SessionAuthentication,
+)
+from rest_framework.permissions import (
+  IsAuthenticated,
+  IsAuthenticatedOrReadOnly,
+  AllowAny,
+)
 from rest_framework.generics import (
   ListAPIView,
   RetrieveAPIView,
@@ -24,6 +33,8 @@ from .serializers import ProductSerializer
 class ProductListCreateAPIView(ListCreateAPIView):
   queryset = Product.objects.all()
   serializer_class = ProductSerializer
+  authentication_classes = [SessionAuthentication]
+  permission_classes = [IsAuthenticatedOrReadOnly]
 
   def perform_create(self, serializer):
     title = serializer.validated_data.get('title')
