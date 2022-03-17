@@ -8,6 +8,7 @@ from rest_framework.permissions import (
   IsAuthenticatedOrReadOnly,
   AllowAny,
   DjangoModelPermissions,
+  IsAdminUser,
 )
 from rest_framework.generics import (
   ListAPIView,
@@ -29,13 +30,17 @@ from django.shortcuts import get_object_or_404
 
 from .models import Product
 from .serializers import ProductSerializer
+from .permissions import (
+  IsStaffEditorPermission,
+  
+)
 
 
 class ProductListCreateAPIView(ListCreateAPIView):
   queryset = Product.objects.all()
   serializer_class = ProductSerializer
   authentication_classes = [SessionAuthentication]
-  permission_classes = [DjangoModelPermissions]
+  permission_classes = [IsAdminUser, IsStaffEditorPermission]
 
   def perform_create(self, serializer):
     title = serializer.validated_data.get('title')
