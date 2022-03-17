@@ -7,6 +7,7 @@ from rest_framework.permissions import (
   IsAuthenticated,
   IsAuthenticatedOrReadOnly,
   AllowAny,
+  DjangoModelPermissions,
 )
 from rest_framework.generics import (
   ListAPIView,
@@ -34,7 +35,7 @@ class ProductListCreateAPIView(ListCreateAPIView):
   queryset = Product.objects.all()
   serializer_class = ProductSerializer
   authentication_classes = [SessionAuthentication]
-  permission_classes = [IsAuthenticatedOrReadOnly]
+  permission_classes = [DjangoModelPermissions]
 
   def perform_create(self, serializer):
     title = serializer.validated_data.get('title')
@@ -53,6 +54,7 @@ class ProductUpdateAPIView(UpdateAPIView):
   queryset = Product.objects.all()
   serializer_class = ProductSerializer
   lookup_field = 'pk'
+  permission_classes = [DjangoModelPermissions]
 
   def perform_update(self, serializer):
     instance = serializer.save()
