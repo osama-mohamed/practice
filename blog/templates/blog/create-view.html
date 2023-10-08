@@ -7,6 +7,9 @@
 </head>
 <body>
   Osama
+  <a href='{% url "blog:list" %}'>Back To List</a>
+  <br>
+  <br>
   <h1>Create New Post</h1>
   <form method="POST" action=".">
     {% csrf_token %}

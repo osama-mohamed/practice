@@ -7,12 +7,16 @@
 </head>
 <body>
   Osama
-  {{ object_list }}
+    <a href='{% url "blog:create" %}'>Create New Post</a>
+    <br>
+    <br>
+  <!-- {{ object_list }} -->
   {% for object in object_list %}
   <li>
     #{{ object.id }} - <a href="/blog/{{ object.id }}">{{ object.title }}</a> => {{ object.slug }}
     <a href='{% url "blog:detail" id=object.id %}'>{{ object.title }}</a>
     <a href="{{ object.get_absolute_url }}">{{ object.title }}</a>
+    <a href='{% url "blog:update" id=object.id %}'>Update {{ object.title }}</a>
   </li>
   {% endfor %}
 </body>

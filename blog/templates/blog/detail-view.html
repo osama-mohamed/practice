@@ -7,6 +7,9 @@
 </head>
 <body>
   Osama
+    <a href='{% url "blog:list" %}'>Back To List</a>
+    <br>
+    <br>
     {% if messages %}
     <ul class="messages">
       {% for message in messages %}
@@ -16,6 +19,7 @@
     {% endif %}
   <li>
     #{{ object.id }} - {{ object.title }} => {{ object.slug }} => {{ object.content }}
+    <a href='{% url "blog:update" id=object.id %}'>Update {{ object.title }}</a>
   </li>
 </body>
 </html>

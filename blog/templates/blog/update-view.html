@@ -7,6 +7,9 @@
 </head>
 <body>
   Osama
+  <a href='{% url "blog:list" %}'>Back To List</a>
+  <br>
+  <br>
   <!-- <h1>Update {{ object.title }} Post</h1> -->
   <h1>Update {{ form.instance.title }} Post</h1>
   <form method="POST" action=".">
