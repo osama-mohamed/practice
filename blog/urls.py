@@ -22,6 +22,7 @@ from .views import (
   post_model_create_view,
   post_model_update_view,
   post_model_delete_view,
+  post_model_robust_view,
   )
 
 app_name = 'blog'
@@ -32,4 +33,11 @@ urlpatterns = [
     path('<int:id>/update/', post_model_update_view, name='update'),
     path('<int:id>/delete/', post_model_delete_view, name='delete'),
     path('create/', post_model_create_view, name='create'),
+
+
+    path('robust/create/', post_model_create_view, name='robust_create'),
+    path('robust/<int:id>/update/', post_model_robust_view, name='robust_update'),
+    path('robust/<int:id>/delete/', post_model_robust_view, name='robust_delete'),
+    path('robust/<int:id>/', post_model_robust_view, name='robust_detail'),
+    path('robust/', post_model_robust_view, name='robust_list'),
 ]

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  Osama
+    <a href='{% url "blog:robust_create" %}'>Create New Post</a>
+    <br>
+    <br>
+  
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  <!-- {{ object_list }} -->
+  {% for object in object_list %}
+  <li>
+    #{{ object.id }} - <a href="/blog/robust/{{ object.id }}">{{ object.title }}</a> => {{ object.slug }}
+    <a href='{% url "blog:robust_detail" id=object.id %}'>{{ object.title }}</a>
+    <a href='{% url "blog:robust_update" id=object.id %}'>Update</a>
+    <a href='{% url "blog:robust_delete" id=object.id %}'>Delete</a>
+  </li>
+  {% endfor %}
+</body>
+</html>

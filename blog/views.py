@@ -7,6 +7,41 @@ from .forms import PostModelForm
 from .models import PostModel
 
 
+
+def post_model_robust_view(request, id=None):
+  context = {}
+  if id is None:
+    template = 'blog/robust_list_view.html'
+    context['object_list'] = PostModel.objects.all()
+  else:
+    obj = get_object_or_404(PostModel, id=id)
+    context['object'] = obj
+    template = 'blog/robust_detail_view.html'
+    if 'create' in request.get_full_path():
+      template = 'blog/robust_create_view.html'
+      success_message = 'Created successfully!'
+    if 'update' in request.get_full_path():
+      template = 'blog/robust_update_view.html'
+      success_message = 'Updated successfully!'
+    if 'create' or 'update' in request.get_full_path():
+      form = PostModelForm(request.POST or None, instance=obj)
+      context['form'] = form
+      if form.is_valid():
+        obj = form.save(commit=False)
+        obj.save()
+        messages.success(request, success_message)
+        return redirect('blog:robust_detail', id=obj.id)
+    if 'delete' in request.get_full_path():
+      template = 'blog/robust_delete_view.html'
+      if request.method == 'POST':
+        obj.delete()
+        messages.success(request, 'Deleted successfully!')
+        return redirect('blog:robust_list')
+  return render(request, template, context)
+
+
+
+
 @login_required
 def post_model_update_view(request, id=None):
   obj = get_object_or_404(PostModel, id=id)
