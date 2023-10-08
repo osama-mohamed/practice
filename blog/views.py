@@ -7,6 +7,23 @@ from .forms import PostModelForm
 from .models import PostModel
 
 
+@login_required
+def post_model_update_view(request, id=None):
+  obj = get_object_or_404(PostModel, id=id)
+  form = PostModelForm(request.POST or None, instance=obj)
+  context = {
+    'form': form,
+    # 'object': obj,
+  }
+  if form.is_valid():
+    obj = form.save(commit=False)
+    obj.save()
+    messages.success(request, 'Updated successfully!')
+    return redirect('blog:detail', id=obj.id)
+  return render(request, 'blog/update-view.html', context)
+
+
+@login_required
 def post_model_create_view(request):
   # if request.method == 'POST':
   #   # print(request.POST)
