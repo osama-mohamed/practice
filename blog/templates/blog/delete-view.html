@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delete</title>
+</head>
+<body>
+  Osama
+  <a href='{% url "blog:list" %}'>Back To List</a>
+  <br>
+  <br>
+  <h1>Delete {{ object.title }} ?</h1>
+  <form method="POST" action=".">
+    {% csrf_token %}
+    Are you sure to delete this post ?
+    <input type="submit" value="Yes">
+    <a href='{% url "blog:detail" id=object.id %}'>Cancel</a>
+  </form>
+</body>
+</html>

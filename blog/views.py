@@ -23,6 +23,18 @@ def post_model_update_view(request, id=None):
   return render(request, 'blog/update-view.html', context)
 
 
+def post_model_delete_view(request, id=None):
+  obj = get_object_or_404(PostModel, id=id)
+  if request.method == 'POST':
+    obj.delete()
+    messages.success(request, 'Deleted successfully!')
+    return redirect('blog:list')
+  context = {
+    'object': obj
+  }
+  return render(request, 'blog/delete-view.html', context)
+
+
 @login_required
 def post_model_create_view(request):
   # if request.method == 'POST':

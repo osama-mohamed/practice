@@ -19,7 +19,8 @@
     {% endif %}
   <li>
     #{{ object.id }} - {{ object.title }} => {{ object.slug }} => {{ object.content }}
-    <a href='{% url "blog:update" id=object.id %}'>Update {{ object.title }}</a>
+    <a href='{% url "blog:update" id=object.id %}'>Update</a>
+    <a href='{% url "blog:delete" id=object.id %}'>Delete</a>
   </li>
 </body>
 </html>
