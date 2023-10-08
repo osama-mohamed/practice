@@ -18,6 +18,9 @@
         {% endfor %}
       </ul>
     {% endif %}
+<form action="/blog/" method="GET">
+  <input type="text" name="q"placeholder="Search">
+</form>
   <!-- {{ object_list }} -->
   {% for object in object_list %}
   <li>

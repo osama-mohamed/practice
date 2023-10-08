@@ -3,6 +3,9 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 
+from django.db.models import Q
+
+
 from .forms import PostModelForm
 from .models import PostModel
 
@@ -118,7 +121,14 @@ def post_model_detail_view(request, id):
 
 
 def post_model_list_view(request):
+  q = request.GET.get('q', None)
   qs = PostModel.objects.all()
+  if q is not None:
+    # qs = qs.filter(title__icontains=q)
+    qs = qs.filter(
+      Q(title__icontains=q) |
+      Q(content__icontains=q)
+    )
   context = {
     'object_list': qs
   }
