@@ -6,6 +6,7 @@ from django.utils.encoding import smart_str as smart_text
 from django.utils import timezone 
 from django.utils.text import slugify
 from django.utils.timesince import timesince
+from django.urls import reverse
 
 
 # Create your models here.
@@ -69,6 +70,9 @@ class PostModel(models.Model):
     objects = PostModelManager()
     other = PostModelManager()
     #save = PostModelManager()
+
+    def get_absolute_url(self):
+        return reverse('blog:detail', kwargs={'id': self.id})
 
     def save(self, *args, **kwargs):
         # if not self.slug and self.title:

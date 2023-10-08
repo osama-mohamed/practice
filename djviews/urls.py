@@ -21,5 +21,5 @@ from .views import redirect_somewhere
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('redirect/', redirect_somewhere, name='redirect'),
-    path('blog/', include('blog.urls'))
+    path('blog/', include('blog.urls', namespace='blog')),
 ]
