@@ -16,4 +16,4 @@ def validate_blocked_words(value):
     raise ValidationError(validatio_errors)
   return value
 
-validate_blocked_words('This is bad & cheap')
+# validate_blocked_words('This is bad & cheap')
