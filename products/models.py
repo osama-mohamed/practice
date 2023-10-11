@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.db.models.signals import pre_save
 from django.utils import timezone
@@ -7,6 +8,8 @@ from django.utils.text import slugify
 
 from .validators import validate_blocked_words
 
+
+User = settings.AUTH_USER_MODEL
 
 class ProductQueryset(models.QuerySet):
   def published(self): # Product.objects.filter().published() & Product.objects.published()
@@ -28,6 +31,7 @@ class Product(models.Model):
     # obj.get_state_display()
     # state=Product.productstateoptions.PUBLISH
 
+  user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
   title = models.CharField(max_length=120, validators=[validate_blocked_words]) # unique=True
   slug = models.SlugField(blank=True, unique=True, null=True, db_index=True)
   state = models.CharField(max_length=2, default=ProductStateOptions.DRAFT,

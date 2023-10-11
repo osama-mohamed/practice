@@ -1,4 +1,12 @@
+from django.contrib.auth import get_user_model
 from products.models import Product
+
+
+# to use user model
+User = get_user_model
+current_user = User.objects.first()
+Product.objects.create(user=current_user, title='new product', price=12.34)
+current_user.product_set.all() # get all products of current user - Products foreign key
 
 datas = [
   {'title': 'Product 1', 'price': 12.34},
