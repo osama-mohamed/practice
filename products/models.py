@@ -5,6 +5,17 @@ from django.utils import timezone
 from .validators import validate_blocked_words
 
 
+class ProductQueryset(models.QuerySet):
+  def published(self): # Product.objects.filter().published() & Product.objects.published()
+    return self.filter(state=Product.ProductStateOptions.PUBLISH, publish_timestamp__lte=timezone.now())
+
+
+class ProductManager(models.Manager):
+  def get_queryset(self):
+    return ProductQueryset(self.models, using=self._db)
+  
+  def published(self): # Product.objects.published()
+    return self.get_queryset().published()
   
 class Product(models.Model):
   class ProductStateOptions(models.TextChoices):
@@ -22,6 +33,8 @@ class Product(models.Model):
   publish_timestamp = models.DateTimeField(auto_now_add=False, auto_now=False, null=True)
   timestamp = models.DateTimeField(auto_now_add=True) # default=timezone.now
   updated = models.DateTimeField(auto_now=True)
+
+  objects = ProductManager()
 
   class Meta:
     ordering = ['-updated', '-timestamp']
