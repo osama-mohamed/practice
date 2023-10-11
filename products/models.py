@@ -33,7 +33,7 @@ class Product(models.Model):
 
   user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
   title = models.CharField(max_length=120, validators=[validate_blocked_words]) # unique=True
-  slug = models.SlugField(blank=True, unique=True, null=True, db_index=True)
+  slug = models.SlugField(blank=True, null=True, db_index=True)
   state = models.CharField(max_length=2, default=ProductStateOptions.DRAFT,
                            choices=ProductStateOptions.choices)
   description = models.TextField(null=True)
@@ -85,7 +85,7 @@ def slugify_pre_save(sender, instance, *args, **kwargs):
     # instance.slug = slugify(instance.title)
     new_slug = slugify(instance.title)
     klass = instance.__class__ # sender
-    qs = klass.objects.filter(slug=new_slug) # .exclude(id=instance.id)
+    qs = klass.objects.filter(slug__icontains=new_slug) # .exclude(id=instance.id)
     if qs.count() == 0:
       instance.slug = new_slug
     else:
