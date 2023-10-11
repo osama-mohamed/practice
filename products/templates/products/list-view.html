@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  {% for object in object_list %}
+  <li>
+    #{{ object.id }} - <a href='{% url "products:detail" id=object.id %}'>{{ object.title }}</a> => {{ object.slug }}
+    <a href='{% url "products:detail_slug" slug=object.slug %}'>Slug</a>
+    <a href="{{ object.get_absolute_url }}">ID</a>
+    <a href="{{ object.get_absolute_slug_url }}">SLUG</a>
+  </li>
+  {% endfor %}
+</body>
+</html>

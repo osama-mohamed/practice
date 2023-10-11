@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail</title>
+</head>
+<body>
+  Osama
+    <a href='{% url "products:list" %}'>Back To List</a>
+    <br>
+    <br>
+
+  <li>
+    #{{ object.id }} - {{ object.title }} => {{ object.slug }} => {{ object.content }}
+  </li>
+</body>
+</html>

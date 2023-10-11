@@ -17,10 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from .views import redirect_somewhere
+app_name = 'products'
+
+from .views import (
+  products_list_view,
+  product_detail_view,
+  product_detail_slug_view,
+)
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('redirect/', redirect_somewhere, name='redirect'),
-    path('blog/', include('blog.urls', namespace='blog')),
-    path('products/', include('products.urls', namespace='products')),
+    path('', products_list_view, name='list'),
+    path('slug/<str:slug>', product_detail_slug_view, name='detail_slug'),
+    path('<int:id>', product_detail_view, name='detail'),
 ]
