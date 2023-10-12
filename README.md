@@ -8,7 +8,7 @@
 For detailed explanation on how project work, read the [Django Docs](https://docs.djangoproject.com/en/1.11/), [MySQLDB Docs](https://dev.mysql.com/doc/) and [MongoDB Docs](https://docs.mongodb.com/)
 
 ## Developer
-This projects made by [Osama Mohamed](https://www.facebook.com/osama.mohamed.ms)
+This projects made by [Osama Mohamed](https://www.linkedin.com/in/osama-mohamed-ms/)
 
 ## License
 This projects is licensed under the [MIT License](https://opensource.org/licenses/MIT)
