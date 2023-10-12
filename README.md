@@ -7,7 +7,7 @@
 For detailed explanation on how project work, read the [Vue Docs](https://vuejs.org/v2/guide)
 
 ## Developer
-This projects made by [Osama Mohamed](https://www.facebook.com/osama.mohamed.ms)
+This projects made by [Osama Mohamed](https://www.linkedin.com/in/osama-mohamed-ms/)
 
 ## License
 This projects is licensed under the [MIT License](https://opensource.org/licenses/MIT)
