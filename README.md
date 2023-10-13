@@ -1,6 +1,6 @@
 # [Fortnite Comparison with Bulma](https://www.facebook.com/osama.mohamed.ms) By Flask
 
-[<img src="http://flask.pocoo.org/static/logo/flask.png" width="200" title="Fortnite Comparison" >](https://github.com/osama-mohamed
+[<img src="https://flask.palletsprojects.com/en/3.0.x/_images/flask-horizontal.png" width="200" title="Fortnite Comparison" >](https://github.com/osama-mohamed
 )
 [<img src="https://raw.githubusercontent.com/jgthms/bulma/master/docs/images/bulma-banner.png" width="200" title="Fortnite Comparison" >](https://github.com/osama-mohamed)
 
@@ -46,7 +46,7 @@ Now the project is running at `http://localhost:5000` and your routes is:
 For detailed explanation on how project work, read the [Flask Docs](http://flask.pocoo.org/docs/0.12/) and [Bulma](https://bulma.io/documentation/overview/start/)
 
 ## Developer
-This project made by [Osama Mohamed](https://www.facebook.com/osama.mohamed.ms)
+This project made by [Osama Mohamed](https://www.linkedin.com/in/osama-mohamed-ms/)
 
 ## License
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT)
