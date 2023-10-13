@@ -1,6 +1,6 @@
 # [Shorten URL](https://url-osama-mohamed.herokuapp.com) By Flask and Mongodb
 
-[<img src="http://flask.pocoo.org/static/logo/flask.png" width="200" title="Shorten URL" >](https://url-osama-mohamed.herokuapp.com)
+[<img src="https://flask.palletsprojects.com/en/3.0.x/_images/flask-horizontal.png" width="200" title="Shorten URL" >](https://url-osama-mohamed.herokuapp.com)
 [<img src="https://webassets.mongodb.com/_com_assets/cms/mongodb-logo-rgb-j6w271g1xn.jpg" width="250" title="Shorten URL" >](https://url-osama-mohamed.herokuapp.com)
 
 
@@ -44,7 +44,7 @@ Now the project is running at `http://localhost:5000` and your routes is:
 For detailed explanation on how project work, read the [Flask Docs](http://flask.pocoo.org/docs/0.12/) and [MongoDB Docs](https://docs.mongodb.com/)
 
 ## Developer
-This project made by [Osama Mohamed](https://www.facebook.com/osama.mohamed.ms)
+This project made by [Osama Mohamed](https://www.linkedin.com/in/osama-mohamed-ms/)
 
 ## License
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT)
