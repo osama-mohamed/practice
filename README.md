@@ -7,7 +7,7 @@ Show random quotes every time you reload the page or when press new quote button
 
 
 ## Developer
-This project made by [Osama Mohamed](https://www.facebook.com/osama.mohamed.ms)
+This project made by [Osama Mohamed](https://www.linkedin.com/in/osama-mohamed-ms/)
 
 
 ## License
