@@ -1,6 +1,6 @@
 # [Blog](https://blog-by-osama-mohamed.herokuapp.com) By Flask
 
-[<img src="http://flask.pocoo.org/static/logo/flask.png" width="200" title="Blog" >](https://blog-by-osama-mohamed.herokuapp.com)
+[<img src="https://flask.palletsprojects.com/en/3.0.x/_images/flask-horizontal.png" width="200" title="Blog" >](https://blog-by-osama-mohamed.herokuapp.com)
 [<img src="https://www.mysql.com/common/logos/logo-mysql-170x115.png" width="150" title="Blog" >](https://blog-by-osama-mohamed.herokuapp.com)
 
 
