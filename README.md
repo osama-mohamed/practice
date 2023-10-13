@@ -7,7 +7,7 @@ Show Movie/Series info.
 
 
 ## Developer
-This project made by [Osama Mohamed](https://www.facebook.com/osama.mohamed.ms)
+This project made by [Osama Mohamed](https://www.linkedin.com/in/osama-mohamed-ms/)
 
 
 ## License
