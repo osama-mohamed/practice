@@ -12,7 +12,7 @@ Minus simple counter using js.
 
 
 ## Developer
-This project made by [Osama Mohamed](https://www.facebook.com/osama.mohamed.ms)
+This project made by [Osama Mohamed](https://www.linkedin.com/in/osama-mohamed-ms/)
 
 ## License
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT)
