@@ -19,10 +19,5 @@ from django.urls import path, include
 
 from .views import redirect_somewhere
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('redirect/', redirect_somewhere, name='redirect'),
-    path('blog/', include('blog.urls', namespace='blog')),
-    path('blog_two/', include('blog_two.urls', namespace='blog_two')),
-    path('products/', include('products.urls', namespace='products')),
-    path('products_two/', include('products_two.urls', namespace='products_two')),
+    path('', redirect_somewhere, name='redirect'),
 ]
