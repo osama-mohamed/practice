@@ -1,23 +1,16 @@
-from django.views.generic import View, ListView
+from django.views.generic import View, ListView, TemplateView
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import render
 
 
-@require_http_methods(['GET']) # only allow GET requests
-def product_list_view(request):
-  return render(request, 'temp', {})
+def about_us_view(request):
+  return render(request, 'about.html', {})
 
 
-class ProductHomeView(View):
-  def get(self, request, *args, **kwargs):
-    return render(request, 'temp', {})
-  
-  def post(self, request, *args, **kwargs):
-    return render(request, 'temp', {})
+class AboutUsView(TemplateView):
+  template_name = 'about.html'
 
-class ProductListView(ListView):
-  # model = Product
-  queryset = Product.objects.all()
-  template_name = 'temp'
 
-ProductListView.as_view()
+class AboutUsView(View):
+  def get(self, request):
+    return render(request, 'about.html', {})

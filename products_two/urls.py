@@ -17,7 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from .views import redirect_somewhere
+from django.views.generic import TemplateView
+
+from .views import (
+  AboutUsView,
+)
+
+
 urlpatterns = [
-    path('', redirect_somewhere, name='redirect'),
+    path('about_us/', AboutUsView.as_view(), name='about_us'),
+    path('about_us/', TemplateView.as_view(template_name='about.html'), name='about_us'),
 ]
