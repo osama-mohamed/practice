@@ -33,6 +33,8 @@ class Post(models.Model):
   view_count = models.IntegerField(default=0)
   publish_date = models.DateField(auto_now=False, auto_now_add=False, default=timezone.now)
   author_email = models.EmailField(max_length=240, validators=[validate_author_email,], null=True, blank=True)
+  timestamp = models.DateTimeField(auto_now_add=True)
+  updated = models.DateTimeField(auto_now=True)
 
   class Mete:
     verbose_name = 'Post'
