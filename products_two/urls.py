@@ -21,7 +21,8 @@ from django.views.generic import TemplateView, RedirectView
 
 from .views import (
   ProductListView,
-  ProductDetailView
+  ProductDetailView,
+  DigitalProductListView
 )
 
 
@@ -29,5 +30,6 @@ app_name = 'products_two'
 
 urlpatterns = [
     path('', ProductListView.as_view(), name='list'),
+    path('digital/', DigitalProductListView.as_view(), name='digital'),
     path('<int:pk>/', ProductDetailView.as_view(), name='detail'),
 ]
