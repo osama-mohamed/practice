@@ -1,1 +1,11 @@
 <h1>Product List</h1>
+
+
+{% for product in object_list %}
+  <li>{{ product.title }}</li>
+{% endfor %}
+
+<hr>
+{% for product in product_list %}
+  <li>{{ product.title }}</li>
+{% endfor %}
