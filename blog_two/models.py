@@ -2,8 +2,11 @@ from django.db import models
 from django.db.models.signals import pre_save, post_save
 
 from django.utils import timezone
+from django.utils.timesince import timesince
 from django.utils.encoding import smart_str
 from django.utils.text import slugify
+
+from datetime import timedelta, datetime, date
 
 
 from .validators import validate_author_email
@@ -47,6 +50,27 @@ class Post(models.Model):
     # if not self.slug:
     #   self.slug = slugify(self.title, allow_unicode=True) # allow_unicode=True for non-english languages => docs.djangoproject.com/en/4.2/ref/utils/#django.utils.text.slugify
     super(Post, self).save(*args, **kwargs)
+
+  def publish_from_time(self):
+
+    return timesince(self.publish_date) # docs.djangoproject.com/en/4.2/ref/utils/#django.utils.timesince.timesince
+
+  @property
+  def other_publish_time(self):
+    if self.publish == 'PU':
+      now = datetime.now()
+      publish_time = datetime.combine(
+        self.publish_date,
+        datetime.now().min.time()
+      )
+      try:
+        difference = now - publish_time
+      except:
+        return 'Unknown'
+      if difference <= timedelta(minutes=1):
+        return 'Just now'
+      return f'{timesince(publish_time).split(', ')[0]} ago'
+    return 'Not published'
 
 
 def post_pre_save_receiver(sender, instance, *args, **kwargs): # docs.djangoproject.com/en/4.2/ref/signals/#pre-save
