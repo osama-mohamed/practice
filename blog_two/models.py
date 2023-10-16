@@ -19,6 +19,12 @@ PUBLISH_CHOICES = [
 ]
 
 
+class PostManager(models.Manager):
+  def all(self, *args, **kwargs):
+    qs = super(PostManager, self).all(*args, **kwargs).filter(active=True)
+    print(qs)
+    return qs
+
 class Post(models.Model):
   active = models.BooleanField(default=True)
   title = models.CharField(
@@ -38,6 +44,9 @@ class Post(models.Model):
   author_email = models.EmailField(max_length=240, validators=[validate_author_email,], null=True, blank=True)
   timestamp = models.DateTimeField(auto_now_add=True)
   updated = models.DateTimeField(auto_now=True)
+
+  objects = PostManager() # Post.objects.all()
+  other = PostManager() # Post.other.all()
 
   class Mete:
     verbose_name = 'Post'
