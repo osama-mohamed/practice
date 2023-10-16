@@ -1,8 +1,15 @@
-from django.views.generic import View, ListView, TemplateView
-from django.views.decorators.http import require_http_methods
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.views.generic import ListView, DetailView
 
 
-def redirect_view(request):
-  return HttpResponseRedirect('https://github.com/osama-mohamed')
+from .models import Product
+
+class ProductListView(ListView):
+  # queryset = Product.objects.all()
+  model = Product
+  template_name = 'products/product_list.html'
+
+
+class ProductDetailView(DetailView):
+  # queryset = Product.objects.all()
+  model = Product
+  template_name = 'products/product_detail.html'
