@@ -1,5 +1,10 @@
 # Change Branches to view more projects.
 
+## Please note that:
+This repository is organized into multiple branches, each focusing on a different project or feature.
+<br>
+Navigate through the list of branches below to explore the various projects.
+
 ## Branches:
 
 1. [API Django](https://github.com/osama-mohamed/practice/tree/api_django)
