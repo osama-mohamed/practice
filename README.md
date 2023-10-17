@@ -1,6 +1,6 @@
 # Change Branches to view more projects.
 
-## Please note that:
+### Please note that:
 This repository is organized into multiple branches, each focusing on a different project or feature.
 <br>
 Navigate through the list of branches below to explore the various projects.
