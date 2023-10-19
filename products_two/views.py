@@ -10,6 +10,14 @@ from .models import Product, DigitalProduct
 from .mixins import ProductTemplateMixin, QuerysetModelMixin
 
 
+class ProductIDRedirectView(RedirectView):
+
+  def get_redirect_url(self, *args, **kwargs):
+    pk = self.kwargs.get('pk')
+    obj = get_object_or_404(Product, pk=pk)
+    return reverse('products_two:detail', kwargs={'slug': obj.slug})
+  
+
 class ProductRedirectView(RedirectView):
 
   def get_redirect_url(self, *args, **kwargs):

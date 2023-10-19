@@ -23,6 +23,7 @@ from .views import (
   ProductListView,
   ProductDetailView,
   ProductRedirectView,
+  ProductIDRedirectView,
   DigitalProductListView,
 )
 
@@ -34,5 +35,6 @@ urlpatterns = [
     path('digital/', DigitalProductListView.as_view(), name='digital'),
     # path('<int:id>/', ProductDetailView.as_view(), name='detail'),
     path('p/<slug:slug>/', ProductRedirectView.as_view(), name='redirect'),
+    path('id/<int:pk>/', ProductIDRedirectView.as_view(), name='redirect_id'),
     path('<slug:slug>/', ProductDetailView.as_view(), name='detail'),
 ]
