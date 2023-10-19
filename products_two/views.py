@@ -37,12 +37,12 @@ class ProductListView(ListView):
 class ProductDetailView(DetailView):
   model = Product
 
-  def get_object(self):
-    url_kwarg_id = self.kwargs.get('id')
-    qs = self.get_queryset().filter(id=url_kwarg_id)
-    if not qs.exists():
-      raise Http404('Product not found')
-    return qs.get()
+  # def get_object(self):
+  #   url_kwarg_id = self.kwargs.get('id')
+  #   qs = self.get_queryset().filter(id=url_kwarg_id)
+  #   if not qs.exists():
+  #     raise Http404('Product not found')
+  #   return qs.get()
 
   def get_context_data(self, *args, **kwargs):
     context = super().get_context_data(*args, **kwargs)
