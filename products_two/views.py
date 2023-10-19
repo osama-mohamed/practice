@@ -1,4 +1,5 @@
 from django.views.generic import View, ListView, DetailView
+from django.views.generic.list import MultipleObjectMixin
 from django.shortcuts import render
 
 from .models import Product, DigitalProduct
@@ -13,12 +14,15 @@ class DigitalProductListView(ProductTemplateMixin, ListView):
 
 
 
-class ProductListView(QuerysetModelMixin, View):
+class ProductListView(MultipleObjectMixin, View):
   queryset = Product.objects.filter(pk__gte=0)
   
   def get(self, request, *args, **kwargs):
+    self.object_list = self.get_queryset()
     context = self.get_context_data()
-    template = self.get_template()
+    app_label = self.object_list.model._meta.app_label
+    model_name = self.object_list.model._meta.model_name
+    template = f'{app_label}/{model_name}_list.html'
     return render(request, template, context)
 
 

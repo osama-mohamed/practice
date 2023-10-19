@@ -19,8 +19,8 @@ class QuerysetModelMixin():
     if self.model is None:
       raise Exception(f'You need to set a template! => {self.__class__.__name__} inside {self.__class__.__module__}')
     model_name = self.model._meta.model_name
-    app_lable = self.model._meta.app_label
-    template = f'{app_lable}/{model_name}_list.html'
+    app_label = self.model._meta.app_label
+    template = f'{app_label}/{model_name}_list.html'
     return template
   
   def get_queryset(self):
