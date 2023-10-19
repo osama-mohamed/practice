@@ -1,13 +1,22 @@
 from typing import Any
 from django.db import models
-from django.views.generic import View, ListView, DetailView
+from django.views.generic import View, ListView, DetailView, RedirectView
 from django.views.generic.list import MultipleObjectMixin
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import Http404
+from django.urls import reverse
 
 from .models import Product, DigitalProduct
 from .mixins import ProductTemplateMixin, QuerysetModelMixin
 
+
+class ProductRedirectView(RedirectView):
+
+  def get_redirect_url(self, *args, **kwargs):
+    slug = self.kwargs.get('slug')
+    # print(self.request.path, self.request.build_absolute_uri())
+    return reverse('products_two:detail', kwargs={'slug': slug})
+  
 
 class DigitalProductListView(ProductTemplateMixin, ListView):
   model = DigitalProduct

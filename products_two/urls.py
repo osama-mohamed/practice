@@ -22,7 +22,8 @@ from django.views.generic import TemplateView, RedirectView
 from .views import (
   ProductListView,
   ProductDetailView,
-  DigitalProductListView
+  ProductRedirectView,
+  DigitalProductListView,
 )
 
 
@@ -32,5 +33,6 @@ urlpatterns = [
     path('', ProductListView.as_view(), name='list'),
     path('digital/', DigitalProductListView.as_view(), name='digital'),
     # path('<int:id>/', ProductDetailView.as_view(), name='detail'),
+    path('p/<slug:slug>/', ProductRedirectView.as_view(), name='redirect'),
     path('<slug:slug>/', ProductDetailView.as_view(), name='detail'),
 ]
