@@ -1,8 +1,8 @@
-from django.views.generic import ListView, DetailView
-
+from django.views.generic import View, ListView, DetailView
+from django.shortcuts import render
 
 from .models import Product, DigitalProduct
-from .mixins import ProductTemplateMixin
+from .mixins import ProductTemplateMixin, QuerysetModelMixin
 
 
 class DigitalProductListView(ProductTemplateMixin, ListView):
@@ -12,8 +12,15 @@ class DigitalProductListView(ProductTemplateMixin, ListView):
     return 'Digital Products'
 
 
-class ProductListView(ProductTemplateMixin, ListView):
-  model = Product
+
+class ProductListView(QuerysetModelMixin, View):
+  queryset = Product.objects.filter(pk__gte=0)
+  
+  def get(self, request, *args, **kwargs):
+    context = self.get_context_data()
+    template = self.get_template()
+    return render(request, template, context)
+
 
 
 class ProductDetailView(ProductTemplateMixin, DetailView):
