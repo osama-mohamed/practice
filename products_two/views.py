@@ -1,10 +1,12 @@
-from typing import Any
+from django.contrib.auth.decorators import login_required
 from django.db import models
 from django.views.generic import View, ListView, DetailView, RedirectView
 from django.views.generic.list import MultipleObjectMixin
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from django.urls import reverse
+from django.utils.decorators import method_decorator
+
 
 from .models import Product, DigitalProduct
 from .mixins import ProductTemplateMixin, QuerysetModelMixin
@@ -50,9 +52,12 @@ class ProductListView(ListView):
 #     template = f'{app_label}/{model_name}_list.html'
 #     return render(request, template, context)
 
-
 class ProductDetailView(DetailView):
   model = Product
+
+  @method_decorator(login_required)
+  def dispatch(self, *args, **kwargs):
+    return super().dispatch(*args, **kwargs)
 
   # def get_object(self):
   #   url_kwarg_id = self.kwargs.get('id')
