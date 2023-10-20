@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.db import models
 from django.views.generic import View, ListView, DetailView, RedirectView
@@ -52,12 +53,17 @@ class ProductListView(ListView):
 #     template = f'{app_label}/{model_name}_list.html'
 #     return render(request, template, context)
 
+class MyProductDetailView(LoginRequiredMixin, DetailView):
+  model = Product
+
+  # @method_decorator(login_required)
+  # def dispatch(self, *args, **kwargs):
+  #   return super().dispatch(*args, **kwargs)
+
+
 class ProductDetailView(DetailView):
   model = Product
 
-  @method_decorator(login_required)
-  def dispatch(self, *args, **kwargs):
-    return super().dispatch(*args, **kwargs)
 
   # def get_object(self):
   #   url_kwarg_id = self.kwargs.get('id')
