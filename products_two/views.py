@@ -1,16 +1,18 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.db import models
-from django.views.generic import View, ListView, DetailView, RedirectView
+from django.forms.models import BaseModelForm
+from django.views.generic import View, ListView, DetailView, RedirectView, CreateView
 from django.views.generic.list import MultipleObjectMixin
 from django.shortcuts import render, get_object_or_404
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 
 
 from .models import Product, DigitalProduct
 from .mixins import ProductTemplateMixin, QuerysetModelMixin
+from .forms import ProductModelForm
 
 
 class ProductIDRedirectView(RedirectView):
@@ -93,3 +95,19 @@ class ProductDetailView(DetailView):
 #     model_name = self.object_list.model._meta.model_name
 #     template = f'{app_label}/{model_name}_detail.html'
 #     return render(request, template, context)
+
+
+
+class ProductCreateView(LoginRequiredMixin, CreateView):
+  form_class = ProductModelForm
+  template_name = 'products_two/forms.html'
+  # success_url = '/products_two/'
+
+  def form_valid(self, form):
+    obj = form.save(commit=False)
+    obj.user = self.request.user
+    obj.save()
+    return super().form_valid(form)
+  
+  # def form_invalid(self, form):
+  #   return super().form_invalid(form)
