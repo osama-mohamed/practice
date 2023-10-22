@@ -11,10 +11,14 @@ from django.utils.decorators import method_decorator
 
 
 class LoginRequiredMixin(object):
-  @classmethod
-  def as_view(cls, **kwargs):
-    view = super(LoginRequiredMixin, cls).as_view(**kwargs)
-    return login_required(view)
+  # @classmethod
+  # def as_view(cls, **kwargs):
+  #   view = super(LoginRequiredMixin, cls).as_view(**kwargs)
+  #   return login_required(view)
+  
+  @method_decorator(login_required) # login_required for all of types of request methods
+  def dispatch(self, request, *args, **kwargs):
+    return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
   
 
 class AboutTemplateView(TemplateView):
