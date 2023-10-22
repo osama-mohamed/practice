@@ -1,5 +1,8 @@
+from multiprocessing import context
+from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic.base import TemplateResponseMixin, ContextMixin
+from django.views.generic import TemplateView, View
 
 # Create your views here.
 
@@ -10,3 +13,9 @@ class AboutTemplateView(TemplateView):
     context = super().get_context_data(**kwargs)
     context['title'] = 'About'
     return context
+  
+class MyView(ContextMixin, TemplateResponseMixin, View):
+  template_name = 'dashboard/about.html'
+  def get(self, request, *args, **kwargs):
+    context = self.get_context_data(**kwargs)
+    return self.render_to_response(context)

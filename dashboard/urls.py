@@ -18,6 +18,7 @@ from django.urls import path
 
 from .views import (
   AboutTemplateView,
+  MyView,
 )
 
 
@@ -25,4 +26,5 @@ app_name = 'dashboard'
 
 urlpatterns = [
     path('about/', AboutTemplateView.as_view(), name='about'),
+    path('my-view/', MyView.as_view(), name='my-view'),
 ]
