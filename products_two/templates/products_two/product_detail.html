@@ -4,5 +4,5 @@
 <h1>{{ object.slug }}</h1>
 
 {% if form %}
-{% include 'products_two/forms.html' with form=form %}
+{% include 'products_two/forms.html' with form=form delete_url=object.get_delete_url %}
 {% endif %}

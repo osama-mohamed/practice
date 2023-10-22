@@ -10,8 +10,14 @@ class Product(models.Model):
   title = models.CharField(max_length=120)
   slug = models.SlugField(unique=True)
 
+  def __str__(self):
+    return self.title
+
   def get_absolute_url(self):
     return reverse('products_two:detail', kwargs={'slug': self.slug})
+  
+  def get_delete_url(self):
+    return reverse('products_two:delete', kwargs={'slug': self.slug})
 
 class DigitalProduct(Product):
   class Meta:

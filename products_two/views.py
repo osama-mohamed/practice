@@ -3,12 +3,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.db import models
 from django.forms.models import BaseModelForm
-from django.views.generic import View, ListView, DetailView, RedirectView, CreateView, UpdateView
+from django.views.generic import View, ListView, DetailView, RedirectView, CreateView, UpdateView, DeleteView
 from django.views.generic.edit import FormMixin, ModelFormMixin
 from django.views.generic.list import MultipleObjectMixin
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404, HttpResponse
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 
 
@@ -175,3 +175,9 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
   # def form_valid(self, form):
   #   form.instance.user = self.request.user
   #   return super().form_valid(form)
+
+
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
+  template_name = 'products_two/forms_delete.html'
+  model = Product
+  success_url = reverse_lazy('products_two:list')
