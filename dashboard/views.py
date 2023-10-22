@@ -21,8 +21,10 @@ class AboutTemplateView(TemplateView):
 class MyView(ContextMixin, TemplateResponseMixin, View):
   template_name = 'dashboard/about.html'
 
-  @method_decorator(login_required)
   def get(self, request, *args, **kwargs):
     context = self.get_context_data(**kwargs)
     return self.render_to_response(context)
   
+  @method_decorator(login_required) # login_required for all of types of request methods
+  def dispatch(self, request, *args, **kwargs):
+    return super(MyView, self).dispatch(request, *args, **kwargs)
