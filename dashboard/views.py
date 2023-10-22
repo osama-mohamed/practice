@@ -8,7 +8,14 @@ from django.views.generic import TemplateView, View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-# Create your views here.
+
+
+class LoginRequiredMixin(object):
+  @classmethod
+  def as_view(cls, **kwargs):
+    view = super(LoginRequiredMixin, cls).as_view(**kwargs)
+    return login_required(view)
+  
 
 class AboutTemplateView(TemplateView):
   template_name = 'dashboard/about.html'
@@ -18,13 +25,10 @@ class AboutTemplateView(TemplateView):
     context['title'] = 'About'
     return context
   
-class MyView(ContextMixin, TemplateResponseMixin, View):
+class MyView(LoginRequiredMixin, ContextMixin, TemplateResponseMixin, View):
   template_name = 'dashboard/about.html'
 
   def get(self, request, *args, **kwargs):
     context = self.get_context_data(**kwargs)
     return self.render_to_response(context)
   
-  @method_decorator(login_required) # login_required for all of types of request methods
-  def dispatch(self, request, *args, **kwargs):
-    return super(MyView, self).dispatch(request, *args, **kwargs)
