@@ -142,3 +142,17 @@ class ProductBaseFormView(LoginRequiredMixin, ModelFormMixin, View):
   
   def form_invalid(self, form):
     return super().form_invalid(form)
+  
+
+
+def product_update_view(request, slug, *args, **kwargs):
+  obj = get_object_or_404(Product, slug=slug)
+  form = ProductModelForm(request.POST or None, instance=obj)
+  if form.is_valid():
+    form.save()
+    form = ProductModelForm()
+  context = {
+    'object': obj,
+    'form': form
+    }
+  return render(request, 'products_two/forms.html', context)
