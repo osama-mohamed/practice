@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.db import models
 from django.forms.models import BaseModelForm
-from django.views.generic import View, ListView, DetailView, RedirectView, CreateView
+from django.views.generic import View, ListView, DetailView, RedirectView, CreateView, UpdateView
 from django.views.generic.edit import FormMixin, ModelFormMixin
 from django.views.generic.list import MultipleObjectMixin
 from django.shortcuts import render, get_object_or_404
@@ -156,3 +156,22 @@ def product_update_view(request, slug, *args, **kwargs):
     'form': form
     }
   return render(request, 'products_two/forms.html', context)
+
+
+
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
+  form_class = ProductModelForm
+  # template_name = 'products_two/forms.html'
+  # template_name = 'products_two/product_detail.html'
+  template_name_suffix = '_detail'
+  # model = Product
+
+  def get_queryset(self):
+    return Product.objects.filter(user=self.request.user)
+  
+  # def get_success_url(self):
+  #   return self.object.get_update_url()
+
+  # def form_valid(self, form):
+  #   form.instance.user = self.request.user
+  #   return super().form_valid(form)

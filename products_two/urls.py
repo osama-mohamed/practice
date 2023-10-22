@@ -28,6 +28,7 @@ from .views import (
   MyProductDetailView,
   ProductCreateView,
   ProductBaseFormView,
+  ProductUpdateView,
 )
 
 
@@ -42,4 +43,5 @@ urlpatterns = [
     path('my/<slug:slug>/', MyProductDetailView.as_view(), name='my_detail'),
     path('create/', ProductBaseFormView.as_view(), name='create'),
     path('<slug:slug>/', ProductDetailView.as_view(), name='detail'),
+    path('update/<slug:slug>/', ProductUpdateView.as_view(), name='update'),
 ]
