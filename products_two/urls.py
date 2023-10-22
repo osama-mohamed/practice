@@ -27,6 +27,7 @@ from .views import (
   DigitalProductListView,
   MyProductDetailView,
   ProductCreateView,
+  ProductBaseFormView,
 )
 
 
@@ -39,6 +40,6 @@ urlpatterns = [
     path('p/<slug:slug>/', ProductRedirectView.as_view(), name='redirect'),
     path('id/<int:pk>/', ProductIDRedirectView.as_view(), name='redirect_id'),
     path('my/<slug:slug>/', MyProductDetailView.as_view(), name='my_detail'),
-    path('create/', ProductCreateView.as_view(), name='create'),
+    path('create/', ProductBaseFormView.as_view(), name='create'),
     path('<slug:slug>/', ProductDetailView.as_view(), name='detail'),
 ]

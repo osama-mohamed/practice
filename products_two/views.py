@@ -1,8 +1,10 @@
+from typing import Any
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.db import models
 from django.forms.models import BaseModelForm
 from django.views.generic import View, ListView, DetailView, RedirectView, CreateView
+from django.views.generic.edit import FormMixin, ModelFormMixin
 from django.views.generic.list import MultipleObjectMixin
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404, HttpResponse
@@ -111,3 +113,32 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
   
   # def form_invalid(self, form):
   #   return super().form_invalid(form)
+
+
+class ProductBaseFormView(LoginRequiredMixin, ModelFormMixin, View):
+  form_class = ProductModelForm
+  template_name = 'products_two/forms.html'
+
+  # def get_initial(self):
+  #   return {'title': 'This is my title'}
+
+  def get(self, request, *args, **kwargs):
+    form = self.get_form()
+    context = {'form': form}
+    return render(request, self.template_name, context)
+  
+  def post(self, request, *args, **kwargs):
+    form = self.get_form()
+    if form.is_valid():
+      return self.form_valid(form)
+    return self.form_invalid(form)
+
+  def form_valid(self, form):
+    form.instance.user = self.request.user
+    # obj = form.save(commit=False)
+    # obj.user = self.request.user
+    # obj.save()
+    return super().form_valid(form)
+  
+  def form_invalid(self, form):
+    return super().form_invalid(form)
