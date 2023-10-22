@@ -16,11 +16,13 @@ Including another URLconf
 """
 from django.urls import path
 
-from .views import redirect_somewhere
+from .views import (
+  AboutTemplateView,
+)
 
 
 app_name = 'dashboard'
 
 urlpatterns = [
-    path('redirect/', redirect_somewhere, name='redirect'),
+    path('about/', AboutTemplateView.as_view(), name='about'),
 ]
