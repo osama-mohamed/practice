@@ -6,9 +6,11 @@ from .forms import TestForm
 
 
 def home(request):
-  form = TestForm()
-  if request.method == 'POST':
-    print(request.POST.get('some_text'))
+  form = TestForm(request.POST or None)
+  if form.is_valid():
+    print(form.cleaned_data.get('some_text'))
+  # if request.method == 'POST':
+  #   print(request.POST.get('some_text'))
   context = {
     'form': form
   }
