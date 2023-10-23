@@ -17,11 +17,11 @@ Including another URLconf
 
 from django.urls import path
 
-from .views import redirect_somewhere
+from .views import home
 
 
 app_name = 'products'
 
 urlpatterns = [
-    path('/', redirect_somewhere, name='home'),
+    path('', home, name='home'),
 ]
