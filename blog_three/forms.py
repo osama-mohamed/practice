@@ -6,3 +6,15 @@ class TestForm(forms.Form):
   boolean = forms.BooleanField()
   integer = forms.IntegerField(initial=1)
   email = forms.EmailField(min_length=6)
+
+  def clean_some_text(self, *args, **kwargs):
+    some_text = self.cleaned_data.get('some_text')
+    if len(some_text) < 10:
+      raise forms.ValidationError('The text is too short')
+    return some_text
+  
+  def clean_integer(self, *args, **kwargs):
+    integer = self.cleaned_data.get('integer')
+    if integer < 10:
+      raise forms.ValidationError('The number is too small')
+    return integer
