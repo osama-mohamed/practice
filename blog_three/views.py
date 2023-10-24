@@ -56,3 +56,23 @@ def formset_view(request):
     return render(request, 'blog_three/formset_view.html', context)
   else:
     raise Http404
+
+
+def formset_jq_view(request):
+  if request.user.is_authenticated:
+    PostModelFormset = modelformset_factory(Post, form=PostModelForm)
+    formset = PostModelFormset(request.POST or None, queryset=Post.objects.filter(user=request.user))
+    if formset.is_valid():
+      # formset.save()
+      for form in formset:
+        # print(form.cleaned_data)
+        obj = form.save(commit=False)
+        obj.slug = slugify(obj.title)
+        obj.save()
+
+    context = {
+      'formset': formset
+    }
+    return render(request, 'blog_three/formset_view_jq.html', context)
+  else:
+    raise Http404

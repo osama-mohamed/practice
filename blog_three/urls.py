@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.urls import path
 
-from .views import home, formset_view
+from .views import home, formset_view, formset_jq_view
 
 
 app_name = 'blog_three'
@@ -25,4 +25,5 @@ app_name = 'blog_three'
 urlpatterns = [
     path('', home, name='home'),
     path('formset/', formset_view, name='formset'),
+    path('formset/jq/', formset_jq_view, name='formset_jq'),
 ]
