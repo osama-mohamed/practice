@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, Http404
 from django.utils.text import slugify
 from django.forms import formset_factory, modelformset_factory
 
@@ -39,13 +39,20 @@ def home(request):
 
 
 def formset_view(request):
-  PostModelFormset = modelformset_factory(Post, fields=['user', 'title', 'image'], extra=2)
-  formset = PostModelFormset()
-  if formset.is_valid():
-    formset.save()
-    # for form in formset:
-    #   print(form.cleaned_data)
-  context = {
-    'formset': formset
-  }
-  return render(request, 'blog_three/formset_view.html', context)
+  if request.user.is_authenticated():
+    PostModelFormset = modelformset_factory(Post, form=PostModelForm, extra=2)
+    formset = PostModelFormset(request.POST or None, queryset=Post.objects.filter(user=request.user))
+    if formset.is_valid():
+      # formset.save()
+      for form in formset:
+        # print(form.cleaned_data)
+        obj = form.save(commit=False)
+        obj.slug = slugify(obj.title)
+        obj.save()
+
+    context = {
+      'formset': formset
+    }
+    return render(request, 'blog_three/formset_view.html', context)
+  else:
+    raise Http404
