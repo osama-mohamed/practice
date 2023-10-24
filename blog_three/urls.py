@@ -17,11 +17,12 @@ Including another URLconf
 
 from django.urls import path
 
-from .views import home
+from .views import home, formset_view
 
 
 app_name = 'blog_three'
 
 urlpatterns = [
     path('', home, name='home'),
+    path('formset/', formset_view, name='formset'),
 ]
