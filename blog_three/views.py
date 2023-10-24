@@ -4,6 +4,7 @@ from django.forms import formset_factory, modelformset_factory
 
 
 from .forms import TestForm, PostModelForm
+from .models import Post
 
 
 def home(request):
@@ -25,12 +26,25 @@ def home(request):
 
 
 
+# def formset_view(request):
+#   TestFormset = formset_factory(TestForm, extra=2)
+#   formset = TestFormset()
+#   if formset.is_valid():
+#     for form in formset:
+#       print(form.cleaned_data)
+#   context = {
+#     'formset': formset
+#   }
+#   return render(request, 'blog_three/formset_view.html', context)
+
+
 def formset_view(request):
-  TestFormset = formset_factory(TestForm, extra=2)
-  formset = TestFormset()
+  PostModelFormset = modelformset_factory(Post, fields=['user', 'title', 'image'], extra=2)
+  formset = PostModelFormset()
   if formset.is_valid():
-    for form in formset:
-      print(form.cleaned_data)
+    formset.save()
+    # for form in formset:
+    #   print(form.cleaned_data)
   context = {
     'formset': formset
   }
