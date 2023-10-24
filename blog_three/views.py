@@ -39,7 +39,7 @@ def home(request):
 
 
 def formset_view(request):
-  if request.user.is_authenticated():
+  if request.user.is_authenticated:
     PostModelFormset = modelformset_factory(Post, form=PostModelForm, extra=2)
     formset = PostModelFormset(request.POST or None, queryset=Post.objects.filter(user=request.user))
     if formset.is_valid():
