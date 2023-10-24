@@ -1,5 +1,7 @@
 from math import e
 from django import forms
+from django.utils import timezone
+from django.utils.text import slugify
 
 
 from .models import Post
@@ -16,8 +18,16 @@ class PostModelForm(forms.ModelForm):
       'image',
     ]
     exclude = [
-      # 'slug',
+      'slug',
     ]
+
+  def save(self, commit=True, *args, **kwargs):
+    obj = super(PostModelForm, self).save(commit=False, *args, **kwargs)
+    obj.slug = slugify(obj.title)
+    obj.publish = timezone.now().strftime('%Y-%m-%d')
+    if commit:
+      obj.save()
+    return obj
 
 
 

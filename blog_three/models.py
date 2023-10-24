@@ -6,6 +6,8 @@ from django.conf import settings
 def upload_location(instance, filename):
   PostModel = instance.__class__
   new_id = PostModel.objects.order_by('id').last().id + 1
+  print(PostModel)
+  print(f'{new_id}/{filename}')
   return f'{new_id}/{filename}'
 
 
