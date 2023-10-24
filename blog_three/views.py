@@ -1,14 +1,15 @@
-from multiprocessing import context
 from django.shortcuts import render
+from django.utils.text import slugify
 
 from .forms import TestForm, PostModelForm
-# Create your views here.
 
 
 def home(request):
   form = PostModelForm(request.POST or None)
   if form.is_valid():
-    form.save()
+    obj = form.save(commit=False)
+    obj.slug = slugify(obj.title)
+    obj.save()
   context = {
     'form': form
   }
