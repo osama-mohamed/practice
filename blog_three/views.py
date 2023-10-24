@@ -1,16 +1,14 @@
 from multiprocessing import context
 from django.shortcuts import render
 
-from .forms import TestForm
+from .forms import TestForm, PostModelForm
 # Create your views here.
 
 
 def home(request):
-  form = TestForm(request.POST or None)
+  form = PostModelForm(request.POST or None)
   if form.is_valid():
-    print(form.cleaned_data.get('some_text'))
-  # if request.method == 'POST':
-  #   print(request.POST.get('some_text'))
+    form.save()
   context = {
     'form': form
   }
