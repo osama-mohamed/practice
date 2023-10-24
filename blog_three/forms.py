@@ -1,3 +1,4 @@
+from cProfile import label
 from math import e
 from django import forms
 
@@ -18,6 +19,10 @@ class PostModelForm(forms.ModelForm):
     exclude = [
       'slug',
     ]
+    labels = {
+      'title': 'Post Title',
+      'image': 'Post Image',
+    }
 
 
 
