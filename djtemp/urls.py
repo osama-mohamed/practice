@@ -16,11 +16,24 @@ Including another URLconf
 """
 from django.urls import path
 
-from .views import home
+from .views import (
+    some_test_view,
+    post_model_list_view,
+    
+    post_model_create_view,
+    post_model_detail_view,
+    post_model_delete_view,
+    post_model_update_view,
+    )
 
 
 app_name = 'djtemp'
 
 urlpatterns = [
-  path('', home, name='home'),
+  path('', post_model_list_view, name='list'),
+  path('test/', some_test_view, name='test'),
+  path('create/', post_model_create_view, name='create'),
+  path('<int:id>/', post_model_detail_view, name='detail'),
+  path('<int:id>/update/', post_model_update_view, name='update'),
+  path('<int:id>/delete/', post_model_delete_view, name='delete'),
 ]

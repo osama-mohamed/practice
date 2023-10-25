@@ -1,0 +1,11 @@
+{% extends 'djtemp/base.html' %}
+
+{% block title %}Blog List View | {{ block.super }}{% endblock title %}
+
+{% block content %}
+  <h1>Blog List</h1>
+  <hr/>
+  {% for object in object_list %}
+    {% include 'djtemp/components/object-detail.html' with object=object list_view=True %}
+  {% endfor %}
+{% endblock content %}
