@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'dashboard',
     'blog_three',
     'djtemp',
+    'accounts',
 ]
 
 MIDDLEWARE = [

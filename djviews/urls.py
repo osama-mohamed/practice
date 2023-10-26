@@ -28,4 +28,5 @@ urlpatterns = [
     path('dashboard/', include('dashboard.urls', namespace='dashboard')),
     path('blog_three/', include('blog_three.urls', namespace='blog_three')),
     path('djtemp/', include('djtemp.urls', namespace='djtemp')),
+    path('accounts/', include('accounts.urls', namespace='accounts')),
 ]
