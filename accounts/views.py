@@ -2,7 +2,7 @@ from multiprocessing import context
 from django.shortcuts import render
 from django.urls import reverse
 from django.shortcuts import redirect
-from django.contrib.auth import login, get_user_model
+from django.contrib.auth import login, get_user_model, logout
 
 from .forms import UserCreationForm, UserLoginForm
 
@@ -17,6 +17,10 @@ def home(request):
       'city': request.user.profile.city,
     }
     return render(request, 'accounts/home.html', context)
+  context = {
+    'user': request.user,
+    }
+  return render(request, 'accounts/home.html', context)
   
 def register(request):
   form = UserCreationForm(request.POST or None)
@@ -44,3 +48,8 @@ def user_login(request):
     'btn': 'Login',
   }
   return render(request, 'accounts/login.html', context)
+
+
+def user_logout(request):
+  logout(request)
+  return redirect('accounts:login')
