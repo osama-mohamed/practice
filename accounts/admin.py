@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 
-from .models import MyUser, Profile
+from .models import MyUser, Profile, ActivationProfile
 from .forms import UserCreationForm, UserChangeForm
 
 
@@ -23,6 +23,7 @@ class UserAdmin(BaseUserAdmin):
         (None, {"fields": ["username", "email", "password"]}),
         ("Personal info", {"fields": ["zipcode"]}),
         ("Permissions", {"fields": ["is_admin", "is_staff"]}),
+        ("Access", {"fields": ["is_active"]}),
     ]
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
@@ -39,10 +40,13 @@ class UserAdmin(BaseUserAdmin):
     ordering = ["username", "email"]
     filter_horizontal = []
 
+class AcitvationProfileAdmin(admin.ModelAdmin):
+    list_display = ['user', 'key', 'expired']
 
 # Now register the new UserAdmin...
 admin.site.register(MyUser, UserAdmin)
 admin.site.register(Profile)
+admin.site.register(ActivationProfile, AcitvationProfileAdmin)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 admin.site.unregister(Group)

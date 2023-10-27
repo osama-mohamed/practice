@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.core.validators import RegexValidator
+from django.urls import reverse
 from django.contrib.auth.models import (
   BaseUserManager, 
   AbstractBaseUser,
@@ -8,6 +9,9 @@ from django.contrib.auth.models import (
 
 
 from django.conf import settings
+
+from .utils import code_generator
+
 
 # https://docs.djangoproject.com/en/4.2/topics/auth/customizing/
 
@@ -106,6 +110,30 @@ class MyUser(AbstractBaseUser):
 
 
 
+class ActivationProfile(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    key = models.CharField(max_length=120)
+    expired = models.BooleanField(default=False)
+
+    def __str__(self):
+      return str(f'{self.user.username} - {self.key}')
+    
+    def get_activate_url(self):
+      return reverse('accounts:activate', kwargs={'code': self.key})
+
+    def save(self, *args, **kwargs):
+      self.key = code_generator()
+      return super(ActivationProfile, self).save(*args, **kwargs)
+
+
+def post_save_activation_receiver(sender, instance, created, *args, **kwargs):
+  if created:
+    #send email
+    print(f'Activation created at: {instance.get_activate_url()}')
+
+post_save.connect(post_save_activation_receiver, sender=ActivationProfile)
+
+
 class Profile(models.Model):
   user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
   city = models.CharField(max_length=120, null=True, blank=True)
@@ -119,7 +147,8 @@ def post_save_user_model_receiver(sender, instance, created, *args, **kwargs):
   if created:
     try:
       Profile.objects.create(user=instance)
+      ActivationProfile.objects.create(user=instance)
     except:
       pass
 
-# post_save.connect(post_save_user_model_receiver, sender=settings.AUTH_USER_MODEL)
+post_save.connect(post_save_user_model_receiver, sender=settings.AUTH_USER_MODEL)

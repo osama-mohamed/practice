@@ -23,6 +23,7 @@ from .views import (
   register,
   user_login,
   user_logout,
+  activate_user_view,
 )
 
 urlpatterns = [
@@ -30,4 +31,5 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('login/', user_login, name='login'),
     path('logout/', user_logout, name='logout'),
+    path('activate/<str:code>/', activate_user_view, name='activate'),
 ]
