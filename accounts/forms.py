@@ -53,6 +53,8 @@ class UserLoginForm(forms.Form):
     user_obj = user_qs.first()
     if not user_obj.check_password(password):
       raise forms.ValidationError(f'Invalid credentials, Invalid password try again!')
+    if not user_obj.is_active:
+      raise forms.ValidationError('Inactive user. Please verify your email address.')
     self.cleaned_data['user_obj'] = user_obj
     return super(UserLoginForm, self).clean(*args, **kwargs)
   
@@ -90,6 +92,7 @@ class UserCreationForm(forms.ModelForm):
         # Save the provided password in hashed format
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
+        user.is_active = False
         if commit:
             user.save()
         return user
