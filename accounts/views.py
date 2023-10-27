@@ -39,8 +39,9 @@ def register(request):
 def user_login(request):
   form = UserLoginForm(request.POST or None)
   if form.is_valid():
-    username = form.cleaned_data.get('username')
-    user_obj = User.objects.get(username__iexact=username)
+    # username = form.cleaned_data.get('username')
+    # user_obj = User.objects.get(username__iexact=username)
+    user_obj = form.cleaned_data.get('user_obj')
     login(request, user_obj)
     return redirect('accounts:home')
   context = {
