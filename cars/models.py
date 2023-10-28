@@ -24,6 +24,7 @@ class Car(models.Model):
   # user = models.ForeignKey(User, on_delete=models.CASCADE)
   # drivers = models.ManyToManyField(User)
   # first_owner = models.OneToOneField(User, on_delete=models.CASCADE)
+  updated_by = models.ForeignKey(User, related_name='updated_car_user', null=True, blank=True, on_delete=models.SET_NULL) 
   name = models.CharField(max_length=120)
 
   def __str__(self):
