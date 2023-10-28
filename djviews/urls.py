@@ -30,4 +30,5 @@ urlpatterns = [
     path('djtemp/', include('djtemp.urls', namespace='djtemp')),
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('cars/', include('cars.urls', namespace='cars')),
+    path('billing/', include('billing.urls', namespace='billing')),
 ]

@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_celery_results',
+
     'blog',
     'products',
     'blog_two',
@@ -48,6 +50,7 @@ INSTALLED_APPS = [
     'djtemp',
     'accounts',
     'cars',
+    'billing',
 ]
 
 AUTH_USER_MODEL = "accounts.MyUser"
@@ -118,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Cairo'
 
 USE_I18N = True
 
@@ -135,3 +138,38 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SHORTCODE_MIN = 25
+
+
+from dotenv import load_dotenv
+load_dotenv()
+
+
+# REDIS SETTINGS
+REDIS_PASSWORD = os.getenv('REDIS_PASSWORD')
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": F"redis://default:{REDIS_PASSWORD}@redis-18612.c1.asia-northeast1-1.gce.cloud.redislabs.com:18612",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "PASSWORD": REDIS_PASSWORD,
+            "SSL": True,
+        }
+    }
+}
+
+# Test REDIS cache
+from django.core.cache import cache
+cache.set("test_key", "test_value", timeout=60) # Set a value in the cache
+value = cache.get("test_key") # Retrieve the value
+print(value) # Output should be "test_value"
+
+
+# CELERY SETTINGS
+CELERY_BROKER_URL = CACHES.get('default').get('LOCATION')
+CELERY_RESULT_BACKEND = CACHES.get('default').get('LOCATION')
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = TIME_ZONE # 'Africa/Cairo'
