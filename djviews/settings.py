@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'blog_three',
     'djtemp',
     'accounts',
+    'cars',
 ]
 
 AUTH_USER_MODEL = "accounts.MyUser"
