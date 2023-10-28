@@ -32,6 +32,6 @@ class Car(models.Model):
   
 
 # https://docs.djangoproject.com/en/4.2/ref/models/fields/#module-django.db.models.fields.related
-# ForeignKey => user_obj.car_set.all() 
+# ForeignKey => user_obj.car_set.all() OR user_obj.updated_car_user.all()
 # ManyToMany => user_obj.car_set.all()
 # OneToOne => user_obj.car
