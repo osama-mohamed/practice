@@ -16,7 +16,7 @@ Navigate through the list of branches below to explore the various projects.
 6. [Cafe JS](https://github.com/osama-mohamed/practice/tree/cafe_js)
 7. [Custom Toggle Switch Sass](https://github.com/osama-mohamed/practice/tree/custom_toggle_switch_sass)
 8. [Django 2 Practice](https://github.com/osama-mohamed/practice/tree/django_2_practice)
-9. [E-Commerce](https://github.com/osama-mohamed/practice/tree/e-commerce)
+9. [E-Commerce](https://github.com/osama-mohamed/practice/tree/E-Commerce)
 10. [Employee Manager Vue](https://github.com/osama-mohamed/practice/tree/employee_manager_vue)
 11. [Facebook Posts Flask](https://github.com/osama-mohamed/practice/tree/facebook_posts_flask)
 12. [Fortnite Comparison](https://github.com/osama-mohamed/practice/tree/fortnite_comparison)
