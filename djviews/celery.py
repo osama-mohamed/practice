@@ -4,12 +4,15 @@ from celery import Celery
 from django.conf import settings
 
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djviews.settings') # wisgi.py
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djviews.settings') # wsgi.py
 app = Celery('djviews')
 app.conf.enable_utc = False
 app.config_from_object('django.conf:settings', namespace='CELERY')
 # app.config_from_object(settings, namespace='CELERY')
+# app.autodiscover_tasks(settings.INSTALLED_APPS)
 app.autodiscover_tasks()
+app.conf.broker_url = os.getenv('FULL_URL')
+app.conf.broker_connection_retry_on_startup = True
 
 @app.task(bind=True)
 def debug_task(self):
