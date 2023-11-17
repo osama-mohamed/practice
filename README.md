@@ -49,6 +49,6 @@ Navigate through the list of branches below to explore the various projects.
 39. [SMS Message Express](https://github.com/osama-mohamed/practice/tree/sms_message_express)
 40. [Social Media](https://github.com/osama-mohamed/practice/tree/social_media)
 41. [To Do Express](https://github.com/osama-mohamed/practice/tree/to_do_express)
-42. [Tweetme Django](https://github.com/osama-mohamed/practice/tree/tweetme_django)
-43. [Translator Vue](https://github.com/osama-mohamed/practice/tree/translator_vue)
+42. [Translator Vue](https://github.com/osama-mohamed/practice/tree/translator_vue)
+43. [Tweetme Django](https://github.com/osama-mohamed/practice/tree/tweetme_django)
 44. [Vue Practice](https://github.com/osama-mohamed/practice/tree/vue_practice)
